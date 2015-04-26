@@ -1,0 +1,29 @@
+@mixin bp-w($max) {
+	@media only screen and (max-width: $max) {
+		@content;
+	}
+}
+
+@mixin bp-w-i($min, $max) {
+	@media only screen and (max-width: $max) and (min-width: $min) {
+		@content;
+	}
+}
+
+@mixin bp-w-sm {
+	@media only screen and (max-width: 25em) {
+		@content;
+	}
+}
+
+@mixin bp-w-md {
+	@media only screen and (max-width: 33.33333em) {
+		@content;
+	}
+}
+
+@mixin bp-w-lg {
+	@media only screen and (max-width: 50em) {
+		@content;
+	}
+}

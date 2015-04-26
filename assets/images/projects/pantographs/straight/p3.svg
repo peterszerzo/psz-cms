@@ -1,0 +1,11 @@
+<svg version="1.1" id="trace" 
+xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+viewBox="0 0 200 100" 
+style="enable-background:new 0 0 200 100;" xml:space="preserve" >
+	<line fill="none" stroke="black" stroke-linecap="round" stroke-linejoin="round" x1 = "0.185000" y1 = "0.000000" x2 = "-0.133966" y2 = "-0.385047" />
+	<line fill="none" stroke="black" stroke-linecap="round" stroke-linejoin="round" x1 = "-0.185000" y1 = "0.000000" x2 = "0.133966" y2 = "-0.385047" />
+	<line fill="none" stroke="black" stroke-linecap="round" stroke-linejoin="round" x1 = "0.133966" y1 = "-0.385047" x2 = "-0.097010" y2 = "-0.663874" />
+	<line fill="none" stroke="black" stroke-linecap="round" stroke-linejoin="round" x1 = "-0.133966" y1 = "-0.385047" x2 = "0.097010" y2 = "-0.663874" />
+	<line fill="none" stroke="black" stroke-linecap="round" stroke-linejoin="round" x1 = "0.097010" y1 = "-0.663874" x2 = "-0.070248" y2 = "-0.865783" />
+	<line fill="none" stroke="black" stroke-linecap="round" stroke-linejoin="round" x1 = "-0.097010" y1 = "-0.663874" x2 = "0.070248" y2 = "-0.865783" />
+</svg>

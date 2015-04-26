@@ -1,0 +1,46 @@
+#header {
+	width: 100
+}
+
+.header {
+
+	width: 100%;
+	height: 100%;
+
+	background-color: $base-color;
+
+	position: relative;
+
+	&__summary {
+
+		position: absolute;
+
+		width: 100%;
+		top: 25%;
+		text-align: center;
+
+
+		li {
+			display: inline-block;
+			opacity: 0.9;
+			font-size: 24px;
+			margin: auto 15px auto 15px;
+			color: white;
+
+		}
+
+	}
+
+	&__globe {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+	}
+
+}
+
+.geopath {
+	stroke: white;
+	fill: white;
+	stroke-width: 0.2px;
+}

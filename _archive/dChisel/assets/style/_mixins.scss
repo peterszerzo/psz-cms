@@ -1,0 +1,39 @@
+@mixin makeTransition($property, $duration, $tFunction)
+{
+	-webkit-transition:$property $duration $tFunction;
+	   -moz-transition:$property $duration $tFunction;
+		 -o-transition:$property $duration $tFunction;
+	        transition:$property $duration $tFunction;
+}
+
+@mixin makeDoubleTransition($property1, $property2, $duration, $tFunction)
+{
+	-webkit-transition:$property1 $duration $tFunction,$property2 $duration $tFunction;
+	   -moz-transition:$property1 $duration $tFunction,$property2 $duration $tFunction;
+		 -o-transition:$property1 $duration $tFunction,$property2 $duration $tFunction;
+	        transition:$property1 $duration $tFunction,$property2 $duration $tFunction;
+}
+
+@mixin makeTripleTransition($property1, $property2, $property3, $duration, $tFunction)
+{
+	-webkit-transition:$property1 $duration $tFunction,$property2 $duration $tFunction,$property3 $duration $tFunction;
+	   -moz-transition:$property1 $duration $tFunction,$property2 $duration $tFunction,$property3 $duration $tFunction;
+		 -o-transition:$property1 $duration $tFunction,$property2 $duration $tFunction,$property3 $duration $tFunction;
+	        transition:$property1 $duration $tFunction,$property2 $duration $tFunction,$property3 $duration $tFunction;
+}
+
+@mixin makeQuadrupleTransition($property1, $property2, $property3, $property4, $duration, $tFunction)
+{
+	-webkit-transition:$property1 $duration $tFunction,$property2 $duration $tFunction,$property3 $duration $tFunction, $property4 $duration $tFunction;
+	   -moz-transition:$property1 $duration $tFunction,$property2 $duration $tFunction,$property3 $duration $tFunction, $property4 $duration $tFunction;
+		 -o-transition:$property1 $duration $tFunction,$property2 $duration $tFunction,$property3 $duration $tFunction, $property4 $duration $tFunction;
+	        transition:$property1 $duration $tFunction,$property2 $duration $tFunction,$property3 $duration $tFunction, $property4 $duration $tFunction;
+}
+
+@mixin makeRTransition($duration)
+{
+	-webkit-transition-duration:$duration;
+	   -moz-transition-duration:$duration;
+		 -o-transition-duration:$duration;
+	        transition-duration:$duration;
+}

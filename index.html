@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html ng-app='psz'>
+	
+	<head>
+		
+		<title>Peter Szerzo | Interactive Web Developer and Designer | Washington DC</title>
+		<meta name="description" content="Full-stack web developer and lightly taught designer focused on user interface engineering, interactive data visualization, mapping and 3d graphics. Good eye and thought processes for intuitive UI and fluid UX. Based in Washington, DC.">
+		<meta charset="utf-8">
+		<link rel="icon" type="image/png" href="assets/images/favicon/favicon.png">
+		<link href='http://fonts.googleapis.com/css?family=Ubuntu+Mono' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" type="text/css" href="assets/style/style.css">
+		<link rel="stylesheet" type="text/css" href="assets/vendor/font-awesome/css/font-awesome.min.css">
+		<script src="assets/script/build/app.js"></script>
+		
+	</head>
+	
+	<body ng-app>
+
+		<div id="header" class="fill-parent">
+			<div class="header">
+				<div class="header__globe"></div>
+				<ul class="header__summary">
+					<li>mindful code</li>
+					<li>minimal design</li>
+				</ul>
+			</div>
+		</div>
+
+		<div id="content" ng-controller='projects'>
+
+			<div class='content'>
+
+				<div class="content--header">
+					<ul>
+						<li>projects</li>
+						<li>blog</li>
+						<li>in</li>
+					</ul>
+				</div>
+
+				<ul class='projects'>
+
+					<li ng-repeat="project in projects">
+
+						<a class="project" href="{{project.url}}" target="_blank">
+
+							<img src="assets/images/project-logos/project-logos_{{project.name}}.svg">
+							<div>{{project.name}}</div>
+
+						</a>
+
+					</li>
+
+				</ul>
+
+			</div>
+
+		</div>
+
+		<div id="footer">
+			<div class="footer">
+			</div>
+		</div>
+
+		<script>
+			$(function() {
+				psz.globe().start();
+			});
+		</script>
+
+	</body>
+	
+</html>
