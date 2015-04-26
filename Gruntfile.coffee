@@ -58,8 +58,8 @@ module.exports = (grunt) ->
                 'assets/images/**/*'
                 'assets/style/style.css'
                 'assets/vendor/font-awesome/**/*'
-                'assets/javascript/build/app.js'
-                'assets/javascript/build/app.min.js'
+                'assets/script/build/app.js'
+                'assets/script/build/app.min.js'
                 'projectsites/*.html'
             ]
 
