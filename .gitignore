@@ -1,0 +1,3 @@
+node_modules/**/*
+.grunt/**/*
+assets/vendor/**/*
