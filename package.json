@@ -6,6 +6,7 @@
   "directories": {
     "doc": "doc"
   },
+  "readme": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -21,9 +22,6 @@
   ],
   "author": "Peter Szerzo",
   "license": "ISC",
-  "bugs": {
-    "url": ""
-  },
   "homepage": "https://github.com/pickled-plugins/peterszerzo-com",
   "devDependencies": {
     "grunt": "~0.4.5",

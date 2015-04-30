@@ -25,7 +25,20 @@
 			opacity: 0.9;
 			font-size: 24px;
 			margin: auto 15px auto 15px;
-			color: white;
+			
+
+			a {
+				position: relative;
+				opacity: 0.7;
+				padding-bottom: 4px;
+				text-decoration: none;
+				color: white;
+				top: 0px;
+				&:hover {
+					opacity: 1;
+					border-bottom: 2px solid white;
+				}
+			}
 
 		}
 
