@@ -3,11 +3,8 @@ module.exports = (grunt) ->
     script =
 
         vendor: [
-
             'assets/vendor/jquery/dist/jquery.js'
-            'assets/vendor/angular/angular.js'
             'assets/vendor/d3/d3.js'
-
         ]
 
         coffee: [
@@ -30,14 +27,14 @@ module.exports = (grunt) ->
             options: { banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n' },
             dist: 
                 src: script.vendor.concat([ 'assets/script/build/_coffee.js' ]),
-                dest: 'assets/script/build/app.js'
+                dest: 'public/scripts/site.js'
 
 
         uglify: 
             options: { banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n' },
             dist: 
                 files: 
-                    'assets/script/build/app.min.js': 'assets/script/build/app.js'
+                    'public/scripts/site.min.js': 'public/scripts/site.js'
 
 
         sass: 
@@ -45,7 +42,7 @@ module.exports = (grunt) ->
                 options: 
                     style: 'compressed'
                 files:
-                    'assets/style/style.css': 'assets/style/style.scss'
+                    'public/styles/site.css': 'assets/style/style.scss'
 
 
         'gh-pages': 

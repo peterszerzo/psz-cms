@@ -31,5 +31,10 @@
     "grunt-contrib-uglify": "~0.6.0",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-gh-pages": "^0.10.0"
+  },
+  "dependencies": {
+    "ejs": "^2.3.1",
+    "express": "^4.12.3",
+    "jade": "^1.9.2"
   }
 }

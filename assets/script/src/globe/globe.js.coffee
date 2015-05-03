@@ -76,7 +76,7 @@
 
 		
 
-		$.get 'assets/data/geo/countries.geo.json', draw
+		$.get 'data/geo/countries.geo.json', draw
 
 		subtractAngles = (angle1, angle2) ->
 			if (angle1 < 90 && angle2 > 270) 

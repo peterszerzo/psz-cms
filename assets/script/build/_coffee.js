@@ -1,12 +1,6 @@
 (function() {
   this.psz = {};
 
-  angular.module('psz', []).controller('projects', function($scope, $http) {
-    return $http.get('assets/data/projects.json').success(function(projects) {
-      return $scope.projects = projects;
-    });
-  });
-
 }).call(this);
 
 (function() {
@@ -75,7 +69,7 @@
         updateGeoPaths();
         return setInterval(update, 50);
       };
-      $.get('assets/data/geo/countries.geo.json', draw);
+      $.get('data/geo/countries.geo.json', draw);
       subtractAngles = function(angle1, angle2) {
         if (angle1 < 90 && angle2 > 270) {
           return Math.abs(angle1 + 360 - angle2);

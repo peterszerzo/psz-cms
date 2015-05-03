@@ -1,0 +1,49 @@
+doctype html
+html
+	head
+		title Peter Szerzo | Interactive Web Developer and Designer | Washington DC
+		meta(name='description', content='Full-stack web developer and lightly taught designer focused on user interface engineering, interactive data visualization, mapping and 3d graphics. Good eye and thought processes for intuitive UI and fluid UX. Based in Washington, DC.')
+		meta(charset='utf-8')
+		link(rel="icon", type="image/png", href="images/favicon/favicon.png")
+		link(href='http://fonts.googleapis.com/css?family=Ubuntu+Mono', rel='stylesheet', type='text/css')
+		link(rel="stylesheet", type="text/css", href="styles/site.css")
+		script(src="scripts/site.js")
+
+	body
+
+		div(id='header', class='fill-parent')
+			div(class='header fill-parent')
+				div(class='header__globe')
+				ul(class='header__summary')
+					li
+						a(href="https://github.com/pickled-plugins", target="_blank") mindful code
+					li
+						a(href="https://www.etsy.com/shop/dchisel", target="_blank") minimal design
+
+		div(id="content")
+
+			div(class='content')
+
+				div(class="content--header")
+					ul
+						li projects
+						li blog
+						li in
+
+				ul(class='projects')
+
+					each project in projects
+
+						li
+
+							a(class="project", href="#{project.url}", target="_blank")
+
+								img(src="images/project-logos/project-logos_#{project.name}.svg")
+								div= project.name
+
+
+		div(id="footer")
+			div(class="footer")
+
+		script(type='text/javascript').
+			$(function() { psz.globe().start(); });
