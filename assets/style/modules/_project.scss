@@ -10,44 +10,19 @@
 	position: relative;
 	width: 350px;
 	height: 350px;
-
-	/*width: 25vw;
-	height: 25vw;
-
-	@include bp-w-i(0px, 500px) {
-		width: 100vw;
-		height: 100vw;
-	}
-
-	@include bp-w-i(500px, 800px) {
-		width: 33.3333333vw;
-		height: 33.3333333vw;
-	}
-
-	@include bp-w-i(800px, 2000px) {
-		width: 25vw;
-		height: 25vw;
-	}*/
 	
-	img, div {
-		
-		position: absolute;
-		
-	}
+	img, div { position: absolute; }
 	
 	img {
-		
 		width: 65%;
 		height: 65%;
 		left: 17.5%;
 		top: 15%;
 		opacity: 0.2;
 		transition: 0.5s ease-in-out;
-		
 	}
 	
 	div {
-		
 		color: $base-color;
 		font-size: 20px;
 		top: 76%;
@@ -56,7 +31,6 @@
 		opacity: 0;
 		text-align: center;
 		transition: 0.5s ease-in-out;
-		
 	}
 	
 	transition: 0.5s ease-in-out;
@@ -84,31 +58,4 @@
 		
 	}
 	
-}
-
-.content--header {
-
-	display: none;
-	width: 100%;
-	background-color: $base-color;
-
-	ul {
-
-		text-align: center;
-
-		li {
-			display: inline-block;
-			margin-left: 30px;
-			margin-right: 30px;
-			border-bottom: 1px solid white;
-		}
-
-		margin: auto;
-
-		color: white;
-		text-align: center;
-		vertical-align: middle;
-
-	}
-
 }
