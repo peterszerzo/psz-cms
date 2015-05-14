@@ -2,11 +2,13 @@ var express = require('express');
 var fs = require('fs');
 var app = express();
 var projects = require('./projects.js');
+var bodyParser = require('body-parser');
 
 app.set('views', __dirname + '/views');
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'jade')
 
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static('public'));
 
 app.get('/', function(req, res) {
@@ -21,6 +23,17 @@ app.get('/projects/:id', function(req, res) {
 	projects.request(req.params.id, function(err, datum) {
 		if (err) { throw err; }
 		res.render('projects/show.jade', { project: datum });
+	});
+});
+
+app.get('/terrain', function(req, res) {
+	res.render('terrain-graphics.html');
+});
+
+app.post('/save', function(req, res) {
+	console.dir(req.body.geo);
+	fs.writeFile('public/data/geo/geo.json', req.body.geo, function(err) {
+		if (err) { throw err; }
 	});
 });
 
