@@ -264,11 +264,12 @@
 			for(i = 0, max = dirty.length; i < max; i += 1) {
 				point = dirty[i];
 				if(point !== "") { 
+					console.log(point);
 					point = point.split(',');
-					point[0] = parseFloat(point[0]);
-					point[1] = parseFloat(point[1]);
+					point[0] = parseFloat(point[0]) - 180;
+					point[1] = parseFloat(point[1]) - 90;
 					if (i === 0) { startPoint = point }
-					feature.geometry.coordinates[0].push([ point[1], point[0] ]);
+					feature.geometry.coordinates[0].push([ point[0], point[1] ]);
 				}
 			}
 
