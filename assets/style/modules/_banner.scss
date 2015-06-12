@@ -12,32 +12,25 @@
 		position: absolute;
 
 		width: 100%;
-		top: 25%;
+		top: 20%;
 		text-align: center;
 
-
 		li {
-			display: inline-block;
-			opacity: 0.9;
-			font-size: 24px;
-			margin: auto 30px;
-			
-
+			display: block;
+			margin: 15px 30px;
+			@media only screen and (min-width: 800px) {
+				display: inline-block;
+			}
 			a {
+				border: none;
+				font-size: 28px;
 				position: relative;
-				opacity: 0.7;
 				padding-bottom: 4px;
 				text-decoration: none;
 				color: white;
 				top: 0px;
-				&:hover {
-					opacity: 1;
-					border-bottom: 2px solid white;
-				}
 			}
-
 		}
-
 	}
 
 	&__globe {

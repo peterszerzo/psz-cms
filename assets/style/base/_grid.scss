@@ -1,69 +1,40 @@
 .grid {
-  
     margin: auto $grid-pad;
-  
     &:after {
-
         content: "";
         display: table;
         clear: both;
-
     }
-
     @media screen and (max-width: $breakpoint) {
-
         margin: auto 10px;
-
     }   
-
 }
 
 [class*='col-'] {
-
     float: left;
     padding-right: $grid-pad;
-
     .grid &:last-of-type {
-
         padding-right: 0;
-
     }
-
     @media screen and (max-width: $breakpoint) {
-
         padding-right: 0;
-
     } 
-
 }
 
 @for $i from 1 through 12 {
-
     .col-#{$i} {
-
         width: 100%/12*$i;
-
         @media screen and (max-width: $breakpoint) {
-
             width: 100%;
             margin-left: 0;
-
         }    
-
     }
-
     .col-offset-#{$i} {
-
         margin-left: 100%/12*$i;
-
         @media screen and (max-width: $breakpoint) {
-
             margin-left: 0;
-
         }    
-
     }
-
 }
 
 .clearfix:after {

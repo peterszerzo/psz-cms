@@ -1,13 +1,13 @@
-* {
-
-	font-family: 'Ubuntu Mono';
-
+@font-face {
+	font-family: 'Hallo';
+	src: url('../fonts/Hallo-Sans/Hallo sans.otf');
+	font-style:   normal;
+    font-stretch: normal;
 }
 
-h1, h2 {
-
+* {
+	font-family: 'Hallo';
 	font-weight: normal;
-
 }
 
 p { line-height: 150%; }

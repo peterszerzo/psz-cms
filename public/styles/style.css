@@ -199,9 +199,16 @@ html, body {
   height: 100%;
   margin: 0; }
 
+p, a {
+  font-size: 22px; }
+
 a {
   text-decoration: none;
-  color: white; }
+  color: white;
+  border-bottom: 2px solid white;
+  opacity: 0.6; }
+  a:hover {
+    opacity: 1; }
 
 div[id$="-container"] {
   width: 100%; }
@@ -211,7 +218,7 @@ ul {
   padding: 0;
   margin: 0; }
   ul li {
-    display: inline-block; }
+    display: block; }
 
 img {
   border-radius: 10px;
@@ -221,10 +228,14 @@ img {
       width: 250px;
       margin: auto; } }
 
-* {
-  font-family: 'Ubuntu Mono'; }
+@font-face {
+  font-family: 'Hallo';
+  src: url("../fonts/Hallo-Sans/Hallo sans.otf");
+  font-style: normal;
+  font-stretch: normal; }
 
-h1, h2 {
+* {
+  font-family: 'Hallo';
   font-weight: normal; }
 
 p {
@@ -241,7 +252,7 @@ p {
 .title {
   font-size: 48px;
   font-weight: bold;
-  margin-top: 160px;
+  margin-top: 180px;
   margin-bottom: 120px;
   text-align: center; }
 
@@ -253,23 +264,22 @@ p {
   .banner__summary {
     position: absolute;
     width: 100%;
-    top: 25%;
+    top: 20%;
     text-align: center; }
     .banner__summary li {
-      display: inline-block;
-      opacity: 0.9;
-      font-size: 24px;
-      margin: auto 30px; }
+      display: block;
+      margin: 15px 30px; }
+      @media only screen and (min-width: 800px) {
+        .banner__summary li {
+          display: inline-block; } }
       .banner__summary li a {
+        border: none;
+        font-size: 28px;
         position: relative;
-        opacity: 0.7;
         padding-bottom: 4px;
         text-decoration: none;
         color: white;
         top: 0px; }
-        .banner__summary li a:hover {
-          opacity: 1;
-          border-bottom: 2px solid white; }
   .banner__globe {
     position: absolute;
     width: 100%;
@@ -293,13 +303,14 @@ p {
     vertical-align: middle; }
   .header li {
     display: inline-block;
-    margin-left: 10px;
-    margin-right: 10px; }
+    margin: auto 20px; }
 
 .projects {
   width: 100%;
   margin: 90px 0;
   text-align: center; }
+  .projects li {
+    display: inline-block; }
 
 .project {
   display: inline-block;
@@ -318,7 +329,7 @@ p {
     transition: 0.5s ease-in-out; }
   .project div {
     color: #0F3954;
-    font-size: 20px;
+    font-size: 24px;
     top: 76%;
     width: 90%;
     left: 5%;
@@ -341,4 +352,6 @@ p {
   width: 90%;
   max-width: 768px;
   margin: auto;
-  color: #888; }
+  color: #222; }
+  .static li {
+    padding-left: 15px; }
