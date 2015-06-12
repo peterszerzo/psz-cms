@@ -1,7 +1,7 @@
 var express = require('express');
 var fs = require('fs');
 var app = express();
-var projects = require('./projects.js');
+var projects = require('./models/projects.js');
 var bodyParser = require('body-parser');
 
 app.set('views', __dirname + '/views');

@@ -18785,7 +18785,7 @@ psz.globe = function () {
             return setInterval(update, 50);
         };
 
-        $.get('data/geo/geo.json', draw);
+        $.get('data/geo/countries.geo.json', draw);
 
         subtractAngles = function (angle1, angle2) {
             if (angle1 < 90 && angle2 > 270) {
