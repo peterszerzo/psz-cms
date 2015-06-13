@@ -1,7 +1,19 @@
 [
 
     {
+        "id": "scaling-tricks-for-geo",
+        "name": "Scaling Tricks for Geo",
+        "title": "On Scalable Interactive Mapping",
+        "subtitle": "Recent Favorite Tricks",
+        "is_live": false,
+        "collaborators": [],
+        "categories": [ "code", "blog" ]
+    },
+
+    {
         "id": "atlas",
+        "name": "atlas.newamerica.org",
+        "title": "atlas.newamerica.org",
         "is_live": false
     },
 
@@ -9,6 +21,7 @@
         "id": "ripsaw-js",
         "name": "ripsaw.js",
         "title": "ripsaw.js - Guided Design for Non-designers",
+        "subtitle": "Guided Design for Non-designers",
         "url": "http://pickled-plugins.github.io/ripsaw-demo/#pages/home",
         "year": 2010,
         "supervisors": [],
@@ -17,7 +30,7 @@
             "an interactive product design environment for the web browser, aspiring to provide a minimal frustration design experience for the non-designer",
             "an online publishing environment for developers and computational designers"
         ],
-        "categories": ["all", "featured", "software", "web development", "product"],
+        "categories": [ "code", "design" ],
         "importance": 1
     },
 
@@ -33,7 +46,7 @@
             "an exporting plug-in for Rhinoceros 3d that integrates architectural and strutural design workflows by allowing structural models to be built exclusively within Rhino",
             "by communicating between established software packages, it allows for a well-structured, lightweight and non-redundant storage of design data"
         ],
-        "categories": ["all", "featured", "software", "structural engineering"],
+        "categories": [ "code" ],
         "importance": 1
     },
 
@@ -49,7 +62,7 @@
             "a design exercise that encourages a lively and expressive interaction between artwork and its frame, one that can be perceived as tension, play, harmony or competition for the viewer’s attention",
             "digitally designed and lasercut"
         ],
-        "categories": ["all", "featured", "product"],
+        "categories": [ "design" ],
         "importance": 1
 
     },
@@ -63,7 +76,7 @@
         "year": 2010,
         "supervisors": [],
         "collaborators": ["Tamás Plugor", "Tamás Gajdó"],
-        "categories": ["all", "software", "archive"],
+        "categories": [ "code" ],
         "importance": 1
 
     },
@@ -79,7 +92,7 @@
             "proof of concept for a structure that adapts in response to its environment",
             "computer-aided interaction between environment and structure"
         ],
-        "categories": ["all", "featured", "software", "structural engineering", "architecture"],
+        "categories": [ "code", "design" ],
         "importance": 1
     },
 
@@ -94,7 +107,7 @@
             "assembly of two shell structures floating at a distance, allowing competing performers to ‘battle’. The two units come together to form a larger roof",
             "a computational exercise that tailors a custom particle-springs algorithm to the architectural and structural requirements of the project"
         ],
-        "categories": ["all", "software", "architecture"],
+        "categories": [ "code", "design" ],
         "importance": 1
     },
 
@@ -111,7 +124,7 @@
             "the tool regenerates the structure if their main parameters are modified",
             "upon adjustments, it provides instant feedback on tonnage and constructability, and integrates seamlessly with other software packages used for design development"
         ],
-        "categories": [],
+        "categories": [ "code", "design" ],
         "importance": 1
     },
 
@@ -123,7 +136,7 @@
         "year": 2010,
         "supervisors": [],
         "collaborators": [],
-        "categories": [],
+        "categories": [ "design" ],
         "importance": 1
     },
 
@@ -135,7 +148,7 @@
         "year": 2010,
         "supervisors": [],
         "collaborators": [],
-        "categories": [],
+        "categories": [ "code" ],
         "importance": 1
     },
 
@@ -146,7 +159,7 @@
         "year": 2010,
         "supervisors": [],
         "collaborators": [],
-        "categories": [],
+        "categories": [ "code", "design" ],
         "importance": 1
     },
 
@@ -161,7 +174,7 @@
         "spoiler": [
             "my old personal website"
         ],
-        "categories": ["software", "graphic", "archive"],
+        "categories": [ "code", "design" ],
         "importance": 1
     }
 

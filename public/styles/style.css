@@ -199,8 +199,14 @@ html, body {
   height: 100%;
   margin: 0; }
 
-p, a {
-  font-size: 22px; }
+pre, code {
+  width: 100%;
+  overflow-x: scroll; }
+
+pre {
+  background-color: rgba(15, 57, 84, 0.1);
+  padding: 20px;
+  border-radius: 8px; }
 
 a {
   text-decoration: none;
@@ -208,9 +214,6 @@ a {
   opacity: 0.6; }
   a:hover {
     opacity: 1; }
-
-div[id$="-container"] {
-  width: 100%; }
 
 ul {
   list-style-type: none;
@@ -237,8 +240,31 @@ img {
   font-family: 'Hallo';
   font-weight: normal; }
 
-p {
+p, a, li, code {
+  font-size: 22px; }
+
+code {
+  font-family: "Courier New";
+  font-size: 18px;
+  padding: 0 4px; }
+
+p, li {
   line-height: 150%; }
+
+code {
+  line-height: 125%; }
+
+h1 {
+  font-size: 40px; }
+
+h2 {
+  font-size: 36px; }
+
+h3 {
+  font-size: 28px; }
+
+h4 {
+  font-size: 24px; }
 
 .active {
   opacity: 1 !important;
@@ -248,12 +274,20 @@ p {
   width: 100%;
   height: 100%; }
 
+.title, .subtitle {
+  text-align: center; }
+
 .title {
   font-size: 48px;
-  font-weight: bold;
   margin-top: 180px;
-  margin-bottom: 120px;
-  text-align: center; }
+  margin-bottom: 15px; }
+
+.subtitle {
+  opacity: 0.6;
+  font-size: 30px;
+  font-weight: normal;
+  margin-top: 0px;
+  margin-bottom: 60px; }
 
 .banner {
   width: 100%;
@@ -300,6 +334,8 @@ p {
     display: table-cell;
     text-align: center;
     vertical-align: middle; }
+  .header__main-link {
+    font-size: 24px; }
   .header li {
     display: inline-block;
     margin: auto 20px; }
@@ -336,7 +372,6 @@ p {
     text-align: center;
     transition: 0.5s ease-in-out; }
   .project:hover {
-    transform: rotate3d(0, 1, 0, 0deg);
     transition: all 0.5s ease-in-out; }
     .project:hover img {
       opacity: 1;
@@ -351,6 +386,14 @@ p {
   width: 90%;
   max-width: 768px;
   margin: auto;
+  padding-bottom: 50px;
   color: #222; }
   .static li {
-    padding-left: 15px; }
+    padding-left: 15px;
+    list-style-type: square; }
+  .static a {
+    color: #222;
+    border-bottom: 2px dotted #222;
+    opacity: 0.5; }
+    .static a:hover {
+      opacity: 1; }

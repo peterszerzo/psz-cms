@@ -10,20 +10,22 @@ html, body {
 	margin: 0;
 }
 
-p, a {
-	font-size: 22px;
+pre, code {
+	width: 100%;
+	overflow-x: scroll;
+}
+
+pre {
+	background-color: transparentize(map-get($palette, base), 0.9);
+	padding: 20px;
+	border-radius: 8px;
 }
 
 a { 
 	text-decoration: none; 
 	color: white;
-	// border-bottom: 2px solid white;
 	opacity: 0.6;
 	&:hover { opacity: 1; }
-}
-
-div[id$="-container"] {
-	width: 100%;
 }
 
 ul {

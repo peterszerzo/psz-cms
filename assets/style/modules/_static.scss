@@ -2,8 +2,17 @@
 	width: 90%;
 	max-width: 768px;
 	margin: auto;
+	padding-bottom: 50px;
 	color: map-get($palette, grey);
 	li {
 		padding-left: 15px;
+		list-style-type: square;
+	}
+
+	a {
+		color: map-get($palette, grey);
+		border-bottom: 2px dotted map-get($palette, grey);
+		opacity: 0.5;
+		&:hover { opacity: 1; }
 	}
 }

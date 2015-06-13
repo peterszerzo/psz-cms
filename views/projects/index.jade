@@ -1,15 +1,10 @@
+include ../mixins/header
+
 extend ../layout
 
 block content
 
-	div(class='header')
-		ul
-			li 
-				a(href="/") code
-			li 
-				a(href="/") design
-			li 
-				a(href="/") blog
+	mixin header
 
 	ul(class='projects')
 		each project in projects

@@ -6,17 +6,20 @@ var addSrc = require('gulp-add-src');
 var nodemon = require('gulp-nodemon');
 
 var source = {
-	vendor: [ 'assets/vendor/jquery/dist/jquery.js', 'assets/vendor/d3/d3.js' ],
+	vendor: [ 
+		'bower_components/jquery/dist/jquery.js', 
+		'bower_components/d3/d3.js'
+	],
 	lib: [ 'assets/script/app.js' ]
 };
 
-gulp.task('style-build', function() {
+gulp.task('style', function() {
 	gulp.src('assets/style/style.scss')
 		.pipe(sass('site.css').on('error', sass.logError))
 		.pipe(gulp.dest('./public/styles/'));
 });
 
-gulp.task('script-build', function() {
+gulp.task('script', function() {
 	gulp.src(source.lib)
 		.pipe(babel())
 		.pipe(addSrc.prepend(source.vendor))
@@ -24,10 +27,12 @@ gulp.task('script-build', function() {
 		.pipe(gulp.dest('./public/scripts/'))
 });
 
+gulp.task('default', [ 'style', 'script' ]);
+
 gulp.task('dev', function() {
 	nodemon({
 		script: './app.js',
 		ext: 'js scss jade',
-		tasks: [ 'style-build', 'script-build' ]
+		tasks: [ 'style', 'script' ]
 	}).on('restart', function() { console.log('restarted'); });
 });
