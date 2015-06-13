@@ -1,0 +1,19 @@
+extend ../layout
+
+block content
+
+	div(class='header')
+		ul
+			li 
+				a(href="/") code
+			li 
+				a(href="/") design
+			li 
+				a(href="/") blog
+
+	ul(class='projects')
+		each project in projects
+			li
+				a(class="project", href="projects/#{project.id}")
+					img(src="images/project-logos/project-logos_#{project.id}.svg")
+					div= project.name

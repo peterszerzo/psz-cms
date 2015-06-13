@@ -1,81 +1,63 @@
 [
 
 	{
-
 		"name": "Washington, DC, USA",
 		"icon": "location-arrow",
 		"display": true
-
 	},
 
 	{
-
 		"name": "Web Developer at New America Foundation",
 		"url": "http://newamerica.org/",
 		"icon": "briefcase",
 		"display": true
-
 	},
 
 	{
-
 		"name": "Princeton University",
 		"icon": "graduation-cap",
 		"display": true
-
 	},
 
 	{
-
 		"name": "Transylvania",
 		"icon": "child",
 		"display": true
-
 	},
 
 	{
-
 		"name": "pickled-plugins",
 		"url": "https://github.com/pickled-plugins",
 		"icon": "github",
 		"display": true
-
 	},
 
 	{
-
 		"name": "peterszerzo",
 		"url": "https://www.linkedin.com/in/peterszerzo",
 		"icon": "linkedin",
 		"display": true
-
 	},
 
 	{
-
 		"name": "blunt bright orange",
 		"url": "https://soundcloud.com/bbo-listen",
 		"icon": "soundcloud",
 		"display": true
-
 	},
 
 	{
-
 		"name": "szerzo1",
 		"url": "http://www.youtube.com/user/szerzo1",
 		"icon": "youtube",
 		"display": true
-
 	},
 
 	{
-
 		"name": "+PeterSzerzo",
 		"url": "https://plus.google.com/+PeterSzerzo",
 		"icon": "google-plus",
 		"display": true
-
 	}
 
 ]

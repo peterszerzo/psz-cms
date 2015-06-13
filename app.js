@@ -1,13 +1,12 @@
 var express = require('express'),
 	fs = require('fs'),
-	http = require('http'),
 	app = express(),
 	projects = require('./models/projects.js'),
 	bodyParser = require('body-parser');
 
 app.set('views', __dirname + '/views');
 app.engine('html', require('ejs').renderFile);
-app.set('view engine', 'jade')
+app.set('view engine', 'jade');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static('public'));
@@ -18,6 +17,13 @@ app.get('/', function(req, res) {
 		res.render('index.jade', { projects: data });
 	});
 	
+});
+
+app.get('/projects', function(req, res) {
+	projects.request(undefined, function(err, data) {
+		if (err) { throw err; }
+		res.render('projects/index.jade', { projects: data });
+	});
 });
 
 app.get('/projects/:id', function(req, res) {

@@ -205,7 +205,6 @@ p, a {
 a {
   text-decoration: none;
   color: white;
-  border-bottom: 2px solid white;
   opacity: 0.6; }
   a:hover {
     opacity: 1; }
@@ -292,7 +291,7 @@ p {
 .header {
   position: fixed;
   width: 100%;
-  height: 100px;
+  height: 80px;
   display: table;
   top: 0;
   background-color: rgba(15, 57, 84, 0.95);
