@@ -10,11 +10,15 @@ var source = {
 		'bower_components/jquery/dist/jquery.js', 
 		'bower_components/d3/d3.js'
 	],
-	lib: [ 'assets/script/app.js' ]
+	lib: [ 
+		'app/assets/script/init.js',
+		'app/assets/script/globe.js',
+		'app/assets/script/geojson_generator.js'
+	]
 };
 
 gulp.task('style', function() {
-	gulp.src('assets/style/style.scss')
+	gulp.src('app/assets/style/style.scss')
 		.pipe(sass('site.css').on('error', sass.logError))
 		.pipe(gulp.dest('./public/styles/'));
 });
@@ -32,7 +36,7 @@ gulp.task('default', [ 'style', 'script' ]);
 gulp.task('dev', function() {
 	nodemon({
 		script: './app.js',
-		ext: 'js scss jade',
+		ext: 'js jsx scss jade',
 		tasks: [ 'style', 'script' ]
 	}).on('restart', function() { console.log('restarted'); });
 });

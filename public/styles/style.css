@@ -199,6 +199,12 @@ html, body {
   height: 100%;
   margin: 0; }
 
+svg {
+  display: block; }
+  svg polygon {
+    stroke: none;
+    fill: #111; }
+
 pre, code {
   width: 100%;
   overflow-x: scroll; }

@@ -1,12 +1,14 @@
-var psz = {};
-//
-psz.globe = function() {
+psz.globe = function(selector, fileName) {
 
-    var self = {};
+    var self = {
+        selector: selector
+    };
 
     self.start = function() {
+
         var $el, draw, eye, getDistance, getFeatureOpacity, getPath, height, lambda, phi, sphericalToCartesian, subtractAngles, svg, update, updateDimensions, updateEye, updateGeoPaths, width;
-        $el = $('.banner__globe');
+
+        $el = $(self.selector);
         width = $el.width();
         height = $el.height();
         svg = void 0;
@@ -63,6 +65,7 @@ psz.globe = function() {
         };
 
         draw = function(data) {
+            console.log(data);
             svg = d3.select('.banner__globe').append('svg');
             updateDimensions();
             $(window).on('resize', updateDimensions);
@@ -73,7 +76,7 @@ psz.globe = function() {
             return setInterval(update, 50);
         };
 
-        $.get('data/geo/geo.json', draw);
+        $.get('data/geo/' + fileName, draw);
 
         subtractAngles = function(angle1, angle2) {
             if (angle1 < 90 && angle2 > 270) {

@@ -10,6 +10,14 @@ html, body {
 	margin: 0;
 }
 
+svg {
+	display: block;
+	polygon {
+		stroke: none;
+		fill: #111;
+	}
+}
+
 pre, code {
 	width: 100%;
 	overflow-x: scroll;

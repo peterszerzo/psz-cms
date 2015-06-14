@@ -1,0 +1,8 @@
+extend layout
+
+block content
+
+	include terrain-graphics/terrain-graphics.svg
+	
+	script(type='text/javascript').
+		$(function() { psz.geoJsonGenerator('svg').generate(); });

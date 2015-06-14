@@ -18713,17 +18713,22 @@ return jQuery;
   if (typeof define === "function" && define.amd) define(d3); else if (typeof module === "object" && module.exports) module.exports = d3;
   this.d3 = d3;
 }();
-'use strict';
+"use strict";
 
 var psz = {};
-//
-psz.globe = function () {
+'use strict';
 
-    var self = {};
+psz.globe = function (selector, fileName) {
+
+    var self = {
+        selector: selector
+    };
 
     self.start = function () {
+
         var $el, draw, eye, getDistance, getFeatureOpacity, getPath, height, lambda, phi, sphericalToCartesian, subtractAngles, svg, update, updateDimensions, updateEye, updateGeoPaths, width;
-        $el = $('.banner__globe');
+
+        $el = $(self.selector);
         width = $el.width();
         height = $el.height();
         svg = void 0;
@@ -18780,6 +18785,7 @@ psz.globe = function () {
         };
 
         draw = function (data) {
+            console.log(data);
             svg = d3.select('.banner__globe').append('svg');
             updateDimensions();
             $(window).on('resize', updateDimensions);
@@ -18790,7 +18796,7 @@ psz.globe = function () {
             return setInterval(update, 50);
         };
 
-        $.get('data/geo/geo.json', draw);
+        $.get('data/geo/' + fileName, draw);
 
         subtractAngles = function (angle1, angle2) {
             if (angle1 < 90 && angle2 > 270) {
@@ -18839,4 +18845,86 @@ psz.globe = function () {
     };
 
     return self;
+};
+"use strict";
+
+psz.geoJsonGenerator = function (selector) {
+
+	var self = {};
+
+	self.generate = function () {
+
+		var geoJson = {
+			type: "FeatureCollection",
+			features: []
+		};
+
+		var removeEmptyStrings = function removeEmptyStrings(array) {
+			var i,
+			    max,
+			    newArray = [];
+			for (i = 0, max = array.length; i < max; i += 1) {
+				if (array[i] !== "") {
+					newArray.push(array[i]);
+				}
+			}
+			return newArray;
+		};
+
+		/* 
+   * Convert 20,10 to [10, 20].
+   * @param {string}
+   * @param {array} Optional displacement vector, defaults to [ 0, 0 ].
+   */
+		var convertToPoint = function convertToPoint(string, displacement) {
+			var pt = string.split(",");
+			displacement = displacement || [0, 0];
+			pt[0] = parseFloat(pt[0]);
+			pt[1] = parseFloat(pt[1]);
+			return [pt[0] + displacement[0], pt[1] + displacement[1]];
+		};
+
+		$(selector + " polygon").each(function () {
+
+			var feature = {
+				type: "Feature",
+				geometry: {
+					type: "Polygon",
+					coordinates: [[]]
+				}
+			},
+			    pointsAttr = $(this).attr("points"),
+			    point,
+			    startPoint,
+			    pointStrings,
+			    pointString,
+			    i,
+			    max,
+			    clean = [];
+
+			pointStrings = removeEmptyStrings(pointsAttr.split(/\s\n*/));
+
+			for (i = 0, max = pointStrings.length; i < max; i += 1) {
+				pointString = pointStrings[i];
+				point = convertToPoint(pointString, [-180, -90]);
+				if (i === 0) {
+					startPoint = point;
+				}
+				feature.geometry.coordinates[0].push(point);
+			}
+
+			feature.geometry.coordinates[0].push(startPoint);
+			geoJson.features.push(feature);
+		});
+
+		console.log(geoJson);
+
+		$.ajax({
+			url: "/save",
+			data: { geo: JSON.stringify(geoJson) },
+			type: "post"
+		});
+	};
+
+	return self;
 };
