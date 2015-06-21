@@ -2,15 +2,7 @@ extend layout
 
 block content
 
-	div(class='banner fill-parent')
-		div(class='banner__globe')
-		ul(class='banner__summary')
-			li
-				a(href="https://github.com/pickled-plugins", target="_blank") mindful code
-			li
-				a(href="https://www.etsy.com/shop/dchisel", target="_blank") minimal design
-			li
-				a(href="https://github.com/pickled-plugins/scaling-tricks-for-geo", target="_blank") blog
+	!= reactOutput
 
 	script(type='text/javascript').
 		$(function() { psz.globe('.banner__globe', 'geo.json').start(); });

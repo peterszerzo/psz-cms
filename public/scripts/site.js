@@ -18794,9 +18794,11 @@ psz.globe = function (selector, fileName) {
             path = getPath();
             return svg.selectAll('path').attr({
                 d: function d(feature) {
-                    //var b = path.bounds(feature);
-                    //console.log(b[0], b[1]);
-                    // if (Math.abs(b[1][0] - b[1][1]) > 500) { return ''; };
+                    var b = path.bounds(feature);
+                    var length = Math.abs(b[0][0] - b[1][0]);
+                    var height = Math.abs(b[0][1] - b[1][1]);
+                    //console.log(length + height);
+                    //if (length + height > 2500) { return ''; }
                     return path(feature);
                 },
                 opacity: getFeatureOpacity
@@ -18920,9 +18922,18 @@ psz.geoJsonGenerator = function (selector) {
 		var convertToPoint = function convertToPoint(string, displacement, scale) {
 			var pt = string.split(",");
 			displacement = displacement || [0, 0];
-			pt[0] = parseFloat(pt[0]);
-			pt[1] = parseFloat(pt[1]);
+			pt[0] = parseInt(pt[0] * 100000, 10) / 100000;
+			pt[1] = parseInt(pt[1] * 100000, 10) / 100000;
 			return [(pt[0] + displacement[0]) * scale, (pt[1] + displacement[1]) * scale];
+		};
+
+		var isClockwiseTriangle = function isClockwiseTriangle(coordinates) {
+			var pt1 = coordinates[0],
+			    pt2 = coordinates[1],
+			    pt3 = coordinates[2];
+
+			var prod = (pt2[0] - pt1[0]) * (pt2[1] - pt1[1]) + (pt3[0] - pt2[0]) * (pt3[1] - pt2[1]);
+			return prod > 0;
 		};
 
 		$(selector + " polygon").each(function () {
@@ -18931,9 +18942,11 @@ psz.geoJsonGenerator = function (selector) {
 				type: "Feature",
 				geometry: {
 					type: "Polygon",
-					coordinates: [[]]
+					coordinates: []
 				}
 			},
+			    coords = [],
+			    repl,
 			    pointsAttr = $(this).attr("points"),
 			    point,
 			    startPoint,
@@ -18951,10 +18964,22 @@ psz.geoJsonGenerator = function (selector) {
 				if (i === 0) {
 					startPoint = point;
 				}
-				feature.geometry.coordinates[0].push(point);
+				coords.push(point);
 			}
 
-			feature.geometry.coordinates[0].push(startPoint);
+			coords.push(startPoint);
+
+			// Replace second and third points if triangle is counterclockwise.
+
+			var repl;
+
+			if (isClockwiseTriangle(coords)) {
+				repl = coords[1];
+				coords[1] = coords[2];
+				coords[2] = repl;
+			}
+
+			feature.geometry.coordinates[0] = coords;
 			geoJson.features.push(feature);
 		});
 

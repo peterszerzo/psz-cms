@@ -74,9 +74,11 @@ psz.globe = function(selector, fileName) {
             path = getPath();
             return svg.selectAll('path').attr({
                 d: function(feature) { 
-                    //var b = path.bounds(feature);
-                    //console.log(b[0], b[1]);
-                    // if (Math.abs(b[1][0] - b[1][1]) > 500) { return ''; };
+                    var b = path.bounds(feature);
+                    var length = Math.abs(b[0][0] - b[1][0]);
+                    var height = Math.abs(b[0][1] - b[1][1]);
+                    //console.log(length + height);
+                    //if (length + height > 2500) { return ''; }
                     return path(feature); 
                 },
                 opacity: getFeatureOpacity
