@@ -18720,32 +18720,51 @@ var psz = {};
 
 psz.globe = function (selector, fileName) {
 
+    var timeStep = 0.02;
+
     var self = {
         selector: selector
     };
 
     self.start = function () {
 
-        var $el, draw, eye, getDistance, getFeatureOpacity, getPath, height, lambda, phi, sphericalToCartesian, subtractAngles, svg, update, updateDimensions, updateEye, updateGeoPaths, width;
+        var $el, draw, eye, getDistance, getFeatureOpacity, getPath, height, long, lat, sphericalToCartesian, subtractAngles, svg, update, updateDimensions, updateEye, updateGeoPaths, width;
 
         $el = $(self.selector);
         width = $el.width();
         height = $el.height();
         svg = void 0;
-        lambda = d3.scale.linear().domain([0, width]).range([-180, 180]);
-        phi = d3.scale.linear().domain([0, height]).range([90, -90]);
+
+        longScale = d3.scale.linear().domain([0, width]).range([-180, 180]);
+        latScale = d3.scale.linear().domain([0, height]).range([90, -90]);
+
+        var s = 4;
+
         eye = {
-            lambda0: 0,
-            phi0: 0,
+            position: [0, 0],
+            velocity: [s, s / 2],
+            springConstant: [s / 50, s / 100],
             updateByMouse: function updateByMouse(context) {
                 var p;
                 p = d3.mouse(context);
-                this.lambda0 = -lambda(p[0]);
-                return this.phi0 = -phi(p[1]);
+                this.long = -longScale(p[0]);
+                return this.lat = -latScale(p[1]);
             },
-            update: function update(dLambda, dPhi) {
-                this.lambda0 += dLambda;
-                return this.phi0 += dPhi;
+            updateConstant: function updateConstant(dLong, dLat) {
+                this.long += dLong;
+                return this.lat += dLat;
+            },
+            updateHarmonic: function updateHarmonic() {
+                this._updateHarmonicVelocity();
+                this._updateHarmonicPosition();
+            },
+            _updateHarmonicVelocity: function _updateHarmonicVelocity() {
+                this.velocity[0] -= this.position[0] * this.springConstant[0] * timeStep;
+                this.velocity[1] -= this.position[1] * this.springConstant[1] * timeStep;
+            },
+            _updateHarmonicPosition: function _updateHarmonicPosition() {
+                this.position[0] += this.velocity[0] * timeStep;
+                this.position[1] += this.velocity[1] * timeStep;
             }
         };
 
@@ -18759,13 +18778,13 @@ psz.globe = function (selector, fileName) {
         };
 
         updateEye = function () {
-            return eye.update(0.2, 0.2);
+            return eye.updateHarmonic(0.2, 0.2);
         };
 
         getPath = function () {
             var path, projection;
             projection = d3.geo.orthographic().scale(width * 0.7).rotate([0, 0, 0]).translate([width / 2, height / 2 * 1.6]);
-            projection.rotate([-eye.lambda0, -eye.phi0]);
+            projection.rotate([-eye.position[0], -eye.position[1]]);
             path = d3.geo.path().projection(projection);
             return path;
         };
@@ -18774,26 +18793,32 @@ psz.globe = function (selector, fileName) {
             var path;
             path = getPath();
             return svg.selectAll('path').attr({
-                d: path,
+                d: function d(feature) {
+                    //var b = path.bounds(feature);
+                    //console.log(b[0], b[1]);
+                    // if (Math.abs(b[1][0] - b[1][1]) > 500) { return ''; };
+                    return path(feature);
+                },
                 opacity: getFeatureOpacity
             });
         };
 
         update = function () {
-            updateEye();
-            return updateGeoPaths();
+            eye.updateHarmonic();
+            updateGeoPaths();
         };
 
         draw = function (data) {
-            console.log(data);
             svg = d3.select('.banner__globe').append('svg');
             updateDimensions();
             $(window).on('resize', updateDimensions);
             svg.selectAll('path').data(data.features).enter().append('path').attr({
-                'class': 'geopath'
+                'class': function _class(feature) {
+                    return 'geopath';
+                }
             });
             updateGeoPaths();
-            return setInterval(update, 50);
+            return setInterval(update, timeStep * 1000);
         };
 
         $.get('data/geo/' + fileName, draw);
@@ -18808,35 +18833,49 @@ psz.globe = function (selector, fileName) {
             return Math.abs(angle1 - angle2);
         };
 
-        sphericalToCartesian = function (lambda, phi, r) {
+        sphericalToCartesian = function (long, lat, r) {
             var degToRad;
             if (r == null) {
                 r = 1;
             }
             degToRad = 1 / 57;
-            return [Math.cos(lambda * degToRad) * Math.cos(phi * degToRad) * r, Math.sin(lambda * degToRad) * Math.cos(phi * degToRad) * r, Math.sin(phi * degToRad) * r];
+            return [Math.cos(long * degToRad) * Math.cos(lat * degToRad) * r, Math.sin(long * degToRad) * Math.cos(lat * degToRad) * r, Math.sin(lat * degToRad) * r];
         };
 
-        getDistance = function (lambda1, phi1, lambda2, phi2) {
+        getDistance = function (long1, lat1, long2, lat2) {
             var distance, pos1, pos2;
-            pos1 = sphericalToCartesian(lambda1, phi1);
-            pos2 = sphericalToCartesian(lambda2, phi2);
+            pos1 = sphericalToCartesian(long1, lat1);
+            pos2 = sphericalToCartesian(long2, lat2);
             distance = Math.pow(Math.pow(pos2[0] - pos1[0], 2) + Math.pow(pos2[1] - pos1[1], 2) + Math.pow(pos2[2] - pos1[2], 2), 0.5);
             return distance;
         };
 
+        getFeatureCentroid = function (feature) {
+            var i,
+                c = [0, 0],
+                coordinates = feature.geometry.coordinates;
+            for (i = 0; i < 3; i += 1) {
+                c[0] += coordinates[0][i][0] / 3;
+                c[1] += coordinates[0][i][1] / 3;
+            }
+            return c;
+        };
+
+        var maxOp = 0;
+
         return getFeatureOpacity = function (feature) {
-            var centroid, delta, deltaMax, distance, lambda1, phi1;
-            centroid = d3.geo.centroid(feature);
-            lambda1 = centroid[0];
-            phi1 = centroid[1];
-            distance = getDistance(eye.lambda0, eye.phi0, lambda1, phi1);
+            var centroid, centroidCheck, delta, deltaMax, distance, long1, lat1, op;
+            centroid = getFeatureCentroid(feature);
+            long1 = centroid[0];
+            lat1 = centroid[1];
+            distance = getDistance(eye.position[0], eye.position[1], long1, lat1);
             delta = distance / 2;
-            deltaMax = 0.3;
+            deltaMax = 0.6;
             if (delta > deltaMax) {
                 return 0;
             }
-            return Math.pow((deltaMax - delta) / deltaMax, 1) * 0.4;
+            op = Math.pow((deltaMax - delta) / deltaMax, 4) * 0.5;
+            return op;
         };
     };
 
@@ -18874,14 +18913,16 @@ psz.geoJsonGenerator = function (selector) {
 		/* 
    * Convert 20,10 to [10, 20].
    * @param {string}
-   * @param {array} Optional displacement vector, defaults to [ 0, 0 ].
+   * @param {array} displacement - Optional displacement vector, defaults to [ 0, 0 ].
+   * @param {number} scale - Scale factor.
+   * @returns {array} point - Point array.
    */
-		var convertToPoint = function convertToPoint(string, displacement) {
+		var convertToPoint = function convertToPoint(string, displacement, scale) {
 			var pt = string.split(",");
 			displacement = displacement || [0, 0];
 			pt[0] = parseFloat(pt[0]);
 			pt[1] = parseFloat(pt[1]);
-			return [pt[0] + displacement[0], pt[1] + displacement[1]];
+			return [(pt[0] + displacement[0]) * scale, (pt[1] + displacement[1]) * scale];
 		};
 
 		$(selector + " polygon").each(function () {
@@ -18906,7 +18947,7 @@ psz.geoJsonGenerator = function (selector) {
 
 			for (i = 0, max = pointStrings.length; i < max; i += 1) {
 				pointString = pointStrings[i];
-				point = convertToPoint(pointString, [-180, -90]);
+				point = convertToPoint(pointString, [-180, -90], 0.4);
 				if (i === 0) {
 					startPoint = point;
 				}

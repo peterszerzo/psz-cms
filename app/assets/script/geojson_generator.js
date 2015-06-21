@@ -20,14 +20,19 @@ psz.geoJsonGenerator = function(selector) {
 		/* 
 		 * Convert 20,10 to [10, 20].
 		 * @param {string}
-		 * @param {array} Optional displacement vector, defaults to [ 0, 0 ].
+		 * @param {array} displacement - Optional displacement vector, defaults to [ 0, 0 ].
+		 * @param {number} scale - Scale factor.
+		 * @returns {array} point - Point array.
 		 */
-		var convertToPoint = function(string, displacement) {
+		var convertToPoint = function(string, displacement, scale) {
 			var pt = string.split(',');
 			displacement = displacement || [0, 0];
 			pt[0] = parseFloat(pt[0]);
 			pt[1] = parseFloat(pt[1]);
-			return [ pt[0] + displacement[0], pt[1] + displacement[1] ];
+			return [ 
+				(pt[0] + displacement[0]) * scale, 
+				(pt[1] + displacement[1]) * scale 
+			];
 		};
 
 		$(selector + ' polygon').each(function() {
@@ -48,7 +53,7 @@ psz.geoJsonGenerator = function(selector) {
 
 			for(i = 0, max = pointStrings.length; i < max; i += 1) {
 				pointString = pointStrings[i];
-				point = convertToPoint(pointString, [ -180, -90 ]);
+				point = convertToPoint(pointString, [ -180, -90 ], 0.4);
 				if (i === 0) { startPoint = point; }
 				feature.geometry.coordinates[0].push(point);
 			}
