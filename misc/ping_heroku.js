@@ -1,5 +1,5 @@
 var http = require('http');
 
-exports = function() {
-	http.get('peterszerzo.com');
+module.exports = function() {
+	http.get('http://peterszerzo.herokuapp.com');
 };

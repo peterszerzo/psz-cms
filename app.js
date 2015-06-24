@@ -1,7 +1,10 @@
-var express = require('express'),
+var pingHeroku = require('./misc/ping_heroku'),
+	express = require('express'),
 	app = express(),
 	router,
 	bodyParser = require('body-parser');
+
+setInterval(pingHeroku, 5 * 60 * 1000);
 
 require('node-jsx').install({extension: '.jsx'});
 

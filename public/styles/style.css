@@ -306,6 +306,7 @@ h4 {
     top: 20%;
     text-align: center; }
     .banner__summary li {
+      opacity: 0.7;
       display: block;
       margin: 15px 30px; }
       @media only screen and (min-width: 800px) {
@@ -319,6 +320,14 @@ h4 {
         text-decoration: none;
         color: white;
         top: 0px; }
+  .banner__notice {
+    position: absolute;
+    top: 35%;
+    width: 100%;
+    color: white;
+    text-align: center;
+    font-size: 54px;
+    text-transform: uppercase; }
   .banner__globe {
     position: absolute;
     width: 100%;
