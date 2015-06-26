@@ -19,7 +19,7 @@ var Home = React.createClass({
 						<a href="https://github.com/pickled-plugins/scaling-tricks-for-geo" target="_blank">blog</a>
 					</li>
 				</ul>
-				<div className="banner__notice">.. Coming Soon ..</div>
+				<div className="banner__notice"></div>
 			</div>
 		);
 	}

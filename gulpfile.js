@@ -4,8 +4,8 @@ var babel = require('gulp-babel');
 var sass = require('gulp-sass');
 var addSrc = require('gulp-add-src');
 var nodemon = require('gulp-nodemon');
-var browserify = require('browserify');
-var reactify = require('reactify');
+//var browserify = require('browserify');
+//var reactify = require('reactify');
 
 var source = {
 	vendor: [ 
@@ -43,11 +43,11 @@ gulp.task('dev', function() {
 	}).on('restart', function() { console.log('restarted'); });
 });
 
-gulp.task('comp', function() {
+/*gulp.task('comp', function() {
 	browserify({
 		entries: [ 'app/components/index.js' ],
 		transform: [ reactify ]
 	})
 		.bundle()
 		.pipe(gulp.dest('reactzz.js'));
-});
+});*/

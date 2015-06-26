@@ -1,9 +1,9 @@
-As chess boards became more and more complicated, I've decided to look around in the other direction.
+Seeing the elaboration of chess set designs over centuries and cultures, I've decided to take a minimalistic look at it.
 
-* go 2d.
+I knew I wanted to go 2d first, so that. 
 
-* simplify figures; maybe just the shoes?
+I also got interested in redefining the roles of the figures by assigning them shoes. This highlighted different characteristics of the players: modern, formal elegance instead of royal might for the king, strength, status and feminine for the queen, a detachment of the knight's horse from its rider. The pawns 
 
-* solid colors are obviously pushing it too far. yes, hatches!
+Discrete hatches distinguish between the two sides.
 
-* draw, trace, lasercut, play!
+The set was hand-drawn, digitally reworked, then lasercut. Playing with it can be confusing.
