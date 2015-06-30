@@ -1,3 +1,5 @@
+A highly minimalistic look at the chess set.
+
 Seeing the elaboration of chess set designs over centuries and cultures, I've decided to take a minimalistic look at it.
 
 I knew I wanted to go 2d first, so that. 

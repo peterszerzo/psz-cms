@@ -11,29 +11,31 @@ router.get('/', function(req, res) {
 	res.render('index.jade', { reactOutput: html });
 });
 
-router.get('/projects', function(req, res) {
-	project.request(undefined, function(err, data) {
+router.get('/:category(code|design|blog)', function(req, res) {
+	project.get({ category: req.params.category }, function(err, data) {
 		if (err) { throw err; }
 		var factory = React.createFactory(Components.Projects.Index),
-			html = React.renderToString(factory({ items: data }));
+			html = React.renderToString(factory({ items: data, category: req.params.category }));
 		res.render('projects/index.jade', { reactOutput: html });
 	});
 });
 
-router.get('/projects/:id', function(req, res) {
-	project.request(req.params.id, function(err, datum) {
+router.get('/:id', function(req, res) {
+
+	project.get({ id: req.params.id }, function(err, datum) {
 		if (err) { throw err; }
 		var factory = React.createFactory(Components.Projects.Show),
 			html = React.renderToString(factory({ item: datum }));
 		res.render('projects/index.jade', { reactOutput: html });
 	});
+
 });
 
-router.get('/terrain', function(req, res) {
+router.get('/dev/terrain', function(req, res) {
 	res.render('terrain-graphics.jade');
 });
 
-router.post('/save', function(req, res) {
+router.post('/dev/save', function(req, res) {
 	fs.writeFile('public/data/geo/geo.json', req.body.geo, function(err) {
 		if (err) { throw err; }
 		console.log('save successful!');

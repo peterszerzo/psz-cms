@@ -306,7 +306,6 @@ h4 {
     top: 20%;
     text-align: center; }
     .banner__summary li {
-      opacity: 0.7;
       display: block;
       margin: 15px 30px; }
       @media only screen and (min-width: 800px) {
@@ -343,17 +342,25 @@ h4 {
   height: 80px;
   display: table;
   top: 0;
-  background-color: rgba(15, 57, 84, 0.95);
-  color: white; }
+  background-color: rgba(15, 57, 84, 0.93);
+  color: white;
+  z-index: 10; }
   .header > * {
     display: table-cell;
     text-align: center;
     vertical-align: middle; }
   .header__main-link {
     font-size: 24px; }
-  .header li {
-    display: inline-block;
-    margin: auto 20px; }
+  .header__nav {
+    text-align: right;
+    padding-right: 30px; }
+    .header__nav__item {
+      display: inline-block;
+      margin: auto 20px; }
+      .header__nav__item a {
+        height: 15px; }
+      .header__nav__item--active a {
+        opacity: 0.9; }
 
 .projects {
   width: 100%;

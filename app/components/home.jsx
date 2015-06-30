@@ -10,16 +10,16 @@ var Home = React.createClass({
 				<div className="banner__globe"></div>
 				<ul className="banner__summary">
 					<li>
-						<a href="https://github.com/pickled-plugins" target="_blank">mindful code</a>
+						<a href="/code">mindful code</a>
 					</li>
 					<li>
-						<a href="https://www.etsy.com/shop/dchisel" target="_blank">minimal design</a>
+						<a href="/design">minimal design</a>
 					</li>
 					<li>
-						<a href="https://github.com/pickled-plugins/scaling-tricks-for-geo" target="_blank">blog</a>
+						<a href="/blog">blog</a>
 					</li>
 				</ul>
-				<div className="banner__notice"></div>
+				<div className="banner__notice">.. Coming Soon ..</div>
 			</div>
 		);
 	}

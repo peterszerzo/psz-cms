@@ -12,20 +12,44 @@ var getMarkdown = function(err, datum, cb) {
 	});
 };
 
-exports.request = function(id, cb) {
+var filterByCategory = function(data, category) {
+	var i, max, datum,
+		filteredData = [];
+	for(i = 0, max = data.length; i < max; i += 1) {
+		datum = data[i];
+		if (datum.categories && (datum.categories.indexOf(category) > -1)) {
+			filteredData.push(datum);
+		}
+	}
+	return filteredData;
+};
+
+exports.get = function(query, cb) {
+
+	query = query || {};
+
 	fs.readFile(dbPath + '/index.json', function(err, data) {
+
 		var i, max, datum;
+
 		if (err) { return cb(err, data); }
+
 		if (data) { data = JSON.parse(data); }
-		if (!id) { 
-			return cb(null, data);
-		} else {
+
+		if (query.id) {
 			for (i = 0, max = data.length; i < max; i += 1) {
 				datum = data[i];
-				if (datum.id === id) {
+				if (datum.id === query.id) {
 					return getMarkdown(null, datum, cb);
 				}
 			}
+			return [];
 		}
+
+		if (query.category) { data = filterByCategory(data, query.category); }
+
+		return cb(null, data);
+
 	});
+
 };

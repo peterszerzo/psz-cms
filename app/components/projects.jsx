@@ -16,7 +16,7 @@ Projects.Index = React.createClass({
 	render: function() {
 		return (
 			<div>
-				<Header/>
+				<Header category={this.props.category}/>
 				<Projects.List items={this.props.items}/>
 			</div>
 		);
@@ -41,7 +41,7 @@ Projects.List.Item = React.createClass({
 		var itemData = this.props.itemData;
 		return (
 			<li>
-				<a className="project" href={'projects/' + itemData.id}>
+				<a className="project" href={'/' + itemData.id}>
 					<img src={'images/project-logos/project-logos_' + itemData.id + '.svg'}></img>
 					<div>{itemData.name}</div>
 				</a>
