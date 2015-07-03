@@ -12,6 +12,27 @@ var getMarkdown = function(err, datum, cb) {
 	});
 };
 
+var test = function(datum, query) {
+	var value;
+	for (key in query) {
+		value = query[value];
+		if (datum[key] !== value) { return false; }
+	}
+	return true;
+};
+
+var filter = function(data, query) {
+	var i, max, datum,
+		filteredData = [];
+	for(i = 0, max = data.length; i < max; i += 1) {
+		datum = data[i];
+		if (test(datum, query)) {
+			filteredData.push(datum);
+		}
+	}
+	return filteredData;
+};
+
 var filterByCategory = function(data, category) {
 	var i, max, datum,
 		filteredData = [];
@@ -47,6 +68,8 @@ exports.get = function(query, cb) {
 		}
 
 		if (query.category) { data = filterByCategory(data, query.category); }
+
+		//data = filter(data, query);
 
 		return cb(null, data);
 

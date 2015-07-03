@@ -63,10 +63,15 @@ Projects.Show = React.createClass({
 
 Projects.Show.Item = React.createClass({
 	render: function() {
+		var url;
+		if (this.props.item.url != null) {
+			url = <a href={this.props.item.url} target="_blank"></a>;
+		}
 		return (
 			<div>
 				<h1 className="title">{this.props.item.title}</h1>
 				<h2 className="subtitle">{this.props.item.subtitle}</h2>
+				{url}
 				<div 
 					className="static"
 					dangerouslySetInnerHTML={{

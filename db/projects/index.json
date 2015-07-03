@@ -19,8 +19,9 @@
 
     {
         "id": "ripsaw-js",
+        "is_live": true,
         "name": "ripsaw.js",
-        "title": "ripsaw.js - Guided Design for Non-designers",
+        "title": "ripsaw.js",
         "subtitle": "Guided Design for Non-designers",
         "url": "http://pickled-plugins.github.io/ripsaw-demo/#pages/home",
         "year": 2010,
@@ -36,6 +37,7 @@
 
     {
         "id": "giraffe-for-rhino",
+        "is_live": true,
         "name": "Giraffe for Rhino",
         "title": "Giraffe - Strctural Engineering Add-on for Rhino",
         "url": "http://pickled-plugins.github.io/Giraffe-for-Rhino/",
@@ -53,6 +55,7 @@
     {
 
         "id": "pendant-project",
+        "is_live": true,
         "name": "Pendant Project",
         "url": "https://www.etsy.com/shop/dchisel",
         "year": 2010,
@@ -70,6 +73,7 @@
     {
 
         "id": "pba",
+        "is_live": true,
         "name": "PBA",
         "title": "Pascal Basketball Association",
         "url": "http://pickled-plugins.github.io/pba/",
@@ -93,7 +97,8 @@
             "computer-aided interaction between environment and structure"
         ],
         "categories": [ "code", "design" ],
-        "importance": 1
+        "importance": 1,
+        "is_live": false
     },
 
     {
@@ -108,7 +113,8 @@
             "a computational exercise that tailors a custom particle-springs algorithm to the architectural and structural requirements of the project"
         ],
         "categories": [ "code", "design" ],
-        "importance": 1
+        "importance": 1,
+        "is_live": false
     },
 
     {
@@ -125,7 +131,8 @@
             "upon adjustments, it provides instant feedback on tonnage and constructability, and integrates seamlessly with other software packages used for design development"
         ],
         "categories": [ "code", "design" ],
-        "importance": 1
+        "importance": 1,
+        "is_live": false
     },
 
     {
@@ -137,7 +144,8 @@
         "supervisors": [],
         "collaborators": [],
         "categories": [ "design" ],
-        "importance": 1
+        "importance": 1,
+        "is_live": false
     },
 
     {
@@ -149,11 +157,13 @@
         "supervisors": [],
         "collaborators": [],
         "categories": [ "code" ],
-        "importance": 1
+        "importance": 1,
+        "is_live": false
     },
 
     {
         "id": "algorithmic-tattoo",
+        "is_live": true,
         "name": "algorithmic tattoo",
         "title": "algorithmic tattoo",
         "year": 2010,
@@ -175,7 +185,8 @@
             "my old personal website"
         ],
         "categories": [ "code", "design" ],
-        "importance": 1
+        "importance": 1,
+        "is_live": false
     }
 
 ]

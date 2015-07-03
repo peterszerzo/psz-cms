@@ -12,17 +12,19 @@ router.get('/', function(req, res) {
 });
 
 router.get('/:category(code|design|blog)', function(req, res) {
-	project.get({ category: req.params.category }, function(err, data) {
+
+	project.get({ category: req.params.category, is_live: true }, function(err, data) {
 		if (err) { throw err; }
 		var factory = React.createFactory(Components.Projects.Index),
 			html = React.renderToString(factory({ items: data, category: req.params.category }));
 		res.render('projects/index.jade', { reactOutput: html });
 	});
+	
 });
 
 router.get('/:id', function(req, res) {
 
-	project.get({ id: req.params.id }, function(err, datum) {
+	project.get({ id: req.params.id, is_live: true }, function(err, datum) {
 		if (err) { throw err; }
 		var factory = React.createFactory(Components.Projects.Show),
 			html = React.renderToString(factory({ item: datum }));
