@@ -2,7 +2,7 @@ var express = require('express'),
 	router = express.Router(),
 	project = require('../models/project'),
 	React = require('react'),
-	Components = require('../components/index.js'),
+	Components = require('../components/index.jsx'),
 	fs = require('fs');
 
 router.get('/', function(req, res) {

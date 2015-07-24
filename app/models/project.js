@@ -1,4 +1,6 @@
-var fs = require('fs'),
+var _ = require('underscore'),
+	Backbone = require('backbone'),
+	fs = require('fs'),
 	marked = require('marked'),
 	projects = {},
 	dbPath = __dirname + '/../../db/projects';
@@ -12,11 +14,20 @@ var getMarkdown = function(err, datum, cb) {
 	});
 };
 
+var testByKey = function(datum, key, testValue) {
+	var value = datum[key];
+	if (value == null) { return false; }
+	// Single value case.
+	if (value.length == null) { return (value === testValue); }
+	// Array case.
+	return (value.indexOf(textValue) > -1);
+};
+
 var test = function(datum, query) {
 	var value;
 	for (key in query) {
 		value = query[value];
-		if (datum[key] !== value) { return false; }
+		if (!testByKey(datum, key, value)) { return false; }
 	}
 	return true;
 };

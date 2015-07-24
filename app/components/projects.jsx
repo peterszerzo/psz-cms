@@ -1,7 +1,7 @@
 /** @jsx React.DOM */
 
 var React = require('react'),
-	Header = require('./mixins/header.jsx'),
+	Header = require('./header.jsx'),
 	marked = require('marked');
 
 var Projects = React.createClass({
