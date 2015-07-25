@@ -1,6 +1,7 @@
 /** @jsx React.DOM */
 
 var React = require('react'),
+	Home = require('./home.jsx'),
 	Header = require('./header.jsx'),
 	Projects = require('./projects.jsx');
 
@@ -26,8 +27,26 @@ var Layout = React.createClass({
 		</div>
 	},
 
-	getRoutable: function() {
+	renderHome: function() {
+		return (<Home />);
+	},
 
+	renderProjectsIndex: function() {
+		return (
+			<div>
+				<Header categories={this.props.categories} activeCategory={this.props.activeCategory} />
+				<Projects.List projects={this.props.projects} />
+			</div>
+		);
+	},
+
+	renderProjectsShow: function() {
+		return (
+			<div>
+				<Header categories={this.props.categories} activeCategory={this.props.activeCategory} />
+				<Projects.Show projects={this.props.projects} />
+			</div>
+		);
 	}
 
 });

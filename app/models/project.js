@@ -1,9 +1,41 @@
-var _ = require('underscore'),
-	Backbone = require('backbone'),
+var base = require('./base.js'),
 	fs = require('fs'),
 	marked = require('marked'),
 	projects = {},
 	dbPath = __dirname + '/../../db/projects';
+
+class Model extends base.Model {
+
+	getBody(next) {
+
+		var id = this.get('id');
+
+		fs.readFile(dbPath + `/show/${id}.md`, 'utf8', function(err, data) {
+			if (err) { return cb(err, datum); }
+			datum.bodyText = marked(data);
+			next(null, datum);
+		});
+
+	}
+
+}
+
+class Collection extends base.Collection {
+
+	fetchFromDb(options, next) {
+
+		var self = this;
+
+		fs.readFile(dbPath + '/index.json', (err, data) => {
+			if (err) { return next(err, data); }
+			if (data) { data = JSON.parse(data); }
+			self.reset(data);
+			next(err, self);
+		});
+
+	}
+
+}
 
 // looks for markdown if show action
 var getMarkdown = function(err, datum, cb) {
@@ -32,30 +64,6 @@ var test = function(datum, query) {
 	return true;
 };
 
-var filter = function(data, query) {
-	var i, max, datum,
-		filteredData = [];
-	for(i = 0, max = data.length; i < max; i += 1) {
-		datum = data[i];
-		if (test(datum, query)) {
-			filteredData.push(datum);
-		}
-	}
-	return filteredData;
-};
-
-var filterByCategory = function(data, category) {
-	var i, max, datum,
-		filteredData = [];
-	for(i = 0, max = data.length; i < max; i += 1) {
-		datum = data[i];
-		if (datum.categories && (datum.categories.indexOf(category) > -1)) {
-			filteredData.push(datum);
-		}
-	}
-	return filteredData;
-};
-
 exports.get = function(query, cb) {
 
 	query = query || {};
@@ -78,12 +86,11 @@ exports.get = function(query, cb) {
 			return [];
 		}
 
-		if (query.category) { data = filterByCategory(data, query.category); }
-
-		//data = filter(data, query);
-
 		return cb(null, data);
 
 	});
 
 };
+
+exports.Model = Model;
+exports.Collection = Collection;

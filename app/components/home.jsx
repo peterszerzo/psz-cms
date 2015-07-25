@@ -4,8 +4,7 @@ var React = require('react');
 
 var data = [ 
 	{ url: '/code', name: 'mindful code' },  
-	{ url: '/design', name: 'minimal design' },
-	{ url: '/blog', name: 'blog' }
+	{ url: '/design', name: 'minimal design' }
 ];
 
 var Home = React.createClass({
@@ -17,7 +16,7 @@ var Home = React.createClass({
 				<ul className="banner__summary">
 					{ this.renderList() }
 				</ul>
-				<div className="banner__notice">.. Coming Soon ..</div>
+				<div className="banner__notice"></div>
 			</div>
 		);
 	},

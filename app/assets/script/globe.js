@@ -22,7 +22,7 @@ psz.globe = function(selector, fileName) {
 
         eye = {
             position: [ 0, 0 ],
-            velocity: [ s, s / 2 ],
+            velocity: [ 3 * s, 3 * s / 2 ],
             springConstant: [ s / 50, s / 100 ],
             updateByMouse: function(context) {
                 var p;

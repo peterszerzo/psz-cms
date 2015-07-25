@@ -5,7 +5,7 @@ var React = require('react');
 var Header = React.createClass({
 
 	getList: function() {
-		var activeCategory = this.props.category;
+		var activeCategory = this.props.activeCategory;
 		return [ 'code', 'design', 'blog' ].map(function(category) {
 			var isActive = (activeCategory === category),
 				className = 'header__nav__item' + (isActive ? ' header__nav__item--active' : '');
@@ -27,6 +27,7 @@ var Header = React.createClass({
 			</div>
 		);
 	}
+	
 });
 
 module.exports = Header;

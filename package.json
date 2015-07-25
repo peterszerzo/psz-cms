@@ -38,6 +38,7 @@
     "vinyl-source-stream": "^1.1.0"
   },
   "dependencies": {
+    "babel": "^5.8.5",
     "backbone": "^1.2.1",
     "body-parser": "^1.12.4",
     "ejs": "^2.3.1",

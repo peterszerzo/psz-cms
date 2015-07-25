@@ -7,14 +7,22 @@
         "subtitle": "Recent Favorite Tricks",
         "is_live": false,
         "collaborators": [],
-        "categories": [ "code", "blog" ]
+        "categories": [ "code", "blog" ],
+        "technologies": [ "Backbone.js", "Marionette.js", "d3.js", "Leaflet.js" ]
+    },
+
+    {
+        "id": "peterszerzo-io",
+        "technologies": [ "Express.js", "React.js" ]
     },
 
     {
         "id": "atlas",
         "name": "atlas.newamerica.org",
         "title": "atlas.newamerica.org",
-        "is_live": false
+        "is_live": false,
+        "languages": [ "JavaScript" ],
+        "technologies": [ "React.js", "Backbone.js", "Marionette.js", "d3.js", "Leaflet.js", "Express.js" ]
     },
 
     {
@@ -32,7 +40,8 @@
             "an online publishing environment for developers and computational designers"
         ],
         "categories": [ "code", "design" ],
-        "importance": 1
+        "importance": 1,
+        "technologies": [ "HTML Canvas" ]
     },
 
     {
@@ -49,7 +58,8 @@
             "by communicating between established software packages, it allows for a well-structured, lightweight and non-redundant storage of design data"
         ],
         "categories": [ "code" ],
-        "importance": 1
+        "importance": 1,
+        "technologies": [ "Rhino PythonScript" ]
     },
 
     {
@@ -81,7 +91,8 @@
         "supervisors": [],
         "collaborators": ["Tamás Plugor", "Tamás Gajdó"],
         "categories": [ "code" ],
-        "importance": 1
+        "importance": 1,
+        "languages": [ "Borland Pascal", "Processing" ]
 
     },
 
@@ -98,7 +109,8 @@
         ],
         "categories": [ "code", "design" ],
         "importance": 1,
-        "is_live": false
+        "is_live": false,
+        "languages": [ "MatLab", "Visual Basic" ]
     },
 
     {
@@ -114,7 +126,8 @@
         ],
         "categories": [ "code", "design" ],
         "importance": 1,
-        "is_live": false
+        "is_live": false,
+        "languages": [ "Visual Basic" ]
     },
 
     {
@@ -132,7 +145,8 @@
         ],
         "categories": [ "code", "design" ],
         "importance": 1,
-        "is_live": false
+        "is_live": false,
+        "languages": [ "Visual Basic" ]
     },
 
     {
@@ -170,7 +184,8 @@
         "supervisors": [],
         "collaborators": [],
         "categories": [ "code", "design" ],
-        "importance": 1
+        "importance": 1,
+        "languages": [ "JavaScript" ]
     },
 
     {
@@ -186,7 +201,9 @@
         ],
         "categories": [ "code", "design" ],
         "importance": 1,
-        "is_live": false
+        "is_live": false,
+        "languages": [ "PHP", "JavaScript" ],
+        "technologies": [ ]
     }
 
 ]

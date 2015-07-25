@@ -17,16 +17,16 @@ Projects.Index = React.createClass({
 		return (
 			<div>
 				<Header category={this.props.category}/>
-				<Projects.List items={this.props.items}/>
+				<Projects.Index.List items={this.props.items}/>
 			</div>
 		);
 	}
 });
 
-Projects.List = React.createClass({
+Projects.Index.List = React.createClass({
 	render: function() {
 		var createItem = function(itemData, index) {
-			return <Projects.List.Item itemData={itemData}/>;
+			return <Projects.Index.List.Item itemData={itemData}/>;
 		};
 		return (
 			<ul className="projects">
@@ -36,12 +36,12 @@ Projects.List = React.createClass({
 	}
 });
 
-Projects.List.Item = React.createClass({
+Projects.Index.List.Item = React.createClass({
 	render: function() {
 		var itemData = this.props.itemData;
 		return (
 			<li>
-				<a className="project" href={'/' + itemData.id}>
+				<a className="project" href={'/things/' + itemData.id}>
 					<img src={'images/project-logos/project-logos_' + itemData.id + '.svg'}></img>
 					<div>{itemData.name}</div>
 				</a>
@@ -65,18 +65,14 @@ Projects.Show.Item = React.createClass({
 	render: function() {
 		var url;
 		if (this.props.item.url != null) {
-			url = <a href={this.props.item.url} target="_blank"></a>;
+			url = <a className="project-site" href={this.props.item.url} target="_blank">Project Site</a>;
 		}
 		return (
 			<div>
 				<h1 className="title">{this.props.item.title}</h1>
 				<h2 className="subtitle">{this.props.item.subtitle}</h2>
 				{url}
-				<div 
-					className="static"
-					dangerouslySetInnerHTML={{
-						__html: this.props.item.bodyText
-					}}/>
+				<div className="static" dangerouslySetInnerHTML={{ __html: this.props.item.bodyText }}/>
 			</div>
 		);
 	}

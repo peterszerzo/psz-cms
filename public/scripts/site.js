@@ -18742,7 +18742,7 @@ psz.globe = function (selector, fileName) {
 
         eye = {
             position: [0, 0],
-            velocity: [s, s / 2],
+            velocity: [3 * s, 3 * s / 2],
             springConstant: [s / 50, s / 100],
             updateByMouse: function updateByMouse(context) {
                 var p;
@@ -18960,7 +18960,7 @@ psz.geoJsonGenerator = function (selector) {
 
 			for (i = 0, max = pointStrings.length; i < max; i += 1) {
 				pointString = pointStrings[i];
-				point = convertToPoint(pointString, [-180, -90], 0.4);
+				point = convertToPoint(pointString, [-180, -90], 0.7);
 				if (i === 0) {
 					startPoint = point;
 				}
@@ -18986,7 +18986,7 @@ psz.geoJsonGenerator = function (selector) {
 		console.log(geoJson);
 
 		$.ajax({
-			url: "/save",
+			url: "/dev/save",
 			data: { geo: JSON.stringify(geoJson) },
 			type: "post"
 		});

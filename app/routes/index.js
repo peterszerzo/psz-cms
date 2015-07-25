@@ -11,9 +11,9 @@ router.get('/', function(req, res) {
 	res.render('index.jade', { reactOutput: html });
 });
 
-router.get('/:category(code|design|blog)', function(req, res) {
+router.get('/things', function(req, res) {
 
-	project.get({ category: req.params.category, is_live: true }, function(err, data) {
+	project.get({ is_live: true }, function(err, data) {
 		if (err) { throw err; }
 		var factory = React.createFactory(Components.Projects.Index),
 			html = React.renderToString(factory({ items: data, category: req.params.category }));
@@ -22,7 +22,10 @@ router.get('/:category(code|design|blog)', function(req, res) {
 	
 });
 
-router.get('/:id', function(req, res) {
+router.get('/things/:id', function(req, res) {
+
+	var coll = new project.Collection();
+	coll.fetchFromDb({}, function(err, coll) { console.log(coll.toJSON()); });
 
 	project.get({ id: req.params.id, is_live: true }, function(err, datum) {
 		if (err) { throw err; }
@@ -33,6 +36,7 @@ router.get('/:id', function(req, res) {
 
 });
 
+// Development routes
 router.get('/dev/terrain', function(req, res) {
 	res.render('terrain-graphics.jade');
 });

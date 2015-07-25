@@ -1,3 +1,7 @@
+require('babel/register')({
+	// extensions: [ '.es6' ]
+});
+
 var pingHeroku = require('./misc/ping_heroku'),
 	express = require('express'),
 	app = express(),
@@ -12,7 +16,7 @@ app.set('views', __dirname + '/app/views');
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'jade');
 
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: false, limit: '50mb' }));
 app.use(express.static('public'));
 
 router = require('./app/routes/index.js');
