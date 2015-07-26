@@ -5,13 +5,13 @@ var React = require('react');
 var Header = React.createClass({
 
 	getList: function() {
-		var activeCategory = this.props.activeCategory;
-		return [ 'code', 'design', 'blog' ].map(function(category) {
-			var isActive = (activeCategory === category),
+		var activeCategory = this.props.category;
+		return [ 'all', 'code', 'design', 'blog' ].map(function(category) {
+			var isActive = (category === activeCategory),
 				className = 'header__nav__item' + (isActive ? ' header__nav__item--active' : '');
 			return (
 				<li className={className}>
-					<a href={'/' + category}>{category}</a>
+					<a href={ '/things' + '?category=' + category }>{category}</a>
 				</li>
 			);
 		});

@@ -6,14 +6,16 @@ var base = require('./base.js'),
 
 class Model extends base.Model {
 
-	getBody(next) {
+	getShowUrl() {
+		return `/show/${this.get('id')}.md`;
+	}
 
-		var id = this.get('id');
+	getBodyText(next) {
 
-		fs.readFile(dbPath + `/show/${id}.md`, 'utf8', function(err, data) {
-			if (err) { return cb(err, datum); }
-			datum.bodyText = marked(data);
-			next(null, datum);
+		fs.readFile(dbPath + this.getShowUrl(), 'utf8', (err, bodyText) => {
+			if (err) { console.log('md not found'); return next(); }
+			this.set('bodyText', bodyText);
+			next(null, this);
 		});
 
 	}
@@ -22,7 +24,14 @@ class Model extends base.Model {
 
 class Collection extends base.Collection {
 
-	fetchFromDb(options, next) {
+	constructor(options) {
+
+		super(options);
+		this.model = Model;
+
+	}
+
+	fetchFromDb(query, next) {
 
 		var self = this;
 
@@ -30,67 +39,21 @@ class Collection extends base.Collection {
 			if (err) { return next(err, data); }
 			if (data) { data = JSON.parse(data); }
 			self.reset(data);
-			next(err, self);
+			self.reset(self.where(query));
+			if (query.id != null) {
+				self.models[0].getBodyText(function(err, model) {
+					next(err, self);
+				});
+			} else {
+				next(err, self);
+			}
 		});
 
 	}
 
 }
 
-// looks for markdown if show action
-var getMarkdown = function(err, datum, cb) {
-	fs.readFile(dbPath + '/show/' + datum.id + '.md', 'utf8', function(err, data) {
-		if (err) { console.log('md not found'); return cb(null, datum); }
-		datum.bodyText = marked(data);
-		cb(null, datum);
-	});
-};
-
-var testByKey = function(datum, key, testValue) {
-	var value = datum[key];
-	if (value == null) { return false; }
-	// Single value case.
-	if (value.length == null) { return (value === testValue); }
-	// Array case.
-	return (value.indexOf(textValue) > -1);
-};
-
-var test = function(datum, query) {
-	var value;
-	for (key in query) {
-		value = query[value];
-		if (!testByKey(datum, key, value)) { return false; }
-	}
-	return true;
-};
-
-exports.get = function(query, cb) {
-
-	query = query || {};
-
-	fs.readFile(dbPath + '/index.json', function(err, data) {
-
-		var i, max, datum;
-
-		if (err) { return cb(err, data); }
-
-		if (data) { data = JSON.parse(data); }
-
-		if (query.id) {
-			for (i = 0, max = data.length; i < max; i += 1) {
-				datum = data[i];
-				if (datum.id === query.id) {
-					return getMarkdown(null, datum, cb);
-				}
-			}
-			return [];
-		}
-
-		return cb(null, data);
-
-	});
-
-};
-
-exports.Model = Model;
-exports.Collection = Collection;
+module.exports = {
+	Model: Model,
+	Collection: Collection
+}

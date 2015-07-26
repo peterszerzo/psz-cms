@@ -13,10 +13,14 @@ router.get('/', function(req, res) {
 
 router.get('/things', function(req, res) {
 
-	project.get({ is_live: true }, function(err, data) {
+	var coll = new project.Collection();
+
+	coll.fetchFromDb({ is_live: true }, function(err, coll) {
 		if (err) { throw err; }
+		var data = coll.toJSON();
+		var category = req.query.category || 'all';
 		var factory = React.createFactory(Components.Projects.Index),
-			html = React.renderToString(factory({ items: data, category: req.params.category }));
+			html = React.renderToString(factory({ items: data, category: category }));
 		res.render('projects/index.jade', { reactOutput: html });
 	});
 	
@@ -25,10 +29,12 @@ router.get('/things', function(req, res) {
 router.get('/things/:id', function(req, res) {
 
 	var coll = new project.Collection();
-	coll.fetchFromDb({}, function(err, coll) { console.log(coll.toJSON()); });
 
-	project.get({ id: req.params.id, is_live: true }, function(err, datum) {
-		if (err) { throw err; }
+	coll.fetchFromDb({ id: req.params.id, "is_live": true }, function(err, coll) {
+		if (err) { return res.redirect('/'); }
+		var model = coll.models[0];
+		if (model == null) { return res.redirect('/'); }
+		var datum = coll.models[0].toJSON();
 		var factory = React.createFactory(Components.Projects.Show),
 			html = React.renderToString(factory({ item: datum }));
 		res.render('projects/index.jade', { reactOutput: html });

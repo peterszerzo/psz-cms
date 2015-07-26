@@ -17,7 +17,7 @@ Projects.Index = React.createClass({
 		return (
 			<div>
 				<Header category={this.props.category}/>
-				<Projects.Index.List items={this.props.items}/>
+				<Projects.Index.List category={this.props.category} items={this.props.items}/>
 			</div>
 		);
 	}
@@ -25,8 +25,9 @@ Projects.Index = React.createClass({
 
 Projects.Index.List = React.createClass({
 	render: function() {
-		var createItem = function(itemData, index) {
-			return <Projects.Index.List.Item itemData={itemData}/>;
+		var self = this,
+			createItem = function(itemData, index) {
+			return <Projects.Index.List.Item itemData={itemData} category={self.props.category} />;
 		};
 		return (
 			<ul className="projects">
@@ -38,15 +39,21 @@ Projects.Index.List = React.createClass({
 
 Projects.Index.List.Item = React.createClass({
 	render: function() {
-		var itemData = this.props.itemData;
+		var itemData = this.props.itemData,
+			cls = this.shouldDisplay() ? '' : 'hidden';
 		return (
-			<li>
+			<li className={cls}>
 				<a className="project" href={'/things/' + itemData.id}>
 					<img src={'images/project-logos/project-logos_' + itemData.id + '.svg'}></img>
 					<div>{itemData.name}</div>
 				</a>
 			</li>
 		);
+	},
+	shouldDisplay: function() {
+		var activeCategory = this.props.category,
+			categories = this.props.itemData.categories;
+		return ((activeCategory === 'all') || (categories.indexOf(activeCategory) > -1));
 	}
 });
 
@@ -63,7 +70,9 @@ Projects.Show = React.createClass({
 
 Projects.Show.Item = React.createClass({
 	render: function() {
-		var url;
+		var url = this.props.item.url, md, html;
+		md = this.props.item.bodyText;
+		if (md == null) { html = ""; } else { html = marked(md); }
 		if (this.props.item.url != null) {
 			url = <a className="project-site" href={this.props.item.url} target="_blank">Project Site</a>;
 		}
@@ -72,7 +81,7 @@ Projects.Show.Item = React.createClass({
 				<h1 className="title">{this.props.item.title}</h1>
 				<h2 className="subtitle">{this.props.item.subtitle}</h2>
 				{url}
-				<div className="static" dangerouslySetInnerHTML={{ __html: this.props.item.bodyText }}/>
+				<div className="static" dangerouslySetInnerHTML={{ __html: html }}/>
 			</div>
 		);
 	}

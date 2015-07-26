@@ -18738,12 +18738,13 @@ psz.globe = function (selector, fileName) {
         longScale = d3.scale.linear().domain([0, width]).range([-180, 180]);
         latScale = d3.scale.linear().domain([0, height]).range([90, -90]);
 
-        var s = 4;
+        var periodModifier = 2,
+            amplitudeModifier = 2;
 
         eye = {
             position: [0, 0],
-            velocity: [3 * s, 3 * s / 2],
-            springConstant: [s / 50, s / 100],
+            velocity: [amplitudeModifier * periodModifier, amplitudeModifier * periodModifier / 2],
+            springConstant: [periodModifier / 35, periodModifier / 70],
             updateByMouse: function updateByMouse(context) {
                 var p;
                 p = d3.mouse(context);
@@ -18872,11 +18873,11 @@ psz.globe = function (selector, fileName) {
             lat1 = centroid[1];
             distance = getDistance(eye.position[0], eye.position[1], long1, lat1);
             delta = distance / 2;
-            deltaMax = 0.6;
+            deltaMax = 0.4;
             if (delta > deltaMax) {
                 return 0;
             }
-            op = Math.pow((deltaMax - delta) / deltaMax, 4) * 0.5;
+            op = Math.pow((deltaMax - delta) / deltaMax, 4) * 0.7;
             return op;
         };
     };
@@ -18960,7 +18961,7 @@ psz.geoJsonGenerator = function (selector) {
 
 			for (i = 0, max = pointStrings.length; i < max; i += 1) {
 				pointString = pointStrings[i];
-				point = convertToPoint(pointString, [-180, -90], 0.7);
+				point = convertToPoint(pointString, [-180, -90], 0.5);
 				if (i === 0) {
 					startPoint = point;
 				}

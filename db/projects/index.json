@@ -2,10 +2,11 @@
 
     {
         "id": "scaling-tricks-for-geo",
+        "dates": [ "2015-06-15" ],
         "name": "Scaling Tricks for Geo",
         "title": "On Scalable Interactive Mapping",
         "subtitle": "Recent Favorite Tricks",
-        "is_live": false,
+        "is_live": true,
         "collaborators": [],
         "categories": [ "code", "blog" ],
         "technologies": [ "Backbone.js", "Marionette.js", "d3.js", "Leaflet.js" ]
@@ -48,7 +49,8 @@
         "id": "giraffe-for-rhino",
         "is_live": true,
         "name": "Giraffe for Rhino",
-        "title": "Giraffe - Strctural Engineering Add-on for Rhino",
+        "title": "Giraffe for Rhino",
+        "subtitle": "A Strctural Engineering Add-on",
         "url": "http://pickled-plugins.github.io/Giraffe-for-Rhino/",
         "year": 2010,
         "supervisors": ["Michael Stein, PE"],

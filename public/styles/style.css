@@ -246,6 +246,12 @@ img {
   font-family: 'Hallo';
   font-weight: normal; }
 
+h1, h2, h3, h4 {
+  font-family: 'Hallo'; }
+
+p, a, li {
+  font-family: 'Palatino'; }
+
 p, a, li, code {
   font-size: 22px; }
 
@@ -253,24 +259,29 @@ code {
   font-family: "Courier New";
   font-size: 18px;
   padding: 0 4px; }
+  p code {
+    font-size: 22px; }
 
 p, li {
-  line-height: 150%; }
+  line-height: 185%; }
 
 code {
   line-height: 125%; }
 
 h1 {
-  font-size: 40px; }
+  font-size: 48px; }
 
 h2 {
-  font-size: 36px; }
+  font-size: 40px; }
 
 h3 {
-  font-size: 28px; }
+  font-size: 36px; }
 
 h4 {
-  font-size: 24px; }
+  font-size: 32px; }
+
+.hidden {
+  display: none !important; }
 
 .active {
   opacity: 1 !important;
@@ -281,16 +292,17 @@ h4 {
   height: 100%; }
 
 .title, .subtitle {
-  text-align: center; }
+  text-align: center;
+  padding: 0 10%; }
 
 .title {
-  font-size: 48px;
+  font-size: 54px;
   margin-top: 180px;
   margin-bottom: 15px; }
 
 .subtitle {
-  opacity: 0.6;
-  font-size: 30px;
+  opacity: 0.70;
+  font-size: 38px;
   font-weight: normal;
   margin-top: 0px;
   margin-bottom: 60px; }
@@ -312,13 +324,18 @@ h4 {
         .banner__summary li {
           display: inline-block; } }
       .banner__summary li a {
+        font-family: 'Hallo';
         border: none;
-        font-size: 28px;
+        font-size: 30px;
         position: relative;
         padding-bottom: 4px;
         text-decoration: none;
         color: white;
-        top: 0px; }
+        top: 0px;
+        opacity: 0.8; }
+        .banner__summary li a:hover {
+          opacity: 1;
+          border-bottom: 2px solid white; }
   .banner__notice {
     position: absolute;
     top: 35%;
@@ -350,7 +367,8 @@ h4 {
     text-align: center;
     vertical-align: middle; }
   .header__main-link {
-    font-size: 24px; }
+    font-size: 24px;
+    font-family: 'Hallo'; }
   .header__nav {
     text-align: right;
     padding-right: 30px; }
@@ -358,9 +376,12 @@ h4 {
       display: inline-block;
       margin: auto 20px; }
       .header__nav__item a {
+        padding-bottom: 4px;
+        font-family: 'Hallo';
         height: 15px; }
       .header__nav__item--active a {
-        opacity: 0.9; }
+        opacity: 1;
+        border-bottom: 2px solid white; }
 
 .projects {
   width: 100%;
@@ -411,7 +432,7 @@ h4 {
   padding-bottom: 50px;
   color: #222; }
   .static li {
-    padding-left: 15px;
+    padding: 5px 15px;
     list-style-type: square; }
   .static a {
     color: #222;

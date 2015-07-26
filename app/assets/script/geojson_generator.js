@@ -63,7 +63,7 @@ psz.geoJsonGenerator = function(selector) {
 
 			for(i = 0, max = pointStrings.length; i < max; i += 1) {
 				pointString = pointStrings[i];
-				point = convertToPoint(pointString, [ -180, -90 ], 0.7);
+				point = convertToPoint(pointString, [ -180, -90 ], 0.5);
 				if (i === 0) { startPoint = point; }
 				coords.push(point);
 			}

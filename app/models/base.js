@@ -7,7 +7,16 @@ class Model extends Backbone.Model {
 
 class Collection extends Backbone.Collection {
 
+	constructor(options) {
+
+		super(options);
+		this.model = Model;
+
+	}
+
 }
 
-exports.Model = Model;
-exports.Collection = Collection;
+module.exports = {
+	Model: Model,
+	Collection: Collection
+}

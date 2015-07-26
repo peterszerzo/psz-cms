@@ -22,13 +22,19 @@
 				display: inline-block;
 			}
 			a {
+				font-family: 'Hallo';
 				border: none;
-				font-size: 28px;
+				font-size: 30px;
 				position: relative;
 				padding-bottom: 4px;
 				text-decoration: none;
 				color: white;
 				top: 0px;
+				opacity: 0.8;
+				&:hover {
+					opacity: 1;
+					border-bottom: 2px solid white;
+				}
 			}
 		}
 	}

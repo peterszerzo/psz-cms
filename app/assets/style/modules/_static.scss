@@ -4,8 +4,9 @@
 	margin: auto;
 	padding-bottom: 50px;
 	color: map-get($palette, grey);
+
 	li {
-		padding-left: 15px;
+		padding: 5px 15px;
 		list-style-type: square;
 	}
 
@@ -15,4 +16,5 @@
 		opacity: 0.5;
 		&:hover { opacity: 1; }
 	}
+
 }

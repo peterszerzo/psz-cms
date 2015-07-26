@@ -3,8 +3,8 @@
 var React = require('react');
 
 var data = [ 
-	{ url: '/code', name: 'mindful code' },  
-	{ url: '/design', name: 'minimal design' }
+	{ url: '/things?category=code', name: 'mindful code' },  
+	{ url: '/things?category=design', name: 'minimal design' }
 ];
 
 var Home = React.createClass({
