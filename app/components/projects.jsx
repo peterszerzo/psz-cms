@@ -74,12 +74,12 @@ Projects.Show.Item = React.createClass({
 		md = this.props.item.bodyText;
 		if (md == null) { html = ""; } else { html = marked(md); }
 		if (this.props.item.url != null) {
-			url = <a className="project-site" href={this.props.item.url} target="_blank">Project Site</a>;
+			url = <a className="main-link" href={this.props.item.url} target="_blank">Project Site</a>;
 		}
 		return (
 			<div>
 				<h1 className="title">{this.props.item.title}</h1>
-				<h2 className="subtitle">{this.props.item.subtitle}</h2>
+				<h2 className="subtitle">{'-- ' + this.props.item.subtitle + ' --'}</h2>
 				{url}
 				<div className="static" dangerouslySetInnerHTML={{ __html: html }}/>
 			</div>

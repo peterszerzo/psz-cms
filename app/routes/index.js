@@ -42,6 +42,10 @@ router.get('/things/:id', function(req, res) {
 
 });
 
+router.get('/about', function(req, res) {
+	res.send('Page coming soon!');
+});
+
 // Development routes
 router.get('/dev/terrain', function(req, res) {
 	res.render('terrain-graphics.jade');

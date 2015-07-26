@@ -6,7 +6,7 @@ var Header = React.createClass({
 
 	getList: function() {
 		var activeCategory = this.props.category;
-		return [ 'all', 'code', 'design', 'blog' ].map(function(category) {
+		return [ 'all', 'code', 'design', 'blog', '..about' ].map(function(category) {
 			var isActive = (category === activeCategory),
 				className = 'header__nav__item' + (isActive ? ' header__nav__item--active' : '');
 			return (

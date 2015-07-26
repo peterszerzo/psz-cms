@@ -26,9 +26,26 @@
 }
 
 .subtitle {
-	opacity: 0.70;
-	font-size: 38px;
+	// &:before, &:after { content: '--'; padding: 0 15px; }
+	opacity: 0.50;
+	// text-transform: lowercase;
+	font-size: 34px;
 	font-weight: normal;
-	margin-top: 0px;
+	margin-top: 20px;
 	margin-bottom: 60px;
+}
+
+.main-link {
+	font-family: 'Hallo';
+	width: 180px;
+	display: block;
+	margin: auto;
+	text-align: center;
+	color: black;
+	border: 3px solid black;
+	border-radius: 12px;
+	padding: 8px;
+	font-size: 32px;
+	opacity: 0.2;
+	&:hover { opacity: 1; }
 }
