@@ -2,7 +2,8 @@
 
 var React = require('react'),
 	Header = require('./header.jsx'),
-	marked = require('marked');
+	marked = require('marked'),
+	moment = require('moment');
 
 var Projects = React.createClass({
 	render: function() {
@@ -44,11 +45,24 @@ Projects.Index.List.Item = React.createClass({
 		return (
 			<li className={cls}>
 				<a className="project" href={'/things/' + itemData.id}>
+					{ this.renderBackground() }
 					<img src={'images/project-logos/project-logos_' + itemData.id + '.svg'}></img>
-					<div>{itemData.name}</div>
+					<div className="project__title">{itemData.name}</div>
 				</a>
 			</li>
 		);
+	},
+	renderBackground: function() {
+		var itemData = this.props.itemData;
+		if (itemData.has_logo !== false) { return; }
+		return (
+			<div className="project__background">{this.getInitials()}</div>
+		);
+	},
+	// Get project title initials.
+	getInitials: function() {
+		var title = this.props.itemData.title;
+		return title.slice(0, 3);
 	},
 	shouldDisplay: function() {
 		var activeCategory = this.props.category,
@@ -70,21 +84,47 @@ Projects.Show = React.createClass({
 
 Projects.Show.Item = React.createClass({
 	render: function() {
-		var url = this.props.item.url, md, html;
-		md = this.props.item.bodyText;
-		if (md == null) { html = ""; } else { html = marked(md); }
-		if (this.props.item.url != null) {
-			url = <a className="main-link" href={this.props.item.url} target="_blank">Project Site</a>;
-		}
 		return (
 			<div>
 				<h1 className="title">{this.props.item.title}</h1>
 				<h2 className="subtitle">{'-- ' + this.props.item.subtitle + ' --'}</h2>
-				{url}
-				<div className="static" dangerouslySetInnerHTML={{ __html: html }}/>
+				{ this.renderDates() }
+				{ this.renderUrl() }
+				{ this.renderBody() }
 			</div>
 		);
+	},
+
+	renderDates: function() {
+		var dates = this.props.item.dates, 
+			formattedDates, content;
+		if (dates == null) { return; }
+		formattedDates = dates.map(function(date) {
+			if (date === 'present') { return date; }
+			return moment(date).format('MMMM YYYY');
+		});
+		content = formattedDates.join(' - ');
+		return (
+			<div className='date'>{content}</div>
+		);
+	},
+
+	renderUrl: function() {
+		var url = this.props.item.url;
+		if (url == null) { return; }
+		return (
+			<a className="main-link" href={url} target="_blank">Project Site</a>
+		);
+	},
+
+	renderBody: function() {
+		var md = this.props.item.bodyText;
+		if (md == null) { return; }
+		return (
+			<div className="static" dangerouslySetInnerHTML={{ __html: marked(md) }}/>
+		);
 	}
+
 });
 
 module.exports = Projects;

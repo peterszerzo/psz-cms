@@ -20,7 +20,7 @@ var Header = React.createClass({
 	render: function() {
 		return (
 			<div className='header'>
-				<a className='header__main-link' href='/'>PSZ</a>
+				<a className='header__main-link' href='/'></a>
 				<ul className='header__nav'>
 					{this.getList()}
 				</ul>

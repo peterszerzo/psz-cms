@@ -2,6 +2,7 @@
 
     {
         "id": "scaling-tricks-for-geo",
+        "has_logo": false,
         "dates": [ "2015-06-15" ],
         "url": "https://github.com/pickled-plugins/scaling-tricks-for-geo",
         "name": "Scaling Tricks for Geo",

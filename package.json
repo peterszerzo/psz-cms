@@ -46,6 +46,7 @@
     "gulp-streamify": "0.0.5",
     "jade": "^1.9.2",
     "marked": "^0.3.3",
+    "moment": "^2.10.5",
     "node-jsx": "^0.13.3",
     "react": "^0.13.3",
     "underscore": "^1.8.3"
