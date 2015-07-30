@@ -1,7 +1,7 @@
 /** @jsx React.DOM */
 
 var React = require('react'),
-	Home = require('./home.jsx'),
+	Banner = require('./banner.jsx'),
 	Header = require('./header.jsx'),
 	Projects = require('./projects.jsx');
 
@@ -27,8 +27,8 @@ var Layout = React.createClass({
 		</div>
 	},
 
-	renderHome: function() {
-		return (<Home />);
+	renderBanner: function() {
+		return (<Banner />);
 	},
 
 	renderProjectsIndex: function() {

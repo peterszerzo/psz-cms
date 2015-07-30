@@ -1,7 +1,6 @@
 var _ = require('underscore'),
 	Backbone = require('backbone'),
-	base = require('./base.js'),
-	fs = require('fs');
+	base = require('./base.js');
 
 class Model extends base.Model {
 

@@ -1,5 +1,5 @@
 require('babel/register')({
-	// extensions: [ '.es6' ]
+	extensions: [ '.jsx', '.js' ]
 });
 
 var pingHeroku = require('./misc/ping_heroku'),

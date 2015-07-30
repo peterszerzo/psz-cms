@@ -43,12 +43,14 @@
     "body-parser": "^1.12.4",
     "ejs": "^2.3.1",
     "express": "^4.12.3",
+    "gulp-browserify": "^0.5.1",
     "gulp-streamify": "0.0.5",
     "jade": "^1.9.2",
     "marked": "^0.3.3",
     "moment": "^2.10.5",
     "node-jsx": "^0.13.3",
     "react": "^0.13.3",
+    "request": "^2.60.0",
     "underscore": "^1.8.3"
   }
 }

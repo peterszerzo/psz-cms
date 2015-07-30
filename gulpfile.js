@@ -4,7 +4,7 @@ var babel = require('gulp-babel');
 var sass = require('gulp-sass');
 var addSrc = require('gulp-add-src');
 var nodemon = require('gulp-nodemon');
-//var browserify = require('browserify');
+//var browserify = require('gulp-browserify');
 //var reactify = require('reactify');
 
 var source = {

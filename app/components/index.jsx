@@ -1,7 +1,7 @@
-var Home = require('./home.jsx'),
+var Banner = require('./banner.jsx'),
 	Projects = require('./projects.jsx');
 
 module.exports = {
-	Home: Home,
+	Banner: Banner,
 	Projects: Projects
 };
