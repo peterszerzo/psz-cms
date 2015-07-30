@@ -1,7 +1,11 @@
 var Banner = require('./banner.jsx'),
-	Projects = require('./projects.jsx');
+	Header = require('./header.jsx'),
+	Projects = require('./projects.jsx'),
+	Layout = require('./layout.jsx');
 
 module.exports = {
 	Banner: Banner,
-	Projects: Projects
+	Header: Header,
+	Projects: Projects,
+	Layout: Layout
 };

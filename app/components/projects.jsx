@@ -1,17 +1,17 @@
-/** @jsx React.DOM */
-
 var React = require('react'),
 	Header = require('./header.jsx'),
 	marked = require('marked'),
 	moment = require('moment');
 
-var Projects = React.createClass({
-	render: function() {
+class Projects extends React.Component {
+
+	render() {
 		return (
 			<div></div>
 		);
 	}
-});
+	
+}
 
 Projects.Index = React.createClass({
 	render: function() {

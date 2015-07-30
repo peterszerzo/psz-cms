@@ -1,52 +1,45 @@
-/** @jsx React.DOM */
+var React = require('react');
 
-var React = require('react'),
-	Banner = require('./banner.jsx'),
-	Header = require('./header.jsx'),
-	Projects = require('./projects.jsx');
+var comp = {
+	Banner: require('./banner.jsx'),
+	Header: require('./header.jsx'),
+	Projects: require('./projects.jsx')
+}
 
-var routes = {
-	'projects': {
-		component: <Projects.List />,
-		propKey: 'items',
-		propValueDataUrl: '/api/v1/projects'
-	},
-	'projects/:id': {
-		component: <Projects.Show />,
-		propKey: 'itemData',
-		propValueDataUrl: '/api/v1/projects/:id'
+class Layout extends React.Component {
+
+	constructor() {
+		super();
 	}
-};
 
-var Layout = React.createClass({
-
-	render: function() {
-		<div>
-			<Header />
-			{ this.getRoutable() }
-		</div>
-	},
-
-	renderBanner: function() {
-		return (<Banner />);
-	},
-
-	renderProjectsIndex: function() {
+	render() {
+		console.dir(this.props);
 		return (
-			<div>
-				<Header categories={this.props.categories} activeCategory={this.props.activeCategory} />
-				<Projects.List projects={this.props.projects} />
-			</div>
-		);
-	},
-
-	renderProjectsShow: function() {
-		return (
-			<div>
-				<Header categories={this.props.categories} activeCategory={this.props.activeCategory} />
-				<Projects.Show projects={this.props.projects} />
+			<div className='wrapper fill-parent'>
+				{ this.getRoutable() }
 			</div>
 		);
 	}
 
-});
+	// Splits class name by . and goes down the tree to get component.
+	getRoutableComponent() {
+		var arr = this.props.routableSubcomponentClassName.split('.'),
+			Comp = comp;
+		arr.forEach(function(el) {
+			Comp = Comp[el];
+		});
+		return Comp;
+	}
+
+	getRoutable() {
+		var Comp = this.getRoutableComponent();
+		return (<Comp />);
+	}
+
+	componentDidMount() {
+		this.props.routableSubcomponentProps;
+	}
+
+}
+
+module.exports = Layout;

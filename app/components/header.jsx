@@ -1,10 +1,8 @@
-/** @jsx React.DOM */
-
 var React = require('react');
 
-var Header = React.createClass({
+class Header extends React.Component {
 
-	getList: function() {
+	getList() {
 		var activeCategory = this.props.category;
 		return [ 'all', 'code', 'design', 'blog', '..about' ].map(function(category) {
 			var isActive = (category === activeCategory),
@@ -15,9 +13,9 @@ var Header = React.createClass({
 				</li>
 			);
 		});
-	},
+	}
 
-	render: function() {
+	render() {
 		return (
 			<div className='header'>
 				<a className='header__main-link' href='/'></a>
@@ -28,6 +26,6 @@ var Header = React.createClass({
 		);
 	}
 	
-});
+}
 
 module.exports = Header;

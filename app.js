@@ -10,10 +10,7 @@ var pingHeroku = require('./misc/ping_heroku'),
 
 setInterval(pingHeroku, 5 * 60 * 1000);
 
-require('node-jsx').install({extension: '.jsx'});
-
 app.set('views', __dirname + '/app/views');
-app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'jade');
 
 app.use(bodyParser.urlencoded({ extended: false, limit: '50mb' }));

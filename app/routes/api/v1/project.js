@@ -5,7 +5,7 @@ var express = require('express'),
 
 // Function used in the router's get definitions.
 // Also used to retrieve data for server-side rendering.
-router.server = function(req, next) {
+router.callOnServer = function(req, next) {
 
 	var query = req.query;
 
@@ -21,7 +21,7 @@ router.server = function(req, next) {
 
 		// Convert to Backbone collection to do querying.
 		var coll = new project.Collection(JSON.parse(data)),
-			matchingModels = coll.where(req.query),
+			matchingModels = coll.where(query),
 			json = matchingModels.map(function(model) {
 				return model.toJSON();
 			});
@@ -43,7 +43,7 @@ router.server = function(req, next) {
 
 router.get('/', function(req, res) {
 
-	server(req, function(err, json) {
+	router.callOnServer(req, function(err, json) {
 		res.json(json);
 	});
 

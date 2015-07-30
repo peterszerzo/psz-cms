@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 var React = require('react');
 
 var data = [ 
@@ -7,9 +5,20 @@ var data = [
 	{ url: '/things?category=design', name: 'minimal design' }
 ];
 
-var Banner = React.createClass({
+class Banner extends React.Component {
 
-	render: function() {
+	constructor() {
+		super();
+		this.state = {
+			data: [ 
+				{ url: '/things?category=code', name: 'mindful code' },  
+				{ url: '/things?category=design', name: 'minimal design' }
+			]
+		};
+
+	}
+
+	render() {
 		return (
 			<div className="banner fill-parent">
 				<div className="banner__globe"></div>
@@ -19,18 +28,9 @@ var Banner = React.createClass({
 				<div className="banner__notice"></div>
 			</div>
 		);
-	},
+	}
 
-	getInitialState: function() {
-		return {
-			data: [ 
-				{ url: '/things?category=code', name: 'mindful code' },  
-				{ url: '/things?category=design', name: 'minimal design' }
-			]
-		};
-	},
-
-	_renderList: function() {
+	_renderList() {
 		return this.state.data.map(function(item) {
 			return (
 				<li>
@@ -38,16 +38,16 @@ var Banner = React.createClass({
 				</li>
 			);
 		});
-	},
+	}
 
-	componentDidMount: function() {
+	componentDidMount() {
 		psz.globe('.banner__globe', 'geo.json').start();
-	},
+	}
 
-	componentWillUnmount: function() {
+	componentWillUnmount() {
 		psz.globe('.banner__globe', 'geo.json').stop();
 	}
 
-});
+}
 
 module.exports = Banner;
