@@ -439,9 +439,9 @@ h4 {
         .header__nav__item {
           display: table;
           background: none; }
-          .header__nav__item:hover {
+          .header__nav__item:hover, .header__nav__item--active {
             background-color: rgba(255, 255, 255, 0.05); }
-            .header__nav__item:hover a {
+            .header__nav__item:hover a, .header__nav__item--active a {
               opacity: 1; } }
       .header__nav__item a {
         padding: 0 30px;
