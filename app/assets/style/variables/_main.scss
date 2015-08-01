@@ -7,6 +7,21 @@ $palette: (
 	grey: #222
 );
 
+$colors: (
+	base: darken(#101C29, 2),
+	white: #FFFFFF,
+	blue: #2D375D,
+	greenish-blue: #0E3647,
+	purple: #3F1285,
+	light-purple: #9695A8
+);
+
+@function get-color($key, $index: 1) {
+	@if ($key == 'scheme') {
+		@return nth(map-get($colors, $key), $index);
+	}
+	@return map-get($colors, $key);
+}
 
 // GEOMETRY
 

@@ -1,10 +1,11 @@
-var React = require('react');
+var React = require('react'),
+	Buttons = require('./logos/buttons.jsx');
 
 class Header extends React.Component {
 
 	getList() {
 		var activeCategory = this.props.category;
-		return [ 'all', 'code', 'design', 'blog', '..about' ].map(function(category) {
+		return [ 'all', 'code', 'design', 'blog', '..about' ].reverse().map(function(category) {
 			var isActive = (category === activeCategory),
 				className = 'header__nav__item' + (isActive ? ' header__nav__item--active' : '');
 			return (
@@ -20,6 +21,9 @@ class Header extends React.Component {
 			<div className='header'>
 				<a className='header__main-link' href='/'></a>
 				<ul className='header__nav'>
+					<li className='header__nav__arrow'>
+						<Buttons.Arrow />
+					</li>
 					{this.getList()}
 				</ul>
 			</div>

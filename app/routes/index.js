@@ -4,17 +4,18 @@ var express = require('express'),
 		project: require('./api/v1/project.js')
 	},
 	React = require('react'),
-	comp = require('../components/index.jsx'),
+	Layout = require('../components/layout.jsx'),
 	routes = require('./routes.js'),
 	fs = require('fs');
+
+var layoutFactory = React.createFactory(Layout);
 
 router.use('/api/v1/projects', apiSubrouters.project);
 
 router.get('/', function(req, res) {
 
 	var route = routes['/'],
-		factory = React.createFactory(comp.Layout),
-		html = React.renderToString(factory(route));;
+		html = React.renderToString(layoutFactory({ route: route }));;
 
 	res.render('index.jade', { reactOutput: html });
 
@@ -24,11 +25,10 @@ router.get('/things', function(req, res) {
 
 	var route = routes['/things'];
 
-	apiSubrouters.project.callOnServer({ query: { is_live: true } }, function(err, data) {
+	apiSubrouters.project.callOnServer({ query: { is_live: true } }, function(err, projects) {
 		if (err) { throw err; }
 	 	var category = req.query.category || 'all',
-	 		factory = React.createFactory(comp.Projects.Index),
-	 		html = React.renderToString(factory({ items: data, category: category }));
+	 		html = React.renderToString(layoutFactory({ route: route, projects: projects, category: category }));
 	 	res.render('projects/index.jade', { reactOutput: html });
 	});
 	
@@ -36,14 +36,13 @@ router.get('/things', function(req, res) {
 
 router.get('/things/:id', function(req, res) {
 
-	var route = routes['/things:id'];
+	var route = routes['/things/:id'];
 
-	apiSubrouters.project.callOnServer({ query: { id: req.params.id, is_live: true } }, function(err, data) {
+	apiSubrouters.project.callOnServer({ query: { id: req.params.id, is_live: true } }, function(err, projects) {
 		if (err) { return res.redirect('/'); }
-		var datum = data[0];
-		if (datum == null) { return res.redirect('/'); }
-		var factory = React.createFactory(comp.Projects.Show),
-			html = React.renderToString(factory({ item: datum }));
+		var project = projects[0];
+		if (project == null) { return res.redirect('/'); }
+		var html = React.renderToString(layoutFactory({ route: route, project: project }));
 		res.render('projects/index.jade', { reactOutput: html });
 	});
 

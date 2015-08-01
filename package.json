@@ -33,7 +33,9 @@
     "gulp-concat": "^2.5.2",
     "gulp-jshint": "^1.10.0",
     "gulp-nodemon": "^2.0.3",
+    "gulp-reactify": "^3.0.1",
     "gulp-sass": "^2.0.0",
+    "react-tools": "^0.13.3",
     "reactify": "^1.1.1",
     "vinyl-source-stream": "^1.1.0"
   },

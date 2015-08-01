@@ -1,7 +1,8 @@
 var React = require('react'),
 	Header = require('./header.jsx'),
 	marked = require('marked'),
-	moment = require('moment');
+	moment = require('moment'),
+	Logos = require('./logos/project-logos.jsx');
 
 class Projects extends React.Component {
 
@@ -13,90 +14,123 @@ class Projects extends React.Component {
 	
 }
 
-Projects.Index = React.createClass({
-	render: function() {
+Projects.Index = class extends React.Component {
+	render() {
 		return (
 			<div>
 				<Header category={this.props.category}/>
-				<Projects.Index.List category={this.props.category} items={this.props.items}/>
+				<Projects.Index.List category={this.props.category} projects={this.props.projects}/>
 			</div>
 		);
 	}
-});
+}
 
-Projects.Index.List = React.createClass({
-	render: function() {
-		var self = this,
-			createItem = function(itemData, index) {
-			return <Projects.Index.List.Item itemData={itemData} category={self.props.category} />;
-		};
+Projects.Index.List = class extends React.Component {
+
+	render() {
 		return (
 			<ul className="projects">
-				{this.props.items.map(createItem)}
+				{ this.renderList() }
 			</ul>
 		);
 	}
-});
 
-Projects.Index.List.Item = React.createClass({
-	render: function() {
-		var itemData = this.props.itemData,
+	renderList() {
+		return this.props.projects.map((project, index) => {
+			return <Projects.Index.List.Item project={project} category={this.props.category} />;
+		});
+	}
+
+}
+
+Projects.Index.List.Item = class extends React.Component {
+
+	render() {
+		var project = this.props.project,
 			cls = this.shouldDisplay() ? '' : 'hidden';
 		return (
 			<li className={cls}>
-				<a className="project" href={'/things/' + itemData.id}>
+				<a className="project" href={'/things/' + project.id}>
 					{ this.renderBackground() }
-					<img src={'images/project-logos/project-logos_' + itemData.id + '.svg'}></img>
-					<div className="project__title">{itemData.name}</div>
+					{ this.renderOldBackgroundImage() }
+					{ this.renderNewBackgroundImage() }
+					<div className="project__title">{project.name}</div>
 				</a>
 			</li>
 		);
-	},
-	renderBackground: function() {
-		var itemData = this.props.itemData;
-		if (itemData.has_logo !== false) { return; }
+	}
+
+	renderBackground() {
+		var project = this.props.project;
+		if (project.has_logo !== false) { return; }
 		return (
 			<div className="project__background">{this.getInitials()}</div>
 		);
-	},
+	}
+
+	// Obsolete.
+	renderOldBackgroundImage() {
+		var project = this.props.project;
+		return;
+		return (
+			<img src={'images/project-logos/project-logos_' + project.id + '.svg'}></img>
+		);
+	}
+
+	renderNewBackgroundImage() {
+		var project = this.props.project,
+			id = project.id,
+			name = id.split('-').map(function(word) {
+				return (word[0].toUpperCase() + word.slice(1));
+			}).join(''),
+			Comp = Logos[name];
+		if (Comp == null) { return <Logos.Neutral className='project__logo' />; }
+		return (<Comp className='project__logo' />);
+	}
+
 	// Get project title initials.
-	getInitials: function() {
-		var title = this.props.itemData.title;
+	getInitials() {
+		var title = this.props.project.title;
 		return title.slice(0, 3);
-	},
-	shouldDisplay: function() {
+	}
+
+	shouldDisplay() {
 		var activeCategory = this.props.category,
-			categories = this.props.itemData.categories;
+			categories = this.props.project.categories;
 		return ((activeCategory === 'all') || (categories.indexOf(activeCategory) > -1));
 	}
-});
 
-Projects.Show = React.createClass({
-	render: function() {
+}
+
+Projects.Show = class extends React.Component {
+
+	render() {
 		return (
 			<div>
 				<Header/>
-				<Projects.Show.Item item={this.props.item}/>
+				<Projects.Show.Item project={this.props.project}/>
 			</div>
 		);
 	}
-});
 
-Projects.Show.Item = React.createClass({
-	render: function() {
+}
+
+Projects.Show.Item = class extends React.Component {
+
+	render() {
 		return (
 			<div>
-				<h1 className="title">{this.props.item.title}</h1>
-				<h2 className="subtitle">{'-- ' + this.props.item.subtitle + ' --'}</h2>
+				<h1 className="title">{this.props.project.title}</h1>
+				<h2 className="subtitle">{'-- ' + this.props.project.subtitle + ' --'}</h2>
 				{ this.renderDates() }
 				{ this.renderUrl() }
 				{ this.renderBody() }
 			</div>
 		);
-	},
+	}
 
-	renderDates: function() {
-		var dates = this.props.item.dates, 
+	renderDates() {
+		var dates = this.props.project.dates, 
 			formattedDates, content;
 		if (dates == null) { return; }
 		formattedDates = dates.map(function(date) {
@@ -107,24 +141,24 @@ Projects.Show.Item = React.createClass({
 		return (
 			<div className='date'>{content}</div>
 		);
-	},
+	}
 
-	renderUrl: function() {
-		var url = this.props.item.url;
+	renderUrl() {
+		var url = this.props.project.url;
 		if (url == null) { return; }
 		return (
 			<a className="main-link" href={url} target="_blank">Project Site</a>
 		);
-	},
+	}
 
-	renderBody: function() {
-		var md = this.props.item.bodyText;
+	renderBody() {
+		var md = this.props.project.bodyText;
 		if (md == null) { return; }
 		return (
 			<div className="static" dangerouslySetInnerHTML={{ __html: marked(md) }}/>
 		);
 	}
 
-});
+}
 
 module.exports = Projects;

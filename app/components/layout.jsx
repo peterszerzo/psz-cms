@@ -13,7 +13,6 @@ class Layout extends React.Component {
 	}
 
 	render() {
-		console.dir(this.props);
 		return (
 			<div className='wrapper fill-parent'>
 				{ this.getRoutable() }
@@ -23,7 +22,7 @@ class Layout extends React.Component {
 
 	// Splits class name by . and goes down the tree to get component.
 	getRoutableComponent() {
-		var arr = this.props.routableSubcomponentClassName.split('.'),
+		var arr = this.props.route.routableSubcomponentClassName.split('.'),
 			Comp = comp;
 		arr.forEach(function(el) {
 			Comp = Comp[el];
@@ -33,7 +32,7 @@ class Layout extends React.Component {
 
 	getRoutable() {
 		var Comp = this.getRoutableComponent();
-		return (<Comp />);
+		return (<Comp {...this.props} />);
 	}
 
 	componentDidMount() {
