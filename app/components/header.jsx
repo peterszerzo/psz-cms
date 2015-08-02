@@ -46,7 +46,9 @@ class Header extends React.Component {
 	render() {
 		return (
 			<div className='header'>
-				<a className='header__main-link' href='/'></a>
+				<a className='header__main-link' href='/'>
+					<Buttons.BackToMain />
+				</a>
 				<ul className='header__nav'>
 					<li className='header__nav__arrow'>
 						<Buttons.Arrow />

@@ -401,11 +401,12 @@ h4 {
     vertical-align: middle;
     width: 150px;
     font-size: 24px;
-    font-family: 'Hallo';
-    background-image: url("/images/link-to-homepage.svg");
-    background-size: 30%;
-    background-position: 50% 50%;
-    background-repeat: no-repeat; }
+    font-family: 'Hallo'; }
+    .header__main-link svg {
+      height: 50px;
+      width: 50px;
+      padding-top: 5px;
+      fill: white; }
   .header__nav {
     z-index: 100;
     width: 120px;
@@ -414,6 +415,8 @@ h4 {
     float: right;
     text-align: right;
     padding: 0; }
+    .header__nav:hover .header__nav__item {
+      display: table; }
     @media screen and (min-width: 800px) {
       .header__nav {
         width: auto;
@@ -445,7 +448,7 @@ h4 {
           opacity: 1; }
     .header__nav__item {
       z-index: 100;
-      display: table;
+      display: none;
       background-color: rgba(13, 23, 34, 0.93); }
       @media screen and (min-width: 800px) {
         .header__nav__item {
@@ -536,8 +539,11 @@ h4 {
     opacity: 0.5; }
     .static a:hover {
       opacity: 1; }
-  .static img {
+  .static img, .static iframe {
     width: 80%;
     max-width: 500px;
+    max-height: 500px;
     display: block;
-    margin: 20px auto; }
+    margin: 40px auto; }
+  .static iframe {
+    height: 400px; }

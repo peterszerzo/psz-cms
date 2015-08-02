@@ -19,10 +19,8 @@
 		width: 150px;
 		font-size: 24px;
 		font-family: 'Hallo';
-		background-image: url('/images/link-to-homepage.svg');
-		background-size: 30%;
-		background-position: 50% 50%;
-		background-repeat: no-repeat;
+
+		svg { height: 50px; width: 50px; padding-top: 5px; fill: white; }
 	}
 
 	&__nav {
@@ -33,6 +31,10 @@
 		height: 80px;
 		overflow: visible;
 		float: right;
+
+		&:hover &__item {
+			display: table;
+		}
 
 		@media screen and (min-width: 800px) {
 			width: auto;
@@ -76,16 +78,19 @@
 		}
 
 		&__item {
+
 			z-index: 100;
-			display: table;
+			display: none;
 			background-color: rgba(get-color(base), 0.93);
+
 			@media screen and (min-width: 800px) {
 				display: table;
 				background: none;
 				&:hover, &--active {
-					background-color: rgba(255, 255, 255, 0.05);
-					a { opacity: 1; }
-				}
+				background-color: rgba(255, 255, 255, 0.05);
+				a { opacity: 1; }
+			}
+				
 			}
 
 			a { 

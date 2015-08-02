@@ -17,6 +17,42 @@ Logos.Neutral = class extends React.Component {
 
 }
 
+Logos.Kinetic = class extends React.Component {
+
+	render() {
+		var noFill = { fill: 'none' };
+		return (
+			<svg className={this.props.className} viewBox="0 0 400 400">
+				<g>
+					<circle cx="200" cy="200" r="198.806"/>
+				</g>
+				<g>
+					<path style={noFill} stroke="#FFFFFF" strokeWidth="5.9271" strokeLinecap="round" strokeLinejoin="round" d="M166.268,122.81
+						c-3.999-4-10.486-4-14.486,0c-4,4.001-4,10.486,0,14.487"/>
+					<line style={noFill} stroke="#FFFFFF" strokeWidth="5.9271" strokeLinecap="round" strokeLinejoin="round" x1="200" y1="156.542" x2="166.268" y2="122.81"/>
+					<line style={noFill} stroke="#FFFFFF" strokeWidth="5.9271" strokeLinecap="round" strokeLinejoin="round" x1="268.706" y1="225.247" x2="214.486" y2="171.028"/>
+					<line style={noFill} stroke="#FFFFFF" strokeWidth="5.9271" strokeLinecap="round" strokeLinejoin="round" x1="185.513" y1="171.028" x2="151.781" y2="137.297"/>
+					<line style={noFill} stroke="#FFFFFF" strokeWidth="5.9271" strokeLinecap="round" strokeLinejoin="round" x1="246.975" y1="232.491" x2="200" y2="185.516"/>
+					<line style={noFill} stroke="#FFFFFF" strokeWidth="5.9271" strokeLinecap="round" strokeLinejoin="round" x1="200" y1="279.467" x2="153.024" y2="232.491"/>
+					<line style={noFill} stroke="#FFFFFF" strokeWidth="5.9271" strokeLinecap="round" strokeLinejoin="round" x1="185.513" y1="293.953" x2="131.294" y2="239.734"/>
+					<line style={noFill} stroke="#FFFFFF" strokeWidth="5.9271" strokeLinecap="round" strokeLinejoin="round" x1="275.514" y1="383.954" x2="200" y2="308.44"/>
+					<line style={noFill} stroke="#FFFFFF" strokeWidth="5.9271" strokeLinecap="round" strokeLinejoin="round" x1="295.135" y1="374.603" x2="214.486" y2="293.953"/>
+					<path fill="#FFFFFF" stroke="#FFFFFF" strokeWidth="5.9271" strokeLinecap="round" strokeLinejoin="round" d="M124.488,383.952
+						l144.218-144.218c3.999-4,3.999-10.486,0-14.487c-4.001-4-10.488-4-14.488,0L104.863,374.603l8.875,5.308L124.488,383.952z"/>
+					<path fill="#FFFFFF" stroke="#FFFFFF" strokeWidth="1.017" strokeMiterlimit="10" d="M144.485,241.457
+						c-4.119,4.119-10.796,4.118-14.915-0.001c-4.116-4.117-4.116-10.794,0-14.913l105.458-105.456c4.115-4.117,10.793-4.117,14.912,0
+						c4.117,4.12,4.117,10.795,0,14.914L144.485,241.457H129.57c-4.116-4.118-4.116-10.795,0-14.914"/>
+					<circle cx="200" cy="171.028" r="4.097"/>
+					<circle cx="261.461" cy="232.491" r="4.098"/>
+					<circle cx="200" cy="293.953" r="4.097"/>
+					<circle cx="138.537" cy="232.491" r="4.098"/>
+				</g>
+			</svg>
+		);
+	}
+
+}
+
 Logos.ScalingTricksForGeo = class extends React.Component {
 
 	render() {
