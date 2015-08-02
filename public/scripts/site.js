@@ -19643,6 +19643,10 @@ var psz = {};
 // page('*', function(req) {
 // 	console.log(req);
 // });
+/*
+ * Globe animation module.
+ * @returns {object} self - Module object with public API.
+ */
 'use strict';
 
 psz.globe = function (selector, fileName) {
@@ -19653,9 +19657,13 @@ psz.globe = function (selector, fileName) {
         selector: selector
     };
 
+    var $message = $('.banner__message');
+
     self.start = function () {
 
         var $el, draw, eye, getDistance, getFeatureOpacity, getPath, height, long, lat, sphericalToCartesian, subtractAngles, svg, update, updateDimensions, updateEye, updateGeoPaths, width;
+
+        $message.hide();
 
         $el = $(self.selector);
         width = $el.width();
@@ -19709,6 +19717,9 @@ psz.globe = function (selector, fileName) {
             return eye.updateHarmonic(0.2, 0.2);
         };
 
+        /*
+         * @returns {object} path
+         */
         getPath = function () {
             var path, projection;
             projection = d3.geo.orthographic().scale(width * 0.7).rotate([0, 0, 0]).translate([width / 2, height / 2 * 1.6]);
@@ -19722,12 +19733,14 @@ psz.globe = function (selector, fileName) {
             path = getPath();
             return svg.selectAll('path').attr({
                 d: function d(feature) {
-                    var b = path.bounds(feature);
-                    var length = Math.abs(b[0][0] - b[1][0]);
-                    var height = Math.abs(b[0][1] - b[1][1]);
-                    //console.log(length + height);
-                    //if (length + height > 2500) { return ''; }
                     return path(feature);
+                },
+                'class': function _class(feature) {
+                    var cls = 'banner__geopath';
+                    // if (feature._isActive === true) {
+                    //     cls += ' banner__geopath--active'
+                    // }
+                    return cls;
                 },
                 opacity: getFeatureOpacity
             });
@@ -19742,10 +19755,14 @@ psz.globe = function (selector, fileName) {
             svg = d3.select('.banner__globe').append('svg');
             updateDimensions();
             $(window).on('resize', updateDimensions);
-            svg.selectAll('path').data(data.features).enter().append('path').attr({
-                'class': function _class(feature) {
-                    return 'geopath';
-                }
+            svg.selectAll('path').data(data.features).enter().append('path').on('mouseenter', function (feature) {
+                feature._isActive = true;
+                //$message.show();
+            }).on('mouseleave', function (feature) {
+                feature._isActive = false;
+                //$message.hide();
+            }).on('click', function (feature) {
+                window.location.assign('/things/random');
             });
             updateGeoPaths();
             return setInterval(update, timeStep * 1000);
@@ -19795,6 +19812,9 @@ psz.globe = function (selector, fileName) {
 
         return getFeatureOpacity = function (feature) {
             var centroid, centroidCheck, delta, deltaMax, distance, long1, lat1, op;
+            if (feature._isActive === true) {
+                return 0.6;
+            }
             centroid = getFeatureCentroid(feature);
             long1 = centroid[0];
             lat1 = centroid[1];
@@ -19848,7 +19868,7 @@ psz.geoJsonGenerator = function (selector) {
    * @returns {array} point - Point array.
    */
 		var convertToPoint = function convertToPoint(string, displacement, scale) {
-			var pt = string.split(",");
+			var pt = string.split(',');
 			displacement = displacement || [0, 0];
 			pt[0] = parseInt(pt[0] * 100000, 10) / 100000;
 			pt[1] = parseInt(pt[1] * 100000, 10) / 100000;
@@ -19864,18 +19884,18 @@ psz.geoJsonGenerator = function (selector) {
 			return prod > 0;
 		};
 
-		$(selector + " polygon").each(function () {
+		$(selector + ' polygon').each(function () {
 
 			var feature = {
-				type: "Feature",
+				type: 'Feature',
 				geometry: {
-					type: "Polygon",
+					type: 'Polygon',
 					coordinates: []
 				}
 			},
 			    coords = [],
 			    repl,
-			    pointsAttr = $(this).attr("points"),
+			    pointsAttr = $(this).attr('points'),
 			    point,
 			    startPoint,
 			    pointStrings,
@@ -19914,9 +19934,9 @@ psz.geoJsonGenerator = function (selector) {
 		console.log(geoJson);
 
 		$.ajax({
-			url: "/dev/save",
+			url: '/dev/save',
 			data: { geo: JSON.stringify(geoJson) },
-			type: "post"
+			type: 'post'
 		});
 	};
 

@@ -368,10 +368,22 @@ h4 {
     position: absolute;
     width: 100%;
     height: 100%; }
-  .banner .geopath {
+  .banner__message {
+    position: absolute;
+    bottom: 5%;
+    color: white;
+    text-align: center;
+    width: 100%;
+    font-size: 14px;
+    opacity: 0.6;
+    font-family: 'Palatino'; }
+  .banner__geopath {
+    cursor: pointer;
     stroke: white;
     fill: white;
     stroke-width: 0.2px; }
+    .banner__geopath--active, .banner__geopath:hover {
+      transition: opacity 0.2s ease-in-out; }
 
 .header {
   overflow: visible;

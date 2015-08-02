@@ -59,10 +59,25 @@
 		height: 100%;
 	}
 
-	.geopath {
+	&__message {
+		position: absolute;
+		bottom: 5%;
+		color: white;
+		text-align: center;
+		width: 100%;
+		font-size: 14px;
+		opacity: 0.6;
+		font-family: 'Palatino';
+	}
+
+	&__geopath {
+		cursor: pointer;
 		stroke: white;
 		fill: white;
 		stroke-width: 0.2px;
+		&--active, &:hover {
+			transition: opacity 0.2s ease-in-out;
+		}
 	}
 
 }

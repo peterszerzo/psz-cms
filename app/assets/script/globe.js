@@ -1,3 +1,7 @@
+/*
+ * Globe animation module.
+ * @returns {object} self - Module object with public API.
+ */
 psz.globe = function(selector, fileName) {
 
     var timeStep = 0.02;
@@ -6,9 +10,13 @@ psz.globe = function(selector, fileName) {
         selector: selector
     };
 
+    var $message = $('.banner__message');
+
     self.start = function() {
 
         var $el, draw, eye, getDistance, getFeatureOpacity, getPath, height, long, lat, sphericalToCartesian, subtractAngles, svg, update, updateDimensions, updateEye, updateGeoPaths, width;
+
+        $message.hide();
 
         $el = $(self.selector);
         width = $el.width();
@@ -62,6 +70,9 @@ psz.globe = function(selector, fileName) {
             return eye.updateHarmonic(0.2, 0.2);
         };
 
+        /*
+         * @returns {object} path
+         */
         getPath = function() {
             var path, projection;
             projection = d3.geo.orthographic().scale(width * 0.7).rotate([0, 0, 0]).translate([width / 2, height / 2 * 1.6]);
@@ -75,12 +86,14 @@ psz.globe = function(selector, fileName) {
             path = getPath();
             return svg.selectAll('path').attr({
                 d: function(feature) { 
-                    var b = path.bounds(feature);
-                    var length = Math.abs(b[0][0] - b[1][0]);
-                    var height = Math.abs(b[0][1] - b[1][1]);
-                    //console.log(length + height);
-                    //if (length + height > 2500) { return ''; }
                     return path(feature); 
+                },
+                'class': function(feature) {
+                    var cls = 'banner__geopath';
+                    // if (feature._isActive === true) {
+                    //     cls += ' banner__geopath--active'
+                    // }
+                    return cls; 
                 },
                 opacity: getFeatureOpacity
             });
@@ -99,11 +112,17 @@ psz.globe = function(selector, fileName) {
                 .data(data.features)
                 .enter()
                 .append('path')
-                .attr({
-                    "class": function(feature) { 
-                        return 'geopath'; 
-                    }
-            });
+                .on('mouseenter', function(feature) {
+                    feature._isActive = true
+                    //$message.show();
+                })
+                .on('mouseleave', function(feature) {
+                    feature._isActive = false
+                    //$message.hide();
+                })
+                .on('click', function(feature) {
+                    window.location.assign('/things/random');
+                });
             updateGeoPaths();
             return setInterval(update, timeStep * 1000);
         };
@@ -151,6 +170,7 @@ psz.globe = function(selector, fileName) {
 
         return getFeatureOpacity = function(feature) {
             var centroid, centroidCheck, delta, deltaMax, distance, long1, lat1, op;
+            if (feature._isActive === true) { return 0.6; }
             centroid = getFeatureCentroid(feature);
             long1 = centroid[0];
             lat1 =  centroid[1];

@@ -1,9 +1,12 @@
-var gulp = require('gulp');
-var concat = require('gulp-concat');
-var babel = require('gulp-babel');
-var sass = require('gulp-sass');
-var addSrc = require('gulp-add-src');
-var nodemon = require('gulp-nodemon');
+var gulp = require('gulp'),
+	concat = require('gulp-concat'),
+	babel = require('gulp-babel'),
+	sass = require('gulp-sass'),
+	addSrc = require('gulp-add-src'),
+	browserify = require('browserify'),
+	reactify = require('reactify'),
+	source = require('vinyl-source-stream'),
+	nodemon = require('gulp-nodemon');
 
 var source = {
 	vendor: [ 
@@ -34,6 +37,14 @@ gulp.task('script', function() {
 });
 
 gulp.task('default', [ 'style', 'script' ]);
+
+gulp.task('bundle', function() {
+	var b = browserify({ entries: [ './app/bundle.js' ] });
+	b.transform(reactify);
+	return b.bundle()
+		.pipe(source('bundle.js'))
+		.pipe(gulp.dest('./app/assets/script'));
+});
 
 gulp.task('dev', function() {
 	nodemon({
