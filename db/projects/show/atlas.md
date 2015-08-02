@@ -1,1 +1,1 @@
-A new policy analysis tool for the New America Foundation's Education Policy Program.
+[Atlas](http://atlas.newamerica.org) is a new policy analysis tool for the New America Foundation's Education Policy Program.

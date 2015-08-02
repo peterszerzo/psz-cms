@@ -17,6 +17,49 @@ Logos.Neutral = class extends React.Component {
 
 }
 
+Logos.Atlas = class extends React.Component {
+
+	render() {
+		var noFill = { fill: 'none' };
+		return (
+			<svg className={this.props.className} viewBox="0 0 400 400">
+				<g>
+					<path d="M199.135,399.16C89.263,398.686,0.582,309.228,1.059,199.354C1.536,89.482,90.992,0.801,200.865,1.279
+						c109.872,0.478,198.554,89.934,198.076,199.806C398.463,310.957,309.008,399.639,199.135,399.16z"/>
+				</g>
+				<g>
+					<rect x="124.062" y="233.479" fill="#FFFFFF" width="152.028" height="21.306"/>
+					<rect x="124.062" y="189.956" fill="#FFFFFF" width="152.028" height="21.762"/>
+					<rect x="161.499" y="146.433" fill="#FFFFFF" width="114.592" height="21.762"/>
+					<path fill="#FFFFFF" d="M123.91,157.39c0-6.696,5.479-12.175,12.175-12.175c6.696,0,12.174,5.479,12.174,12.175
+						s-5.479,12.175-12.174,12.175C129.388,169.564,123.91,164.086,123.91,157.39"/>
+				</g>
+			</svg>
+		);
+	}
+
+}
+
+Logos.About = class extends React.Component {
+
+	render() {
+		var noFill = { fill: 'none' };
+		return (
+			<svg className={this.props.className} viewBox="0 0 400 400">
+				<g>
+					<circle cx="200" cy="200" r="199.221"/>
+				</g>
+				<g>
+					<circle fill="#FFFFFF" cx="140" cy="273.987" r="14.999"/>
+					<circle fill="#FFFFFF" cx="200" cy="282.987" r="14.999"/>
+					<circle fill="#FFFFFF" cx="260" cy="273.987" r="14.999"/>
+				</g>
+			</svg>
+		);
+	}
+
+}
+
 Logos.Kinetic = class extends React.Component {
 
 	render() {

@@ -97,7 +97,9 @@ Projects.Index.List.Item = class extends React.Component {
 	shouldDisplay() {
 		var activeCategory = this.props.category,
 			categories = this.props.project.categories;
-		return ((activeCategory === 'all') || (categories.indexOf(activeCategory) > -1));
+		if (activeCategory === 'all') { return true; }
+		if (categories == null) { return false; }
+		return (categories.indexOf(activeCategory) > -1);
 	}
 
 }

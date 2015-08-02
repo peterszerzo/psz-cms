@@ -2,6 +2,7 @@
 
     {
         "id": "about",
+        "name": "about",
         "title": "Hi,",
         "is_live": true,
         "categories": [ "about" ]
@@ -27,9 +28,12 @@
 
     {
         "id": "atlas",
+        "url": "http://atlas.newamerica.org",
+        "dates": ["2014-12", "present"],
         "name": "atlas.newamerica.org",
         "title": "atlas.newamerica.org",
-        "is_live": false,
+        "is_live": true,
+        "categories": [ "code", "design" ],
         "languages": [ "JavaScript" ],
         "technologies": [ "React.js", "Backbone.js", "Marionette.js", "d3.js", "Leaflet.js", "Express.js" ]
     },
