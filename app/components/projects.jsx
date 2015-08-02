@@ -121,7 +121,7 @@ Projects.Show.Item = class extends React.Component {
 		return (
 			<div>
 				<h1 className="title">{this.props.project.title}</h1>
-				<h2 className="subtitle">{'-- ' + this.props.project.subtitle + ' --'}</h2>
+				{ this.renderSubtitle() }
 				{ this.renderDates() }
 				{ this.renderUrl() }
 				{ this.renderBody() }
@@ -141,6 +141,11 @@ Projects.Show.Item = class extends React.Component {
 		return (
 			<div className='date'>{content}</div>
 		);
+	}
+
+	renderSubtitle() {
+		if (this.props.project.subtitle == null) { return; }
+		return (<h2 className="subtitle">{'-- ' + this.props.project.subtitle + ' --'}</h2>);
 	}
 
 	renderUrl() {

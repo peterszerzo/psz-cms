@@ -1,6 +1,13 @@
 [
 
     {
+        "id": "about",
+        "title": "Hi,",
+        "is_live": true,
+        "categories": [ "about" ]
+    },
+
+    {
         "id": "scaling-tricks-for-geo",
         "dates": [ "2015-06-15" ],
         "url": "https://github.com/pickled-plugins/scaling-tricks-for-geo",

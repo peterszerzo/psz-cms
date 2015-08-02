@@ -29,8 +29,6 @@ router.callOnServer = function(req, next) {
 			matchingModels = coll.where(query), 
 			json,
 			randomIndex = Math.floor(Math.random() * matchingModels.length);
-		
-		console.log(randomIndex);
 
 		if (getRandom === true) {
 			matchingModels = [ matchingModels[ randomIndex ] ];

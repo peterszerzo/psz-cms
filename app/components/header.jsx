@@ -3,14 +3,41 @@ var React = require('react'),
 
 class Header extends React.Component {
 
+	constructor() {
+		super();
+		this.state = {};
+		this.state.buttons = [
+			{
+				name: 'all',
+				url: '/things?category=all'
+			},
+			{
+				name: 'code',
+				url: '/things?category=code'
+			},
+			{
+				name: 'design',
+				url: '/things?category=design'
+			},
+			{
+				name: 'blog',
+				url: '/things?category=blog'
+			},
+			{
+				name: '..about',
+				url: '/things/about'
+			}
+		];
+	}
+
 	getList() {
 		var activeCategory = this.props.category;
-		return [ 'all', 'code', 'design', 'blog', '..about' ].reverse().map(function(category) {
-			var isActive = (category === activeCategory),
+		return this.state.buttons.reverse().map(function(button) {
+			var isActive = (button.name === activeCategory),
 				className = 'header__nav__item' + (isActive ? ' header__nav__item--active' : '');
 			return (
 				<li className={className}>
-					<a href={ '/things' + '?category=' + category }>{category}</a>
+					<a href={ button.url }>{ button.name }</a>
 				</li>
 			);
 		});
