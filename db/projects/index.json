@@ -80,13 +80,14 @@
 
         "id": "pendant-project",
         "is_live": true,
+        "dates": [ "2013-01", "2013-04" ],
         "name": "Pendant Project",
         "title": "The Pendant Project",
         "subtitle": "Variations on a Set Frame",
         "url": "https://www.etsy.com/shop/dchisel",
         "year": 2010,
         "supervisors": [],
-        "collaborators": ["Tiffany Cheezem", "Greta Shum", "Alison Cook"],
+        "collaborators": [ "Tiffany Cheezem", "Greta Shum", "Alison Cook" ],
         "spoiler": [
             "a design exercise that encourages a lively and expressive interaction between artwork and its frame, one that can be perceived as tension, play, harmony or competition for the viewer’s attention",
             "digitally designed and lasercut"
@@ -134,6 +135,7 @@
     {
         "id": "battle",
         "name": "battle",
+        "dates": [ "2012-03", "2012-05" ],
         "title": "Battle Shell",
         "year": 2010,
         "supervisors": ["Prof. Sigrid Adriaenssens"],
@@ -144,7 +146,7 @@
         ],
         "categories": [ "code", "design" ],
         "importance": 1,
-        "is_live": false,
+        "is_live": true,
         "languages": [ "Visual Basic" ]
     },
 

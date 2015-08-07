@@ -94,6 +94,7 @@ Projects.Index.List.Item = class extends React.Component {
 		return title.slice(0, 3);
 	}
 
+	// Specifies whether project should display.
 	shouldDisplay() {
 		var activeCategory = this.props.category,
 			categories = this.props.project.categories;

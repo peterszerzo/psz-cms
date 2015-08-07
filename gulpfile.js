@@ -1,6 +1,7 @@
 var gulp = require('gulp'),
 	concat = require('gulp-concat'),
 	babel = require('gulp-babel'),
+	babelify = require('babelify'),
 	sass = require('gulp-sass'),
 	addSrc = require('gulp-add-src'),
 	browserify = require('browserify'),
@@ -39,9 +40,9 @@ gulp.task('script', function() {
 gulp.task('default', [ 'style', 'script' ]);
 
 gulp.task('bundle', function() {
-	var b = browserify({ entries: [ './app/bundle.js' ] });
-	b.transform(reactify);
-	return b.bundle()
+	return browserify([ './app/bundle.js' ])
+		.transform(babelify)
+		.bundle()
 		.pipe(source('bundle.js'))
 		.pipe(gulp.dest('./app/assets/script'));
 });

@@ -405,7 +405,7 @@ h4 {
     .header__main-link svg {
       height: 50px;
       width: 50px;
-      padding-top: 5px;
+      padding-top: 8px;
       fill: white; }
   .header__nav {
     z-index: 100;
