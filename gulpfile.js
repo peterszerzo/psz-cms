@@ -41,7 +41,7 @@ gulp.task('bundle-client', function() {
 });
 
 gulp.task('bundle-simple', shell.task([
-	'browserify app/bundle.js -t babelify --outfile public/scripts/bundle.js --insert-globals'
+	'browserify app/bundle.js -t babelify --outfile public/scripts/bundle.js --insert-globals --ignore fs'
 ]));
 
 gulp.task('dev', function() {
