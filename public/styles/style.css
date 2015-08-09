@@ -530,9 +530,13 @@ h4 {
   padding-top: 30px;
   padding-bottom: 50px;
   color: #222; }
+  .static ul {
+    list-style-type: circle;
+    list-style-position: outside;
+    padding: 25px; }
   .static li {
-    padding: 5px 15px;
-    list-style-type: square; }
+    display: list-item;
+    padding: 5px 0; }
   .static a {
     color: #222;
     border-bottom: 2px dotted #222;

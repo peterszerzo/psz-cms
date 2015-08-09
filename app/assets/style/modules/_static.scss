@@ -6,9 +6,15 @@
 	padding-bottom: 50px;
 	color: map-get($palette, grey);
 
+	ul {
+		list-style-type: circle;
+		list-style-position: outside;
+		padding: 25px;
+	}
+
 	li {
-		padding: 5px 15px;
-		list-style-type: square;
+		display: list-item;
+		padding: 5px 0;
 	}
 
 	a {
