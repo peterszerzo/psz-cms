@@ -1,4 +1,5 @@
-var React = require('react');
+var React = require('react'),
+	globe = require('./../assets/script/globe.js');
 
 var data = [ 
 	{ url: '/things?category=code', name: 'mindful code' },  
@@ -42,11 +43,11 @@ class Banner extends React.Component {
 	}
 
 	componentDidMount() {
-		psz.globe('.banner__globe', 'geo.json').start();
+		globe('.banner__globe', 'geo.json').start();
 	}
 
 	componentWillUnmount() {
-		psz.globe('.banner__globe', 'geo.json').stop();
+		globe('.banner__globe', 'geo.json').stop();
 	}
 
 }

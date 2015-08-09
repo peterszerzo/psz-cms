@@ -1,8 +1,11 @@
+var $ = require('jquery'),
+    d3 = require('d3');
+
 /*
  * Globe animation module.
  * @returns {object} self - Module object with public API.
  */
-psz.globe = function(selector, fileName) {
+module.exports = function(selector, fileName) {
 
     var timeStep = 0.02;
 
@@ -14,7 +17,9 @@ psz.globe = function(selector, fileName) {
 
     self.start = function() {
 
-        var $el, draw, eye, getDistance, getFeatureOpacity, getPath, height, long, lat, sphericalToCartesian, subtractAngles, svg, update, updateDimensions, updateEye, updateGeoPaths, width;
+        var $el, draw, eye, height, long, lat, svg, width;
+
+        var latScale, longScale;
 
         $message.hide();
 
@@ -57,7 +62,7 @@ psz.globe = function(selector, fileName) {
             }
         };
 
-        updateDimensions = function() {
+        var updateDimensions = function() {
             width = $el.width();
             height = $el.height();
             return svg.attr({
@@ -66,14 +71,14 @@ psz.globe = function(selector, fileName) {
             });
         };
 
-        updateEye = function() {
+        var updateEye = function() {
             return eye.updateHarmonic(0.2, 0.2);
         };
 
         /*
          * @returns {object} path
          */
-        getPath = function() {
+        var getPath = function() {
             var path, projection;
             projection = d3.geo.orthographic().scale(width * 0.7).rotate([0, 0, 0]).translate([width / 2, height / 2 * 1.6]);
             projection.rotate([- eye.position[0], - eye.position[1]]);
@@ -81,7 +86,7 @@ psz.globe = function(selector, fileName) {
             return path;
         };
 
-        updateGeoPaths = function() {
+        var updateGeoPaths = function() {
             var path;
             path = getPath();
             return svg.selectAll('path').attr({
@@ -99,12 +104,12 @@ psz.globe = function(selector, fileName) {
             });
         };
 
-        update = function() {
+        var update = function() {
             eye.updateHarmonic();
             updateGeoPaths();
         };
 
-        draw = function(data) {
+        var draw = function(data) {
             svg = d3.select('.banner__globe').append('svg');
             updateDimensions();
             $(window).on('resize', updateDimensions);
@@ -129,7 +134,7 @@ psz.globe = function(selector, fileName) {
 
         $.get('data/geo/' + fileName, draw);
 
-        subtractAngles = function(angle1, angle2) {
+        var subtractAngles = function(angle1, angle2) {
             if (angle1 < 90 && angle2 > 270) {
                 return Math.abs(angle1 + 360 - angle2);
             }
@@ -139,7 +144,7 @@ psz.globe = function(selector, fileName) {
             return Math.abs(angle1 - angle2);
         };
 
-        sphericalToCartesian = function(long, lat, r) {
+        var sphericalToCartesian = function(long, lat, r) {
             var degToRad;
             if (r == null) {
                 r = 1;
@@ -148,7 +153,7 @@ psz.globe = function(selector, fileName) {
             return [Math.cos(long * degToRad) * Math.cos(lat * degToRad) * r, Math.sin(long * degToRad) * Math.cos(lat * degToRad) * r, Math.sin(lat * degToRad) * r];
         };
 
-        getDistance = function(long1, lat1, long2, lat2) {
+        var getDistance = function(long1, lat1, long2, lat2) {
             var distance, pos1, pos2;
             pos1 = sphericalToCartesian(long1, lat1);
             pos2 = sphericalToCartesian(long2, lat2);
@@ -156,7 +161,7 @@ psz.globe = function(selector, fileName) {
             return distance;
         };
 
-        getFeatureCentroid = function(feature) {
+        var getFeatureCentroid = function(feature) {
             var i, c = [ 0, 0 ],
                 coordinates = feature.geometry.coordinates;
             for (i = 0; i < 3; i += 1) { 
@@ -168,7 +173,7 @@ psz.globe = function(selector, fileName) {
 
         var maxOp = 0;
 
-        return getFeatureOpacity = function(feature) {
+        var getFeatureOpacity = function(feature) {
             var centroid, centroidCheck, delta, deltaMax, distance, long1, lat1, op;
             if (feature._isActive === true) { return 0.6; }
             centroid = getFeatureCentroid(feature);

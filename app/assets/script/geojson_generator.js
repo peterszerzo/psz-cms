@@ -1,4 +1,6 @@
-psz.geoJsonGenerator = function(selector) {
+var $ = require('jquery');
+
+module.exports = function(selector) {
 
 	var self = {};
 
@@ -85,7 +87,7 @@ psz.geoJsonGenerator = function(selector) {
 
 		});
 
-		console.log(geoJson);
+		// console.log(geoJson);
 
 		$.ajax({
 			url: '/dev/save', 

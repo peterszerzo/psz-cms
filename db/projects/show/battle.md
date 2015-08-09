@@ -1,4 +1,4 @@
-A collaboration with architecture students Laura Ettedgui and Julianne Gola at Princeton University under the guidance of Prof. Sigrid Adriaenssens, the Battle Shell gave me an interesting opportunity to work at the intersection of software, mechanics and architectural design.
+A collaboration with architecture students Laura Ettedgui and Julianne Gola at Princeton University under the guidance of Prof. Sigrid Adriaenssens, the Battle Shell gave me an interesting opportunity to work at the intersection of software, structural mechanics and architectural design.
 
 ![Battle Shell Rendering 1](/images/projects/battle/battle-render-1.png)
 
