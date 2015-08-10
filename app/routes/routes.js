@@ -16,6 +16,7 @@ var routes = {
 
 			{
 				key: 'projects',
+				query: {},
 				dataUrl: function(req) {
 					return '/api/v1/projects' + '?' + req.params.id;
 				},
@@ -25,6 +26,7 @@ var routes = {
 
 			{
 				key: 'categories',
+				query: {},
 				dataUrl: '/api/v1/categories',
 				shouldCache: true,
 				cacheKey: 'categories'

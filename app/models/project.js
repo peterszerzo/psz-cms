@@ -4,9 +4,7 @@ var base = require('./base.js'),
     fs = require('fs'),
     dbPath = __dirname + '/../../db/projects';
 
-var isOnClient = function() {
-    return (fs == null || fs.readFile == null);
-};
+
 
 class Model extends base.Model {
 
@@ -22,7 +20,7 @@ class Model extends base.Model {
     }
 
     setBody() {
-        if (isOnClient()) {
+        if (this.isOnClient()) {
 
         } else {
             fs.readFile(`${dbPath}/show/${this.get('id')}.md`, 'utf-8', (err, data) => {
@@ -44,66 +42,70 @@ class Collection extends base.Collection {
 
         super(options);
         this.model = Model;
-        this.url = '/api/v1/projects';
+        this.baseUrl = '/api/v1/projects';
 
     }
 
-    resetToRandom() {
-        var randomIndex, randomModel;
-        randomIndex = Math.floor(Math.random() * this.models.length);
-        randomModel = this.models[randomIndex];
-        this.reset([randomModel]);
-    }
-
-    fetch(query, options) {
+    getFetchPromise(query, options) {
 
         var shouldGetRandom = false,
             randomModel,
             randomIndex;
 
-        // if on client
-        if (isOnClient()) {
+        return new Promise((resolve, reject) => {
 
-            super.fetch(query, options);
+            // if on client, fetch using API url and resolve on reset.
+            if (this.isOnClient()) {
 
-        } else {
-
-            fs.readFile(`${dbPath}/index.json`, 'utf-8', (err, data) => {
-
-                var filteredCollection;
-                if (err) {
-                    return console.dir(err);
-                }
-
-                data = JSON.parse(data);
-                this.reset(data);
-
-                if (query == null) {
-                    return this.trigger('fetched');
-                }
-
-                if (query.id === 'random') {
-                    delete query.id;
-                    shouldGetRandom = true;
-                }
-
-                this.reset(this.where(query));
-
-                if (query.id == null && !shouldGetRandom) {
-                	return this.trigger('fetched');
-                }
-
-                if (shouldGetRandom) {
-                    this.resetToRandom();
-                }
-
-                this.models[0].setBody();
-                this.models[0].on('change', () => {
-                    this.trigger('fetched')
+                this.setUrl(query);
+                this.fetch();
+                this.on('reset', () => {
+                    return resolve(this);
                 });
 
-            });
-        }
+            // if on server, retrieve from file system.
+            } else {
+
+                fs.readFile(`${dbPath}/index.json`, 'utf-8', (err, data) => {
+
+                    var filteredCollection;
+
+                    if (err) {
+                        return reject(err);
+                    }
+
+                    data = JSON.parse(data);
+                    this.reset(data);
+
+                    if (query == null) {
+                        return resolve(this);
+                    }
+
+                    if (query.id === 'random') {
+                        delete query.id;
+                        shouldGetRandom = true;
+                    }
+
+                    this.reset(this.where(query));
+
+                    if (query.id == null && !shouldGetRandom) {
+                        return resolve(this);
+                    }
+
+                    if (shouldGetRandom) {
+                        this.resetToRandom();
+                    }
+
+                    this.models[0].setBody();
+                    this.models[0].on('change', () => {
+                        return resolve(this);
+                    });
+
+                });
+            }
+
+        });
+
     }
 
 }

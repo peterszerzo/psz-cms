@@ -18,9 +18,10 @@ router.get('/', function(req, res) {
 	sanitizeQuery(query);
 
 	var coll = new project.Collection();
-	coll.fetch(query);
 
-	coll.on('fetched', () => {
+	var promise = coll.getFetchPromise(query);
+
+	promise.then((coll) => {
 		return res.json(coll.toJSON());
 	});
 

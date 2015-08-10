@@ -44,6 +44,12 @@ gulp.task('bundle-simple', shell.task([
 	'browserify app/bundle.js -t babelify --outfile public/scripts/bundle.js --insert-globals --ignore fs'
 ]));
 
+gulp.task('uglify-bundle', function() {
+	gulp.src('./public/scripts/bundle.js')
+		.pipe(uglify())
+		.pipe(gulp.dest('./public/scripts'));
+});
+
 gulp.task('dev', function() {
 	nodemon({
 		script: './app.js',
@@ -51,3 +57,5 @@ gulp.task('dev', function() {
 		tasks: [ 'style', 'bundle-simple' ]
 	}).on('restart', function() { console.log('restarted'); });
 });
+
+gulp.task('deploy', [  ]);
