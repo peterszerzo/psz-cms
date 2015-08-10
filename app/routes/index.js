@@ -30,7 +30,7 @@ router.get('/things', function(req, res) {
 	 	var category = req.query.category || 'all',
 	 		html = React.renderToString(layoutFactory({ route: route, projects: coll.toJSON(), category: category }));
 	 	res.render('projects/index.jade', { reactOutput: html });
-	});
+	}, () => { res.redirect('/'); });
 	
 });
 
@@ -45,7 +45,7 @@ router.get('/things/:id', function(req, res) {
 		var project = coll.models[0];
 		var html = React.renderToString(layoutFactory({ route: route, project: project.toJSON() }));
 		res.render('projects/index.jade', { reactOutput: html });
-	});
+	}, () => { res.redirect('/'); });
 
 });
 

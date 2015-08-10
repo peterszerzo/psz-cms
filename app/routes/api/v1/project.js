@@ -23,7 +23,7 @@ router.get('/', function(req, res) {
 
 	promise.then((coll) => {
 		return res.json(coll.toJSON());
-	});
+	}, () => { return res.json([]); });
 
 });
 
