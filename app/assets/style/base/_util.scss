@@ -17,19 +17,25 @@
 .title, .subtitle {
 	text-align: center;
 	padding: 0 10%;
+	width: 100%;
+	word-wrap: break-word;
 }
 
 .title {
-	font-size: 54px;
+	font-size: 40px;
+	@media screen and (min-width: 600px) {
+		font-size: 54px;
+	}
 	margin-top: 180px;
 	margin-bottom: 15px;
 }
 
 .subtitle {
-	// &:before, &:after { content: '--'; padding: 0 15px; }
+	font-size: 28px;
+	@media screen and (min-width: 600px) {
+		font-size: 38px;
+	}
 	opacity: 0.50;
-	// text-transform: lowercase;
-	font-size: 34px;
 	font-weight: normal;
 	margin-top: 20px;
 	margin-bottom: 60px;

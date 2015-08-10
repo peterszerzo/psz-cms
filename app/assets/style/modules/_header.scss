@@ -4,7 +4,6 @@
 	position: fixed;
 	width: 100%;
 	height: 80px;
-	display: table;
 	top: 0;
 	background-color: rgba(get-color(base), 0.93);
 	color: white;
@@ -12,15 +11,16 @@
 
 	&__main-link {
 
-		display: table-cell;
-		text-align: center;
-		vertical-align: middle;
-
+		height: 100%;
 		width: 150px;
-		font-size: 24px;
-		font-family: 'Hallo';
 
-		svg { height: 50px; width: 50px; padding-top: 8px; fill: white; }
+		svg { 
+			height: 40px; 
+			width: 40px; 
+			margin-top: 23px; 
+			margin-left: 30px;
+			fill: white; 
+		}
 	}
 
 	&__nav {

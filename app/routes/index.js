@@ -60,7 +60,7 @@ router.get('/dev/terrain', function(req, res) {
 
 router.post('/dev/save', function(req, res) {
 	fs.writeFile('public/data/geo/geo.json', req.body.geo, function(err) {
-		if (err) { throw err; }
+		if (err) { return console.dir(err); }
 		console.log('save successful!');
 	});
 });

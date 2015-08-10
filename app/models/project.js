@@ -25,7 +25,7 @@ class Model extends base.Model {
         } else {
             fs.readFile(`${dbPath}/show/${this.get('id')}.md`, 'utf-8', (err, data) => {
                 if (err) {
-                    console.dir(err);
+                    console.log(`Data file not found for project with id ${this.get('id')}.`);
                     data = '';
                 }
                 this.set('bodyText', data);
