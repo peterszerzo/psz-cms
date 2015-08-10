@@ -1,10 +1,8 @@
-I spent some time thinking up some coding patterns that made my recent interactive mapping code less bulky, more modular, and all in all more fun to write and maintain. Finally, I extracted and collected them into this blog post. For those of you looking to see live, breathing code, this [demo project](https://github.com/pickled-plugins/scaling-tricks-for-geo) sums things up in a somewhat unpolished nutshell.
-
-Some topics I touch on:
+I spent some time thinking up some software tricks that made my recent interactive mapping code less bulky, more modular, and all in all more fun to write and maintain. Finally, I extracted and collected them into this blog post. For those of you looking to see live, breathing code, this [demo project](https://github.com/pickled-plugins/scaling-tricks-for-geo) sums things up in a somewhat unpolished nutshell. Otherwise, help yourselves right below for a couple of ideas on the following topics:
 * a focused look at interactive data visualizations within larger front-end architectures.
 * a smarter flavor of geodata that reintroduces featureful data models inside interactive map views.
 * a scetch of a visualization lifecycle that works the same way for various forms of displayable data, whether they need additional shape files loaded or not.
-* a word on visualization.
+* a structure for rendering code that works with all of the above.
 
 The technology stack: [d3.js](http://d3js.org/) render using [Backbone.js](http://backbonejs.org/) data models, carried over into [GeoJSON](http://geojson.org/) format. That said, the ideas and code samples from this post may work well with other MV* frameworks or in [React](http://facebook.github.io/react/) apps, and especially as lightweight helpers if you don't use a framework at all. In fact, the [project](http://atlas.newamerica.org) that first used patterns from this blog post is in transition to React, so there is a good chance I may follow up with specifics.
 
@@ -53,6 +51,7 @@ If we look at a sample rendering code, we see how easily we retrieve these refer
 		.data(geoJson.features)
 		.enter()
 		.append('path')
+		// insert code here that assigns 'd' attributes on the path based on feature geometry data
 		.attr('class', function(feature) {
 			var model = feature._model;
 			/* Hello, model! */
@@ -66,7 +65,7 @@ To facilitate smuggling, or more formally, injecting model references into a Geo
 
 I was very excited to find that ``d3`` is so welcoming to smarter objects like this, so I went ahead and enhanced them some more. Could a build-in event system be useful? Anything else? Let's find out.
 
-## The Self-sufficient GeoModel
+### The Self-sufficient GeoModel
 
 Let's think through the process of mapping some datasets with some ``new stg.RichGeoJSON()``'s. First up:
 
@@ -232,7 +231,7 @@ Putting all the pieces together, here is how a map pin visualization could look 
 
 	}());
 
-Note that this is by no means polished code. On actual applications, I moved all logic generating ``richGeoJson`` into an instance method on the collection. Generating the view ended up in a controller module. The API changed a little bit to conform to make things more consistent across a larger codebase. My goal was not presenting a library, perhaps just a few ideas on how one could be created, if a formalized version makes sense for your project. In this example, extending the view from a handy, well-documented base class would undoubtedly make things a bit more clear. This could become an open-source miniproject, and if you're interested in having it around, please let me know.
+Note that this is by no means polished code. On actual applications, I moved all logic generating ``richGeoJson`` into an instance method on the collection. Generating the view ended up in a controller module. The API changed a little bit to conform to make things more consistent across a larger codebase. My goal here is not to present a library, perhaps just a few ideas on how one could be created, if a formalized version makes sense for your project. In this example, extending the view from a handy, well-documented base class would undoubtedly make things a bit more clear. This could become an open-source miniproject, and if you're interested in having it around, please let me know.
 
 # So, Worth it?
 

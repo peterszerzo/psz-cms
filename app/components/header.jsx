@@ -32,11 +32,11 @@ class Header extends React.Component {
 
 	getList() {
 		var activeCategory = this.props.category;
-		return this.state.buttons.reverse().map(function(button) {
+		return this.state.buttons.reverse().map(function(button, index) {
 			var isActive = (button.name === activeCategory),
 				className = 'header__nav__item' + (isActive ? ' header__nav__item--active' : '');
 			return (
-				<li className={className}>
+				<li className={className} key={index} >
 					<a href={ button.url }>{ button.name }</a>
 				</li>
 			);

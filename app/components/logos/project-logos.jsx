@@ -280,30 +280,30 @@ Logos.PendantProject = class extends React.Component {
 					<circle cx="200" cy="200" r="199.221"/>
 				</g>
 				<g class="Layer_1">
-					<path style={noFill} stroke="#FFFFFF" strokeWidth="6" stroke-linecap="round" stroke-linejoin="round" d="M220.925,184.943
+					<path style={noFill} stroke="#FFFFFF" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" d="M220.925,184.943
 						c23.577,18.514,24.397,51.755,1.665,71.585c-19.776,17.252-50.489,18.067-71.004,1.954c-23.569-18.508-24.396-51.736-1.674-71.57
 						C169.687,169.65,200.403,168.831,220.925,184.943z"/>
-					<path style={noFill} stroke="#FFFFFF" strokeWidth="6" stroke-linecap="round" stroke-linejoin="round" d="M196.037,170.955
+					<path style={noFill} stroke="#FFFFFF" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" d="M196.037,170.955
 						c-1.807-0.762-2.893-2.84-1.526-4.677c1.14-1.538,3.315-1.839,4.886-1.179c1.806,0.76,2.889,2.838,1.523,4.676
 						C199.782,171.311,197.605,171.613,196.037,170.955z"/>
 					<g>
-						<path style={noFill} stroke="#FFFFFF" strokeWidth="6" stroke-linecap="round" stroke-linejoin="round" d="M171.863,284.825
+						<path style={noFill} stroke="#FFFFFF" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" d="M171.863,284.825
 							c16.347,3.116,33.791,0.683,48.812-7.394c14.849-7.984,27.735-21.891,32.384-40.346"/>
-						<path style={noFill} stroke="#FFFFFF" strokeWidth="6" stroke-linecap="round" stroke-linejoin="round" d="M253.059,237.086
+						<path style={noFill} stroke="#FFFFFF" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" d="M253.059,237.086
 							c0.472-1.866,0.848-3.747,1.132-5.66"/>
-						<path style={noFill} stroke="#FFFFFF" strokeWidth="6" stroke-linecap="round" stroke-linejoin="round" d="M254.19,231.426
+						<path style={noFill} stroke="#FFFFFF" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" d="M254.19,231.426
 							c4.262-28.69-13.045-52.307-35.023-63.1c-21.759-10.688-48.329-9.756-69.396,2.621c-21.356,12.544-36.807,37.58-30.393,65.835
 							c6.191,27.265,29.6,43.68,52.484,48.043"/>
 					</g>
 					<g class="ring_2_">
-						<path style={noFill} stroke="#FFFFFF" strokeWidth="6" stroke-linecap="round" stroke-linejoin="round" d="M200.442,165.75
+						<path style={noFill} stroke="#FFFFFF" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" d="M200.442,165.75
 							c-0.381,0.887-0.761,1.738-1.38,2.471c-0.96,1.131-1.366,0.195-1.421-1.09c-0.09-2.012,0.308-3.859,0.767-5.759
 							c0.457-1.894,1.02-3.712,1.818-5.468c0.401-0.881,0.736-1.737,1.504-2.367c1.072-0.883,1.134,0.857,1.129,1.842"/>
-						<path style={noFill} stroke="#FFFFFF" strokeWidth="6" stroke-linecap="round" stroke-linejoin="round" d="M202.858,155.38
+						<path style={noFill} stroke="#FFFFFF" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" d="M202.858,155.38
 							c-0.015,2.463-0.558,4.712-1.229,7.009"/>
 					</g>
 					<g class="thread_2_">
-						<path style={noFill} stroke="#FFFFFF" strokeWidth="6" stroke-linecap="round" stroke-linejoin="round" d="M202.271,56.238
+						<path style={noFill} stroke="#FFFFFF" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" d="M202.271,56.238
 							c-11.322,3.758-21.878,8.106-31.541,16.229c-9.901,8.324-15.77,18.926-14.083,33.445c1.423,12.248,7.885,25.613,15.302,34.445
 							c4.705,5.607,10.041,9.848,15.988,13.584c4.336,2.725,8.421,5.271,13.658,5.673c4.776,0.368,8.763-1.142,12.967-3.229
 							c6.592-3.271,12.609-7.555,18.754-11.663c9.995-6.679,19.967-13.262,30.668-18.545c5.907-2.915,12.074-5.029,17.597-9.055

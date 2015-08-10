@@ -68,6 +68,6 @@ Luckily, our competent intern Jessica has been making progress prototyping React
 
 ## August 2015
 
-All Marionette modules move over to React. We learn an important lesson: React encourages more encapsulation, better defined data flow direction and simpler to follow messaging patterns than Marionette's modules. The plan becomes to use Marionette more sparingly, but not eliminate it completely.
+All Marionette modules move over to React. We learn an important lesson: React encourages more encapsulation, crystal-clear data flow and simpler messaging patterns than Marionette's modules. This is not to say the same is not possible in Marionette, it's just more tempting to take shortcuts that introduce wild couplings, shortcuts of which we discovered a few. The plan becomes to use Marionette more sparingly and only as a global messaging system.
 
-Taking a step back, we learn another important lesson: updating technologies does wonders to code quality. Feeling motivated to keep doing that as frequently as possible.
+There is another lesson another step further back: updating technologies - especially to the ones we like - does wonders to code quality. Feeling motivated to keep doing that as frequently as possible.

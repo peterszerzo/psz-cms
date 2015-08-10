@@ -37,7 +37,7 @@ Projects.Index.List = class extends React.Component {
 
 	renderList() {
 		return this.props.projects.map((project, index) => {
-			return <Projects.Index.List.Item project={project} category={this.props.category} />;
+			return <Projects.Index.List.Item project={project} category={this.props.category} key={index} />;
 		});
 	}
 
@@ -138,7 +138,7 @@ Projects.Show.Item = class extends React.Component {
 		if (dates == null) { return; }
 		formattedDates = dates.map(function(date) {
 			if (date === 'present') { return date; }
-			return moment(date).format('MMMM YYYY');
+			return moment(date, 'YYYY-MM').format('MMMM YYYY');
 		});
 		content = formattedDates.join(' - ');
 		return (
