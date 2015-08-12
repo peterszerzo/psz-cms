@@ -1660,19 +1660,23 @@ var Model = (function (_base$Model) {
             }
         }
     }, {
-        key: 'setBody',
-        value: function setBody() {
+        key: 'getSetBodyPromise',
+        value: function getSetBodyPromise() {
             var _this = this;
 
-            if (this.isOnClient()) {} else {
-                fs.readFile(dbPath + '/show/' + this.get('id') + '.md', 'utf-8', function (err, data) {
-                    if (err) {
-                        console.log('Data file not found for project with id ' + _this.get('id') + '.');
-                        data = '';
-                    }
-                    _this.set('bodyText', data);
-                });
-            }
+            return new Promise(function (resolve, reject) {
+
+                if (_this.isOnClient()) {} else {
+                    fs.readFile(dbPath + '/show/' + _this.get('id') + '.md', 'utf-8', function (err, data) {
+                        if (err) {
+                            console.log('Data file not found for project with id ' + _this.get('id') + '.');
+                            data = '';
+                        }
+                        _this.set('bodyText', data);
+                        resolve();
+                    });
+                }
+            });
         }
     }]);
 
@@ -1697,7 +1701,8 @@ var Collection = (function (_base$Collection) {
 
             var shouldGetRandom = false,
                 randomModel,
-                randomIndex;
+                randomIndex,
+                promise;
 
             return new Promise(function (resolve, reject) {
 
@@ -1743,9 +1748,9 @@ var Collection = (function (_base$Collection) {
                                 _this2.resetToRandom();
                             }
 
-                            _this2.models[0].setBody();
-                            _this2.models[0].on('change', function () {
-                                return resolve(_this2);
+                            promise = _this2.models[0].getSetBodyPromise();
+                            promise.then(function () {
+                                resolve(_this2);
                             });
                         });
                     }

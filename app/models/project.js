@@ -19,18 +19,24 @@ class Model extends base.Model {
         }
     }
 
-    setBody() {
-        if (this.isOnClient()) {
+    getSetBodyPromise() {
 
-        } else {
-            fs.readFile(`${dbPath}/show/${this.get('id')}.md`, 'utf-8', (err, data) => {
-                if (err) {
-                    console.log(`Data file not found for project with id ${this.get('id')}.`);
-                    data = '';
-                }
-                this.set('bodyText', data);
-            });
-        }
+        return new Promise((resolve, reject) => {
+
+            if (this.isOnClient()) {
+
+            } else {
+                fs.readFile(`${dbPath}/show/${this.get('id')}.md`, 'utf-8', (err, data) => {
+                    if (err) {
+                        console.log(`Data file not found for project with id ${this.get('id')}.`);
+                        data = '';
+                    }
+                    this.set('bodyText', data);
+                    resolve();
+                });
+            }
+
+        });
 
     }
 
@@ -50,7 +56,8 @@ class Collection extends base.Collection {
 
         var shouldGetRandom = false,
             randomModel,
-            randomIndex;
+            randomIndex,
+            promise;
 
         return new Promise((resolve, reject) => {
 
@@ -96,9 +103,9 @@ class Collection extends base.Collection {
                         this.resetToRandom();
                     }
 
-                    this.models[0].setBody();
-                    this.models[0].on('change', () => {
-                        return resolve(this);
+                    promise = this.models[0].getSetBodyPromise();
+                    promise.then(() => {
+                        resolve(this);
                     });
 
                 });
