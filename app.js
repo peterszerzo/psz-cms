@@ -2,6 +2,8 @@ require('babel/register')({
 	extensions: [ '.jsx', '.js' ]
 });
 
+require('longjohn');
+
 var pingHeroku = require('./misc/ping_heroku'),
 	express = require('express'),
 	app = express(),
