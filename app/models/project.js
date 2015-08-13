@@ -25,6 +25,8 @@ class Model extends base.Model {
 
             if (this.isOnClient()) {
 
+                resolve();
+
             } else {
                 fs.readFile(`${dbPath}/show/${this.get('id')}.md`, 'utf-8', (err, data) => {
                     if (err) {
