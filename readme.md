@@ -1,5 +1,17 @@
 # peterszerzo.com
 
-### Deploy Issues
+My new personal website.
 
-http://stackoverflow.com/questions/18406721/heroku-does-not-appear-to-be-a-git-repository
+## Story
+
+### November 2014
+
+Projects listing page design.
+
+### December 2014
+
+First experiments to create front page animation (not intended for a front page animation yet).
+
+### July 2015
+
+Move to React.js.

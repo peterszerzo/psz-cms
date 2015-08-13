@@ -1,6 +1,6 @@
 {
   "name": "peterszerzo.com",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "portfolio website",
   "main": "gulpfile.js",
   "directories": {
@@ -45,7 +45,6 @@
     "backbone": "^1.2.1",
     "body-parser": "^1.12.4",
     "d3": "^3.5.6",
-    "ejs": "^2.3.1",
     "express": "^4.13.3",
     "jade": "^1.9.2",
     "jquery": "^2.1.4",
