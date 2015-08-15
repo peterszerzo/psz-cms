@@ -54,9 +54,9 @@ router.get('/about', function(req, res) {
 });
 
 // Development routes
-router.get('/dev/terrain', function(req, res) {
-	res.render('terrain-graphics.jade');
-});
+// router.get('/dev/terrain', function(req, res) {
+// 	res.render('terrain-graphics.jade');
+// });
 
 router.post('/dev/save', function(req, res) {
 	fs.writeFile('public/data/geo/geo.json', req.body.geo, function(err) {

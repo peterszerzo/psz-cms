@@ -26,7 +26,6 @@ class Banner extends React.Component {
 				<ul className="banner__summary">
 					{ this._renderList() }
 				</ul>
-				<div className="banner__notice"></div>
 				<div className="banner__message">hey, welcome! let me surprise you</div>
 			</div>
 		);

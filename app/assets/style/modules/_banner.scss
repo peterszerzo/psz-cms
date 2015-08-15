@@ -60,6 +60,7 @@
 	}
 
 	&__message {
+		display: none;
 		position: absolute;
 		bottom: 5%;
 		color: white;
@@ -76,6 +77,7 @@
 		fill: white;
 		stroke-width: 0.2px;
 		&--active, &:hover {
+			opacity: 1;
 			transition: opacity 0.2s ease-in-out;
 		}
 	}

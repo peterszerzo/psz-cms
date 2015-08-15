@@ -1,13 +1,20 @@
-var $ = require('jquery'),
+var React = require('react'),
 	Backbone = require('backbone'),
+	$ = require('jquery'),
+	Router = require('react-router'),
 	Layout = require('./components/layout.jsx'),
+	routes = require('./components/routes.jsx'),
 	models = require('./models/index.js'),
-	routes = require('./routes/routes.js'),
 	globe = require('./assets/script/globe.js'),
 	geoJsonGenerator = require('./assets/script/geojson_generator.js'),
 	init = require('./assets/script/init.js');
 
-module.exports = {
+global.$ = $;
+global.Router = Router;
+global.Backbone = Backbone;
+
+global.psz = {
+	React: React,
 	Layout: Layout,
 	routes: routes,
 	models: models,
@@ -16,6 +23,6 @@ module.exports = {
 	globe: globe
 };
 
-global.$ = $;
-global.Backbone = Backbone;
-global.psz = module.exports;
+Router.run(routes, Router.HistoryLocation, (Root) => {
+	React.render(<Root />, global.document.body);
+});

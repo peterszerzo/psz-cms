@@ -42,6 +42,7 @@ module.exports = function(selector) {
 				pt2 = coordinates[1],
 				pt3 = coordinates[2];
 
+			// return difference between dot products
 			var prod = (pt2[0] - pt1[0]) * (pt2[1] - pt1[1]) + (pt3[0] - pt2[0]) * (pt3[1] - pt2[1]);
 			return (prod > 0);
 		};

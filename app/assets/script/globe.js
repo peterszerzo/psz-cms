@@ -1,5 +1,5 @@
-var $ = require('jquery'),
-    d3 = require('d3');
+var d3 = require('d3'),
+    Eye = require('./eye.js');
 
 /*
  * Globe animation module.
@@ -13,66 +13,28 @@ module.exports = function(selector, fileName) {
         selector: selector
     };
 
-    var $message = $('.banner__message');
-
     self.start = function() {
 
-        var $el, draw, eye, height, long, lat, svg, width;
+        var draw, eye, height, long, lat, svg, width;
 
         var latScale, longScale;
 
-        $message.hide();
-
-        $el = $(self.selector);
-        width = $el.width();
-        height = $el.height();
+        width = window.innerWidth;
+        height = window.innerHeight;
         svg = void 0;
 
         longScale = d3.scale.linear().domain([0, width]).range([-180, 180]);
         latScale = d3.scale.linear().domain([0, height]).range([90, -90]);
 
-        var periodModifier = 2,
-            amplitudeModifier = 2;
-
-        eye = {
-            position: [ 0, 0 ],
-            velocity: [ amplitudeModifier * periodModifier, amplitudeModifier * periodModifier / 2 ],
-            springConstant: [ periodModifier / 35, periodModifier / 70 ],
-            updateByMouse: function(context) {
-                var p;
-                p = d3.mouse(context);
-                this.long = -longScale(p[0]);
-                return this.lat = -latScale(p[1]);
-            },
-            updateConstant: function(dLong, dLat) {
-                this.long += dLong;
-                return this.lat += dLat;
-            },
-            updateHarmonic: function() {
-                this._updateHarmonicVelocity();
-                this._updateHarmonicPosition();
-            },
-            _updateHarmonicVelocity: function() {
-                this.velocity[0] -= this.position[0] * this.springConstant[0] * timeStep;
-                this.velocity[1] -= this.position[1] * this.springConstant[1] * timeStep;
-            },
-            _updateHarmonicPosition: function() {
-                this.position[0] += this.velocity[0] * timeStep;
-                this.position[1] += this.velocity[1] * timeStep;
-            }
-        };
+        eye = new Eye();
 
         var updateDimensions = function() {
-            width = $el.width();
-            height = $el.height();
+            width = window.innerWidth;
+            height = window.innerHeight;
             return svg.attr({
                 width: width,
                 height: height
             });
-        };
-
-        var updateEye = function() {
-            return eye.updateHarmonic(0.2, 0.2);
         };
 
         /*
@@ -95,9 +57,6 @@ module.exports = function(selector, fileName) {
                 },
                 'class': function(feature) {
                     var cls = 'banner__geopath';
-                    // if (feature._isActive === true) {
-                    //     cls += ' banner__geopath--active'
-                    // }
                     return cls; 
                 },
                 opacity: getFeatureOpacity
@@ -105,26 +64,18 @@ module.exports = function(selector, fileName) {
         };
 
         var update = function() {
-            eye.updateHarmonic();
+            eye.updateHarmonic(timeStep);
             updateGeoPaths();
         };
 
         var draw = function(data) {
             svg = d3.select('.banner__globe').append('svg');
             updateDimensions();
-            $(window).on('resize', updateDimensions);
+            window.addEventListener('resize', updateDimensions);
             svg.selectAll('path')
                 .data(data.features)
                 .enter()
                 .append('path')
-                .on('mouseenter', function(feature) {
-                    feature._isActive = true
-                    //$message.show();
-                })
-                .on('mouseleave', function(feature) {
-                    feature._isActive = false
-                    //$message.hide();
-                })
                 .on('click', function(feature) {
                     window.location.assign('/things/random');
                 });
@@ -192,7 +143,7 @@ module.exports = function(selector, fileName) {
     };
 
     self.stop = function() {
-        return $(window).off('resize, updateDimensions');
+        return window.removeEventListener('resize', updateDimensions);
     };
     
     return self;

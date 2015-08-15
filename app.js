@@ -12,6 +12,8 @@ var pingHeroku = require('./misc/ping_heroku'),
  
 // setInterval(pingHeroku, 5 * 60 * 1000);
 
+require('./app/components/routes.jsx');
+
 app.set('views', __dirname + '/app/views');
 app.set('view engine', 'jade');
 
