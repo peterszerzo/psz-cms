@@ -1,3 +1,6 @@
+# Rhino script to convert a latitude-longitude plane drawing into a
+#   GeoJson. Many features only work for triangles.
+
 import math
 import string
 import json
@@ -18,9 +21,8 @@ def ensure_counter_clockwise_triangle(coordinates):
 		coordinates[1], coordinates[2] = coordinates[2], coordinates[1]
 	return coordinates
 
-# Returns polyline coordinates, assuming it is closed.
-#   (last coordinate is deleted)
-def get_closed_polyline_coordinates(polyline):
+# Returns polyline coordinates.
+def get_polyline_coordinates(polyline):
 	coordinates = []
 	pts = rs.CurvePoints(polyline)
 	for pt in pts:
@@ -31,14 +33,24 @@ def get_closed_polyline_coordinates(polyline):
 	ensure_counter_clockwise_triangle(coordinates)
 	return coordinates
 
+def set_feature_centroid_cache(feature):
+	coord = feature['geometry']['coordinates'][0];
+	x = (coord[0][0] + coord[1][0] + coord[2][0]) / 3
+	y = (coord[0][1] + coord[1][1] + coord[2][1]) / 3
+	feature['geometry']['_centroid_cache'] = [ x, y ]
+
+
 def get_feature(item):
-	return {
+	# Note the extra array wrapper for GeoJson
+	feature = {
 		'type': 'Feature',
 		'geometry': {
 			'type': 'Polygon',
-			'coordinates': [ get_closed_polyline_coordinates(item) ]
+			'coordinates': [ get_polyline_coordinates(item) ]
 		}
 	}
+	set_feature_centroid_cache(feature)
+	return feature
 
 def get_feature_collection(base_layer):
 	feature_collection = {

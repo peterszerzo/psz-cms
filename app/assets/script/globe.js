@@ -6,10 +6,9 @@ var d3 = require('d3'),
  * Globe animation module.
  * @returns {object} self - Module object with public API.
  */
-module.exports = function(selector, fileName) {
+module.exports = function(fileName) {
 
     var self = {
-        selector: selector,
         timeStep: 0.02,
         width: 0,
         height: 0,
@@ -17,15 +16,13 @@ module.exports = function(selector, fileName) {
         eye: undefined
     };
 
-    self.setDimensions = function() {
-        self.width = window.innerWidth;
-        self.height = window.innerHeight;
-        if (self.svg) {
-            self.svg.attr({
-                width: window.innerWidth,
-                height: window.innerHeight
-            });
-        }
+    self.start = function() {
+        self.setup();
+        d3.json('data/geo/' + fileName, self.draw);
+    };
+
+    self.stop = function() {
+        return window.removeEventListener('resize', self.setDimensions);
     };
 
     self.setup = function() {
@@ -35,88 +32,96 @@ module.exports = function(selector, fileName) {
         window.addEventListener('resize', self.setDimensions);
     };
 
+    self.tearDown = function() {
+        if (self.animationIntervalId) {
+            clearInterval(self.animationIntervalId);
+        }
+        window.removeEventListener('resize', self.setDimensions);
+    };
+
+    self.draw = function(error, data) {
+        self.svg.selectAll('path')
+            .data(data.features)
+            .enter()
+            .append('path')
+            .on('click', function(feature) {
+                window.location.assign('/things/random');
+            });
+        self.updateGeoPaths();
+        self.animationIntervalId = setInterval(self.update, self.timeStep * 1000);
+    };
+
+    self.setDimensions = function() {
+        self.width = window.outerWidth;
+        self.height = window.outerHeight;
+        if (self.svg) {
+            self.svg.attr({
+                width: window.outerWidth,
+                height: window.outerHeight
+            });
+        }
+    };
+
     /*
      * @returns {object} path
      */
     self.getPath = function() {
-        var path, projection;
-        projection = d3.geo.orthographic().scale(self.width * 0.7).rotate([0, 0, 0]).translate([self.width / 2, self.height / 2 * 1.6]);
+        var path, projection,
+            minWH = Math.min(self.width, self.height);
+        projection = d3.geo.orthographic().scale(self.width * 0.7).rotate([0, 0, 0]).translate([self.width / 2, self.height / 2 * 1.4]);
         projection.rotate([- self.eye.position[0], - self.eye.position[1]]);
         path = d3.geo.path().projection(projection);
         return path;
     };
 
-    self.start = function() {
-
-        var draw, long, lat;
-
-        var update = function() {
-            self.eye.updateHarmonic(self.timeStep);
-            updateGeoPaths();
-        };
-
-        var updateGeoPaths = function() {
-            var path;
-            path = self.getPath();
-            return self.svg.selectAll('path').attr({
-                d: function(feature) { 
-                    return path(feature); 
-                },
-                'class': function(feature) {
-                    var cls = 'banner__geopath';
-                    return cls; 
-                },
-                opacity: getFeatureOpacity
-            });
-        };
-
-        var draw = function(error, data) {
-            self.setup();
-            self.svg.selectAll('path')
-                .data(data.features)
-                .enter()
-                .append('path')
-                .on('click', function(feature) {
-                    window.location.assign('/things/random');
-                });
-            updateGeoPaths();
-            return setInterval(update, self.timeStep * 1000);
-        };
-
-        d3.json('data/geo/' + fileName, draw);
-
-        var getFeatureCentroid = function(feature) {
-            var i, c = [ 0, 0 ],
-                coordinates = feature.geometry.coordinates;
-            for (i = 0; i < 3; i += 1) { 
-                c[0] += coordinates[0][i][0] / 3;
-                c[1] += coordinates[0][i][1] / 3;
-            }
-            return c;
-        };
-
-        var getFeatureOpacity = function(feature) {
-            var centroid, centroidCheck, delta, deltaMax, distance, long1, lat1, op;
-            if (feature._isActive === true) { return 0.6; }
-            centroid = getFeatureCentroid(feature);
-            long1 = centroid[0];
-            lat1 =  centroid[1];
-            distance = geomUtil.getDistance(self.eye.position[0], self.eye.position[1], long1, lat1);
-            delta = distance / 2;
-            deltaMax = 0.4;
-            if (delta > deltaMax) {
-                return 0;
-            }
-            op = Math.pow((deltaMax - delta) / deltaMax, 4) * 0.7;
-            return op;
-        };
-
+    self.update = function() {
+        self.eye.updateHarmonic(self.timeStep);
+        self.updateGeoPaths();
     };
 
-    self.stop = function() {
-        return window.removeEventListener('resize', self.setDimensions);
+    self.getFeatureCentroid = function(feature) {
+        var i, c, coord;
+        // If centroid is already cached, return it.
+        if (feature.geometry['_centroid_cache']) {
+            return feature.geometry['_centroid_cache'];
+        }
+        c = [ 0, 0 ];
+        coord = feature.geometry.coordinates;
+        for (i = 0; i < 3; i += 1) { 
+            c[0] += coordinates[0][i][0] / 3;
+            c[1] += coordinates[0][i][1] / 3;
+        }
+        return c;
     };
-    
+
+    self.getFeatureOpacity = function(feature) {
+        var centroid, centroidCheck, delta, deltaMax, distance, op;
+        if (feature._isActive === true) { return 0.6; }
+        centroid = self.getFeatureCentroid(feature);
+        distance = geomUtil.getLongLatDistance(self.eye.position, centroid);
+        delta = distance / 2;
+        deltaMax = 0.4;
+        if (delta > deltaMax) {
+            return 0;
+        }
+        op = Math.pow((deltaMax - delta) / deltaMax, 3) * 0.7;
+        return op;
+    };
+
+    self.updateGeoPaths = function() {
+        var path = self.getPath();
+        return self.svg.selectAll('path').attr({
+            d: function(feature) { 
+                return path(feature); 
+            },
+            'class': function(feature) {
+                var cls = 'banner__geopath';
+                return cls; 
+            },
+            opacity: self.getFeatureOpacity
+        });
+    };
+
     return self;
 
 };
