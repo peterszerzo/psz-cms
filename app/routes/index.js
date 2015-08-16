@@ -53,16 +53,4 @@ router.get('/about', function(req, res) {
 	res.redirect('/things/about');
 });
 
-// Development routes
-// router.get('/dev/terrain', function(req, res) {
-// 	res.render('terrain-graphics.jade');
-// });
-
-router.post('/dev/save', function(req, res) {
-	fs.writeFile('public/data/geo/geo.json', req.body.geo, function(err) {
-		if (err) { return console.dir(err); }
-		console.log('save successful!');
-	});
-});
-
 module.exports = router;

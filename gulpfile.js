@@ -33,7 +33,7 @@ gulp.task('style', function() {
 gulp.task('default', [ 'style', 'script' ]);
 
 gulp.task('bundle-client', function() {
-	var b = browserify({ entries: [ './app/test_bundle.js' ] });
+	var b = browserify({ entries: [ './app/bundle.js' ] });
 	b.transform(babelify);
 	return b.bundle()
 		.pipe(source('bundle.js'))

@@ -1,11 +1,14 @@
 class Eye {
 
     constructor() {
+        
         var periodModifier = 2,
             amplitudeModifier = 2;
+
         this.position = [0, 0];
         this.velocity = [amplitudeModifier * periodModifier, amplitudeModifier * periodModifier / 2];
         this.springConstant = [periodModifier / 35, periodModifier / 70];
+
     }
     
     updateConstant(vector) {
