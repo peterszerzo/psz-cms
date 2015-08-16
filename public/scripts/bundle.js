@@ -204,7 +204,7 @@ module.exports = function (fileName) {
         if (delta > deltaMax) {
             return 0;
         }
-        op = Math.pow((deltaMax - delta) / deltaMax, 3) * 0.7;
+        op = Math.pow((deltaMax - delta) / deltaMax, 4) * 0.7;
         return op;
     };
 
@@ -232,14 +232,13 @@ module.exports = function (fileName) {
 
 var React = require('react'),
     Backbone = require('backbone'),
-
-// Router = require('react-router'),
-Layout = require('./components/layout.jsx'),
+    Router = require('react-router'),
+    Layout = require('./components/layout.jsx'),
     routes = require('./components/routes.jsx'),
     models = require('./models/index.js'),
     globe = require('./assets/script/globe.js');
 
-// global.Router = Router;
+global.Router = Router;
 global.Backbone = Backbone;
 
 global.psz = {
@@ -250,12 +249,12 @@ global.psz = {
 	globe: globe
 };
 
-// Router.run(routes, Router.HistoryLocation, (Root) => {
-// 	React.render(<Root />, global.document.body);
-// });
+Router.run(routes, Router.HistoryLocation, function (Root) {
+	React.render(React.createElement(Root, null), global.document.body);
+});
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/app/bundle.js","/app")
-},{"./assets/script/globe.js":3,"./components/layout.jsx":7,"./components/routes.jsx":11,"./models/index.js":14,"_process":23,"backbone":17,"buffer":19,"react":221}],5:[function(require,module,exports){
+},{"./assets/script/globe.js":3,"./components/layout.jsx":7,"./components/routes.jsx":11,"./models/index.js":14,"_process":23,"backbone":17,"buffer":19,"react":221,"react-router":52}],5:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 'use strict';
 
@@ -322,7 +321,7 @@ var Banner = (function (_React$Component) {
 		key: 'componentDidMount',
 		value: function componentDidMount() {
 			this.globeAnimation = globe('geo.json');
-			this.globaAnimation.start();
+			this.globeAnimation.start();
 		}
 	}, {
 		key: 'componentWillUnmount',
@@ -1098,6 +1097,9 @@ Projects.Index.List = (function (_React$Component3) {
 		value: function renderList() {
 			var _this = this;
 
+			if (!this.props.projects) {
+				return;
+			}
 			return this.props.projects.map(function (project, index) {
 				return React.createElement(Projects.Index.List.Item, { project: project, category: _this.props.category, key: index });
 			});

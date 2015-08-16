@@ -16,7 +16,7 @@ router.get('/', function(req, res) {
 	var route = routes['/'],
 		html = React.renderToString(layoutFactory({ route: route }));;
 
-	res.render('index.jade', { reactOutput: html });
+	res.render('layout.jade', { reactOutput: html });
 
 });
 
@@ -29,7 +29,7 @@ router.get('/things', function(req, res) {
 	promise.then((coll) => {
 	 	var category = req.query.category || 'all',
 	 		html = React.renderToString(layoutFactory({ route: route, projects: coll.toJSON(), category: category }));
-	 	res.render('projects/index.jade', { reactOutput: html });
+	 	res.render('layout.jade', { reactOutput: html });
 	}, () => { res.redirect('/'); });
 	
 });
@@ -44,7 +44,7 @@ router.get('/things/:id', function(req, res) {
 		if (coll.models == null || coll.models[0] == null) { return res.redirect('/'); }
 		var project = coll.models[0];
 		var html = React.renderToString(layoutFactory({ route: route, project: project.toJSON() }));
-		res.render('projects/index.jade', { reactOutput: html });
+		res.render('layout.jade', { reactOutput: html });
 	}, () => { res.redirect('/'); });
 
 });

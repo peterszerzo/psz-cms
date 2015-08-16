@@ -43,7 +43,7 @@ class Banner extends React.Component {
 
 	componentDidMount() {
 		this.globeAnimation = globe('geo.json');
-		this.globaAnimation.start();
+		this.globeAnimation.start();
 	}
 
 	componentWillUnmount() {

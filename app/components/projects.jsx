@@ -36,6 +36,7 @@ Projects.Index.List = class extends React.Component {
 	}
 
 	renderList() {
+		if (!this.props.projects) { return; }
 		return this.props.projects.map((project, index) => {
 			return <Projects.Index.List.Item project={project} category={this.props.category} key={index} />;
 		});

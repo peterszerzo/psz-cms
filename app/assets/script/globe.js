@@ -104,7 +104,7 @@ module.exports = function(fileName) {
         if (delta > deltaMax) {
             return 0;
         }
-        op = Math.pow((deltaMax - delta) / deltaMax, 3) * 0.7;
+        op = Math.pow((deltaMax - delta) / deltaMax, 4) * 0.7;
         return op;
     };
 
