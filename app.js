@@ -10,7 +10,7 @@ var pingHeroku = require('./misc/ping_heroku'),
 	router,
 	bodyParser = require('body-parser');
  
-// setInterval(pingHeroku, 5 * 60 * 1000);
+setInterval(pingHeroku, 15 * 60 * 1000);
 
 require('./app/components/routes.jsx');
 
