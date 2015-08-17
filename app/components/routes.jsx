@@ -6,7 +6,6 @@ import { history } from 'react-router/lib/History';
 
 class App extends React.Component {
 	render() {
-		console.log(this.context);
 		return (
 			<div className='wrapper fill-parent'>
 				<RouteHandler />

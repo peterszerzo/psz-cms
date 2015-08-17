@@ -286,7 +286,6 @@ var Banner = (function (_React$Component) {
 	_createClass(Banner, [{
 		key: 'render',
 		value: function render() {
-			console.log(this.props);
 			return React.createElement(
 				'div',
 				{ className: 'banner fill-parent' },
@@ -1469,7 +1468,6 @@ var App = (function (_React$Component) {
 	_createClass(App, [{
 		key: 'render',
 		value: function render() {
-			console.log(this.context);
 			return _react2['default'].createElement(
 				'div',
 				{ className: 'wrapper fill-parent' },
