@@ -1,8 +1,10 @@
-var React = require('react'),
-	Header = require('./header.jsx'),
-	marked = require('marked'),
-	moment = require('moment'),
-	Logos = require('./logos/project-logos.jsx');
+import React from 'react';
+import { Link } from 'react-router';
+import Header from './header.jsx';
+import project from './../models/project.js';
+import marked from 'marked';
+import moment from 'moment';
+import Logos from './logos/project-logos.jsx';
 
 class Projects extends React.Component {
 
@@ -15,14 +17,47 @@ class Projects extends React.Component {
 }
 
 Projects.Index = class extends React.Component {
+
+	constructor(props) {
+		super(props);
+		this.state = this.state || {};
+		this.props = this.props || {};
+	}
+
 	render() {
 		return (
 			<div>
-				<Header category={this.props.category}/>
-				<Projects.Index.List category={this.props.category} projects={this.props.projects}/>
+				<Header category={this.getCategory()}/>
+				<Projects.Index.List category={this.getCategory()} projects={this.getProjects()}/>
 			</div>
 		);
 	}
+
+	componentDidMount() {
+		var coll, promise;
+		if (this.getProjects() == null) {
+			coll = new project.Collection();
+			promise = coll.getFetchPromise({});
+			promise.then((coll) => {
+				this.setState({ projects: coll.toJSON() });
+			}, () => { console.log('promise rejected'); });
+		}
+	}
+
+	getProjects() {
+		// projects are stored in props if rendered server-side, and on the state if rendered client-side.
+		if (this.state.projects != null) { return this.state.projects; }
+		return this.props.projects;
+	}
+
+	getCategory() {
+		return this.props.category || this.props.query.category || 'all';
+	}
+
+}
+
+Projects.Index.contextTypes = {
+	router: React.PropTypes.func
 }
 
 Projects.Index.List = class extends React.Component {
@@ -36,9 +71,10 @@ Projects.Index.List = class extends React.Component {
 	}
 
 	renderList() {
-		if (!this.props.projects) { return; }
-		return this.props.projects.map((project, index) => {
-			return <Projects.Index.List.Item project={project} category={this.props.category} key={index} />;
+		var projects = this.props.projects;
+		if (!projects) { return (<img src="/images/loader/ripple.gif" />); }
+		return projects.map((project, index) => {
+			return <Projects.Index.List.Item project={project} category={this.props.category || 'all'} key={index} />;
 		});
 	}
 
@@ -51,12 +87,12 @@ Projects.Index.List.Item = class extends React.Component {
 			cls = this.shouldDisplay() ? '' : 'hidden';
 		return (
 			<li className={cls}>
-				<a className="project" href={'/things/' + project.id}>
+				<Link className="project" to={'/things/' + project.id}>
 					{ this.renderBackground() }
 					{ this.renderOldBackgroundImage() }
 					{ this.renderNewBackgroundImage() }
 					<div className="project__title">{project.name}</div>
-				</a>
+				</Link>
 			</li>
 		);
 	}
@@ -108,13 +144,35 @@ Projects.Index.List.Item = class extends React.Component {
 
 Projects.Show = class extends React.Component {
 
+	constructor(props) {
+		super(props);
+		this.state = this.state || {};
+		this.props = this.props || {};
+	}
+
 	render() {
+		var project = this.getProject();
 		return (
 			<div>
 				<Header/>
-				<Projects.Show.Item project={this.props.project}/>
+				<Projects.Show.Item project={ project }/>
 			</div>
 		);
+	}
+
+	componentDidMount() {
+		var coll, promise;
+		if (this.getProject() == null) {
+			coll = new project.Collection();
+			promise = coll.getFetchPromise({ id: this.props.params.id });
+			promise.then((coll) => {
+				this.setState({ project: coll.models[0].toJSON() });
+			}, () => { console.log('promise rejected'); });
+		}
+	}
+
+	getProject() {
+		return this.state.project || this.props.project;
 	}
 
 }
@@ -122,9 +180,17 @@ Projects.Show = class extends React.Component {
 Projects.Show.Item = class extends React.Component {
 
 	render() {
+		var project = this.props.project;
+		if (project == null) {
+			return (
+				<div className='projects'>
+					<img src="/images/loader/ripple.gif" />
+				</div>
+			);
+		}
 		return (
-			<div>
-				<h1 className="title">{this.props.project.title}</h1>
+			<div className="fill-parent">
+				<h1 className="title">{project.title}</h1>
 				{ this.renderSubtitle() }
 				{ this.renderDates() }
 				{ this.renderUrl() }

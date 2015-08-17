@@ -286,6 +286,7 @@ var Banner = (function (_React$Component) {
 	_createClass(Banner, [{
 		key: 'render',
 		value: function render() {
+			console.log(this.props);
 			return React.createElement(
 				'div',
 				{ className: 'banner fill-parent' },
@@ -344,12 +345,21 @@ var _createClass = (function () { function defineProperties(target, props) { for
 
 var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var React = require('react'),
-    Buttons = require('./logos/buttons.jsx');
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _logosButtonsJsx = require('./logos/buttons.jsx');
+
+var _logosButtonsJsx2 = _interopRequireDefault(_logosButtonsJsx);
+
+var _reactRouter = require('react-router');
 
 var Header = (function (_React$Component) {
 	_inherits(Header, _React$Component);
@@ -374,22 +384,22 @@ var Header = (function (_React$Component) {
 		}, {
 			name: '..about',
 			url: '/things/about'
-		}];
+		}].reverse();
 	}
 
 	_createClass(Header, [{
 		key: 'getList',
 		value: function getList() {
 			var activeCategory = this.props.category;
-			return this.state.buttons.reverse().map(function (button, index) {
+			return this.state.buttons.map(function (button, index) {
 				var isActive = button.name === activeCategory,
 				    className = 'header__nav__item' + (isActive ? ' header__nav__item--active' : '');
-				return React.createElement(
+				return _react2['default'].createElement(
 					'li',
 					{ className: className, key: index },
-					React.createElement(
-						'a',
-						{ href: button.url },
+					_react2['default'].createElement(
+						_reactRouter.Link,
+						{ to: button.url },
 						button.name
 					)
 				);
@@ -398,21 +408,21 @@ var Header = (function (_React$Component) {
 	}, {
 		key: 'render',
 		value: function render() {
-			return React.createElement(
+			return _react2['default'].createElement(
 				'div',
 				{ className: 'header' },
-				React.createElement(
-					'a',
-					{ className: 'header__main-link', href: '/' },
-					React.createElement(Buttons.BackToMain, null)
+				_react2['default'].createElement(
+					_reactRouter.Link,
+					{ className: 'header__main-link', to: '/' },
+					_react2['default'].createElement(_logosButtonsJsx2['default'].BackToMain, null)
 				),
-				React.createElement(
+				_react2['default'].createElement(
 					'ul',
 					{ className: 'header__nav' },
-					React.createElement(
+					_react2['default'].createElement(
 						'li',
 						{ className: 'header__nav__arrow' },
-						React.createElement(Buttons.Arrow, null)
+						_react2['default'].createElement(_logosButtonsJsx2['default'].Arrow, null)
 					),
 					this.getList()
 				)
@@ -421,12 +431,16 @@ var Header = (function (_React$Component) {
 	}]);
 
 	return Header;
-})(React.Component);
+})(_react2['default'].Component);
+
+Header.contextTypes = {
+	router: _react2['default'].PropTypes.func
+};
 
 module.exports = Header;
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/app/components/header.jsx","/app/components")
-},{"./logos/buttons.jsx":8,"_process":23,"buffer":19,"react":221}],7:[function(require,module,exports){
+},{"./logos/buttons.jsx":8,"_process":23,"buffer":19,"react":221,"react-router":52}],7:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 'use strict';
 
@@ -1021,15 +1035,37 @@ var _createClass = (function () { function defineProperties(target, props) { for
 
 var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var React = require('react'),
-    Header = require('./header.jsx'),
-    marked = require('marked'),
-    moment = require('moment'),
-    Logos = require('./logos/project-logos.jsx');
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouter = require('react-router');
+
+var _headerJsx = require('./header.jsx');
+
+var _headerJsx2 = _interopRequireDefault(_headerJsx);
+
+var _modelsProjectJs = require('./../models/project.js');
+
+var _modelsProjectJs2 = _interopRequireDefault(_modelsProjectJs);
+
+var _marked = require('marked');
+
+var _marked2 = _interopRequireDefault(_marked);
+
+var _moment = require('moment');
+
+var _moment2 = _interopRequireDefault(_moment);
+
+var _logosProjectLogosJsx = require('./logos/project-logos.jsx');
+
+var _logosProjectLogosJsx2 = _interopRequireDefault(_logosProjectLogosJsx);
 
 var Projects = (function (_React$Component) {
 	_inherits(Projects, _React$Component);
@@ -1043,36 +1079,72 @@ var Projects = (function (_React$Component) {
 	_createClass(Projects, [{
 		key: 'render',
 		value: function render() {
-			return React.createElement('div', null);
+			return _react2['default'].createElement('div', null);
 		}
 	}]);
 
 	return Projects;
-})(React.Component);
+})(_react2['default'].Component);
 
 Projects.Index = (function (_React$Component2) {
 	_inherits(_class, _React$Component2);
 
-	function _class() {
+	function _class(props) {
 		_classCallCheck(this, _class);
 
-		_get(Object.getPrototypeOf(_class.prototype), 'constructor', this).apply(this, arguments);
+		_get(Object.getPrototypeOf(_class.prototype), 'constructor', this).call(this, props);
+		this.state = this.state || {};
+		this.props = this.props || {};
 	}
 
 	_createClass(_class, [{
 		key: 'render',
 		value: function render() {
-			return React.createElement(
+			return _react2['default'].createElement(
 				'div',
 				null,
-				React.createElement(Header, { category: this.props.category }),
-				React.createElement(Projects.Index.List, { category: this.props.category, projects: this.props.projects })
+				_react2['default'].createElement(_headerJsx2['default'], { category: this.getCategory() }),
+				_react2['default'].createElement(Projects.Index.List, { category: this.getCategory(), projects: this.getProjects() })
 			);
+		}
+	}, {
+		key: 'componentDidMount',
+		value: function componentDidMount() {
+			var _this = this;
+
+			var coll, promise;
+			if (this.getProjects() == null) {
+				coll = new _modelsProjectJs2['default'].Collection();
+				promise = coll.getFetchPromise({});
+				promise.then(function (coll) {
+					_this.setState({ projects: coll.toJSON() });
+				}, function () {
+					console.log('promise rejected');
+				});
+			}
+		}
+	}, {
+		key: 'getProjects',
+		value: function getProjects() {
+			// projects are stored in props if rendered server-side, and on the state if rendered client-side.
+			if (this.state.projects != null) {
+				return this.state.projects;
+			}
+			return this.props.projects;
+		}
+	}, {
+		key: 'getCategory',
+		value: function getCategory() {
+			return this.props.category || this.props.query.category || 'all';
 		}
 	}]);
 
 	return _class;
-})(React.Component);
+})(_react2['default'].Component);
+
+Projects.Index.contextTypes = {
+	router: _react2['default'].PropTypes.func
+};
 
 Projects.Index.List = (function (_React$Component3) {
 	_inherits(_class2, _React$Component3);
@@ -1086,7 +1158,7 @@ Projects.Index.List = (function (_React$Component3) {
 	_createClass(_class2, [{
 		key: 'render',
 		value: function render() {
-			return React.createElement(
+			return _react2['default'].createElement(
 				'ul',
 				{ className: 'projects' },
 				this.renderList()
@@ -1095,19 +1167,20 @@ Projects.Index.List = (function (_React$Component3) {
 	}, {
 		key: 'renderList',
 		value: function renderList() {
-			var _this = this;
+			var _this2 = this;
 
-			if (!this.props.projects) {
-				return;
+			var projects = this.props.projects;
+			if (!projects) {
+				return _react2['default'].createElement('img', { src: '/images/loader/ripple.gif' });
 			}
-			return this.props.projects.map(function (project, index) {
-				return React.createElement(Projects.Index.List.Item, { project: project, category: _this.props.category, key: index });
+			return projects.map(function (project, index) {
+				return _react2['default'].createElement(Projects.Index.List.Item, { project: project, category: _this2.props.category || 'all', key: index });
 			});
 		}
 	}]);
 
 	return _class2;
-})(React.Component);
+})(_react2['default'].Component);
 
 Projects.Index.List.Item = (function (_React$Component4) {
 	_inherits(_class3, _React$Component4);
@@ -1123,16 +1196,16 @@ Projects.Index.List.Item = (function (_React$Component4) {
 		value: function render() {
 			var project = this.props.project,
 			    cls = this.shouldDisplay() ? '' : 'hidden';
-			return React.createElement(
+			return _react2['default'].createElement(
 				'li',
 				{ className: cls },
-				React.createElement(
-					'a',
-					{ className: 'project', href: '/things/' + project.id },
+				_react2['default'].createElement(
+					_reactRouter.Link,
+					{ className: 'project', to: '/things/' + project.id },
 					this.renderBackground(),
 					this.renderOldBackgroundImage(),
 					this.renderNewBackgroundImage(),
-					React.createElement(
+					_react2['default'].createElement(
 						'div',
 						{ className: 'project__title' },
 						project.name
@@ -1147,7 +1220,7 @@ Projects.Index.List.Item = (function (_React$Component4) {
 			if (project.has_logo !== false) {
 				return;
 			}
-			return React.createElement(
+			return _react2['default'].createElement(
 				'div',
 				{ className: 'project__background' },
 				this.getInitials()
@@ -1160,7 +1233,7 @@ Projects.Index.List.Item = (function (_React$Component4) {
 		value: function renderOldBackgroundImage() {
 			var project = this.props.project;
 			return;
-			return React.createElement('img', { src: 'images/project-logos/project-logos_' + project.id + '.svg' });
+			return _react2['default'].createElement('img', { src: 'images/project-logos/project-logos_' + project.id + '.svg' });
 		}
 	}, {
 		key: 'renderNewBackgroundImage',
@@ -1170,11 +1243,11 @@ Projects.Index.List.Item = (function (_React$Component4) {
 			    name = id.split('-').map(function (word) {
 				return word[0].toUpperCase() + word.slice(1);
 			}).join(''),
-			    Comp = Logos[name];
+			    Comp = _logosProjectLogosJsx2['default'][name];
 			if (Comp == null) {
-				return React.createElement(Logos.Neutral, { className: 'project__logo' });
+				return _react2['default'].createElement(_logosProjectLogosJsx2['default'].Neutral, { className: 'project__logo' });
 			}
-			return React.createElement(Comp, { className: 'project__logo' });
+			return _react2['default'].createElement(Comp, { className: 'project__logo' });
 		}
 
 		// Get project title initials.
@@ -1202,31 +1275,55 @@ Projects.Index.List.Item = (function (_React$Component4) {
 	}]);
 
 	return _class3;
-})(React.Component);
+})(_react2['default'].Component);
 
 Projects.Show = (function (_React$Component5) {
 	_inherits(_class4, _React$Component5);
 
-	function _class4() {
+	function _class4(props) {
 		_classCallCheck(this, _class4);
 
-		_get(Object.getPrototypeOf(_class4.prototype), 'constructor', this).apply(this, arguments);
+		_get(Object.getPrototypeOf(_class4.prototype), 'constructor', this).call(this, props);
+		this.state = this.state || {};
+		this.props = this.props || {};
 	}
 
 	_createClass(_class4, [{
 		key: 'render',
 		value: function render() {
-			return React.createElement(
+			var project = this.getProject();
+			return _react2['default'].createElement(
 				'div',
 				null,
-				React.createElement(Header, null),
-				React.createElement(Projects.Show.Item, { project: this.props.project })
+				_react2['default'].createElement(_headerJsx2['default'], null),
+				_react2['default'].createElement(Projects.Show.Item, { project: project })
 			);
+		}
+	}, {
+		key: 'componentDidMount',
+		value: function componentDidMount() {
+			var _this3 = this;
+
+			var coll, promise;
+			if (this.getProject() == null) {
+				coll = new _modelsProjectJs2['default'].Collection();
+				promise = coll.getFetchPromise({ id: this.props.params.id });
+				promise.then(function (coll) {
+					_this3.setState({ project: coll.models[0].toJSON() });
+				}, function () {
+					console.log('promise rejected');
+				});
+			}
+		}
+	}, {
+		key: 'getProject',
+		value: function getProject() {
+			return this.state.project || this.props.project;
 		}
 	}]);
 
 	return _class4;
-})(React.Component);
+})(_react2['default'].Component);
 
 Projects.Show.Item = (function (_React$Component6) {
 	_inherits(_class5, _React$Component6);
@@ -1240,13 +1337,21 @@ Projects.Show.Item = (function (_React$Component6) {
 	_createClass(_class5, [{
 		key: 'render',
 		value: function render() {
-			return React.createElement(
+			var project = this.props.project;
+			if (project == null) {
+				return _react2['default'].createElement(
+					'div',
+					{ className: 'projects' },
+					_react2['default'].createElement('img', { src: '/images/loader/ripple.gif' })
+				);
+			}
+			return _react2['default'].createElement(
 				'div',
-				null,
-				React.createElement(
+				{ className: 'fill-parent' },
+				_react2['default'].createElement(
 					'h1',
 					{ className: 'title' },
-					this.props.project.title
+					project.title
 				),
 				this.renderSubtitle(),
 				this.renderDates(),
@@ -1267,10 +1372,10 @@ Projects.Show.Item = (function (_React$Component6) {
 				if (date === 'present') {
 					return date;
 				}
-				return moment(date, 'YYYY-MM').format('MMMM YYYY');
+				return (0, _moment2['default'])(date, 'YYYY-MM').format('MMMM YYYY');
 			});
 			content = formattedDates.join(' - ');
-			return React.createElement(
+			return _react2['default'].createElement(
 				'div',
 				{ className: 'date' },
 				content
@@ -1282,7 +1387,7 @@ Projects.Show.Item = (function (_React$Component6) {
 			if (this.props.project.subtitle == null) {
 				return;
 			}
-			return React.createElement(
+			return _react2['default'].createElement(
 				'h2',
 				{ className: 'subtitle' },
 				'-- ' + this.props.project.subtitle + ' --'
@@ -1295,7 +1400,7 @@ Projects.Show.Item = (function (_React$Component6) {
 			if (url == null) {
 				return;
 			}
-			return React.createElement(
+			return _react2['default'].createElement(
 				'a',
 				{ className: 'main-link', href: url, target: '_blank' },
 				'Project Site'
@@ -1308,17 +1413,17 @@ Projects.Show.Item = (function (_React$Component6) {
 			if (md == null) {
 				return;
 			}
-			return React.createElement('div', { className: 'static', dangerouslySetInnerHTML: { __html: marked(md) } });
+			return _react2['default'].createElement('div', { className: 'static', dangerouslySetInnerHTML: { __html: (0, _marked2['default'])(md) } });
 		}
 	}]);
 
 	return _class5;
-})(React.Component);
+})(_react2['default'].Component);
 
 module.exports = Projects;
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/app/components/projects.jsx","/app/components")
-},{"./header.jsx":6,"./logos/project-logos.jsx":9,"_process":23,"buffer":19,"marked":26,"moment":27,"react":221}],11:[function(require,module,exports){
+},{"./../models/project.js":15,"./header.jsx":6,"./logos/project-logos.jsx":9,"_process":23,"buffer":19,"marked":26,"moment":27,"react":221,"react-router":52}],11:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 'use strict';
 
@@ -1364,6 +1469,7 @@ var App = (function (_React$Component) {
 	_createClass(App, [{
 		key: 'render',
 		value: function render() {
+			console.log(this.context);
 			return _react2['default'].createElement(
 				'div',
 				{ className: 'wrapper fill-parent' },
@@ -1380,7 +1486,8 @@ var routes = _react2['default'].createElement(
 	{ handler: App },
 	_react2['default'].createElement(_reactRouter.Route, { path: '', handler: _bannerJsx2['default'] }),
 	_react2['default'].createElement(_reactRouter.Route, { path: 'things', handler: _projectsJsx2['default'].Index }),
-	_react2['default'].createElement(_reactRouter.Route, { path: 'things/:id', handler: _projectsJsx2['default'].Show })
+	_react2['default'].createElement(_reactRouter.Route, { path: 'things/:id', handler: _projectsJsx2['default'].Show }),
+	_react2['default'].createElement(_reactRouter.Redirect, { from: 'things/about', to: 'about' })
 );
 
 exports['default'] = routes;
@@ -1658,6 +1765,12 @@ var Collection = (function (_base$Collection) {
     }
 
     _createClass(Collection, [{
+        key: 'setUrl',
+        value: function setUrl(query) {
+            var queryString = query.id ? '?id=' + query.id : '';
+            this.url = this.baseUrl + queryString;
+        }
+    }, {
         key: 'getFetchPromise',
         value: function getFetchPromise(query, options) {
             var _this2 = this;
@@ -1673,7 +1786,7 @@ var Collection = (function (_base$Collection) {
                 if (_this2.isOnClient()) {
 
                     _this2.setUrl(query);
-                    _this2.fetch();
+                    _this2.fetch({ reset: true });
                     _this2.on('reset', function () {
                         return resolve(_this2);
                     });

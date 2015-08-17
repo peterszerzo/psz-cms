@@ -54,6 +54,11 @@ class Collection extends base.Collection {
 
     }
 
+    setUrl(query) {
+        var queryString = query.id ? ('?id=' + query.id) : '';
+        this.url = this.baseUrl + queryString;
+    }
+
     getFetchPromise(query, options) {
 
         var shouldGetRandom = false,
@@ -67,7 +72,7 @@ class Collection extends base.Collection {
             if (this.isOnClient()) {
 
                 this.setUrl(query);
-                this.fetch();
+                this.fetch({ reset: true });
                 this.on('reset', () => {
                     return resolve(this);
                 });

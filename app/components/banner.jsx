@@ -20,6 +20,7 @@ class Banner extends React.Component {
 	}
 
 	render() {
+		console.log(this.props);
 		return (
 			<div className="banner fill-parent">
 				<div className="banner__globe"></div>

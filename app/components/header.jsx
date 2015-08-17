@@ -1,5 +1,6 @@
-var React = require('react'),
-	Buttons = require('./logos/buttons.jsx');
+import React from 'react';
+import Buttons from './logos/buttons.jsx';
+import { Link } from 'react-router';
 
 class Header extends React.Component {
 
@@ -27,17 +28,18 @@ class Header extends React.Component {
 				name: '..about',
 				url: '/things/about'
 			}
-		];
+		].reverse();
+
 	}
 
 	getList() {
 		var activeCategory = this.props.category;
-		return this.state.buttons.reverse().map(function(button, index) {
+		return this.state.buttons.map(function(button, index) {
 			var isActive = (button.name === activeCategory),
 				className = 'header__nav__item' + (isActive ? ' header__nav__item--active' : '');
 			return (
 				<li className={className} key={index} >
-					<a href={ button.url }>{ button.name }</a>
+					<Link to={button.url}>{ button.name }</Link>
 				</li>
 			);
 		});
@@ -46,9 +48,9 @@ class Header extends React.Component {
 	render() {
 		return (
 			<div className='header'>
-				<a className='header__main-link' href='/'>
+				<Link className='header__main-link' to='/'>
 					<Buttons.BackToMain />
-				</a>
+				</Link>
 				<ul className='header__nav'>
 					<li className='header__nav__arrow'>
 						<Buttons.Arrow />
@@ -60,5 +62,9 @@ class Header extends React.Component {
 	}
 	
 }
+
+Header.contextTypes = {
+	router: React.PropTypes.func
+};
 
 module.exports = Header;

@@ -14,8 +14,9 @@ router.use('/api/v1/categories', require('./api/v1/category.js'));
 router.get('/', function(req, res) {
 
 	var route = routes['/'],
-		html = React.renderToString(layoutFactory({ route: route }));;
+		html;
 
+	//html = React.renderToString(layoutFactory({ route: route }));;
 	res.render('layout.jade', { reactOutput: html });
 
 });
@@ -28,7 +29,8 @@ router.get('/things', function(req, res) {
 	var promise = coll.getFetchPromise({ is_live: true });
 	promise.then((coll) => {
 	 	var category = req.query.category || 'all',
-	 		html = React.renderToString(layoutFactory({ route: route, projects: coll.toJSON(), category: category }));
+	 		html;
+	 	//html = React.renderToString(layoutFactory({ route: route, projects: coll.toJSON(), category: category }));
 	 	res.render('layout.jade', { reactOutput: html });
 	}, () => { res.redirect('/'); });
 	
@@ -43,7 +45,8 @@ router.get('/things/:id', function(req, res) {
 	promise.then((coll) => {
 		if (coll.models == null || coll.models[0] == null) { return res.redirect('/'); }
 		var project = coll.models[0];
-		var html = React.renderToString(layoutFactory({ route: route, project: project.toJSON() }));
+		var html;
+		//html = React.renderToString(layoutFactory({ route: route, project: project.toJSON() }));
 		res.render('layout.jade', { reactOutput: html });
 	}, () => { res.redirect('/'); });
 
