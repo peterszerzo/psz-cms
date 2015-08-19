@@ -22,7 +22,8 @@ module.exports = function(fileName) {
     };
 
     self.stop = function() {
-        return window.removeEventListener('resize', self.setDimensions);
+        self.tearDown();
+        self.removeElements();
     };
 
     self.setup = function() {
@@ -39,14 +40,24 @@ module.exports = function(fileName) {
         window.removeEventListener('resize', self.setDimensions);
     };
 
+    self.removeElements = function() {
+        self.svg.selectAll('path').remove();
+        self.svg.remove();
+    };
+
+    self.onFeatureClick = function(feature) {
+        // this is a method assigned by the parent React component after self is first created.
+        if (this.navigateToRandom != null) {
+            this.navigateToRandom();
+        }
+    };
+
     self.draw = function(error, data) {
         self.svg.selectAll('path')
             .data(data.features)
             .enter()
             .append('path')
-            .on('click', function(feature) {
-                window.location.assign('/things/random');
-            });
+            .on('click', self.onFeatureClick.bind(self));
         self.updateGeoPaths();
         self.animationIntervalId = setInterval(self.update, self.timeStep * 1000);
     };

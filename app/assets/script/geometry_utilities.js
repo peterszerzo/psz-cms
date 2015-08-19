@@ -17,7 +17,6 @@ var geomUtil = {
 
     getLongLatDistance: function(longLat1, longLat2) {
         var distance, pos1, pos2;
-        // return geomUtil.getDistance(longLat1, longLat2);
         pos1 = geomUtil.sphericalToCartesian(longLat1[0], longLat1[1]);
         pos2 = geomUtil.sphericalToCartesian(longLat2[0], longLat2[1]);
         distance = geomUtil.getDistance(pos1, pos2);

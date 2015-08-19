@@ -41,8 +41,13 @@ class Banner extends React.Component {
 		});
 	}
 
+	navigateToRandom() {
+		this.context.router.transitionTo('/things/random');
+	}
+
 	componentDidMount() {
 		this.globeAnimation = globe('geo.json');
+		this.globeAnimation.navigateToRandom = this.navigateToRandom.bind(this);
 		this.globeAnimation.start();
 	}
 
@@ -51,5 +56,9 @@ class Banner extends React.Component {
 	}
 
 }
+
+Banner.contextTypes = {
+	router: React.PropTypes.func
+};
 
 module.exports = Banner;

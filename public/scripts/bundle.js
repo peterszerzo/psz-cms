@@ -78,7 +78,6 @@ var geomUtil = {
 
     getLongLatDistance: function getLongLatDistance(longLat1, longLat2) {
         var distance, pos1, pos2;
-        // return geomUtil.getDistance(longLat1, longLat2);
         pos1 = geomUtil.sphericalToCartesian(longLat1[0], longLat1[1]);
         pos2 = geomUtil.sphericalToCartesian(longLat2[0], longLat2[1]);
         distance = geomUtil.getDistance(pos1, pos2);
@@ -123,7 +122,8 @@ module.exports = function (fileName) {
     };
 
     self.stop = function () {
-        return window.removeEventListener('resize', self.setDimensions);
+        self.tearDown();
+        self.removeElements();
     };
 
     self.setup = function () {
@@ -140,10 +140,20 @@ module.exports = function (fileName) {
         window.removeEventListener('resize', self.setDimensions);
     };
 
+    self.removeElements = function () {
+        self.svg.selectAll('path').remove();
+        self.svg.remove();
+    };
+
+    self.onFeatureClick = function (feature) {
+        // this is a method assigned by the parent React component after self is first created.
+        if (this.navigateToRandom != null) {
+            this.navigateToRandom();
+        }
+    };
+
     self.draw = function (error, data) {
-        self.svg.selectAll('path').data(data.features).enter().append('path').on('click', function (feature) {
-            window.location.assign('/things/random');
-        });
+        self.svg.selectAll('path').data(data.features).enter().append('path').on('click', self.onFeatureClick.bind(self));
         self.updateGeoPaths();
         self.animationIntervalId = setInterval(self.update, self.timeStep * 1000);
     };
@@ -318,9 +328,15 @@ var Banner = (function (_React$Component) {
 			});
 		}
 	}, {
+		key: 'navigateToRandom',
+		value: function navigateToRandom() {
+			this.context.router.transitionTo('/things/random');
+		}
+	}, {
 		key: 'componentDidMount',
 		value: function componentDidMount() {
 			this.globeAnimation = globe('geo.json');
+			this.globeAnimation.navigateToRandom = this.navigateToRandom.bind(this);
 			this.globeAnimation.start();
 		}
 	}, {
@@ -332,6 +348,10 @@ var Banner = (function (_React$Component) {
 
 	return Banner;
 })(React.Component);
+
+Banner.contextTypes = {
+	router: React.PropTypes.func
+};
 
 module.exports = Banner;
 
