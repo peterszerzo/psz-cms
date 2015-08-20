@@ -647,7 +647,7 @@ Logos.Neutral = (function (_React$Component) {
 	return _class;
 })(React.Component);
 
-Logos.Battle = (function (_React$Component2) {
+Logos.Playground1 = (function (_React$Component2) {
 	_inherits(_class2, _React$Component2);
 
 	function _class2() {
@@ -665,7 +665,16 @@ Logos.Battle = (function (_React$Component2) {
 				React.createElement(
 					'g',
 					null,
-					React.createElement('path', { d: 'M41.582,314.867C17.446,282.191,3.178,241.783,3.178,198.043C3.178,89.341,91.298,1.221,200,1.221 c108.701,0,196.821,88.12,196.821,196.822c0,46.417-16.068,89.083-42.946,122.736c-24.513,0.679-26.381,19.249-51.269,19.249 c-22.082,0-28.667-19.246-49.339-19.246c-21.643,0-28.978,19.246-50.307,19.246c-20.235,0-26.781-19.246-50.409-19.246 c-28.018,0-28.996,19.246-53.761,19.246c-14.316,0-21.007-5.577-28.764-10.724c1.43-17.26,19.223-141.517,168.749-174.651 C89.337,170.431,48.597,288.771,41.875,314.797' })
+					React.createElement('circle', { cx: '200', cy: '200', r: '199.221' })
+				),
+				React.createElement(
+					'g',
+					null,
+					React.createElement('circle', { fill: '#FFFFFF', cx: '158.324', cy: '221.22', r: '14.422' }),
+					React.createElement('path', { fill: '#FFFFFF', d: 'M161.654,276c0,0,0,15.721,0,22.484s9,7.146,9,0.115c0-9.171,0-49.064,0-49.064 c4,2.98,6.238,13.956,6.81,17.625c0.803,5.158,8.206,4.979,7.634-0.638c-1.845-18.07-9.601-28.522-17.799-28.522h-16.353 c-9.267,0-16.259,10.452-18.104,28.522c-0.573,5.617,6.177,5.894,6.979,0.734c0.57-3.669,1.832-14.741,5.832-17.722 c0,0,0,39.894,0,49.064c0,7.03,9,6.648,9-0.115s0-22.484,0-22.484H161.654z' }),
+					React.createElement('rect', { x: '202.199', y: '0.586', fill: '#FFFFFF', width: '3.455', height: '243.747' }),
+					React.createElement('rect', { x: '238.987', y: '0.586', fill: '#FFFFFF', width: '3.455', height: '243.747' }),
+					React.createElement('rect', { x: '192.737', y: '247', fill: '#FFFFFF', width: '60', height: '5.158' })
 				)
 			);
 		}
@@ -674,7 +683,7 @@ Logos.Battle = (function (_React$Component2) {
 	return _class2;
 })(React.Component);
 
-Logos.Atlas = (function (_React$Component3) {
+Logos.Battle = (function (_React$Component3) {
 	_inherits(_class3, _React$Component3);
 
 	function _class3() {
@@ -684,6 +693,33 @@ Logos.Atlas = (function (_React$Component3) {
 	}
 
 	_createClass(_class3, [{
+		key: 'render',
+		value: function render() {
+			return React.createElement(
+				'svg',
+				{ className: this.props.className, viewBox: '0 0 400 400' },
+				React.createElement(
+					'g',
+					null,
+					React.createElement('path', { d: 'M41.582,314.867C17.446,282.191,3.178,241.783,3.178,198.043C3.178,89.341,91.298,1.221,200,1.221 c108.701,0,196.821,88.12,196.821,196.822c0,46.417-16.068,89.083-42.946,122.736c-24.513,0.679-26.381,19.249-51.269,19.249 c-22.082,0-28.667-19.246-49.339-19.246c-21.643,0-28.978,19.246-50.307,19.246c-20.235,0-26.781-19.246-50.409-19.246 c-28.018,0-28.996,19.246-53.761,19.246c-14.316,0-21.007-5.577-28.764-10.724c1.43-17.26,19.223-141.517,168.749-174.651 C89.337,170.431,48.597,288.771,41.875,314.797' })
+				)
+			);
+		}
+	}]);
+
+	return _class3;
+})(React.Component);
+
+Logos.Atlas = (function (_React$Component4) {
+	_inherits(_class4, _React$Component4);
+
+	function _class4() {
+		_classCallCheck(this, _class4);
+
+		_get(Object.getPrototypeOf(_class4.prototype), 'constructor', this).apply(this, arguments);
+	}
+
+	_createClass(_class4, [{
 		key: 'render',
 		value: function render() {
 			var noFill = { fill: 'none' };
@@ -707,19 +743,19 @@ Logos.Atlas = (function (_React$Component3) {
 		}
 	}]);
 
-	return _class3;
+	return _class4;
 })(React.Component);
 
-Logos.About = (function (_React$Component4) {
-	_inherits(_class4, _React$Component4);
+Logos.About = (function (_React$Component5) {
+	_inherits(_class5, _React$Component5);
 
-	function _class4() {
-		_classCallCheck(this, _class4);
+	function _class5() {
+		_classCallCheck(this, _class5);
 
-		_get(Object.getPrototypeOf(_class4.prototype), 'constructor', this).apply(this, arguments);
+		_get(Object.getPrototypeOf(_class5.prototype), 'constructor', this).apply(this, arguments);
 	}
 
-	_createClass(_class4, [{
+	_createClass(_class5, [{
 		key: 'render',
 		value: function render() {
 			var noFill = { fill: 'none' };
@@ -742,19 +778,19 @@ Logos.About = (function (_React$Component4) {
 		}
 	}]);
 
-	return _class4;
+	return _class5;
 })(React.Component);
 
-Logos.Kinetic = (function (_React$Component5) {
-	_inherits(_class5, _React$Component5);
+Logos.Kinetic = (function (_React$Component6) {
+	_inherits(_class6, _React$Component6);
 
-	function _class5() {
-		_classCallCheck(this, _class5);
+	function _class6() {
+		_classCallCheck(this, _class6);
 
-		_get(Object.getPrototypeOf(_class5.prototype), 'constructor', this).apply(this, arguments);
+		_get(Object.getPrototypeOf(_class6.prototype), 'constructor', this).apply(this, arguments);
 	}
 
-	_createClass(_class5, [{
+	_createClass(_class6, [{
 		key: 'render',
 		value: function render() {
 			var noFill = { fill: 'none' };
@@ -789,19 +825,19 @@ Logos.Kinetic = (function (_React$Component5) {
 		}
 	}]);
 
-	return _class5;
+	return _class6;
 })(React.Component);
 
-Logos.ScalingTricksForGeo = (function (_React$Component6) {
-	_inherits(_class6, _React$Component6);
+Logos.ScalingTricksForGeo = (function (_React$Component7) {
+	_inherits(_class7, _React$Component7);
 
-	function _class6() {
-		_classCallCheck(this, _class6);
+	function _class7() {
+		_classCallCheck(this, _class7);
 
-		_get(Object.getPrototypeOf(_class6.prototype), 'constructor', this).apply(this, arguments);
+		_get(Object.getPrototypeOf(_class7.prototype), 'constructor', this).apply(this, arguments);
 	}
 
-	_createClass(_class6, [{
+	_createClass(_class7, [{
 		key: 'render',
 		value: function render() {
 			return React.createElement(
@@ -816,19 +852,19 @@ Logos.ScalingTricksForGeo = (function (_React$Component6) {
 		}
 	}]);
 
-	return _class6;
+	return _class7;
 })(React.Component);
 
-Logos.RipsawJs = (function (_React$Component7) {
-	_inherits(_class7, _React$Component7);
+Logos.RipsawJs = (function (_React$Component8) {
+	_inherits(_class8, _React$Component8);
 
-	function _class7() {
-		_classCallCheck(this, _class7);
+	function _class8() {
+		_classCallCheck(this, _class8);
 
-		_get(Object.getPrototypeOf(_class7.prototype), 'constructor', this).apply(this, arguments);
+		_get(Object.getPrototypeOf(_class8.prototype), 'constructor', this).apply(this, arguments);
 	}
 
-	_createClass(_class7, [{
+	_createClass(_class8, [{
 		key: 'render',
 		value: function render() {
 			var noFill = { fill: 'none' };
@@ -845,19 +881,19 @@ Logos.RipsawJs = (function (_React$Component7) {
 		}
 	}]);
 
-	return _class7;
+	return _class8;
 })(React.Component);
 
-Logos.Pba = (function (_React$Component8) {
-	_inherits(_class8, _React$Component8);
+Logos.Pba = (function (_React$Component9) {
+	_inherits(_class9, _React$Component9);
 
-	function _class8() {
-		_classCallCheck(this, _class8);
+	function _class9() {
+		_classCallCheck(this, _class9);
 
-		_get(Object.getPrototypeOf(_class8.prototype), 'constructor', this).apply(this, arguments);
+		_get(Object.getPrototypeOf(_class9.prototype), 'constructor', this).apply(this, arguments);
 	}
 
-	_createClass(_class8, [{
+	_createClass(_class9, [{
 		key: 'render',
 		value: function render() {
 			var noFill = { fill: 'none' };
@@ -886,19 +922,19 @@ Logos.Pba = (function (_React$Component8) {
 		}
 	}]);
 
-	return _class8;
+	return _class9;
 })(React.Component);
 
-Logos.GiraffeForRhino = (function (_React$Component9) {
-	_inherits(_class9, _React$Component9);
+Logos.GiraffeForRhino = (function (_React$Component10) {
+	_inherits(_class10, _React$Component10);
 
-	function _class9() {
-		_classCallCheck(this, _class9);
+	function _class10() {
+		_classCallCheck(this, _class10);
 
-		_get(Object.getPrototypeOf(_class9.prototype), 'constructor', this).apply(this, arguments);
+		_get(Object.getPrototypeOf(_class10.prototype), 'constructor', this).apply(this, arguments);
 	}
 
-	_createClass(_class9, [{
+	_createClass(_class10, [{
 		key: 'render',
 		value: function render() {
 			var noFill = { fill: 'none' };
@@ -919,19 +955,19 @@ Logos.GiraffeForRhino = (function (_React$Component9) {
 		}
 	}]);
 
-	return _class9;
+	return _class10;
 })(React.Component);
 
-Logos.AlgorithmicTattoo = (function (_React$Component10) {
-	_inherits(_class10, _React$Component10);
+Logos.AlgorithmicTattoo = (function (_React$Component11) {
+	_inherits(_class11, _React$Component11);
 
-	function _class10() {
-		_classCallCheck(this, _class10);
+	function _class11() {
+		_classCallCheck(this, _class11);
 
-		_get(Object.getPrototypeOf(_class10.prototype), 'constructor', this).apply(this, arguments);
+		_get(Object.getPrototypeOf(_class11.prototype), 'constructor', this).apply(this, arguments);
 	}
 
-	_createClass(_class10, [{
+	_createClass(_class11, [{
 		key: 'render',
 		value: function render() {
 			var noFill = { fill: 'none' };
@@ -988,19 +1024,19 @@ Logos.AlgorithmicTattoo = (function (_React$Component10) {
 		}
 	}]);
 
-	return _class10;
+	return _class11;
 })(React.Component);
 
-Logos.PendantProject = (function (_React$Component11) {
-	_inherits(_class11, _React$Component11);
+Logos.PendantProject = (function (_React$Component12) {
+	_inherits(_class12, _React$Component12);
 
-	function _class11() {
-		_classCallCheck(this, _class11);
+	function _class12() {
+		_classCallCheck(this, _class12);
 
-		_get(Object.getPrototypeOf(_class11.prototype), 'constructor', this).apply(this, arguments);
+		_get(Object.getPrototypeOf(_class12.prototype), 'constructor', this).apply(this, arguments);
 	}
 
-	_createClass(_class11, [{
+	_createClass(_class12, [{
 		key: 'render',
 		value: function render() {
 			var noFill = { fill: 'none' };
@@ -1040,7 +1076,7 @@ Logos.PendantProject = (function (_React$Component11) {
 		}
 	}]);
 
-	return _class11;
+	return _class12;
 })(React.Component);
 
 module.exports = Logos;

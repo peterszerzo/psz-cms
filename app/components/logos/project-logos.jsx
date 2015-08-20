@@ -17,6 +17,30 @@ Logos.Neutral = class extends React.Component {
 
 }
 
+Logos.Playground1 = class extends React.Component {
+
+	render() {
+		return (
+			<svg className={this.props.className} viewBox="0 0 400 400">
+			<g>
+				<circle cx="200" cy="200" r="199.221"/>
+			</g>
+			<g>
+				<circle fill="#FFFFFF" cx="158.324" cy="221.22" r="14.422"/>
+				<path fill="#FFFFFF" d="M161.654,276c0,0,0,15.721,0,22.484s9,7.146,9,0.115c0-9.171,0-49.064,0-49.064
+					c4,2.98,6.238,13.956,6.81,17.625c0.803,5.158,8.206,4.979,7.634-0.638c-1.845-18.07-9.601-28.522-17.799-28.522h-16.353
+					c-9.267,0-16.259,10.452-18.104,28.522c-0.573,5.617,6.177,5.894,6.979,0.734c0.57-3.669,1.832-14.741,5.832-17.722
+					c0,0,0,39.894,0,49.064c0,7.03,9,6.648,9-0.115s0-22.484,0-22.484H161.654z"/>
+				<rect x="202.199" y="0.586" fill="#FFFFFF" width="3.455" height="243.747"/>
+				<rect x="238.987" y="0.586" fill="#FFFFFF" width="3.455" height="243.747"/>
+				<rect x="192.737" y="247" fill="#FFFFFF" width="60" height="5.158"/>
+			</g>
+			</svg>
+		);
+	}
+
+}
+
 Logos.Battle = class extends React.Component {
 
 	render() {

@@ -1,6 +1,15 @@
 [
 
     {
+        "id": "playground-1",
+        "name": "Playground",
+        "title": "Playground 1",
+        "subtitle": "More Projects!",
+        "is_live": true,
+        "categories": [ "blog" ]
+    },
+
+    {
         "id": "about",
         "name": "about",
         "title": "Hi,",
