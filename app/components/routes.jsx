@@ -19,7 +19,6 @@ var routes = (
 		<Route path='' handler={Banner} />
 		<Route path='things' handler={Projects.Index} />
 		<Route path='things/:id' handler={Projects.Show} />
-		<Redirect from='things/about' to='about' />
 	</Route>
 );
 
