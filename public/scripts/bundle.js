@@ -395,7 +395,7 @@ var Header = (function (_React$Component) {
 			name: 'blog',
 			url: '/things?group=blog'
 		}, {
-			name: '..about',
+			name: 'about',
 			url: '/things/about'
 		}].reverse();
 	}

@@ -17,7 +17,7 @@ class Header extends React.Component {
 				url: '/things?group=blog'
 			},
 			{
-				name: '..about',
+				name: 'about',
 				url: '/things/about'
 			}
 		].reverse();
