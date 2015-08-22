@@ -17,6 +17,27 @@ Logos.Neutral = class extends React.Component {
 
 }
 
+Logos.OnDeletingMyFacebook = class extends React.Component {
+
+	render() {
+		var noFill = { fill: 'none' };
+		return (
+			<svg className={this.props.className} viewBox="0 0 400 400">
+				<g>
+					<circle cx="200" cy="200.712" r="199.221"/>
+				</g>
+				<g>
+					<path fill="#FFFFFF" d="M210.598,268.44v-62.438h20.958l3.138-24.334h-24.096v-15.535c0-7.045,1.957-11.846,12.059-11.846
+						l12.885-0.005v-21.765c-2.228-0.297-9.876-0.959-18.775-0.959c-18.577,0-31.296,11.34-31.296,32.165v17.944h-21.011v24.334h21.011
+						v62.438H210.598z"/>
+				</g>
+			</svg>
+		);
+	}
+
+}
+
+
 Logos.Playground1 = class extends React.Component {
 
 	render() {

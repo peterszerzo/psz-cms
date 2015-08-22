@@ -6,6 +6,11 @@
 	padding-bottom: 50px;
 	color: map-get($palette, grey);
 
+	blockquote {
+		font-style: italic;
+		margin: 35px 0 35px 40px;
+	}
+
 	ul {
 		list-style-type: circle;
 		list-style-position: outside;

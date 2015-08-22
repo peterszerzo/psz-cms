@@ -9,20 +9,12 @@ class Header extends React.Component {
 		this.state = {};
 		this.state.buttons = [
 			{
-				name: 'all',
-				url: '/things?category=all'
-			},
-			{
-				name: 'code',
-				url: '/things?category=code'
-			},
-			{
-				name: 'design',
-				url: '/things?category=design'
+				name: 'projects',
+				url: '/things?group=project'
 			},
 			{
 				name: 'blog',
-				url: '/things?category=blog'
+				url: '/things?group=blog'
 			},
 			{
 				name: '..about',

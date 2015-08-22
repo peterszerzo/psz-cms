@@ -47,15 +47,15 @@ class Model extends base.Model {
 class Collection extends base.Collection {
 
     constructor(options) {
-
         super(options);
         this.model = Model;
         this.baseUrl = '/api/v1/projects';
-
     }
 
     setUrl(query) {
-        var queryString = query.id ? ('?id=' + query.id) : '';
+        var queryString = '';
+        queryString += query.id ? ('?id=' + query.id) : '';
+        queryString += query.group ? ('?group=' + query.group) : '';
         this.url = this.baseUrl + queryString;
     }
 
@@ -65,6 +65,8 @@ class Collection extends base.Collection {
             randomModel,
             randomIndex,
             promise;
+
+        console.dir(query);
 
         return new Promise((resolve, reject) => {
 

@@ -389,17 +389,11 @@ var Header = (function (_React$Component) {
 		_get(Object.getPrototypeOf(Header.prototype), 'constructor', this).call(this);
 		this.state = {};
 		this.state.buttons = [{
-			name: 'all',
-			url: '/things?category=all'
-		}, {
-			name: 'code',
-			url: '/things?category=code'
-		}, {
-			name: 'design',
-			url: '/things?category=design'
+			name: 'projects',
+			url: '/things?group=project'
 		}, {
 			name: 'blog',
-			url: '/things?category=blog'
+			url: '/things?group=blog'
 		}, {
 			name: '..about',
 			url: '/things/about'
@@ -647,7 +641,7 @@ Logos.Neutral = (function (_React$Component) {
 	return _class;
 })(React.Component);
 
-Logos.Playground1 = (function (_React$Component2) {
+Logos.OnDeletingMyFacebook = (function (_React$Component2) {
 	_inherits(_class2, _React$Component2);
 
 	function _class2() {
@@ -657,6 +651,39 @@ Logos.Playground1 = (function (_React$Component2) {
 	}
 
 	_createClass(_class2, [{
+		key: 'render',
+		value: function render() {
+			var noFill = { fill: 'none' };
+			return React.createElement(
+				'svg',
+				{ className: this.props.className, viewBox: '0 0 400 400' },
+				React.createElement(
+					'g',
+					null,
+					React.createElement('circle', { cx: '200', cy: '200.712', r: '199.221' })
+				),
+				React.createElement(
+					'g',
+					null,
+					React.createElement('path', { fill: '#FFFFFF', d: 'M210.598,268.44v-62.438h20.958l3.138-24.334h-24.096v-15.535c0-7.045,1.957-11.846,12.059-11.846 l12.885-0.005v-21.765c-2.228-0.297-9.876-0.959-18.775-0.959c-18.577,0-31.296,11.34-31.296,32.165v17.944h-21.011v24.334h21.011 v62.438H210.598z' })
+				)
+			);
+		}
+	}]);
+
+	return _class2;
+})(React.Component);
+
+Logos.Playground1 = (function (_React$Component3) {
+	_inherits(_class3, _React$Component3);
+
+	function _class3() {
+		_classCallCheck(this, _class3);
+
+		_get(Object.getPrototypeOf(_class3.prototype), 'constructor', this).apply(this, arguments);
+	}
+
+	_createClass(_class3, [{
 		key: 'render',
 		value: function render() {
 			return React.createElement(
@@ -680,19 +707,19 @@ Logos.Playground1 = (function (_React$Component2) {
 		}
 	}]);
 
-	return _class2;
+	return _class3;
 })(React.Component);
 
-Logos.Battle = (function (_React$Component3) {
-	_inherits(_class3, _React$Component3);
+Logos.Battle = (function (_React$Component4) {
+	_inherits(_class4, _React$Component4);
 
-	function _class3() {
-		_classCallCheck(this, _class3);
+	function _class4() {
+		_classCallCheck(this, _class4);
 
-		_get(Object.getPrototypeOf(_class3.prototype), 'constructor', this).apply(this, arguments);
+		_get(Object.getPrototypeOf(_class4.prototype), 'constructor', this).apply(this, arguments);
 	}
 
-	_createClass(_class3, [{
+	_createClass(_class4, [{
 		key: 'render',
 		value: function render() {
 			return React.createElement(
@@ -707,19 +734,19 @@ Logos.Battle = (function (_React$Component3) {
 		}
 	}]);
 
-	return _class3;
+	return _class4;
 })(React.Component);
 
-Logos.Atlas = (function (_React$Component4) {
-	_inherits(_class4, _React$Component4);
+Logos.Atlas = (function (_React$Component5) {
+	_inherits(_class5, _React$Component5);
 
-	function _class4() {
-		_classCallCheck(this, _class4);
+	function _class5() {
+		_classCallCheck(this, _class5);
 
-		_get(Object.getPrototypeOf(_class4.prototype), 'constructor', this).apply(this, arguments);
+		_get(Object.getPrototypeOf(_class5.prototype), 'constructor', this).apply(this, arguments);
 	}
 
-	_createClass(_class4, [{
+	_createClass(_class5, [{
 		key: 'render',
 		value: function render() {
 			var noFill = { fill: 'none' };
@@ -743,19 +770,19 @@ Logos.Atlas = (function (_React$Component4) {
 		}
 	}]);
 
-	return _class4;
+	return _class5;
 })(React.Component);
 
-Logos.About = (function (_React$Component5) {
-	_inherits(_class5, _React$Component5);
+Logos.About = (function (_React$Component6) {
+	_inherits(_class6, _React$Component6);
 
-	function _class5() {
-		_classCallCheck(this, _class5);
+	function _class6() {
+		_classCallCheck(this, _class6);
 
-		_get(Object.getPrototypeOf(_class5.prototype), 'constructor', this).apply(this, arguments);
+		_get(Object.getPrototypeOf(_class6.prototype), 'constructor', this).apply(this, arguments);
 	}
 
-	_createClass(_class5, [{
+	_createClass(_class6, [{
 		key: 'render',
 		value: function render() {
 			var noFill = { fill: 'none' };
@@ -778,19 +805,19 @@ Logos.About = (function (_React$Component5) {
 		}
 	}]);
 
-	return _class5;
+	return _class6;
 })(React.Component);
 
-Logos.Kinetic = (function (_React$Component6) {
-	_inherits(_class6, _React$Component6);
+Logos.Kinetic = (function (_React$Component7) {
+	_inherits(_class7, _React$Component7);
 
-	function _class6() {
-		_classCallCheck(this, _class6);
+	function _class7() {
+		_classCallCheck(this, _class7);
 
-		_get(Object.getPrototypeOf(_class6.prototype), 'constructor', this).apply(this, arguments);
+		_get(Object.getPrototypeOf(_class7.prototype), 'constructor', this).apply(this, arguments);
 	}
 
-	_createClass(_class6, [{
+	_createClass(_class7, [{
 		key: 'render',
 		value: function render() {
 			var noFill = { fill: 'none' };
@@ -825,19 +852,19 @@ Logos.Kinetic = (function (_React$Component6) {
 		}
 	}]);
 
-	return _class6;
+	return _class7;
 })(React.Component);
 
-Logos.ScalingTricksForGeo = (function (_React$Component7) {
-	_inherits(_class7, _React$Component7);
+Logos.ScalingTricksForGeo = (function (_React$Component8) {
+	_inherits(_class8, _React$Component8);
 
-	function _class7() {
-		_classCallCheck(this, _class7);
+	function _class8() {
+		_classCallCheck(this, _class8);
 
-		_get(Object.getPrototypeOf(_class7.prototype), 'constructor', this).apply(this, arguments);
+		_get(Object.getPrototypeOf(_class8.prototype), 'constructor', this).apply(this, arguments);
 	}
 
-	_createClass(_class7, [{
+	_createClass(_class8, [{
 		key: 'render',
 		value: function render() {
 			return React.createElement(
@@ -852,19 +879,19 @@ Logos.ScalingTricksForGeo = (function (_React$Component7) {
 		}
 	}]);
 
-	return _class7;
+	return _class8;
 })(React.Component);
 
-Logos.RipsawJs = (function (_React$Component8) {
-	_inherits(_class8, _React$Component8);
+Logos.RipsawJs = (function (_React$Component9) {
+	_inherits(_class9, _React$Component9);
 
-	function _class8() {
-		_classCallCheck(this, _class8);
+	function _class9() {
+		_classCallCheck(this, _class9);
 
-		_get(Object.getPrototypeOf(_class8.prototype), 'constructor', this).apply(this, arguments);
+		_get(Object.getPrototypeOf(_class9.prototype), 'constructor', this).apply(this, arguments);
 	}
 
-	_createClass(_class8, [{
+	_createClass(_class9, [{
 		key: 'render',
 		value: function render() {
 			var noFill = { fill: 'none' };
@@ -881,19 +908,19 @@ Logos.RipsawJs = (function (_React$Component8) {
 		}
 	}]);
 
-	return _class8;
+	return _class9;
 })(React.Component);
 
-Logos.Pba = (function (_React$Component9) {
-	_inherits(_class9, _React$Component9);
+Logos.Pba = (function (_React$Component10) {
+	_inherits(_class10, _React$Component10);
 
-	function _class9() {
-		_classCallCheck(this, _class9);
+	function _class10() {
+		_classCallCheck(this, _class10);
 
-		_get(Object.getPrototypeOf(_class9.prototype), 'constructor', this).apply(this, arguments);
+		_get(Object.getPrototypeOf(_class10.prototype), 'constructor', this).apply(this, arguments);
 	}
 
-	_createClass(_class9, [{
+	_createClass(_class10, [{
 		key: 'render',
 		value: function render() {
 			var noFill = { fill: 'none' };
@@ -922,19 +949,19 @@ Logos.Pba = (function (_React$Component9) {
 		}
 	}]);
 
-	return _class9;
+	return _class10;
 })(React.Component);
 
-Logos.GiraffeForRhino = (function (_React$Component10) {
-	_inherits(_class10, _React$Component10);
+Logos.GiraffeForRhino = (function (_React$Component11) {
+	_inherits(_class11, _React$Component11);
 
-	function _class10() {
-		_classCallCheck(this, _class10);
+	function _class11() {
+		_classCallCheck(this, _class11);
 
-		_get(Object.getPrototypeOf(_class10.prototype), 'constructor', this).apply(this, arguments);
+		_get(Object.getPrototypeOf(_class11.prototype), 'constructor', this).apply(this, arguments);
 	}
 
-	_createClass(_class10, [{
+	_createClass(_class11, [{
 		key: 'render',
 		value: function render() {
 			var noFill = { fill: 'none' };
@@ -955,19 +982,19 @@ Logos.GiraffeForRhino = (function (_React$Component10) {
 		}
 	}]);
 
-	return _class10;
+	return _class11;
 })(React.Component);
 
-Logos.AlgorithmicTattoo = (function (_React$Component11) {
-	_inherits(_class11, _React$Component11);
+Logos.AlgorithmicTattoo = (function (_React$Component12) {
+	_inherits(_class12, _React$Component12);
 
-	function _class11() {
-		_classCallCheck(this, _class11);
+	function _class12() {
+		_classCallCheck(this, _class12);
 
-		_get(Object.getPrototypeOf(_class11.prototype), 'constructor', this).apply(this, arguments);
+		_get(Object.getPrototypeOf(_class12.prototype), 'constructor', this).apply(this, arguments);
 	}
 
-	_createClass(_class11, [{
+	_createClass(_class12, [{
 		key: 'render',
 		value: function render() {
 			var noFill = { fill: 'none' };
@@ -1024,19 +1051,19 @@ Logos.AlgorithmicTattoo = (function (_React$Component11) {
 		}
 	}]);
 
-	return _class11;
+	return _class12;
 })(React.Component);
 
-Logos.PendantProject = (function (_React$Component12) {
-	_inherits(_class12, _React$Component12);
+Logos.PendantProject = (function (_React$Component13) {
+	_inherits(_class13, _React$Component13);
 
-	function _class12() {
-		_classCallCheck(this, _class12);
+	function _class13() {
+		_classCallCheck(this, _class13);
 
-		_get(Object.getPrototypeOf(_class12.prototype), 'constructor', this).apply(this, arguments);
+		_get(Object.getPrototypeOf(_class13.prototype), 'constructor', this).apply(this, arguments);
 	}
 
-	_createClass(_class12, [{
+	_createClass(_class13, [{
 		key: 'render',
 		value: function render() {
 			var noFill = { fill: 'none' };
@@ -1076,7 +1103,7 @@ Logos.PendantProject = (function (_React$Component12) {
 		}
 	}]);
 
-	return _class12;
+	return _class13;
 })(React.Component);
 
 module.exports = Logos;
@@ -1445,7 +1472,7 @@ Projects.Show.Item = (function (_React$Component6) {
 			return _react2['default'].createElement(
 				'h2',
 				{ className: 'subtitle' },
-				'-- ' + this.props.project.subtitle + ' --'
+				'' + this.props.project.subtitle + ''
 			);
 		}
 	}, {
@@ -1820,7 +1847,9 @@ var Collection = (function (_base$Collection) {
     _createClass(Collection, [{
         key: 'setUrl',
         value: function setUrl(query) {
-            var queryString = query.id ? '?id=' + query.id : '';
+            var queryString = '';
+            queryString += query.id ? '?id=' + query.id : '';
+            queryString += query.group ? '?group=' + query.group : '';
             this.url = this.baseUrl + queryString;
         }
     }, {
@@ -1832,6 +1861,8 @@ var Collection = (function (_base$Collection) {
                 randomModel,
                 randomIndex,
                 promise;
+
+            console.dir(query);
 
             return new Promise(function (resolve, reject) {
 
@@ -1943,7 +1974,7 @@ module.exports = {
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/app/models/technology.js","/app/models")
 },{"./base.js":12,"_process":23,"backbone":17,"buffer":19,"underscore":222}],17:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
-//     Backbone.js 1.2.1
+//     Backbone.js 1.2.2
 
 //     (c) 2010-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 //     Backbone may be freely distributed under the MIT license.
@@ -1986,10 +2017,10 @@ module.exports = {
   var previousBackbone = root.Backbone;
 
   // Create a local reference to a common array method we'll want to use later.
-  var slice = [].slice;
+  var slice = Array.prototype.slice;
 
   // Current version of the library. Keep in sync with `package.json`.
-  Backbone.VERSION = '1.2.1';
+  Backbone.VERSION = '1.2.2';
 
   // For Backbone's purposes, jQuery, Zepto, Ender, or My Library (kidding) owns
   // the `$` variable.
@@ -2013,8 +2044,13 @@ module.exports = {
   // form param named `model`.
   Backbone.emulateJSON = false;
 
-  // Proxy Underscore methods to a Backbone class' prototype using a
-  // particular attribute as the data argument
+  // Proxy Backbone class methods to Underscore functions, wrapping the model's
+  // `attributes` object or collection's `models` array behind the scenes.
+  //
+  // collection.filter(function(model) { return model.get('age') > 10 });
+  // collection.each(this.addView);
+  //
+  // `Function#apply` can be slow so we use the method's arg count, if we know it.
   var addMethod = function(length, method, attribute) {
     switch (length) {
       case 1: return function() {
@@ -2024,10 +2060,10 @@ module.exports = {
         return _[method](this[attribute], value);
       };
       case 3: return function(iteratee, context) {
-        return _[method](this[attribute], iteratee, context);
+        return _[method](this[attribute], cb(iteratee, this), context);
       };
       case 4: return function(iteratee, defaultVal, context) {
-        return _[method](this[attribute], iteratee, defaultVal, context);
+        return _[method](this[attribute], cb(iteratee, this), defaultVal, context);
       };
       default: return function() {
         var args = slice.call(arguments);
@@ -2042,12 +2078,26 @@ module.exports = {
     });
   };
 
+  // Support `collection.sortBy('attr')` and `collection.findWhere({id: 1})`.
+  var cb = function(iteratee, instance) {
+    if (_.isFunction(iteratee)) return iteratee;
+    if (_.isObject(iteratee) && !instance._isModel(iteratee)) return modelMatcher(iteratee);
+    if (_.isString(iteratee)) return function(model) { return model.get(iteratee); };
+    return iteratee;
+  };
+  var modelMatcher = function(attrs) {
+    var matcher = _.matches(attrs);
+    return function(model) {
+      return matcher(model.attributes);
+    };
+  };
+
   // Backbone.Events
   // ---------------
 
   // A module that can be mixed in to *any object* in order to provide it with
-  // custom events. You may bind with `on` or remove with `off` callback
-  // functions to an event; `trigger`-ing an event fires all callbacks in
+  // a custom event channel. You may bind a callback to an event with `on` or
+  // remove with `off`; `trigger`-ing an event fires all callbacks in
   // succession.
   //
   //     var object = {};
@@ -2062,26 +2112,25 @@ module.exports = {
 
   // Iterates over the standard `event, callback` (as well as the fancy multiple
   // space-separated events `"change blur", callback` and jQuery-style event
-  // maps `{event: callback}`), reducing them by manipulating `memo`.
-  // Passes a normalized single event name and callback, as well as any
-  // optional `opts`.
-  var eventsApi = function(iteratee, memo, name, callback, opts) {
+  // maps `{event: callback}`).
+  var eventsApi = function(iteratee, events, name, callback, opts) {
     var i = 0, names;
     if (name && typeof name === 'object') {
       // Handle event maps.
       if (callback !== void 0 && 'context' in opts && opts.context === void 0) opts.context = callback;
       for (names = _.keys(name); i < names.length ; i++) {
-        memo = iteratee(memo, names[i], name[names[i]], opts);
+        events = eventsApi(iteratee, events, names[i], name[names[i]], opts);
       }
     } else if (name && eventSplitter.test(name)) {
-      // Handle space separated event names.
+      // Handle space separated event names by delegating them individually.
       for (names = name.split(eventSplitter); i < names.length; i++) {
-        memo = iteratee(memo, names[i], callback, opts);
+        events = iteratee(events, names[i], callback, opts);
       }
     } else {
-      memo = iteratee(memo, name, callback, opts);
+      // Finally, standard events.
+      events = iteratee(events, name, callback, opts);
     }
-    return memo;
+    return events;
   };
 
   // Bind an event to a `callback` function. Passing `"all"` will bind
@@ -2090,8 +2139,7 @@ module.exports = {
     return internalOn(this, name, callback, context);
   };
 
-  // An internal use `on` function, used to guard the `listening` argument from
-  // the public API.
+  // Guard the `listening` argument from the public API.
   var internalOn = function(obj, name, callback, context, listening) {
     obj._events = eventsApi(onApi, obj._events || {}, name, callback, {
         context: context,
@@ -2108,7 +2156,8 @@ module.exports = {
   };
 
   // Inversion-of-control versions of `on`. Tell *this* object to listen to
-  // an event in another object... keeping track of what it's listening to.
+  // an event in another object... keeping track of what it's listening to
+  // for easier unbinding later.
   Events.listenTo =  function(obj, name, callback) {
     if (!obj) return this;
     var id = obj._listenId || (obj._listenId = _.uniqueId('l'));
@@ -2176,7 +2225,6 @@ module.exports = {
 
   // The reducing API that removes a callback from the `events` object.
   var offApi = function(events, name, callback, options) {
-    // No events to consider.
     if (!events) return;
 
     var i = 0, listening;
@@ -2231,9 +2279,9 @@ module.exports = {
   };
 
   // Bind an event to only be triggered a single time. After the first time
-  // the callback is invoked, it will be removed. When multiple events are
-  // passed in using the space-separated syntax, the event will fire once for every
-  // event you passed in, not once for a combination of all events
+  // the callback is invoked, its listener will be removed. If multiple events
+  // are passed in using the space-separated syntax, the handler will fire
+  // once for each event, not once for a combination of all events.
   Events.once =  function(name, callback, context) {
     // Map the event into a `{event: once}` object.
     var events = eventsApi(onceMap, {}, name, callback, _.bind(this.off, this));
@@ -2421,9 +2469,6 @@ module.exports = {
       var changed = this.changed;
       var prev    = this._previousAttributes;
 
-      // Check for changes of `id`.
-      if (this.idAttribute in attrs) this.id = attrs[this.idAttribute];
-
       // For each `set` attribute, update or delete the current value.
       for (var attr in attrs) {
         val = attrs[attr];
@@ -2435,6 +2480,9 @@ module.exports = {
         }
         unset ? delete current[attr] : current[attr] = val;
       }
+
+      // Update the `id`.
+      this.id = this.get(this.idAttribute);
 
       // Trigger all relevant attribute changes.
       if (!silent) {
@@ -2658,7 +2706,8 @@ module.exports = {
 
   });
 
-  // Underscore methods that we want to implement on the Model.
+  // Underscore methods that we want to implement on the Model, mapped to the
+  // number of arguments they take.
   var modelMethods = { keys: 1, values: 1, pairs: 1, invert: 1, pick: 0,
       omit: 0, chain: 1, isEmpty: 1 };
 
@@ -2691,6 +2740,15 @@ module.exports = {
   var setOptions = {add: true, remove: true, merge: true};
   var addOptions = {add: true, remove: false};
 
+  // Splices `insert` into `array` at index `at`.
+  var splice = function(array, insert, at) {
+    var tail = Array(array.length - at);
+    var length = insert.length;
+    for (var i = 0; i < tail.length; i++) tail[i] = array[i + at];
+    for (i = 0; i < length; i++) array[i + at] = insert[i];
+    for (i = 0; i < tail.length; i++) array[i + length + at] = tail[i];
+  };
+
   // Define the Collection's inheritable methods.
   _.extend(Collection.prototype, Events, {
 
@@ -2713,7 +2771,9 @@ module.exports = {
       return Backbone.sync.apply(this, arguments);
     },
 
-    // Add a model, or list of models to the set.
+    // Add a model, or list of models to the set. `models` may be Backbone
+    // Models or raw JavaScript objects to be converted to Models, or any
+    // combination of the two.
     add: function(models, options) {
       return this.set(models, _.extend({merge: false}, options, addOptions));
     },
@@ -2733,83 +2793,88 @@ module.exports = {
     // already exist in the collection, as necessary. Similar to **Model#set**,
     // the core operation for updating the data contained by the collection.
     set: function(models, options) {
+      if (models == null) return;
+
       options = _.defaults({}, options, setOptions);
       if (options.parse && !this._isModel(models)) models = this.parse(models, options);
+
       var singular = !_.isArray(models);
-      models = singular ? (models ? [models] : []) : models.slice();
-      var id, model, attrs, existing, sort;
+      models = singular ? [models] : models.slice();
+
       var at = options.at;
       if (at != null) at = +at;
       if (at < 0) at += this.length + 1;
+
+      var set = [];
+      var toAdd = [];
+      var toRemove = [];
+      var modelMap = {};
+
+      var add = options.add;
+      var merge = options.merge;
+      var remove = options.remove;
+
+      var sort = false;
       var sortable = this.comparator && (at == null) && options.sort !== false;
       var sortAttr = _.isString(this.comparator) ? this.comparator : null;
-      var toAdd = [], toRemove = [], modelMap = {};
-      var add = options.add, merge = options.merge, remove = options.remove;
-      var order = !sortable && add && remove ? [] : false;
-      var orderChanged = false;
 
       // Turn bare objects into model references, and prevent invalid models
       // from being added.
+      var model;
       for (var i = 0; i < models.length; i++) {
-        attrs = models[i];
+        model = models[i];
 
         // If a duplicate is found, prevent it from being added and
         // optionally merge it into the existing model.
-        if (existing = this.get(attrs)) {
-          if (remove) modelMap[existing.cid] = true;
-          if (merge && attrs !== existing) {
-            attrs = this._isModel(attrs) ? attrs.attributes : attrs;
+        var existing = this.get(model);
+        if (existing) {
+          if (merge && model !== existing) {
+            var attrs = this._isModel(model) ? model.attributes : model;
             if (options.parse) attrs = existing.parse(attrs, options);
             existing.set(attrs, options);
-            if (sortable && !sort && existing.hasChanged(sortAttr)) sort = true;
+            if (sortable && !sort) sort = existing.hasChanged(sortAttr);
+          }
+          if (!modelMap[existing.cid]) {
+            modelMap[existing.cid] = true;
+            set.push(existing);
           }
           models[i] = existing;
 
         // If this is a new, valid model, push it to the `toAdd` list.
         } else if (add) {
-          model = models[i] = this._prepareModel(attrs, options);
-          if (!model) continue;
-          toAdd.push(model);
-          this._addReference(model, options);
+          model = models[i] = this._prepareModel(model, options);
+          if (model) {
+            toAdd.push(model);
+            this._addReference(model, options);
+            modelMap[model.cid] = true;
+            set.push(model);
+          }
         }
-
-        // Do not add multiple models with the same `id`.
-        model = existing || model;
-        if (!model) continue;
-        id = this.modelId(model.attributes);
-        if (order && (model.isNew() || !modelMap[id])) {
-          order.push(model);
-
-          // Check to see if this is actually a new model at this index.
-          orderChanged = orderChanged || !this.models[i] || model.cid !== this.models[i].cid;
-        }
-
-        modelMap[id] = true;
       }
 
-      // Remove nonexistent models if appropriate.
+      // Remove stale models.
       if (remove) {
-        for (var i = 0; i < this.length; i++) {
-          if (!modelMap[(model = this.models[i]).cid]) toRemove.push(model);
+        for (i = 0; i < this.length; i++) {
+          model = this.models[i];
+          if (!modelMap[model.cid]) toRemove.push(model);
         }
         if (toRemove.length) this._removeModels(toRemove, options);
       }
 
       // See if sorting is needed, update `length` and splice in new models.
-      if (toAdd.length || orderChanged) {
+      var orderChanged = false;
+      var replace = !sortable && add && remove;
+      if (set.length && replace) {
+        orderChanged = this.length != set.length || _.some(this.models, function(model, index) {
+          return model !== set[index];
+        });
+        this.models.length = 0;
+        splice(this.models, set, 0);
+        this.length = this.models.length;
+      } else if (toAdd.length) {
         if (sortable) sort = true;
-        this.length += toAdd.length;
-        if (at != null) {
-          for (var i = 0; i < toAdd.length; i++) {
-            this.models.splice(at + i, 0, toAdd[i]);
-          }
-        } else {
-          if (order) this.models.length = 0;
-          var orderedModels = order || toAdd;
-          for (var i = 0; i < orderedModels.length; i++) {
-            this.models.push(orderedModels[i]);
-          }
-        }
+        splice(this.models, toAdd, at == null ? this.length : at);
+        this.length = this.models.length;
       }
 
       // Silently sort the collection if appropriate.
@@ -2817,10 +2882,10 @@ module.exports = {
 
       // Unless silenced, it's time to fire all appropriate add/sort events.
       if (!options.silent) {
-        var addOpts = at != null ? _.clone(options) : options;
-        for (var i = 0; i < toAdd.length; i++) {
-          if (at != null) addOpts.index = at + i;
-          (model = toAdd[i]).trigger('add', model, this, addOpts);
+        for (i = 0; i < toAdd.length; i++) {
+          if (at != null) options.index = at + i;
+          model = toAdd[i];
+          model.trigger('add', model, this, options);
         }
         if (sort || orderChanged) this.trigger('sort', this, options);
         if (toAdd.length || toRemove.length) this.trigger('update', this, options);
@@ -2889,10 +2954,7 @@ module.exports = {
     // Return models with matching attributes. Useful for simple cases of
     // `filter`.
     where: function(attrs, first) {
-      var matches = _.matches(attrs);
-      return this[first ? 'find' : 'filter'](function(model) {
-        return matches(model.attributes);
-      });
+      return this[first ? 'find' : 'filter'](attrs);
     },
 
     // Return the first model with matching attributes. Useful for simple cases
@@ -2905,16 +2967,19 @@ module.exports = {
     // normal circumstances, as the set will maintain sort order as each item
     // is added.
     sort: function(options) {
-      if (!this.comparator) throw new Error('Cannot sort a set without a comparator');
+      var comparator = this.comparator;
+      if (!comparator) throw new Error('Cannot sort a set without a comparator');
       options || (options = {});
 
-      // Run sort based on type of `comparator`.
-      if (_.isString(this.comparator) || this.comparator.length === 1) {
-        this.models = this.sortBy(this.comparator, this);
-      } else {
-        this.models.sort(_.bind(this.comparator, this));
-      }
+      var length = comparator.length;
+      if (_.isFunction(comparator)) comparator = _.bind(comparator, this);
 
+      // Run sort based on type of `comparator`.
+      if (length === 1 || _.isString(comparator)) {
+        this.models = this.sortBy(comparator);
+      } else {
+        this.models.sort(comparator);
+      }
       if (!options.silent) this.trigger('sort', this, options);
       return this;
     },
@@ -3003,7 +3068,6 @@ module.exports = {
     },
 
     // Internal method called by both remove and set.
-    // Returns removed models, or false if nothing is removed.
     _removeModels: function(models, options) {
       var removed = [];
       for (var i = 0; i < models.length; i++) {
@@ -3073,28 +3137,15 @@ module.exports = {
   // right here:
   var collectionMethods = { forEach: 3, each: 3, map: 3, collect: 3, reduce: 4,
       foldl: 4, inject: 4, reduceRight: 4, foldr: 4, find: 3, detect: 3, filter: 3,
-      select: 3, reject: 3, every: 3, all: 3, some: 3, any: 3, include: 2,
-      contains: 2, invoke: 0, max: 3, min: 3, toArray: 1, size: 1, first: 3,
+      select: 3, reject: 3, every: 3, all: 3, some: 3, any: 3, include: 3, includes: 3,
+      contains: 3, invoke: 0, max: 3, min: 3, toArray: 1, size: 1, first: 3,
       head: 3, take: 3, initial: 3, rest: 3, tail: 3, drop: 3, last: 3,
       without: 0, difference: 0, indexOf: 3, shuffle: 1, lastIndexOf: 3,
-      isEmpty: 1, chain: 1, sample: 3, partition: 3 };
+      isEmpty: 1, chain: 1, sample: 3, partition: 3, groupBy: 3, countBy: 3,
+      sortBy: 3, indexBy: 3};
 
   // Mix in each Underscore method as a proxy to `Collection#models`.
   addUnderscoreMethods(Collection, collectionMethods, 'models');
-
-  // Underscore methods that take a property name as an argument.
-  var attributeMethods = ['groupBy', 'countBy', 'sortBy', 'indexBy'];
-
-  // Use attributes instead of properties.
-  _.each(attributeMethods, function(method) {
-    if (!_[method]) return;
-    Collection.prototype[method] = function(value, context) {
-      var iterator = _.isFunction(value) ? value : function(model) {
-        return model.get(value);
-      };
-      return _[method](this.models, iterator, context);
-    };
-  });
 
   // Backbone.View
   // -------------
@@ -3119,7 +3170,7 @@ module.exports = {
   // Cached regex to split keys for `delegate`.
   var delegateEventSplitter = /^(\S+)\s*(.*)$/;
 
-  // List of view options to be merged as properties.
+  // List of view options to be set as properties.
   var viewOptions = ['model', 'collection', 'el', 'id', 'attributes', 'className', 'tagName', 'events'];
 
   // Set up all inheritable **Backbone.View** properties and methods.
@@ -3463,7 +3514,7 @@ module.exports = {
   // falls back to polling.
   var History = Backbone.History = function() {
     this.handlers = [];
-    _.bindAll(this, 'checkUrl');
+    this.checkUrl = _.bind(this.checkUrl, this);
 
     // Ensure that `History` can be used outside of the browser.
     if (typeof window !== 'undefined') {
@@ -3556,7 +3607,7 @@ module.exports = {
       this.options          = _.extend({root: '/'}, this.options, options);
       this.root             = this.options.root;
       this._wantsHashChange = this.options.hashChange !== false;
-      this._hasHashChange   = 'onhashchange' in window;
+      this._hasHashChange   = 'onhashchange' in window && (document.documentMode === void 0 || document.documentMode > 7);
       this._useHashChange   = this._wantsHashChange && this._hasHashChange;
       this._wantsPushState  = !!this.options.pushState;
       this._hasPushState    = !!(this.history && this.history.pushState);
@@ -3675,7 +3726,7 @@ module.exports = {
       // If the root doesn't match, no routes can match either.
       if (!this.matchRoot()) return false;
       fragment = this.fragment = this.getFragment(fragment);
-      return _.any(this.handlers, function(handler) {
+      return _.some(this.handlers, function(handler) {
         if (handler.route.test(fragment)) {
           handler.callback(fragment);
           return true;
@@ -4449,20 +4500,99 @@ function base64Slice (buf, start, end) {
 }
 
 function utf8Slice (buf, start, end) {
-  var res = ''
-  var tmp = ''
   end = Math.min(buf.length, end)
+  var res = []
 
-  for (var i = start; i < end; i++) {
-    if (buf[i] <= 0x7F) {
-      res += decodeUtf8Char(tmp) + String.fromCharCode(buf[i])
-      tmp = ''
-    } else {
-      tmp += '%' + buf[i].toString(16)
+  var i = start
+  while (i < end) {
+    var firstByte = buf[i]
+    var codePoint = null
+    var bytesPerSequence = (firstByte > 0xEF) ? 4
+      : (firstByte > 0xDF) ? 3
+      : (firstByte > 0xBF) ? 2
+      : 1
+
+    if (i + bytesPerSequence <= end) {
+      var secondByte, thirdByte, fourthByte, tempCodePoint
+
+      switch (bytesPerSequence) {
+        case 1:
+          if (firstByte < 0x80) {
+            codePoint = firstByte
+          }
+          break
+        case 2:
+          secondByte = buf[i + 1]
+          if ((secondByte & 0xC0) === 0x80) {
+            tempCodePoint = (firstByte & 0x1F) << 0x6 | (secondByte & 0x3F)
+            if (tempCodePoint > 0x7F) {
+              codePoint = tempCodePoint
+            }
+          }
+          break
+        case 3:
+          secondByte = buf[i + 1]
+          thirdByte = buf[i + 2]
+          if ((secondByte & 0xC0) === 0x80 && (thirdByte & 0xC0) === 0x80) {
+            tempCodePoint = (firstByte & 0xF) << 0xC | (secondByte & 0x3F) << 0x6 | (thirdByte & 0x3F)
+            if (tempCodePoint > 0x7FF && (tempCodePoint < 0xD800 || tempCodePoint > 0xDFFF)) {
+              codePoint = tempCodePoint
+            }
+          }
+          break
+        case 4:
+          secondByte = buf[i + 1]
+          thirdByte = buf[i + 2]
+          fourthByte = buf[i + 3]
+          if ((secondByte & 0xC0) === 0x80 && (thirdByte & 0xC0) === 0x80 && (fourthByte & 0xC0) === 0x80) {
+            tempCodePoint = (firstByte & 0xF) << 0x12 | (secondByte & 0x3F) << 0xC | (thirdByte & 0x3F) << 0x6 | (fourthByte & 0x3F)
+            if (tempCodePoint > 0xFFFF && tempCodePoint < 0x110000) {
+              codePoint = tempCodePoint
+            }
+          }
+      }
     }
+
+    if (codePoint === null) {
+      // we did not generate a valid codePoint so insert a
+      // replacement char (U+FFFD) and advance only 1 byte
+      codePoint = 0xFFFD
+      bytesPerSequence = 1
+    } else if (codePoint > 0xFFFF) {
+      // encode to utf16 (surrogate pair dance)
+      codePoint -= 0x10000
+      res.push(codePoint >>> 10 & 0x3FF | 0xD800)
+      codePoint = 0xDC00 | codePoint & 0x3FF
+    }
+
+    res.push(codePoint)
+    i += bytesPerSequence
   }
 
-  return res + decodeUtf8Char(tmp)
+  return decodeCodePointsArray(res)
+}
+
+// Based on http://stackoverflow.com/a/22747272/680742, the browser with
+// the lowest limit is Chrome, with 0x10000 args.
+// We go 1 magnitude less, for safety
+var MAX_ARGUMENTS_LENGTH = 0x1000
+
+function decodeCodePointsArray (codePoints) {
+  var len = codePoints.length
+  if (len <= MAX_ARGUMENTS_LENGTH) {
+    return String.fromCharCode.apply(String, codePoints) // avoid extra slice()
+  }
+
+  // Decode in chunks to avoid "call stack size exceeded".
+  var res = ''
+  var i = 0
+  while (i < len) {
+    res += String.fromCharCode.apply(
+      String,
+      codePoints.slice(i, i += MAX_ARGUMENTS_LENGTH)
+    )
+  }
+  return res
 }
 
 function asciiSlice (buf, start, end) {
@@ -5168,28 +5298,15 @@ function utf8ToBytes (string, units) {
   var length = string.length
   var leadSurrogate = null
   var bytes = []
-  var i = 0
 
-  for (; i < length; i++) {
+  for (var i = 0; i < length; i++) {
     codePoint = string.charCodeAt(i)
 
     // is surrogate component
     if (codePoint > 0xD7FF && codePoint < 0xE000) {
       // last char was a lead
-      if (leadSurrogate) {
-        // 2 leads in a row
-        if (codePoint < 0xDC00) {
-          if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
-          leadSurrogate = codePoint
-          continue
-        } else {
-          // valid surrogate pair
-          codePoint = leadSurrogate - 0xD800 << 10 | codePoint - 0xDC00 | 0x10000
-          leadSurrogate = null
-        }
-      } else {
+      if (!leadSurrogate) {
         // no lead yet
-
         if (codePoint > 0xDBFF) {
           // unexpected trail
           if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
@@ -5198,17 +5315,29 @@ function utf8ToBytes (string, units) {
           // unpaired lead
           if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
           continue
-        } else {
-          // valid lead
-          leadSurrogate = codePoint
-          continue
         }
+
+        // valid lead
+        leadSurrogate = codePoint
+
+        continue
       }
+
+      // 2 leads in a row
+      if (codePoint < 0xDC00) {
+        if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
+        leadSurrogate = codePoint
+        continue
+      }
+
+      // valid surrogate pair
+      codePoint = leadSurrogate - 0xD800 << 10 | codePoint - 0xDC00 | 0x10000
     } else if (leadSurrogate) {
       // valid bmp char, but last char was a lead
       if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
-      leadSurrogate = null
     }
+
+    leadSurrogate = null
 
     // encode utf8
     if (codePoint < 0x80) {
@@ -5227,7 +5356,7 @@ function utf8ToBytes (string, units) {
         codePoint >> 0x6 & 0x3F | 0x80,
         codePoint & 0x3F | 0x80
       )
-    } else if (codePoint < 0x200000) {
+    } else if (codePoint < 0x110000) {
       if ((units -= 4) < 0) break
       bytes.push(
         codePoint >> 0x12 | 0xF0,
@@ -5278,14 +5407,6 @@ function blitBuffer (src, dst, offset, length) {
     dst[i + offset] = src[i]
   }
   return i
-}
-
-function decodeUtf8Char (str) {
-  try {
-    return decodeURIComponent(str)
-  } catch (err) {
-    return String.fromCharCode(0xFFFD) // UTF 8 invalid char
-  }
 }
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/node_modules/browserify/node_modules/buffer/index.js","/node_modules/browserify/node_modules/buffer")

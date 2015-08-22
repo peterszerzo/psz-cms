@@ -215,7 +215,7 @@ Projects.Show.Item = class extends React.Component {
 
 	renderSubtitle() {
 		if (this.props.project.subtitle == null) { return; }
-		return (<h2 className="subtitle">{'-- ' + this.props.project.subtitle + ' --'}</h2>);
+		return (<h2 className="subtitle">{'' + this.props.project.subtitle + ''}</h2>);
 	}
 
 	renderUrl() {

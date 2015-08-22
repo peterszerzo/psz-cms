@@ -1,8 +1,19 @@
 [
 
     {
+        "id": "on-deleting-my-facebook",
+        "name": "On Deleting my Facebook",
+        "title": "On Deleting my Facebook",
+        "subtitle": "Reflections on a Juvenile Stunt",
+        "is_live": true,
+        "categories": [ "blog" ]
+    },
+
+    {
         "id": "playground-1",
-        "name": "Playground 1",
+        "name": "Playground",
+        "type": "blog",
+        "group": "personal",
         "title": "Playground 1",
         "subtitle": "More Projects!",
         "is_live": true,
@@ -20,6 +31,8 @@
     {
         "id": "scaling-tricks-for-geo",
         "dates": [ "2015-06-15" ],
+        "type": "blog",
+        "group": "technical",
         "url": "https://github.com/pickled-plugins/scaling-tricks-for-geo",
         "name": "Scaling Tricks for Geo",
         "title": "On Scalable Interactive Mapping",
@@ -32,17 +45,21 @@
 
     {
         "id": "peterszerzo-io",
+        "type": "project",
+        "group": "",
         "technologies": [ "Express.js", "React.js" ]
     },
 
     {
         "id": "atlas",
         "url": "http://atlas.newamerica.org",
+        "type": "project",
+        "group": "code",
+        "categories": [ "code" ],
         "dates": ["2014-12", "present"],
         "name": "atlas.newamerica.org",
         "title": "atlas.newamerica.org",
         "is_live": true,
-        "categories": [ "code", "design" ],
         "languages": [ "JavaScript" ],
         "technologies": [ "React.js", "Backbone.js", "Marionette.js", "d3.js", "Leaflet.js", "Express.js" ]
     },
@@ -51,17 +68,14 @@
         "id": "ripsaw-js",
         "is_live": true,
         "name": "ripsaw.js",
+        "type": "project",
+        "categories": [ "code", "design" ],
         "title": "ripsaw.js",
         "subtitle": "Guided Design for Non-designers",
         "url": "http://pickled-plugins.github.io/ripsaw-demo/#pages/home",
         "year": 2010,
         "supervisors": [],
         "collaborators": [],
-        "spoiler": [
-            "an interactive product design environment for the web browser, aspiring to provide a minimal frustration design experience for the non-designer",
-            "an online publishing environment for developers and computational designers"
-        ],
-        "categories": [ "code", "design" ],
         "importance": 1,
         "technologies": [ "HTML Canvas" ]
     },
@@ -71,15 +85,13 @@
         "is_live": true,
         "name": "Giraffe for Rhino",
         "title": "Giraffe for Rhino",
+        "type": "project",
+        "group": "",
         "subtitle": "A Strctural Engineering Add-on",
         "url": "http://pickled-plugins.github.io/Giraffe-for-Rhino/",
         "year": 2010,
         "supervisors": ["Michael Stein, PE"],
         "collaborators": [],
-        "spoiler": [
-            "an exporting plug-in for Rhinoceros 3d that integrates architectural and strutural design workflows by allowing structural models to be built exclusively within Rhino",
-            "by communicating between established software packages, it allows for a well-structured, lightweight and non-redundant storage of design data"
-        ],
         "categories": [ "code" ],
         "importance": 1,
         "technologies": [ "Rhino PythonScript" ]
@@ -89,6 +101,9 @@
 
         "id": "pendant-project",
         "is_live": true,
+        "group": "project",
+        "type": "design",
+        "categories": [ "design" ],
         "dates": [ "2013-01", "2013-04" ],
         "name": "Pendant Project",
         "title": "The Pendant Project",
@@ -97,13 +112,7 @@
         "year": 2010,
         "supervisors": [],
         "collaborators": [ "Tiffany Cheezem", "Greta Shum", "Alison Cook" ],
-        "spoiler": [
-            "a design exercise that encourages a lively and expressive interaction between artwork and its frame, one that can be perceived as tension, play, harmony or competition for the viewer’s attention",
-            "digitally designed and lasercut"
-        ],
-        "categories": [ "design" ],
         "importance": 1
-
     },
 
     {
@@ -111,6 +120,8 @@
         "id": "pba",
         "is_live": true,
         "name": "PBA",
+        "group": "project",
+        "type": "code",
         "title": "Pascal Basketball Association",
         "subtitle": "Our First Videogame",
         "url": "http://pickled-plugins.github.io/pba/",
@@ -126,15 +137,13 @@
     {
         "id": "kinetic",
         "name": "kinetic",
+        "group": "project",
+        "type": "code",
         "title": "Deployable Smart Mast",
         "year": 2010,
         "dates": ["2010-11", "2011-04"],
         "supervisors": ["Prof. Sigrid Adriaenssens", "Prof. Branko Glisic"],
         "collaborators": [],
-        "spoiler": [
-            "proof of concept for a structure that adapts in response to its environment",
-            "computer-aided interaction between environment and structure"
-        ],
         "categories": [ "code", "design" ],
         "importance": 1,
         "is_live": true,
@@ -146,13 +155,11 @@
         "name": "battle",
         "dates": [ "2012-03", "2012-05" ],
         "title": "Battle Shell",
+        "group": "project",
+        "type": "design",
         "year": 2010,
         "supervisors": ["Prof. Sigrid Adriaenssens"],
         "collaborators": ["Laura Ettedgui", "Julianne Gola"],
-        "spoiler": [
-            "assembly of two shell structures floating at a distance, allowing competing performers to ‘battle’. The two units come together to form a larger roof",
-            "a computational exercise that tailors a custom particle-springs algorithm to the architectural and structural requirements of the project"
-        ],
         "categories": [ "code", "design" ],
         "importance": 1,
         "is_live": true,
@@ -208,6 +215,8 @@
         "id": "algorithmic-tattoo",
         "is_live": true,
         "name": "algorithmic tattoo",
+        "group": "project",
+        "type": "design",
         "title": "Algorithmic Tattoo",
         "subtitle": "Body Art from the Creative Programmer",
         "dates": ["2014-11-25"],
@@ -221,6 +230,8 @@
     {
         "id": "dchisel",
         "name": "dchisel",
+        "group": "project",
+        "type": "code",
         "title": "Old portfolio site.",
         "url": "http://dchisel.herokuapp.com/",
         "year": 2013,
