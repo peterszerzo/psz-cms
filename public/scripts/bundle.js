@@ -258,24 +258,33 @@ var _createClass = (function () { function defineProperties(target, props) { for
 
 var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var React = require('react'),
-    globe = require('./../assets/script/globe.js');
+var _react = require('react');
 
-var data = [{ url: '/things?category=code', name: 'mindful code' }, { url: '/things?category=design', name: 'minimal design' }];
+var React = _interopRequireWildcard(_react);
+
+var _assetsScriptGlobeJs = require('./../assets/script/globe.js');
+
+var _assetsScriptGlobeJs2 = _interopRequireDefault(_assetsScriptGlobeJs);
+
+var _reactRouter = require('react-router');
 
 var Banner = (function (_React$Component) {
 	_inherits(Banner, _React$Component);
 
-	function Banner() {
+	function Banner(props) {
 		_classCallCheck(this, Banner);
 
-		_get(Object.getPrototypeOf(Banner.prototype), 'constructor', this).call(this);
+		_get(Object.getPrototypeOf(Banner.prototype), 'constructor', this).call(this, props);
 		this.state = {
-			data: [{ url: '/things?category=code', name: 'mindful code' }, { url: '/things?category=design', name: 'minimal design' }]
+			data: [{ url: '/things?type=project', name: 'mindful code' }, { url: '/things?type=project', name: 'minimal design' }]
 		};
 	}
 
@@ -306,8 +315,8 @@ var Banner = (function (_React$Component) {
 					'li',
 					null,
 					React.createElement(
-						'a',
-						{ href: item.url },
+						_reactRouter.Link,
+						{ to: item.url },
 						item.name
 					)
 				);
@@ -321,7 +330,7 @@ var Banner = (function (_React$Component) {
 	}, {
 		key: 'componentDidMount',
 		value: function componentDidMount() {
-			this.globeAnimation = globe('geo.json');
+			this.globeAnimation = (0, _assetsScriptGlobeJs2['default'])('geo.json');
 			this.globeAnimation.navigateToRandom = this.navigateToRandom.bind(this);
 			this.globeAnimation.start();
 		}
@@ -342,7 +351,7 @@ Banner.contextTypes = {
 module.exports = Banner;
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/app/components/banner.jsx","/app/components")
-},{"./../assets/script/globe.js":3,"_process":19,"buffer":15,"react":217}],6:[function(require,module,exports){
+},{"./../assets/script/globe.js":3,"_process":19,"buffer":15,"react":217,"react-router":48}],6:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 'use strict';
 
@@ -1050,6 +1059,10 @@ var _headerJsx = require('./header.jsx');
 
 var _headerJsx2 = _interopRequireDefault(_headerJsx);
 
+var _underscore = require('underscore');
+
+var _underscore2 = _interopRequireDefault(_underscore);
+
 var _modelsProjectJs = require('./../models/project.js');
 
 var _modelsProjectJs2 = _interopRequireDefault(_modelsProjectJs);
@@ -1086,7 +1099,7 @@ Projects.Index = (function (_React$Component) {
 				'div',
 				null,
 				_react2['default'].createElement(_headerJsx2['default'], { type: this.getType() }),
-				_react2['default'].createElement(ProjectList, { type: this.getType(), projects: this.getProjects() })
+				_react2['default'].createElement(ProjectGroupList, { projects: this.getFilteredProjects() })
 			);
 		}
 	}, {
@@ -1099,11 +1112,19 @@ Projects.Index = (function (_React$Component) {
 				coll = new _modelsProjectJs2['default'].Collection();
 				promise = coll.getFetchPromise({});
 				promise.then(function (coll) {
-					_this.setState({ projects: coll.toJSON() });
+					_this.setState({ projects: coll });
 				}, function () {
 					console.log('promise rejected');
 				});
 			}
+		}
+	}, {
+		key: 'getFilteredProjects',
+		value: function getFilteredProjects() {
+			if (this.getProjects() == null) {
+				return;
+			}
+			return this.getProjects().where({ type: this.getType() });
 		}
 	}, {
 		key: 'getProjects',
@@ -1119,9 +1140,6 @@ Projects.Index = (function (_React$Component) {
 		value: function getType() {
 			return this.props.query.type;
 		}
-	}], [{
-		key: 'fetchData',
-		value: function fetchData() {}
 	}]);
 
 	return _class;
@@ -1131,8 +1149,64 @@ Projects.Index.contextTypes = {
 	router: _react2['default'].PropTypes.func
 };
 
-var ProjectList = (function (_React$Component2) {
-	_inherits(ProjectList, _React$Component2);
+var ProjectGroupList = (function (_React$Component2) {
+	_inherits(ProjectGroupList, _React$Component2);
+
+	function ProjectGroupList() {
+		_classCallCheck(this, ProjectGroupList);
+
+		_get(Object.getPrototypeOf(ProjectGroupList.prototype), 'constructor', this).apply(this, arguments);
+	}
+
+	_createClass(ProjectGroupList, [{
+		key: 'render',
+		value: function render() {
+			return _react2['default'].createElement(
+				'div',
+				{ className: 'project-groups' },
+				this.renderGroups()
+			);
+		}
+	}, {
+		key: 'renderGroups',
+		value: function renderGroups() {
+
+			var projects = this.props.projects;
+
+			if (projects == null) {
+				return _react2['default'].createElement('img', { src: '/images/loader/ripple.gif' });
+			}
+
+			console.log(projects);
+
+			var groups = _underscore2['default'].groupBy(projects, function (model) {
+				return model.get('group');
+			});
+
+			return Object.keys(groups).map(function (key) {
+				var projects = groups[key];
+				if (projects == null) {
+					return _react2['default'].createElement('div', null);
+				}
+				return _react2['default'].createElement(
+					'div',
+					{ className: 'project-group' },
+					_react2['default'].createElement(
+						'h1',
+						{ id: key },
+						key
+					),
+					_react2['default'].createElement(ProjectList, { projects: projects })
+				);
+			});
+		}
+	}]);
+
+	return ProjectGroupList;
+})(_react2['default'].Component);
+
+var ProjectList = (function (_React$Component3) {
+	_inherits(ProjectList, _React$Component3);
 
 	function ProjectList() {
 		_classCallCheck(this, ProjectList);
@@ -1152,14 +1226,8 @@ var ProjectList = (function (_React$Component2) {
 	}, {
 		key: 'renderList',
 		value: function renderList() {
-			var _this2 = this;
-
-			var projects = this.props.projects;
-			if (!projects) {
-				return _react2['default'].createElement('img', { src: '/images/loader/ripple.gif' });
-			}
-			return projects.map(function (project, index) {
-				return _react2['default'].createElement(ProjectListItem, { project: project, type: _this2.props.type, key: index });
+			return this.props.projects.map(function (project, index) {
+				return _react2['default'].createElement(ProjectListItem, { project: project, key: index });
 			});
 		}
 	}]);
@@ -1167,8 +1235,8 @@ var ProjectList = (function (_React$Component2) {
 	return ProjectList;
 })(_react2['default'].Component);
 
-var ProjectListItem = (function (_React$Component3) {
-	_inherits(ProjectListItem, _React$Component3);
+var ProjectListItem = (function (_React$Component4) {
+	_inherits(ProjectListItem, _React$Component4);
 
 	function ProjectListItem() {
 		_classCallCheck(this, ProjectListItem);
@@ -1180,20 +1248,17 @@ var ProjectListItem = (function (_React$Component3) {
 		key: 'render',
 		value: function render() {
 			var project = this.props.project;
-			if (!this.shouldDisplay()) {
-				return _react2['default'].createElement('li', null);
-			}
 			return _react2['default'].createElement(
 				'li',
 				{ className: '' },
 				_react2['default'].createElement(
 					_reactRouter.Link,
-					{ className: 'project', to: '/things/' + project.id },
+					{ className: 'project', to: '/things/' + project.get('id') },
 					this.renderBackgroundImage(),
 					_react2['default'].createElement(
 						'div',
 						{ className: 'project__title' },
-						project.name
+						project.get('name')
 					)
 				)
 			);
@@ -1202,7 +1267,7 @@ var ProjectListItem = (function (_React$Component3) {
 		key: 'renderBackgroundImage',
 		value: function renderBackgroundImage() {
 			var project = this.props.project,
-			    id = project.id,
+			    id = project.get('id'),
 			    name = id.split('-').map(function (word) {
 				return word[0].toUpperCase() + word.slice(1);
 			}).join(''),
@@ -1212,18 +1277,13 @@ var ProjectListItem = (function (_React$Component3) {
 			}
 			return _react2['default'].createElement(Comp, { className: 'project__logo' });
 		}
-	}, {
-		key: 'shouldDisplay',
-		value: function shouldDisplay() {
-			return this.props.type === this.props.project.type;
-		}
 	}]);
 
 	return ProjectListItem;
 })(_react2['default'].Component);
 
-Projects.Show = (function (_React$Component4) {
-	_inherits(_class2, _React$Component4);
+Projects.Show = (function (_React$Component5) {
+	_inherits(_class2, _React$Component5);
 
 	function _class2(props) {
 		_classCallCheck(this, _class2);
@@ -1247,14 +1307,14 @@ Projects.Show = (function (_React$Component4) {
 	}, {
 		key: 'componentDidMount',
 		value: function componentDidMount() {
-			var _this3 = this;
+			var _this2 = this;
 
 			var coll, promise;
 			if (this.getProject() == null) {
 				coll = new _modelsProjectJs2['default'].Collection();
 				promise = coll.getFetchPromise({ id: this.props.params.id });
 				promise.then(function (coll) {
-					_this3.setState({ project: coll.models[0].toJSON() });
+					_this2.setState({ project: coll.models[0] });
 				}, function () {
 					console.log('promise rejected');
 				});
@@ -1273,8 +1333,8 @@ Projects.Show = (function (_React$Component4) {
 	return _class2;
 })(_react2['default'].Component);
 
-var ProjectShowItem = (function (_React$Component5) {
-	_inherits(ProjectShowItem, _React$Component5);
+var ProjectShowItem = (function (_React$Component6) {
+	_inherits(ProjectShowItem, _React$Component6);
 
 	function ProjectShowItem() {
 		_classCallCheck(this, ProjectShowItem);
@@ -1299,7 +1359,7 @@ var ProjectShowItem = (function (_React$Component5) {
 				_react2['default'].createElement(
 					'h1',
 					{ className: 'title' },
-					project.title
+					project.get('title')
 				),
 				this.renderSubtitle(),
 				this.renderDates(),
@@ -1310,7 +1370,7 @@ var ProjectShowItem = (function (_React$Component5) {
 	}, {
 		key: 'renderDates',
 		value: function renderDates() {
-			var dates = this.props.project.dates,
+			var dates = this.props.project.get('dates'),
 			    formattedDates,
 			    content;
 			if (dates == null) {
@@ -1332,19 +1392,19 @@ var ProjectShowItem = (function (_React$Component5) {
 	}, {
 		key: 'renderSubtitle',
 		value: function renderSubtitle() {
-			if (this.props.project.subtitle == null) {
+			if (this.props.project.get('subtitle') == null) {
 				return;
 			}
 			return _react2['default'].createElement(
 				'h2',
 				{ className: 'subtitle' },
-				'' + this.props.project.subtitle + ''
+				'' + this.props.project.get('subtitle') + ''
 			);
 		}
 	}, {
 		key: 'renderUrl',
 		value: function renderUrl() {
-			var url = this.props.project.url;
+			var url = this.props.project.get('url');
 			if (url == null) {
 				return;
 			}
@@ -1357,7 +1417,7 @@ var ProjectShowItem = (function (_React$Component5) {
 	}, {
 		key: 'renderBody',
 		value: function renderBody() {
-			var md = this.props.project.bodyText;
+			var md = this.props.project.get('bodyText');
 			if (md == null) {
 				return;
 			}
@@ -1371,7 +1431,7 @@ var ProjectShowItem = (function (_React$Component5) {
 module.exports = Projects;
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/app/components/projects.jsx","/app/components")
-},{"./../models/project.js":12,"./header.jsx":6,"./logos/project-logos.jsx":8,"_process":19,"buffer":15,"marked":22,"moment":23,"react":217,"react-router":48}],10:[function(require,module,exports){
+},{"./../models/project.js":12,"./header.jsx":6,"./logos/project-logos.jsx":8,"_process":19,"buffer":15,"marked":22,"moment":23,"react":217,"react-router":48,"underscore":218}],10:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 'use strict';
 

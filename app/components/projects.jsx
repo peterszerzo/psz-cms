@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import Header from './header.jsx';
+import _ from 'underscore';
 import project from './../models/project.js';
 import marked from 'marked';
 import moment from 'moment';
@@ -20,7 +21,7 @@ Projects.Index = class extends React.Component {
 		return (
 			<div>
 				<Header type={this.getType()}/>
-				<ProjectList type={this.getType()} projects={this.getProjects()}/>
+				<ProjectGroupList projects={this.getFilteredProjects()}/>
 			</div>
 		);
 	}
@@ -31,13 +32,14 @@ Projects.Index = class extends React.Component {
 			coll = new project.Collection();
 			promise = coll.getFetchPromise({});
 			promise.then((coll) => {
-				this.setState({ projects: coll.toJSON() });
+				this.setState({ projects: coll });
 			}, () => { console.log('promise rejected'); });
 		}
 	}
 
-	static fetchData() {
-
+	getFilteredProjects() {
+		if (this.getProjects() == null) { return; }
+		return this.getProjects().where({ type: this.getType() });
 	}
 
 	getProjects() {
@@ -56,6 +58,42 @@ Projects.Index.contextTypes = {
 	router: React.PropTypes.func
 }
 
+class ProjectGroupList extends React.Component {
+
+	render() {
+		return (
+			<div className='project-groups'>
+				{ this.renderGroups() }
+			</div>
+		);
+	}
+
+	renderGroups() {
+
+		var projects = this.props.projects;
+
+		if (projects == null) { return (<img src="/images/loader/ripple.gif" />); }
+
+		console.log(projects);
+
+		var groups = _.groupBy(projects, (model) => {
+			return model.get('group');
+		});
+
+		return Object.keys(groups).map((key) => {
+			var projects = groups[key];
+			if (projects == null) { return (<div/>); }
+			return (
+				<div className='project-group'>
+					<h1 id={key}>{ key }</h1>
+					<ProjectList projects={projects} />
+				</div>
+			);
+		});
+	}
+
+}
+
 class ProjectList extends React.Component {
 
 	render() {
@@ -67,10 +105,8 @@ class ProjectList extends React.Component {
 	}
 
 	renderList() {
-		var projects = this.props.projects;
-		if (!projects) { return (<img src="/images/loader/ripple.gif" />); }
-		return projects.map((project, index) => {
-			return <ProjectListItem project={project} type={this.props.type} key={index} />;
+		return this.props.projects.map((project, index) => {
+			return <ProjectListItem project={project} key={index} />;
 		});
 	}
 
@@ -80,12 +116,11 @@ class ProjectListItem extends React.Component {
 
 	render() {
 		var project = this.props.project;
-		if (!this.shouldDisplay()) { return <li />; }
 		return (
 			<li className={''}>
-				<Link className="project" to={'/things/' + project.id}>
+				<Link className="project" to={'/things/' + project.get('id')}>
 					{ this.renderBackgroundImage() }
-					<div className="project__title">{project.name}</div>
+					<div className="project__title">{project.get('name')}</div>
 				</Link>
 			</li>
 		);
@@ -93,17 +128,13 @@ class ProjectListItem extends React.Component {
 
 	renderBackgroundImage() {
 		var project = this.props.project,
-			id = project.id,
+			id = project.get('id'),
 			name = id.split('-').map(function(word) {
 				return (word[0].toUpperCase() + word.slice(1));
 			}).join(''),
 			Comp = Logos[name];
 		if (Comp == null) { return <Logos.Neutral className='project__logo' />; }
 		return (<Comp className='project__logo' />);
-	}
-
-	shouldDisplay() {
-		return (this.props.type === this.props.project.type);
 	}
 
 }
@@ -132,7 +163,7 @@ Projects.Show = class extends React.Component {
 			coll = new project.Collection();
 			promise = coll.getFetchPromise({ id: this.props.params.id });
 			promise.then((coll) => {
-				this.setState({ project: coll.models[0].toJSON() });
+				this.setState({ project: coll.models[0] });
 			}, () => { console.log('promise rejected'); });
 		}
 	}
@@ -160,7 +191,7 @@ class ProjectShowItem extends React.Component {
 		}
 		return (
 			<div className="fill-parent">
-				<h1 className="title">{project.title}</h1>
+				<h1 className="title">{project.get('title')}</h1>
 				{ this.renderSubtitle() }
 				{ this.renderDates() }
 				{ this.renderUrl() }
@@ -170,7 +201,7 @@ class ProjectShowItem extends React.Component {
 	}
 
 	renderDates() {
-		var dates = this.props.project.dates, 
+		var dates = this.props.project.get('dates'), 
 			formattedDates, content;
 		if (dates == null) { return; }
 		formattedDates = dates.map(function(date) {
@@ -184,12 +215,12 @@ class ProjectShowItem extends React.Component {
 	}
 
 	renderSubtitle() {
-		if (this.props.project.subtitle == null) { return; }
-		return (<h2 className="subtitle">{'' + this.props.project.subtitle + ''}</h2>);
+		if (this.props.project.get('subtitle') == null) { return; }
+		return (<h2 className="subtitle">{'' + this.props.project.get('subtitle') + ''}</h2>);
 	}
 
 	renderUrl() {
-		var url = this.props.project.url;
+		var url = this.props.project.get('url');
 		if (url == null) { return; }
 		return (
 			<a className="main-link" href={url} target="_blank">Project Site</a>
@@ -197,7 +228,7 @@ class ProjectShowItem extends React.Component {
 	}
 
 	renderBody() {
-		var md = this.props.project.bodyText;
+		var md = this.props.project.get('bodyText');
 		if (md == null) { return; }
 		return (
 			<div className="static" dangerouslySetInnerHTML={{ __html: marked(md) }}/>

@@ -1,19 +1,15 @@
-var React = require('react'),
-	globe = require('./../assets/script/globe.js');
-
-var data = [ 
-	{ url: '/things?category=code', name: 'mindful code' },  
-	{ url: '/things?category=design', name: 'minimal design' }
-];
+import * as React from 'react';
+import globe from './../assets/script/globe.js';
+import { Link } from 'react-router';
 
 class Banner extends React.Component {
 
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
 		this.state = {
 			data: [ 
-				{ url: '/things?category=code', name: 'mindful code' },  
-				{ url: '/things?category=design', name: 'minimal design' }
+				{ url: '/things?type=project', name: 'mindful code' },  
+				{ url: '/things?type=project', name: 'minimal design' }
 			]
 		};
 
@@ -35,7 +31,7 @@ class Banner extends React.Component {
 		return this.state.data.map(function(item) {
 			return (
 				<li>
-					<a href={item.url}>{item.name}</a>
+					<Link to={item.url}>{item.name}</Link>
 				</li>
 			);
 		});
