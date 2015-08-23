@@ -36,6 +36,10 @@ Projects.Index = class extends React.Component {
 		}
 	}
 
+	static fetchData() {
+
+	}
+
 	getProjects() {
 		// projects are stored in props if rendered server-side, and on the state if rendered client-side.
 		if (this.state.projects != null) { return this.state.projects; }
@@ -131,6 +135,10 @@ Projects.Show = class extends React.Component {
 				this.setState({ project: coll.models[0].toJSON() });
 			}, () => { console.log('promise rejected'); });
 		}
+	}
+
+	static fetchData() {
+
 	}
 
 	getProject() {

@@ -3,29 +3,28 @@
     {
         "id": "on-deleting-my-facebook",
         "name": "On Deleting my Facebook",
+        "type": "blog",
+        "group": "personal",
         "title": "On Deleting my Facebook",
         "subtitle": "Reflections on a Juvenile Stunt",
-        "is_live": true,
-        "categories": [ "blog" ]
+        "is_live": true
     },
 
     {
         "id": "playground-1",
-        "name": "Playground",
+        "name": "Playground 1",
         "type": "blog",
         "group": "personal",
         "title": "Playground 1",
         "subtitle": "More Projects!",
-        "is_live": true,
-        "categories": [ "blog" ]
+        "is_live": true
     },
 
     {
         "id": "about",
         "name": "about",
         "title": "Hi,",
-        "is_live": true,
-        "categories": [ "about" ]
+        "is_live": true
     },
 
     {
@@ -39,7 +38,6 @@
         "subtitle": "Recent Favorite Tricks",
         "is_live": true,
         "collaborators": [],
-        "categories": [ "code", "blog" ],
         "technologies": [ "Backbone.js", "Marionette.js", "d3.js", "Leaflet.js" ]
     },
 
@@ -69,7 +67,6 @@
         "is_live": true,
         "name": "ripsaw.js",
         "type": "project",
-        "categories": [ "code", "design" ],
         "title": "ripsaw.js",
         "subtitle": "Guided Design for Non-designers",
         "url": "http://pickled-plugins.github.io/ripsaw-demo/#pages/home",
@@ -101,8 +98,8 @@
 
         "id": "pendant-project",
         "is_live": true,
-        "group": "project",
-        "type": "design",
+        "group": "design",
+        "type": "project",
         "categories": [ "design" ],
         "dates": [ "2013-01", "2013-04" ],
         "name": "Pendant Project",
@@ -120,8 +117,8 @@
         "id": "pba",
         "is_live": true,
         "name": "PBA",
-        "group": "project",
-        "type": "code",
+        "group": "code",
+        "type": "project",
         "title": "Pascal Basketball Association",
         "subtitle": "Our First Videogame",
         "url": "http://pickled-plugins.github.io/pba/",
@@ -137,8 +134,8 @@
     {
         "id": "kinetic",
         "name": "kinetic",
-        "group": "project",
-        "type": "code",
+        "group": "code",
+        "type": "project",
         "title": "Deployable Smart Mast",
         "year": 2010,
         "dates": ["2010-11", "2011-04"],
@@ -155,8 +152,8 @@
         "name": "battle",
         "dates": [ "2012-03", "2012-05" ],
         "title": "Battle Shell",
-        "group": "project",
-        "type": "design",
+        "group": "design",
+        "type": "project",
         "year": 2010,
         "supervisors": ["Prof. Sigrid Adriaenssens"],
         "collaborators": ["Laura Ettedgui", "Julianne Gola"],
@@ -230,8 +227,8 @@
     {
         "id": "dchisel",
         "name": "dchisel",
-        "group": "project",
-        "type": "code",
+        "group": "design",
+        "type": "project",
         "title": "Old portfolio site.",
         "url": "http://dchisel.herokuapp.com/",
         "year": 2013,
@@ -242,7 +239,7 @@
         ],
         "categories": [ "code", "design" ],
         "importance": 1,
-        "is_live": false,
+        "is_live": true,
         "languages": [ "PHP", "JavaScript" ],
         "technologies": [ ]
     }

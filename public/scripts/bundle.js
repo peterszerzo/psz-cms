@@ -245,7 +245,7 @@ var React = require('react'),
     routes = require('./components/routes.jsx');
 
 Router.run(routes, Router.HistoryLocation, function (Root, state) {
-	console.log(state);
+	console.log(state.routes[0].fetchData);
 	React.render(React.createElement(Root, null), global.document.body);
 });
 
@@ -1119,6 +1119,9 @@ Projects.Index = (function (_React$Component) {
 		value: function getType() {
 			return this.props.query.type;
 		}
+	}], [{
+		key: 'fetchData',
+		value: function fetchData() {}
 	}]);
 
 	return _class;
@@ -1262,6 +1265,9 @@ Projects.Show = (function (_React$Component4) {
 		value: function getProject() {
 			return this.state.project || this.props.project;
 		}
+	}], [{
+		key: 'fetchData',
+		value: function fetchData() {}
 	}]);
 
 	return _class2;
