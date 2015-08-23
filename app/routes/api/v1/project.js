@@ -1,7 +1,6 @@
 var express = require('express'),
 	router = express.Router(),
-	project = require('./../../../models/project.js'),
-	fs = require('fs');
+	project = require('./../../../models/project.js');
 
 var sanitizeQuery = function(query) {
 	// Convert boolean queries.

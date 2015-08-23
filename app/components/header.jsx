@@ -10,11 +10,11 @@ class Header extends React.Component {
 		this.state.buttons = [
 			{
 				name: 'projects',
-				url: '/things?group=project'
+				url: '/things?type=project'
 			},
 			{
 				name: 'blog',
-				url: '/things?group=blog'
+				url: '/things?type=blog'
 			},
 			{
 				name: 'about',
@@ -25,9 +25,9 @@ class Header extends React.Component {
 	}
 
 	getList() {
-		var activeCategory = this.props.category;
+		var activeType = this.props.type;
 		return this.state.buttons.map(function(button, index) {
-			var isActive = (button.name === activeCategory),
+			var isActive = (activeType && (button.name === activeType || button.name.slice(0, -1) === activeType)),
 				className = 'header__nav__item' + (isActive ? ' header__nav__item--active' : '');
 			return (
 				<li className={className} key={index} >

@@ -6,15 +6,7 @@ import marked from 'marked';
 import moment from 'moment';
 import Logos from './logos/project-logos.jsx';
 
-class Projects extends React.Component {
-
-	render() {
-		return (
-			<div></div>
-		);
-	}
-	
-}
+var Projects = {};
 
 Projects.Index = class extends React.Component {
 
@@ -27,8 +19,8 @@ Projects.Index = class extends React.Component {
 	render() {
 		return (
 			<div>
-				<Header category={this.getCategory()}/>
-				<Projects.Index.List category={this.getCategory()} projects={this.getProjects()}/>
+				<Header type={this.getType()}/>
+				<ProjectList type={this.getType()} projects={this.getProjects()}/>
 			</div>
 		);
 	}
@@ -50,8 +42,8 @@ Projects.Index = class extends React.Component {
 		return this.props.projects;
 	}
 
-	getCategory() {
-		return this.props.category || this.props.query.category || 'all';
+	getType() {
+		return this.props.query.type;
 	}
 
 }
@@ -60,7 +52,7 @@ Projects.Index.contextTypes = {
 	router: React.PropTypes.func
 }
 
-Projects.Index.List = class extends React.Component {
+class ProjectList extends React.Component {
 
 	render() {
 		return (
@@ -74,47 +66,28 @@ Projects.Index.List = class extends React.Component {
 		var projects = this.props.projects;
 		if (!projects) { return (<img src="/images/loader/ripple.gif" />); }
 		return projects.map((project, index) => {
-			return <Projects.Index.List.Item project={project} category={this.props.category || 'all'} key={index} />;
+			return <ProjectListItem project={project} type={this.props.type} key={index} />;
 		});
 	}
 
 }
 
-Projects.Index.List.Item = class extends React.Component {
+class ProjectListItem extends React.Component {
 
 	render() {
-		var project = this.props.project,
-			cls = this.shouldDisplay() ? '' : 'hidden';
+		var project = this.props.project;
+		if (!this.shouldDisplay()) { return <li />; }
 		return (
-			<li className={cls}>
+			<li className={''}>
 				<Link className="project" to={'/things/' + project.id}>
-					{ this.renderBackground() }
-					{ this.renderOldBackgroundImage() }
-					{ this.renderNewBackgroundImage() }
+					{ this.renderBackgroundImage() }
 					<div className="project__title">{project.name}</div>
 				</Link>
 			</li>
 		);
 	}
 
-	renderBackground() {
-		var project = this.props.project;
-		if (project.has_logo !== false) { return; }
-		return (
-			<div className="project__background">{this.getInitials()}</div>
-		);
-	}
-
-	// Obsolete.
-	renderOldBackgroundImage() {
-		var project = this.props.project;
-		return;
-		return (
-			<img src={'images/project-logos/project-logos_' + project.id + '.svg'}></img>
-		);
-	}
-
-	renderNewBackgroundImage() {
+	renderBackgroundImage() {
 		var project = this.props.project,
 			id = project.id,
 			name = id.split('-').map(function(word) {
@@ -125,19 +98,8 @@ Projects.Index.List.Item = class extends React.Component {
 		return (<Comp className='project__logo' />);
 	}
 
-	// Get project title initials.
-	getInitials() {
-		var title = this.props.project.title;
-		return title.slice(0, 3);
-	}
-
-	// Specifies whether project should display.
 	shouldDisplay() {
-		var activeCategory = this.props.category,
-			categories = this.props.project.categories;
-		if (activeCategory === 'all') { return true; }
-		if (categories == null) { return false; }
-		return (categories.indexOf(activeCategory) > -1);
+		return (this.props.type === this.props.project.type);
 	}
 
 }
@@ -155,7 +117,7 @@ Projects.Show = class extends React.Component {
 		return (
 			<div>
 				<Header/>
-				<Projects.Show.Item project={ project }/>
+				<ProjectShowItem project={ project }/>
 			</div>
 		);
 	}
@@ -177,7 +139,7 @@ Projects.Show = class extends React.Component {
 
 }
 
-Projects.Show.Item = class extends React.Component {
+class ProjectShowItem extends React.Component {
 
 	render() {
 		var project = this.props.project;

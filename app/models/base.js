@@ -1,6 +1,5 @@
-var _ = require('underscore'),
-	Backbone = require('backbone'),
-	fs = require('fs');
+import * as Backbone from 'backbone';
+import * as fs from 'fs';
 
 class Model extends Backbone.Model {
 
@@ -12,28 +11,19 @@ class Model extends Backbone.Model {
 
 class Collection extends Backbone.Collection {
 
-	constructor(options) {
-
-		super(options);
-		this.model = Model;
-
-	}
+    get model() { return Model; }
 
 	isOnClient() {
     	return (fs == null || fs.readFile == null);
 	}
 
 	setUrl(query) {
-
         var queryString = '?', key, value;
-
         for (key in query) {
             value = query[key];
-            queryString += `${key}=${value}`;
+            queryString += `${key}=${value}&`;
         }
-
         this.url = this.baseUrl + queryString;
-
     }
 
     /*
