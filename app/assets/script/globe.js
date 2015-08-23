@@ -52,11 +52,18 @@ module.exports = function(fileName) {
         }
     };
 
+    self.onFeatureMouseEnter = function(feature) {
+        if (this.triggerMessage != null) {
+            this.triggerMessage();
+        }
+    };
+
     self.draw = function(error, data) {
         self.svg.selectAll('path')
             .data(data.features)
             .enter()
             .append('path')
+            .on('mouseenter', self.onFeatureMouseEnter.bind(self))
             .on('click', self.onFeatureClick.bind(self));
         self.updateGeoPaths();
         self.animationIntervalId = setInterval(self.update, self.timeStep * 1000);

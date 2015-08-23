@@ -11,46 +11,18 @@
 
 		position: absolute;
 
+		padding: 0 30px;
+
 		width: 100%;
 		top: 20%;
 		text-align: center;
 
-		li {
-			display: block;
-			
-			&:first-child { a { left: -55px; } }
-			&:last-child { a { left: 55px; } }
-			margin: 15px 30px 30px 30px;
-			@media only screen and (min-width: 800px) {
-				display: inline-block;
-			}
-			a {
-				position: relative;
-				font-family: 'Hallo';
-				border: none;
-				font-size: 30px;
-				position: relative;
-				padding-bottom: 4px;
-				text-decoration: none;
-				color: white;
-				top: 0px;
-				opacity: 0.7;
-				&:hover {
-					opacity: 1;
-					border-bottom: 2px solid white;
-				}
-			}
+		a {
+			font-size: 30px;
+			font-family: 'Hallo';
+			padding: 10px;
 		}
-	}
 
-	&__notice {
-		position: absolute;
-		top: 35%;
-		width: 100%;
-		color: white;
-		text-align: center;
-		font-size: 54px;
-		text-transform: uppercase;
 	}
 
 	&__globe {
@@ -60,15 +32,15 @@
 	}
 
 	&__message {
-		display: none;
+		transition: all 0.75s;
 		position: absolute;
-		bottom: 5%;
+		top: 32%;
 		color: white;
 		text-align: center;
 		width: 100%;
-		font-size: 14px;
-		opacity: 0.6;
-		font-family: 'Palatino';
+		font-size: 24px;
+		opacity: 0.8;
+		font-family: 'Hallo';
 	}
 
 	&__geopath {

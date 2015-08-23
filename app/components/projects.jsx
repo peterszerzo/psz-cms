@@ -74,8 +74,6 @@ class ProjectGroupList extends React.Component {
 
 		if (projects == null) { return (<img src="/images/loader/ripple.gif" />); }
 
-		console.log(projects);
-
 		var groups = _.groupBy(projects, (model) => {
 			return model.get('group');
 		});
@@ -120,7 +118,7 @@ class ProjectListItem extends React.Component {
 			<li className={''}>
 				<Link className="project" to={'/things/' + project.get('id')}>
 					{ this.renderBackgroundImage() }
-					<div className="project__title">{project.get('name')}</div>
+					<div className="project__title">{ this.getName() }</div>
 				</Link>
 			</li>
 		);
@@ -135,6 +133,14 @@ class ProjectListItem extends React.Component {
 			Comp = Logos[name];
 		if (Comp == null) { return <Logos.Neutral className='project__logo' />; }
 		return (<Comp className='project__logo' />);
+	}
+
+	getName() {
+		var name = this.props.project.get('name');
+		if (this.props.project.get('is_draft') === true) {
+			name += ' (draft)'
+		}
+		return name;
 	}
 
 }
@@ -191,7 +197,7 @@ class ProjectShowItem extends React.Component {
 		}
 		return (
 			<div className="fill-parent">
-				<h1 className="title">{project.get('title')}</h1>
+				<h1 className="title">{ this.getTitle() }</h1>
 				{ this.renderSubtitle() }
 				{ this.renderDates() }
 				{ this.renderUrl() }
@@ -212,6 +218,14 @@ class ProjectShowItem extends React.Component {
 		return (
 			<div className='date'>{content}</div>
 		);
+	}
+
+	getTitle() {
+		var title = this.props.project.get('title');
+		if (this.props.project.get('is_draft') === true) {
+			title += ' (draft)'
+		}
+		return title;
 	}
 
 	renderSubtitle() {

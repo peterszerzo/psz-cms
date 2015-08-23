@@ -7,43 +7,49 @@ class Banner extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			data: [ 
-				{ url: '/things?type=project', name: 'mindful code' },  
-				{ url: '/things?type=project', name: 'minimal design' }
-			]
+			wasMessageTriggered: false,
+			isMessageShowing: false
 		};
-
 	}
 
 	render() {
 		return (
 			<div className="banner fill-parent">
 				<div className="banner__globe"></div>
-				<ul className="banner__summary">
-					{ this._renderList() }
-				</ul>
-				<div className="banner__message">hey, welcome! let me surprise you</div>
+				<div className="banner__summary">
+					<Link to='/things?type=project'>
+						a casual site with some mindful code, design and writing
+					</Link>
+				</div>
+				<div className="banner__message" style={this.getMessageStyle()}>hey, welcome! click a triangle for random content</div>
 			</div>
 		);
-	}
-
-	_renderList() {
-		return this.state.data.map(function(item) {
-			return (
-				<li>
-					<Link to={item.url}>{item.name}</Link>
-				</li>
-			);
-		});
 	}
 
 	navigateToRandom() {
 		this.context.router.transitionTo('/things/random');
 	}
 
+	getMessageStyle() {
+		if (this.state.isMessageShowing) { return { opacity: 0.6 }; }
+		return { opacity: 0 };
+	}
+
+	triggerMessage() {
+		if (this.state.wasMessageTriggered) { return; }
+		this.setState({
+			wasMessageTriggered: true,
+			isMessageShowing: true
+		});
+		setTimeout(() => {
+			this.setState({ isMessageShowing: false });
+		}, 4500);
+	}
+
 	componentDidMount() {
 		this.globeAnimation = globe('geo.json');
 		this.globeAnimation.navigateToRandom = this.navigateToRandom.bind(this);
+		this.globeAnimation.triggerMessage = this.triggerMessage.bind(this);
 		this.globeAnimation.start();
 	}
 

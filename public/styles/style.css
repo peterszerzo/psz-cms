@@ -338,55 +338,28 @@ h4 {
   position: relative; }
   .banner__summary {
     position: absolute;
+    padding: 0 30px;
     width: 100%;
     top: 20%;
     text-align: center; }
-    .banner__summary li {
-      display: block;
-      margin: 15px 30px 30px 30px; }
-      .banner__summary li:first-child a {
-        left: -55px; }
-      .banner__summary li:last-child a {
-        left: 55px; }
-      @media only screen and (min-width: 800px) {
-        .banner__summary li {
-          display: inline-block; } }
-      .banner__summary li a {
-        position: relative;
-        font-family: 'Hallo';
-        border: none;
-        font-size: 30px;
-        position: relative;
-        padding-bottom: 4px;
-        text-decoration: none;
-        color: white;
-        top: 0px;
-        opacity: 0.7; }
-        .banner__summary li a:hover {
-          opacity: 1;
-          border-bottom: 2px solid white; }
-  .banner__notice {
-    position: absolute;
-    top: 35%;
-    width: 100%;
-    color: white;
-    text-align: center;
-    font-size: 54px;
-    text-transform: uppercase; }
+    .banner__summary a {
+      font-size: 30px;
+      font-family: 'Hallo';
+      padding: 10px; }
   .banner__globe {
     position: absolute;
     width: 100%;
     height: 100%; }
   .banner__message {
-    display: none;
+    transition: all 0.75s;
     position: absolute;
-    bottom: 5%;
+    top: 32%;
     color: white;
     text-align: center;
     width: 100%;
-    font-size: 14px;
-    opacity: 0.6;
-    font-family: 'Palatino'; }
+    font-size: 24px;
+    opacity: 0.8;
+    font-family: 'Hallo'; }
   .banner__geopath {
     cursor: pointer;
     stroke: white;

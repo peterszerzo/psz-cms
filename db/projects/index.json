@@ -3,6 +3,7 @@
     {
         "id": "on-deleting-my-facebook",
         "name": "On Deleting my Facebook",
+        "is_draft": true,
         "type": "blog",
         "group": "personal",
         "title": "On Deleting my Facebook",
@@ -12,6 +13,7 @@
 
     {
         "id": "playground-1",
+        "dates": [ "2015-08-21" ],
         "name": "Playground 1",
         "type": "blog",
         "group": "personal",
@@ -240,7 +242,7 @@
         ],
         "categories": [ "code", "design" ],
         "importance": 1,
-        "is_live": true,
+        "is_live": false,
         "languages": [ "PHP", "JavaScript" ],
         "technologies": [ ]
     }
