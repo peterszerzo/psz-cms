@@ -15,3 +15,5 @@ My second animated microfilm, explorations on a curious brick wall:
 My first timelapse, taken while harvesting the kale I grew in Brooklyn:
 
 <iframe width="420" height="315" src="https://www.youtube.com/embed/UxzlAk2AgGk" frameborder="0" allowfullscreen></iframe>
+
+And that is about it for a first take! May this post set the scene for many more Playground posts to come.

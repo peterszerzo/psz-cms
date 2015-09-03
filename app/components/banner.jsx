@@ -18,14 +18,10 @@ class Banner extends React.Component {
 				<div className="banner__background"></div>
 				<div className="banner__globe"></div>
 				<div className="banner__summary">
-					<div>
-						<Link to='/things?type=project'>
-							a little room
-						</Link>
-						<Link to='/things?type=project'>
-							for some mindful code, design and writing
-						</Link>
-					</div>
+					<Link to='/things?type=project'>
+						<p>a little room</p>
+						<p>for some mindful code, design and writing</p>
+					</Link>
 				</div>
 				<div className="banner__message" style={this.getMessageStyle()}>hey, welcome! click a triangle for random content</div>
 			</div>

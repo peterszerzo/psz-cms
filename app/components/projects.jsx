@@ -163,15 +163,26 @@ Projects.Show = class extends React.Component {
 		);
 	}
 
+	// If project was passed down in props, no need to fetch again.
 	componentDidMount() {
-		var coll, promise;
 		if (this.getProject() == null) {
-			coll = new project.Collection();
-			promise = coll.getFetchPromise({ id: this.props.params.id });
-			promise.then((coll) => {
-				this.setState({ project: coll.models[0] });
-			}, () => { console.log('promise rejected'); });
+			this.fetchProject();
 		}
+	}
+
+	// Always fetch on update.
+	componentDidUpdate() {
+		this.fetchProject();
+	}
+
+	fetchProject() {
+		var coll, promise, id;
+		id = this.props.params.id;
+		coll = new project.Collection();
+		promise = coll.getFetchPromise({ id: id });
+		promise.then((coll) => {
+			this.setState({ project: coll.models[0] });
+		}, () => { console.log('promise rejected'); });
 	}
 
 	static fetchData() {

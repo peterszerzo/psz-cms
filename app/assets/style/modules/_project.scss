@@ -1,11 +1,12 @@
 .project-groups {
 	padding-top: 100px;
+	padding-bottom: 80px;
 }
 
 .project-group {
 	& > h1 {
-		margin: 85px 65px 15px 65px;
-		// border-bottom: 2px solid #ddd;
+		margin: 75px 18% 15px 18%;
+		border-bottom: 3px solid transparentize(map-get($colors, greenish-blue), 0.85);
 		font-size: 36px;
 		padding: 8px;
 		text-align: center;

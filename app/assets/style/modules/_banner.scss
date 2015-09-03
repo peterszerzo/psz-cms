@@ -24,37 +24,41 @@
 		// top: 20%;
 		text-align: center;
 
-		div {
-			border: 2px solid white;
-			border-radius: 6px;
-			padding: 45px 40px;
-			width: 270px;
-			height: 270px;
+		a {
+			display: block;
+			padding: 55px 40px;
+			width: 250px;
+			height: 250px;
 			border-radius: 100%;
 			margin: auto;
-			background: transparentize(map-get($colors, greenish-blue), 0.1);
+			background: transparentize(map-get($colors, greenish-blue), 0.05);
+			opacity: 0.95;
+			&:hover { opacity: 1; }
 		}
 
-		a {
+		p {
 			opacity: 1;
 			text-align: center;
-			
 			width: 100%;
 			display: block;
 			padding: 0px;
+			margin: 0;
+
 		}
 
-		a:nth-child(1) {
+		p:nth-child(1) {
 			margin-bottom: 15px;
 			text-transform: uppercase;
-			font-size: 40px;
+			font-size: 36px;
 			font-family: 'Hallo';
 			line-height: 90%;
+			
 		}
 
-		a:nth-child(2) {
+		p:nth-child(2) {
 			font-family: 'Hallo';
-			font-size: 24px;
+			font-size: 22px;
+			line-height: 110%;
 		}
 
 	}

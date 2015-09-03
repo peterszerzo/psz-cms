@@ -85,8 +85,9 @@ module.exports = function(fileName) {
      */
     self.getPath = function() {
         var path, projection,
-            minWH = Math.min(self.width, self.height);
-        projection = d3.geo.orthographic().scale(self.width * 0.7).rotate([0, 0, 0]).translate([self.width / 2, self.height / 2]);
+            minWH = Math.min(self.width, self.height),
+            avgWH = (self.width + self.height) / 2;
+        projection = d3.geo.orthographic().scale(avgWH * 0.8).rotate([0, 0, 0]).translate([self.width / 2, self.height / 2]);
         projection.rotate([- self.eye.position[0], - self.eye.position[1]]);
         path = d3.geo.path().projection(projection);
         return path;

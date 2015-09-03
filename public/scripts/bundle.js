@@ -181,8 +181,9 @@ module.exports = function (fileName) {
     self.getPath = function () {
         var path,
             projection,
-            minWH = Math.min(self.width, self.height);
-        projection = d3.geo.orthographic().scale(self.width * 0.7).rotate([0, 0, 0]).translate([self.width / 2, self.height / 2]);
+            minWH = Math.min(self.width, self.height),
+            avgWH = (self.width + self.height) / 2;
+        projection = d3.geo.orthographic().scale(avgWH * 0.8).rotate([0, 0, 0]).translate([self.width / 2, self.height / 2]);
         projection.rotate([-self.eye.position[0], -self.eye.position[1]]);
         path = d3.geo.path().projection(projection);
         return path;
@@ -251,7 +252,6 @@ var React = require('react'),
     routes = require('./components/routes.jsx');
 
 Router.run(routes, Router.HistoryLocation, function (Root, state) {
-	console.log(state.routes[0].fetchData);
 	React.render(React.createElement(Root, null), global.document.body);
 });
 
@@ -307,16 +307,16 @@ var Banner = (function (_React$Component) {
 					'div',
 					{ className: 'banner__summary' },
 					React.createElement(
-						'div',
-						null,
+						_reactRouter.Link,
+						{ to: '/things?type=project' },
 						React.createElement(
-							_reactRouter.Link,
-							{ to: '/things?type=project' },
+							'p',
+							null,
 							'a little room'
 						),
 						React.createElement(
-							_reactRouter.Link,
-							{ to: '/things?type=project' },
+							'p',
+							null,
 							'for some mindful code, design and writing'
 						)
 					)
@@ -1342,21 +1342,36 @@ Projects.Show = (function (_React$Component5) {
 				_react2['default'].createElement(ProjectShowItem, { project: project })
 			);
 		}
+
+		// If project was passed down in props, no need to fetch again.
 	}, {
 		key: 'componentDidMount',
 		value: function componentDidMount() {
+			if (this.getProject() == null) {
+				this.fetchProject();
+			}
+		}
+
+		// Always fetch on update.
+	}, {
+		key: 'componentDidUpdate',
+		value: function componentDidUpdate() {
+			this.fetchProject();
+		}
+	}, {
+		key: 'fetchProject',
+		value: function fetchProject() {
 			var _this2 = this;
 
-			var coll, promise;
-			if (this.getProject() == null) {
-				coll = new _modelsProjectJs2['default'].Collection();
-				promise = coll.getFetchPromise({ id: this.props.params.id });
-				promise.then(function (coll) {
-					_this2.setState({ project: coll.models[0] });
-				}, function () {
-					console.log('promise rejected');
-				});
-			}
+			var coll, promise, id;
+			id = this.props.params.id;
+			coll = new _modelsProjectJs2['default'].Collection();
+			promise = coll.getFetchPromise({ id: id });
+			promise.then(function (coll) {
+				_this2.setState({ project: coll.models[0] });
+			}, function () {
+				console.log('promise rejected');
+			});
 		}
 	}, {
 		key: 'getProject',

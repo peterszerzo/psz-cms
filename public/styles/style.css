@@ -350,30 +350,34 @@ h4 {
     padding: 0 30px;
     width: 100%;
     text-align: center; }
-    .banner__summary div {
-      border: 2px solid white;
-      border-radius: 6px;
-      padding: 45px 40px;
-      width: 270px;
-      height: 270px;
+    .banner__summary a {
+      display: block;
+      padding: 55px 40px;
+      width: 250px;
+      height: 250px;
       border-radius: 100%;
       margin: auto;
-      background: rgba(14, 54, 71, 0.9); }
-    .banner__summary a {
+      background: rgba(14, 54, 71, 0.95);
+      opacity: 0.95; }
+      .banner__summary a:hover {
+        opacity: 1; }
+    .banner__summary p {
       opacity: 1;
       text-align: center;
       width: 100%;
       display: block;
-      padding: 0px; }
-    .banner__summary a:nth-child(1) {
+      padding: 0px;
+      margin: 0; }
+    .banner__summary p:nth-child(1) {
       margin-bottom: 15px;
       text-transform: uppercase;
-      font-size: 40px;
+      font-size: 36px;
       font-family: 'Hallo';
       line-height: 90%; }
-    .banner__summary a:nth-child(2) {
+    .banner__summary p:nth-child(2) {
       font-family: 'Hallo';
-      font-size: 24px; }
+      font-size: 22px;
+      line-height: 110%; }
   .banner__globe, .banner__background {
     position: absolute;
     width: 100%;
@@ -482,10 +486,12 @@ h4 {
         font-family: 'Hallo'; }
 
 .project-groups {
-  padding-top: 100px; }
+  padding-top: 100px;
+  padding-bottom: 80px; }
 
 .project-group > h1 {
-  margin: 85px 65px 15px 65px;
+  margin: 75px 18% 15px 18%;
+  border-bottom: 3px solid rgba(14, 54, 71, 0.15);
   font-size: 36px;
   padding: 8px;
   text-align: center; }
@@ -553,7 +559,7 @@ h4 {
   max-width: 768px;
   margin: auto;
   padding-top: 30px;
-  padding-bottom: 50px;
+  padding-bottom: 120px;
   color: #222; }
   .static blockquote {
     font-style: italic;
