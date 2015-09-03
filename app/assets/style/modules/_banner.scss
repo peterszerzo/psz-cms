@@ -7,34 +7,80 @@
 
 	position: relative;
 
+	display: table;
+
 	&__summary {
 
-		position: absolute;
+		position: relative;
+		z-index: 2;
+		display: table-cell;
+		vertical-align: middle;
+
+		// position: absolute;
 
 		padding: 0 30px;
 
 		width: 100%;
-		top: 20%;
+		// top: 20%;
 		text-align: center;
 
+		div {
+			border: 2px solid white;
+			border-radius: 6px;
+			padding: 45px 40px;
+			width: 270px;
+			height: 270px;
+			border-radius: 100%;
+			margin: auto;
+			background: transparentize(map-get($colors, greenish-blue), 0.1);
+		}
+
 		a {
-			font-size: 30px;
+			opacity: 1;
+			text-align: center;
+			
+			width: 100%;
+			display: block;
+			padding: 0px;
+		}
+
+		a:nth-child(1) {
+			margin-bottom: 15px;
+			text-transform: uppercase;
+			font-size: 40px;
 			font-family: 'Hallo';
-			padding: 10px;
+			line-height: 90%;
+		}
+
+		a:nth-child(2) {
+			font-family: 'Hallo';
+			font-size: 24px;
 		}
 
 	}
 
-	&__globe {
+	&__globe, &__background {
 		position: absolute;
 		width: 100%;
 		height: 100%;
 	}
 
+	&__globe {
+		z-index: 1;
+	}
+
+	&__background {
+		z-index: 0;
+		opacity: 0.4;
+		background-image: url('/images/circle-sky-1200.jpg');
+		background-position: 50% 50%;
+		background-size: cover;
+	}
+
 	&__message {
 		transition: all 0.75s;
 		position: absolute;
-		top: 32%;
+		bottom: 15%;
 		color: white;
 		text-align: center;
 		width: 100%;

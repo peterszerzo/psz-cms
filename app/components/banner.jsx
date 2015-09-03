@@ -15,11 +15,17 @@ class Banner extends React.Component {
 	render() {
 		return (
 			<div className="banner fill-parent">
+				<div className="banner__background"></div>
 				<div className="banner__globe"></div>
 				<div className="banner__summary">
-					<Link to='/things?type=project'>
-						a casual site with some mindful code, design and writing
-					</Link>
+					<div>
+						<Link to='/things?type=project'>
+							a little room
+						</Link>
+						<Link to='/things?type=project'>
+							for some mindful code, design and writing
+						</Link>
+					</div>
 				</div>
 				<div className="banner__message" style={this.getMessageStyle()}>hey, welcome! click a triangle for random content</div>
 			</div>

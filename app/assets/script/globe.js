@@ -70,12 +70,12 @@ module.exports = function(fileName) {
     };
 
     self.setDimensions = function() {
-        self.width = window.outerWidth;
-        self.height = window.outerHeight;
+        self.width = window.innerWidth;
+        self.height = window.innerHeight;
         if (self.svg) {
             self.svg.attr({
-                width: window.outerWidth,
-                height: window.outerHeight
+                width: window.innerWidth,
+                height: window.innerHeight
             });
         }
     };
@@ -86,7 +86,7 @@ module.exports = function(fileName) {
     self.getPath = function() {
         var path, projection,
             minWH = Math.min(self.width, self.height);
-        projection = d3.geo.orthographic().scale(self.width * 0.7).rotate([0, 0, 0]).translate([self.width / 2, self.height / 2 * 1.4]);
+        projection = d3.geo.orthographic().scale(self.width * 0.7).rotate([0, 0, 0]).translate([self.width / 2, self.height / 2]);
         projection.rotate([- self.eye.position[0], - self.eye.position[1]]);
         path = d3.geo.path().projection(projection);
         return path;
@@ -122,7 +122,7 @@ module.exports = function(fileName) {
         if (delta > deltaMax) {
             return 0;
         }
-        op = Math.pow((deltaMax - delta) / deltaMax, 4) * 0.7;
+        op = Math.pow((deltaMax - delta) / deltaMax, 4) * 0.9;
         return op;
     };
 
