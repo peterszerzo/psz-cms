@@ -1,18 +1,13 @@
-require('babel/register')({
-	extensions: [ '.jsx', '.js' ]
-});
-
-// require('longjohn');
+require('babel/register')({ extensions: [ '.jsx', '.js' ] });
 
 var pingHeroku = require('./misc/ping_heroku'),
 	express = require('express'),
-	app = express(),
-	router,
 	bodyParser = require('body-parser');
+
+var app = express(),
+	router = require('./app/routes/index.js');
  
 setInterval(pingHeroku, 15 * 60 * 1000);
-
-require('./app/components/routes.jsx');
 
 app.set('views', __dirname + '/app/views');
 app.set('view engine', 'jade');
@@ -20,7 +15,6 @@ app.set('view engine', 'jade');
 app.use(bodyParser.urlencoded({ extended: false, limit: '50mb' }));
 app.use(express.static('public'));
 
-router = require('./app/routes/index.js');
 app.use(router);
 
 app.listen(process.env.PORT || 3000);

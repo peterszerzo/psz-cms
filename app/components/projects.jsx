@@ -19,7 +19,7 @@ Projects.Index = class extends React.Component {
 
 	render() {
 		return (
-			<div>
+			<div className='wrapper__content'>
 				<Header type={this.getType()}/>
 				<ProjectGroupList projects={this.getFilteredProjects()}/>
 			</div>
@@ -156,7 +156,7 @@ Projects.Show = class extends React.Component {
 	render() {
 		var project = this.getProject();
 		return (
-			<div>
+			<div className='wrapper__content'>
 				<Header/>
 				<ProjectShowItem project={ project }/>
 			</div>

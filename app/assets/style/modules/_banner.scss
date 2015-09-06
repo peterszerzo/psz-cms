@@ -26,14 +26,20 @@
 
 		a {
 			display: block;
+			border: 2px solid rgba(255, 255, 255, 0);
 			padding: 55px 40px;
 			width: 250px;
 			height: 250px;
 			border-radius: 100%;
 			margin: auto;
-			background: transparentize(map-get($colors, greenish-blue), 0.05);
-			opacity: 0.95;
-			&:hover { opacity: 1; }
+			background: transparentize(map-get($colors, greenish-blue), 0);
+			opacity: 0.98;
+			transition: all 0.5s;
+			&:hover { 
+				opacity: 0.99;
+				border: 2px solid rgba(255, 255, 255, 1);
+				transition: all 0.5s;
+			}
 		}
 
 		p {

@@ -13,10 +13,17 @@ class Collection extends Backbone.Collection {
 
     get model() { return Model; }
 
+    /*
+     * Determines whether the instance is called by the client or the server.
+     */
 	isOnClient() {
     	return (fs == null || fs.readFile == null);
 	}
 
+    /*
+     * Sets url property, building up query string from json.
+     *
+     */
 	setUrl(query) {
         var queryString = '?', key, value;
         for (key in query) {
