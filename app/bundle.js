@@ -1,7 +1,12 @@
-var React = require('react'),
-	Router = require('react-router'),
-	routes = require('./components/routes.jsx');
+import React from 'react';
+import Router from 'react-router';
+import routes from './components/routes.jsx';
 
-Router.run(routes, Router.HistoryLocation, (Root, state) => {
-	React.render(<Root />, global.document.body);
-});
+global.psz = {};
+
+psz.start = () => {
+	console.log('Hi, Mom!');
+	Router.run(routes, Router.HistoryLocation, (Root, state) => {
+		React.render(<Root />, global.document.getElementById('site'));
+	});
+};

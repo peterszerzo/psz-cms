@@ -10,6 +10,7 @@ router.use('/api/v1/projects', require('./api/v1/project.js'));
 router.get('*', (req, res) => {
 	Router.run(routes, req.path, (Root, state) => {
 		var html = React.renderToString(<Root />);
+		console.dir(html);
 		res.render('layout.jade', { reactOutput: html });
 	});
 });

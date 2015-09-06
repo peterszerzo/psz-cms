@@ -15,4 +15,14 @@ describe('Collection', () => {
 
 	});
 
+	describe('resetToRandom', () => {
+
+		it('sets url', () => {
+			var coll = new Collection({ id: 1 }, { id: 2 }, { id: 3 });
+			coll.resetToRandom();
+			assert.equal(coll.models.length, 1);
+		});
+
+	});
+
 });

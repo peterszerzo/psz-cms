@@ -12,6 +12,9 @@ html
 
 	body
 		
-		!= reactOutput
+		div(id='site', class='fill-parent')
+			!= reactOutput
 
 		script(src="/scripts/bundle.js")
+		script.
+			window.psz.start();

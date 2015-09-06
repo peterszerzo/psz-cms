@@ -11,7 +11,7 @@ var geomUtil = {
     },
 
     sphericalToCartesian: function(long, lat, r=1) {
-        var degToRad = 1 / 57;
+        var degToRad = Math.PI / 180;
         return [Math.cos(long * degToRad) * Math.cos(lat * degToRad) * r, Math.sin(long * degToRad) * Math.cos(lat * degToRad) * r, Math.sin(lat * degToRad) * r];
     },
 
