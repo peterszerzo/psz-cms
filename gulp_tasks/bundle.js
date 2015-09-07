@@ -27,6 +27,7 @@ var getWatchifyBundler = () => {
 var writeBundle = (bundler) => {
 	return bundler.bundle()
 		.pipe(source('bundle.js'))
+		.pipe(gulp.dest('./public/scripts'))
 		.pipe(!!util.env.production ? uglify() : util.noop())
 		.pipe(gulp.dest('./public/scripts'));
 };
@@ -34,6 +35,12 @@ var writeBundle = (bundler) => {
 // Does not work because of jquery.
 gulp.task('bundle', function() {
 	return writeBundle(getBrowserifyBundler());
+});
+
+gulp.task('bundle-uglify', () => {
+	return gulp.src('./public/scripts/bundle.js')
+		.pipe(!!util.env.production ? uglify() : util.noop())
+		.pipe(gulp.dest('./public/scripts'));
 });
 
 gulp.task('bundle-watch', () => {
