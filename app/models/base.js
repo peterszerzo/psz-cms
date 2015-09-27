@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import * as Backbone from 'backbone';
 import * as fs from 'fs';
 

@@ -17,9 +17,9 @@ class App extends React.Component {
 
 var routes = (
 	<Route handler={App}>
-		<Route path='/' handler={Banner} />
-		<Route path='/things' handler={Index} />
-		<Route path='/things/:id' handler={Show} />
+		<Route name="home" path='/' handler={Banner} />
+		<Route name="things" path='/things' handler={Index} />
+		<Route name="thing" path='/things/:id' handler={Show} />
 	</Route>
 );
 

@@ -1,10 +1,8 @@
-var base = require('./base.js'),
-    marked = require('marked'),
-    projects = {},
-    fs = require('fs'),
-    dbPath = __dirname + '/../../db/projects';
+import base from './base.js';
+import marked from 'marked';
+import fs from 'fs';
 
-
+var dbPath = __dirname + '/../../db/projects';
 
 class Model extends base.Model {
 
