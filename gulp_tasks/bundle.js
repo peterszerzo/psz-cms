@@ -5,19 +5,17 @@ import browserify from 'browserify';
 import watchify from 'watchify';
 import source from 'vinyl-source-stream';
 import nodemon from 'gulp-nodemon';
-import shell from 'gulp-shell';
 import uglify from 'gulp-uglify';
 import util from 'gulp-util';
 
 var browserifyArgs = {
-    entries: [ './app/bundle.js' ],
-	ignore: 'fs'
+    entries: [ './app/bundle.js' ]
 };
 
 var getBrowserifyBundler = () => {
     var args = _.extend(browserifyArgs, watchify.args, { debug: true });
     var b = browserify(args);
-    return b.transform(babelify.configure({ stage: 0 }));
+    return b.transform(babelify.configure({ optional: 'runtime' }));
 };
 
 var getWatchifyBundler = () => {
@@ -26,8 +24,11 @@ var getWatchifyBundler = () => {
 
 var writeBundle = (bundler) => {
 	return bundler.bundle()
+		.on('error', (err) => {
+            console.log('Browserify error..');
+            console.dir(err);
+        })
 		.pipe(source('bundle.js'))
-		.pipe(gulp.dest('./public/scripts'))
 		.pipe(!!util.env.production ? uglify() : util.noop())
 		.pipe(gulp.dest('./public/scripts'));
 };

@@ -1,7 +1,6 @@
 require('babel/register');
 
-var path = require('path'),
-	gulp = require('gulp');
+var gulp = require('gulp');
 
 require('./gulp_tasks/style.js');
 require('./gulp_tasks/spec.js');

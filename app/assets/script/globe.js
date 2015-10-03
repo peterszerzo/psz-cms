@@ -70,12 +70,15 @@ module.exports = function(fileName) {
     };
 
     self.setDimensions = function() {
-        self.width = window.innerWidth;
-        self.height = window.innerHeight;
+        var minW = 800, minH = 600,
+            w = Math.max(minW, window.innerWidth),
+            h = Math.max(minH, window.innerHeight);
+        self.width = w;
+        self.height = h;
         if (self.svg) {
             self.svg.attr({
-                width: window.innerWidth,
-                height: window.innerHeight
+                width: w,
+                height: h
             });
         }
     };
@@ -87,7 +90,7 @@ module.exports = function(fileName) {
         var path, projection,
             minWH = Math.min(self.width, self.height),
             avgWH = (self.width + self.height) / 2;
-        projection = d3.geo.orthographic().scale(avgWH * 0.8).rotate([0, 0, 0]).translate([self.width / 2, self.height / 2]);
+        projection = d3.geo.orthographic().scale(avgWH * 0.8).rotate([0, 0, 0]).translate([window.innerWidth / 2, window.innerHeight / 2]);
         projection.rotate([- self.eye.position[0], - self.eye.position[1]]);
         path = d3.geo.path().projection(projection);
         return path;
