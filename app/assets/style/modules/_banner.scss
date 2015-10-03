@@ -20,8 +20,8 @@
 		height: $d;
 		border-radius: 100%;
 		margin: auto;
-		background: transparentize(map-get($colors, greenish-blue), 0);
-		opacity: 0.98;
+		background-color: map-get($colors, greenish-blue);
+		opacity: 0.95;
 		transition: all 0.5s;
 		&:hover { 
 			opacity: 0.99;

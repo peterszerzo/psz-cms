@@ -17,6 +17,14 @@ class Model extends base.Model {
         }
     }
 
+    getIconName() {
+        var id = this.get('id'),
+            name = id.split('-').map(function(word) {
+                return (word[0].toUpperCase() + word.slice(1));
+            }).join('');
+        return name;
+    }
+
     getSetBodyPromise() {
 
         return new Promise((resolve, reject) => {
