@@ -1,13 +1,13 @@
-require('babel/register')({ extensions: [ '.jsx', '.js' ] });
+require('babel/register');
 
-var pingHeroku = require('./misc/ping_heroku'),
-	express = require('express'),
-	bodyParser = require('body-parser');
+var express = require('express'),
+	bodyParser = require('body-parser'),
+	buildSeeds = require('./db/utilities/build_seeds.js');
 
 var app = express(),
 	router = require('./app/routes/index.js');
  
-setInterval(pingHeroku, 15 * 60 * 1000);
+// buildSeeds({ collectionName: 'blog' }, function(err) { if (err) { return console.dir(err); } console.log('all good'); });
 
 app.set('views', __dirname + '/app/views');
 app.set('view engine', 'jade');

@@ -1,0 +1,109 @@
+.header {
+
+	overflow: visible;
+	position: fixed;
+	width: 100%;
+	height: $header-height;
+	top: 0;
+	background-color: rgba(get-color(base), 0.93);
+	color: white;
+	z-index: 100;
+
+	&__main-link {
+
+		height: 100%;
+		width: 150px;
+
+		svg { 
+			height: 40px; 
+			width: 40px; 
+			margin-top: 23px; 
+			margin-left: 30px;
+			fill: white; 
+		}
+	}
+
+	&__nav {
+
+		z-index: 100;
+
+		width: 120px;
+		height: 80px;
+		overflow: visible;
+		float: right;
+
+		&:hover &__item {
+			display: table;
+		}
+
+		@media screen and (min-width: 800px) {
+			width: auto;
+			float: auto;
+		}
+
+		text-align: right;
+		padding: 0;
+
+		&__arrow, &__item {
+			width: 120px;
+			float: right;
+			height: 100%;
+			padding: 0;
+
+			
+		}
+
+		&__arrow {
+			cursor: pointer;
+			display: table;
+			text-align: center;
+			@media screen and (min-width: 800px) {
+				display: none;
+			}
+			svg {
+				opacity: 0.8;
+				text-align: center;
+				vertical-align: middle;
+				display: table-cell;
+				fill: white;
+				width: 40px;
+				height: 40px;
+				margin: 20px auto;
+			}
+
+			&:hover, &--active {
+				background-color: rgba(255, 255, 255, 0.05);
+				& > svg { opacity: 1; }
+			}
+		}
+
+		&__item {
+
+			z-index: 100;
+			display: none;
+			background-color: rgba(get-color(base), 0.93);
+
+			@media screen and (min-width: 800px) {
+				display: table;
+				background: none;
+				&:hover, &--active {
+				background-color: rgba(255, 255, 255, 0.05);
+				a { opacity: 1; }
+			}
+				
+			}
+
+			a { 
+				padding: 0 30px;
+				display: table-cell;
+				text-align: center;
+				vertical-align: middle;
+				font-family: 'Hallo';
+			}
+
+			
+
+		}
+	}
+
+}

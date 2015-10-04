@@ -2,24 +2,25 @@ import $ from 'jquery';
 import * as Backbone from 'backbone';
 import * as fs from 'fs';
 
-class Model extends Backbone.Model {
 
-	isOnClient() {
-    	return (fs == null || fs.readFile == null);
-	}
+/*
+ * Sets url property, building up query string from json.
+ *
+ */
+class Model extends Backbone.Model {
 
 }
 
+
+
+/*
+ * Sets url property, building up query string from json.
+ *
+ */
 class Collection extends Backbone.Collection {
 
     get model() { return Model; }
 
-    /*
-     * Determines whether the instance is called by the client or the server.
-     */
-	isOnClient() {
-    	return (fs == null || fs.readFile == null);
-	}
 
     /*
      * Sets url property, building up query string from json.
@@ -34,6 +35,7 @@ class Collection extends Backbone.Collection {
         this.url = this.baseUrl + queryString;
     }
 
+
     /*
      * Reset collection to a include only one of its current models, picked at random.
      */
@@ -46,7 +48,8 @@ class Collection extends Backbone.Collection {
 
 }
 
-module.exports = {
+
+export default {
 	Model: Model,
 	Collection: Collection
 }

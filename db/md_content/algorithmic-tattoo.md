@@ -1,0 +1,11 @@
+![Tattoo Image](/images/projects/algorithmic-tattoo.svg)
+
+This simple, highly mathematical shape took a curious journey starting at a solution to a geometry problem, through the drawings of a shelf design, all the way to becoming first a logo, then an ink drawing on my upper back. Here is its story.
+
+It is derived from a [City Voronoi diagram](https://en.wikipedia.org/wiki/Voronoi_diagram#Illustration), vaguely defined as follows. If we look at a map of a city with post offices, the Voronoi algorithm splits up the city into regions around individual offices. Anywhere you may find yourself in the city, the region you are in will tell you which post office is the closest. A simple Voronoi diagram does this by linear (airline) distance and yields a dragonflywing-like mesh that I never found particularly appealing. However, if one is only allowed to move in north-south and east-west directions such as in Manhattan, the subdivisions take a much more interesting shape. Better yet, it can be customized by moving just a couple of points around, with the algorithm handling the rest. I have experimented with this idea in my [ripsaw.js](http://pickled-plugins.github.io/ripsaw-demo/#pages/home) project, and that is where the shape comes from - it was intended to become a shelf, taking the form of a tattoo later on.
+
+City Voronoi diagrams have always made me feel a hint of anxiety, as symbols of highly optimized and efficient existence where everything revolves around linear efficiency in time and money. Paths are not chosen by intuition or emotions, but by algorithms solving highly rational problems. The former are therefore suppressed.
+
+This closed shape and mindset set the starting point of the design process. Once I arrived at a particular closed shape I like, I start removing links from it. It is a very liberating process to break the closed grid and allow for gaps and displacement that I perceive as hints of spontaneity, freedom of movement and thought. To emphasize the idea of transformation, there is a shape in the image that kind of resembles a person in fetal position. This feature was not intended, but came about by chance through the algorithm.
+
+The tattoo was completed in November 2015 in Brooklyn, New York, after I have lived through my personal story of liberation which resembles the design process itself.

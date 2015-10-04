@@ -19,8 +19,8 @@ var routes = (
 	<Router history={createBrowserHistory()}>
 		<Route component={App}>
 			<Route path='/' component={Banner} />
-			<Route path='/things' component={Index} />
-			<Route path='/things/:id' component={Show} />
+			<Route path='/projects' component={Index} />
+			<Route path='/projects/:id' component={Show} />
 		</Route>
 	</Router>
 );

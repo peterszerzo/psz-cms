@@ -9,7 +9,7 @@ import uglify from 'gulp-uglify';
 import util from 'gulp-util';
 
 var browserifyArgs = {
-    entries: [ './app/bundle.js' ]
+    entries: [ './app/assets/scripts/bundle.js' ]
 };
 
 var getBrowserifyBundler = () => {

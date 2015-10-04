@@ -1,0 +1,43 @@
+.static {
+	width: 90%;
+	max-width: 768px;
+	margin: auto;
+	padding-top: 50px;
+	color: map-get($palette, grey);
+
+	blockquote {
+		font-style: italic;
+		margin: 35px 0 35px 40px;
+	}
+
+	ul {
+		list-style-type: circle;
+		list-style-position: outside;
+		padding: 25px;
+	}
+
+	li {
+		display: list-item;
+		padding: 5px 0;
+	}
+
+	a {
+		color: map-get($palette, grey);
+		border-bottom: 2px dotted map-get($palette, grey);
+		opacity: 0.5;
+		&:hover { opacity: 1; }
+	}
+
+	img, iframe {
+		width: 80%;
+		max-width: 500px;
+		max-height: 500px;
+		display: block;
+		margin: 40px auto;
+	}
+
+	iframe {
+		height: 400px;
+	}
+
+}

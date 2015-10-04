@@ -10,15 +10,15 @@ class Header extends React.Component {
 		this.state.buttons = [
 			{
 				name: 'projects',
-				url: '/things?type=project'
+				url: '/projects'
 			},
 			{
 				name: 'blog',
-				url: '/things?type=blog'
+				url: '/blog'
 			},
 			{
 				name: 'about',
-				url: '/things/about'
+				url: '/about'
 			}
 		].reverse();
 

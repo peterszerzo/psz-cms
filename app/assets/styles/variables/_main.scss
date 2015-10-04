@@ -1,0 +1,36 @@
+// COLORS
+// $base-color: #0F3954;
+$base-color: darken(#0F3954, 10);//#00111F;
+
+$palette: (
+	base: #0F3954,
+	grey: #222
+);
+
+$colors: (
+	base: darken(#101C29, 2),
+	white: #FFFFFF,
+	blue: #2D375D,
+	greenish-blue: #0E3647,
+	purple: #4F3F91,
+	light-purple: #9695A8
+);
+
+@function get-color($key, $index: 1) {
+	@if ($key == 'scheme') {
+		@return nth(map-get($colors, $key), $index);
+	}
+	@return map-get($colors, $key);
+}
+
+// GEOMETRY
+
+// breakpoint
+$breakpoint: 780px;
+
+// default grid padding
+$grid-pad: 80px;
+
+$project: 250px;
+
+$header-height: 80px;

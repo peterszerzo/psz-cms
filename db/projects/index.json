@@ -1,28 +1,6 @@
 [
 
     {
-        "id": "on-deleting-my-facebook",
-        "name": "On Deleting my Facebook",
-        "is_draft": true,
-        "type": "blog",
-        "group": "personal",
-        "title": "On Deleting my Facebook",
-        "subtitle": "Reflections on a Juvenile Stunt",
-        "is_live": true
-    },
-
-    {
-        "id": "playground-1",
-        "dates": [ "2015-08-21" ],
-        "name": "Playground 1",
-        "type": "blog",
-        "group": "personal",
-        "title": "Playground 1",
-        "subtitle": "More Projects!",
-        "is_live": true
-    },
-
-    {
         "id": "about",
         "name": "about",
         "title": "Hi,",
@@ -30,21 +8,7 @@
     },
 
     {
-        "id": "scaling-tricks-for-geo",
-        "dates": [ "2015-06-15" ],
-        "type": "blog",
-        "group": "technical",
-        "url": "https://github.com/pickled-plugins/scaling-tricks-for-geo",
-        "name": "Scaling Tricks for Geo",
-        "title": "On Scalable Interactive Mapping",
-        "subtitle": "Recent Favorite Tricks",
-        "is_live": true,
-        "collaborators": [],
-        "technologies": [ "Backbone.js", "Marionette.js", "d3.js", "Leaflet.js" ]
-    },
-
-    {
-        "id": "peterszerzo-io",
+        "id": "peterszerzo-com",
         "type": "project",
         "group": "",
         "technologies": [ "Express.js", "React.js" ]

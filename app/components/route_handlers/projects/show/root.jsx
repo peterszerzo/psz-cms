@@ -1,10 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router';
 import Header from './../../../general/header.jsx';
 import project from './../../../../models/project.js';
-import marked from 'marked';
-import moment from 'moment';
-import Logos from './../../../general/project_logos.jsx';
+
+import ProjectShowItem from './item.jsx';
 
 class Show extends React.Component {
 
@@ -48,8 +46,10 @@ class Show extends React.Component {
 		var coll, promise, id;
 		id = this.props.params.id;
 		coll = new project.Collection();
+		console.log('sending promise');
 		promise = coll.getFetchPromise({ id: id });
 		promise.then((coll) => {
+			console.log(coll);
 			this.setState({ project: coll.models[0] });
 		}, () => { console.log('promise rejected'); });
 	}
@@ -61,102 +61,6 @@ class Show extends React.Component {
 	 */
 	getProject() {
 		return this.state.project || this.props.project;
-	}
-
-}
-
-class ProjectShowItem extends React.Component {
-
-	/*
-	 *
-	 *
-	 */
-	render() {
-		var project = this.props.project;
-		if (project == null) {
-			return (
-				<div className='projects'>
-					<img src="/images/loader/ripple.gif" />
-				</div>
-			);
-		}
-		return (
-			<div className="project-show fill-parent">
-				<h1 className="title">{ this.getTitle() }</h1>
-				{ this.renderSubtitle() }
-				{ this.renderDates() }
-				{ this.renderUrl() }
-				{ this.renderBody() }
-			</div>
-		);
-	}
-
-
-	/*
-	 *
-	 *
-	 */
-	renderSubtitle() {
-		if (this.props.project.get('subtitle') == null) { return; }
-		return (<h2 className="subtitle">{'' + this.props.project.get('subtitle') + ''}</h2>);
-	}
-
-
-	/*
-	 *
-	 *
-	 */
-	renderUrl() {
-		var url = this.props.project.get('url');
-		if (url == null) { return; }
-		return (
-			<a className="main-link" href={url} target="_blank">Project Site</a>
-		);
-	}
-
-
-	/*
-	 *
-	 *
-	 */
-	renderBody() {
-		var md = this.props.project.get('bodyText');
-		if (md == null) { return; }
-		return (
-			<div className="static" dangerouslySetInnerHTML={{ __html: marked(md) }}/>
-		);
-	}
-
-
-	/*
-	 *
-	 *
-	 */
-	renderDates() {
-		var dates = this.props.project.get('dates'), 
-			formattedDates, content;
-		if (dates == null) { return; }
-		formattedDates = dates.map(function(date) {
-			if (date === 'present') { return date; }
-			return moment(date, 'YYYY-MM').format('MMMM YYYY');
-		});
-		content = formattedDates.join(' - ');
-		return (
-			<div className='date'>{content}</div>
-		);
-	}
-
-
-	/*
-	 *
-	 *
-	 */
-	getTitle() {
-		var title = this.props.project.get('title');
-		if (this.props.project.get('is_draft') === true) {
-			title += ' (draft)'
-		}
-		return title;
 	}
 
 }

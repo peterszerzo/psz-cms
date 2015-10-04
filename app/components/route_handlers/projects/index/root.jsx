@@ -2,8 +2,12 @@ import React from 'react';
 import Header from './../../../general/header.jsx';
 import { Link } from 'react-router';
 import _ from 'underscore';
+
+import ProjectListItem from './item.jsx';
+
 import project from './../../../../models/project.js';
-import Logos from './../../../general/project_logos.jsx';
+
+import ProjectGroups from './groups.jsx';
 
 class Index extends React.Component {
 
@@ -24,8 +28,8 @@ class Index extends React.Component {
 	render() {
 		return (
 			<div className='wrapper__content'>
-				<Header type={this.getType()}/>
-				<ProjectGroupList projects={this.getFilteredProjects()}/>
+				<Header />
+				<ProjectGroups projects={this.getProjects()}/>
 			</div>
 		);
 	}
@@ -39,21 +43,12 @@ class Index extends React.Component {
 		var coll, promise;
 		if (this.getProjects() == null) {
 			coll = new project.Collection();
-			promise = coll.getFetchPromise({});
+			promise = coll.getFetchPromise();
 			promise.then((coll) => {
+				console.log(coll);
 				this.setState({ projects: coll });
 			}, () => { console.log('promise rejected'); });
 		}
-	}
-
-
-	/*
-	 *
-	 *
-	 */
-	getFilteredProjects() {
-		if (this.getProjects() == null) { return; }
-		return this.getProjects().where({ type: this.getType() });
 	}
 
 
@@ -67,135 +62,10 @@ class Index extends React.Component {
 		return this.props.projects;
 	}
 
-
-	/*
-	 *
-	 *
-	 */
-	getType() {
-		return this.props.location.type;
-	}
-
 }
 
 Index.contextTypes = {
 	router: React.PropTypes.func
-}
-
-class ProjectGroupList extends React.Component {
-
-	/*
-	 *
-	 *
-	 */
-	render() {
-		return (
-			<div className='project-groups'>
-				{ this.renderGroups() }
-			</div>
-		);
-	}
-
-
-	/*
-	 *
-	 *
-	 */
-	renderGroups() {
-
-		var projects = this.props.projects;
-
-		if (projects == null) { return (<img src="/images/loader/ripple.gif" />); }
-
-		var groups = _.groupBy(projects, (model) => {
-			return model.get('group');
-		});
-
-		return Object.keys(groups).map((key, index) => {
-			var projects = groups[key];
-			if (projects == null) { return (<div/>); }
-			return (
-				<div className='project-group' key={index}>
-					<h1 id={key}>{ key }</h1>
-					<ProjectList projects={projects} />
-				</div>
-			);
-		});
-	}
-
-}
-
-class ProjectList extends React.Component {
-
-	/*
-	 *
-	 *
-	 */
-	render() {
-		return (
-			<ul className="project-list">
-				{ this.renderList() }
-			</ul>
-		);
-	}
-
-
-	/*
-	 *
-	 *
-	 */
-	renderList() {
-		return this.props.projects.map((project, index) => {
-			return <ProjectListItem project={project} key={index} />;
-		});
-	}
-
-}
-
-class ProjectListItem extends React.Component {
-
-	/*
-	 *
-	 *
-	 */
-	render() {
-		var project = this.props.project;
-		return (
-			<li className={''}>
-				<Link className="project-list__item" to={'/things/' + project.get('id')}>
-					{ this.renderBackgroundImage() }
-					<div className="project-list__item__title">{ this.getName() }</div>
-				</Link>
-			</li>
-		);
-	}
-
-
-	/*
-	 *
-	 *
-	 */
-	renderBackgroundImage() {
-		var project = this.props.project,
-			name = project.getIconName(),
-			Comp = Logos[name];
-		if (Comp == null) { return <Logos.Neutral className='project-list__item__logo' />; }
-		return (<Comp className='project-list__item__logo' />);
-	}
-
-
-	/*
-	 *
-	 *
-	 */
-	getName() {
-		var name = this.props.project.get('name');
-		if (this.props.project.get('is_draft') === true) {
-			name += ' (draft)'
-		}
-		return name;
-	}
-
 }
 
 export default Index;
