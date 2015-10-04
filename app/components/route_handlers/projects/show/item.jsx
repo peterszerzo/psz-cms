@@ -5,15 +5,15 @@ import { Link } from 'react-router';
 
 import Loader from './../../../general/loader.jsx';
 
-class ProjectShowItem extends React.Component {
+class ShowItem extends React.Component {
 
 	/*
 	 *
 	 *
 	 */
 	render() {
-		var project = this.props.project;
-		if (project == null) {
+		var resource = this.props.resource;
+		if (resource == null) {
 			return (
 				<Loader />
 			);
@@ -35,8 +35,8 @@ class ProjectShowItem extends React.Component {
 	 *
 	 */
 	renderSubtitle() {
-		if (this.props.project.get('subtitle') == null) { return; }
-		return (<h2 className="subtitle">{'' + this.props.project.get('subtitle') + ''}</h2>);
+		if (this.props.resource.get('subtitle') == null) { return; }
+		return (<h2 className="subtitle">{'' + this.props.resource.get('subtitle') + ''}</h2>);
 	}
 
 
@@ -45,7 +45,7 @@ class ProjectShowItem extends React.Component {
 	 *
 	 */
 	renderUrl() {
-		var url = this.props.project.get('url');
+		var url = this.props.resource.get('url');
 		if (url == null) { return; }
 		return (
 			<a className="main-link" href={url} target="_blank">Project Site</a>
@@ -58,7 +58,7 @@ class ProjectShowItem extends React.Component {
 	 *
 	 */
 	renderBody() {
-		var md = this.props.project.get('bodyText');
+		var md = this.props.resource.get('body_text');
 		if (md == null) { return; }
 		return (
 			<div className="static" dangerouslySetInnerHTML={{ __html: marked(md) }}/>
@@ -71,7 +71,7 @@ class ProjectShowItem extends React.Component {
 	 *
 	 */
 	renderDates() {
-		var dates = this.props.project.get('dates'), 
+		var dates = this.props.resource.get('dates'), 
 			formattedDates, content;
 		if (dates == null) { return; }
 		formattedDates = dates.map(function(date) {
@@ -90,8 +90,8 @@ class ProjectShowItem extends React.Component {
 	 *
 	 */
 	getTitle() {
-		var title = this.props.project.get('title');
-		if (this.props.project.get('is_draft') === true) {
+		var title = this.props.resource.get('title');
+		if (this.props.resource.get('is_draft') === true) {
 			title += ' (draft)'
 		}
 		return title;
@@ -99,4 +99,4 @@ class ProjectShowItem extends React.Component {
 
 }
 
-export default ProjectShowItem;
+export default ShowItem;

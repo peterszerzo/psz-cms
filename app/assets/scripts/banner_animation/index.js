@@ -151,7 +151,7 @@ module.exports = function(fileName) {
         projection = d3.geo.orthographic()
             .scale(avgWH * 0.8)
             .rotate([- self.eye.position[0], - self.eye.position[1]])
-            .translate([ self.width / 2, self.height / 2 ]);
+            .translate([ window.innerWidth / 2, window.innerHeight / 2 ]);
 
         path = d3.geo.path().projection(projection);
         return path;
@@ -202,7 +202,6 @@ module.exports = function(fileName) {
 
         var position = self.eye.position;
 
-        // position = [0, 0];
         distance = geomUtil.getLongLatDistance(position, centroid);
 
         delta = distance / 2;
@@ -213,6 +212,9 @@ module.exports = function(fileName) {
         }
 
         op = Math.pow((deltaMax - delta) / deltaMax, 4) * 0.9;
+
+        op = Math.round(op * 1000) / 1000;
+
         return op; 
 
     };

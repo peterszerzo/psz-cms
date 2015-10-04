@@ -60,8 +60,10 @@
     "jquery": "^2.1.4",
     "longjohn": "^0.2.8",
     "marked": "^0.3.3",
+    "modernizr": "^3.0.0",
     "moment": "^2.10.5",
     "react": "^0.13.3",
+    "react-router": "^1.0.0-rc1",
     "underscore": "^1.8.3"
   }
 }

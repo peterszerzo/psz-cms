@@ -7,6 +7,8 @@ import marked from 'marked';
  */
 class Model extends base.Model {
 
+    get resourceName() { return 'project'; }
+
     /*
      *
      *
@@ -42,27 +44,6 @@ class Model extends base.Model {
 class Collection extends base.Collection {
 
     get model() { return Model; }
-    get baseUrl() { return '/api/v1/projects'; }
-
-
-    /*
-     *
-     *
-     */
-    getFetchPromise(query, options) {
-
-        return new Promise((resolve, reject) => {
-
-            this.setUrl(query);
-            this.fetch({ reset: true });
-            
-            this.on('reset', () => {
-                return resolve(this);
-            });
-
-       });
-
-    }
 
 }
 

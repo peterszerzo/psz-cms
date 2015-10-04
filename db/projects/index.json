@@ -1,13 +1,6 @@
 [
 
     {
-        "id": "about",
-        "name": "about",
-        "title": "Hi,",
-        "is_live": true
-    },
-
-    {
         "id": "peterszerzo-com",
         "type": "project",
         "group": "",

@@ -112,7 +112,7 @@ h4 {
 
 .title {
   font-size: 40px;
-  margin-top: 25px;
+  margin-top: 45px;
   margin-bottom: 15px; }
   @media screen and (min-width: 600px) {
     .title {
@@ -128,31 +128,31 @@ h4 {
     .subtitle {
       font-size: 38px; } }
 
-.main-link {
-  font-family: 'Hallo';
-  width: 170px;
-  display: block;
-  margin: auto;
-  text-align: center;
-  color: black;
-  border: 3px solid black;
-  border-radius: 12px;
-  padding: 6px;
-  font-size: 26px;
-  opacity: 0.2; }
-  .main-link:hover {
-    opacity: 1; }
-
 .date {
   text-align: center;
-  font-size: 24px;
-  opacity: 0.8;
+  font-size: 22px;
+  opacity: 0.7;
   padding: 0 0 30px 0; }
 
 .loader {
   text-align: center; }
   .loader img {
     display: inline-block; }
+
+.main-link {
+  font-family: 'Hallo';
+  width: 170px;
+  display: block;
+  margin: auto;
+  text-align: center;
+  color: #413478;
+  border: 2px solid #413478;
+  border-radius: 6px;
+  padding: 6px;
+  font-size: 26px;
+  opacity: 0.4; }
+  .main-link:hover {
+    opacity: 1; }
 
 .banner {
   width: 100%;
@@ -171,7 +171,7 @@ h4 {
     height: 250px;
     border-radius: 100%;
     margin: auto;
-    background-color: #0E3647;
+    background-color: #413478;
     opacity: 0.95;
     transition: all 0.5s; }
     .banner__summary:hover {
@@ -205,24 +205,23 @@ h4 {
   .banner__message {
     transition: all 0.75s;
     position: absolute;
-    bottom: 30px;
-    left: 30px;
+    bottom: calc(50% - 190px);
     color: white;
-    text-align: left;
+    text-align: center;
     width: 100%;
-    font-size: 17px;
-    opacity: 0.8;
-    font-family: Palatino; }
+    font-size: 19px;
+    opacity: 1;
+    font-family: 'Hallo'; }
   .banner__geopath {
     cursor: pointer;
     stroke: white;
     fill: white;
     stroke-width: 0.2px;
-    transition: all 0.2s ease-in-out; }
+    transition: all 0.2s; }
     .banner__geopath--active, .banner__geopath:hover {
-      fill: #0E3647;
-      stroke: #0E3647;
-      transition: all 0.2s ease-in-out; }
+      fill: #413478;
+      stroke: #413478;
+      transition: all 0.2s; }
 
 .header {
   overflow: visible;
@@ -302,17 +301,34 @@ h4 {
 
 .project-show, .project-groups {
   margin: 0;
-  padding: 60px; }
+  padding: 60px 0; }
 
-.project-group > h1 {
-  margin: 75px 18% 15px 18%;
-  border-bottom: 3px solid rgba(14, 54, 71, 0.15);
-  font-size: 36px;
-  padding: 8px;
-  text-align: center; }
+.project-groups {
+  width: 300px;
+  margin: auto; }
+  @media only screen and (min-width: 640px) {
+    .project-groups {
+      width: 600px; } }
+  @media only screen and (min-width: 940px) {
+    .project-groups {
+      width: 900px; } }
+
+.project-group {
+  margin-top: 75px; }
+  .project-group > h1 {
+    opacity: 1;
+    margin: 0;
+    font-size: 36px;
+    text-align: center; }
+  .project-group__separator {
+    height: 4px;
+    background-color: #5947a3;
+    border-radius: 2px;
+    margin: 10px 20px 35px 20px;
+    opacity: 0.5; }
 
 .project-list {
-  width: 900px;
+  width: 100%;
   margin: 30px auto;
   text-align: left; }
   .project-list > li {
@@ -328,17 +344,17 @@ h4 {
       position: absolute; }
     .project-list__item > *, .project-list__item:hover > * {
       transition: 0.5s ease-in-out; }
-    .project-list__item__logo {
+    .no-touch .project-list__item__logo {
       width: 210px;
       height: 210px;
       left: 45px;
       top: 45px;
       opacity: 0.8;
       z-index: 9; }
-      .project-list__item:hover .project-list__item__logo {
-        opacity: 1;
-        top: 24px; }
-    .project-list__item__title {
+    .project-list__item:hover .project-list__item__logo {
+      opacity: 1;
+      top: 24px; }
+    .no-touch .project-list__item__title {
       color: #071c29;
       font-size: 24px;
       top: 76%;
@@ -346,9 +362,9 @@ h4 {
       left: 5%;
       opacity: 0;
       text-align: center; }
-      .project-list__item:hover .project-list__item__title {
-        opacity: 1;
-        top: 81%; }
+    .project-list__item:hover .project-list__item__title {
+      opacity: 1;
+      top: 81%; }
 
 .static {
   width: 90%;

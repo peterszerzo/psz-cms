@@ -3,11 +3,9 @@ import Header from './../../../general/header.jsx';
 import { Link } from 'react-router';
 import _ from 'underscore';
 
-import ProjectListItem from './item.jsx';
-
 import project from './../../../../models/project.js';
 
-import ProjectGroups from './groups.jsx';
+import Groups from './groups.jsx';
 
 class Index extends React.Component {
 
@@ -29,7 +27,7 @@ class Index extends React.Component {
 		return (
 			<div className='wrapper__content'>
 				<Header />
-				<ProjectGroups projects={this.getProjects()}/>
+				<Groups resources={this.getResources()}/>
 			</div>
 		);
 	}
@@ -40,13 +38,11 @@ class Index extends React.Component {
 	 *
 	 */
 	componentDidMount() {
-		var coll, promise;
-		if (this.getProjects() == null) {
-			coll = new project.Collection();
-			promise = coll.getFetchPromise();
-			promise.then((coll) => {
+		if (this.getResources() == null) {
+			let coll = new project.Collection();
+			coll.getFetchPromise().then((coll) => {
 				console.log(coll);
-				this.setState({ projects: coll });
+				this.setState({ resources: coll });
 			}, () => { console.log('promise rejected'); });
 		}
 	}
@@ -56,10 +52,10 @@ class Index extends React.Component {
 	 *
 	 *
 	 */
-	getProjects() {
+	getResources() {
 		// projects are stored in props if rendered server-side, and on the state if rendered client-side.
-		if (this.state.projects != null) { return this.state.projects; }
-		return this.props.projects;
+		if (this.state.resources != null) { return this.state.resources; }
+		return this.props.resources;
 	}
 
 }

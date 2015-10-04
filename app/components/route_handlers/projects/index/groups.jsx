@@ -1,10 +1,10 @@
 import React from 'react';
 import _ from 'underscore';
 
-import ProjectList from './list.jsx';
+import List from './list.jsx';
 import Loader from './../../../general/loader.jsx';
 
-class ProjectGroups extends React.Component {
+class Groups extends React.Component {
 
 	/*
 	 *
@@ -25,21 +25,22 @@ class ProjectGroups extends React.Component {
 	 */
 	renderGroups() {
 
-		var projects = this.props.projects;
+		var resources = this.props.resources;
 
-		if (projects == null) { return (<Loader />); }
+		if (resources == null) { return (<Loader />); }
 
-		var groups = _.groupBy(projects.models, (model) => {
+		var groups = _.groupBy(resources.models, (model) => {
 			return model.get('group');
 		});
 
 		return Object.keys(groups).map((key, index) => {
-			var projects = groups[key];
-			if (projects == null) { return (<div/>); }
+			var resources = groups[key];
+			if (resources == null) { return (<div/>); }
 			return (
 				<div className='project-group' key={index}>
 					<h1 id={key}>{ key }</h1>
-					<ProjectList projects={projects} />
+					<div className='project-group__separator' />
+					<List resources={resources} />
 				</div>
 			);
 		});
@@ -47,4 +48,4 @@ class ProjectGroups extends React.Component {
 
 }
 
-export default ProjectGroups;
+export default Groups;

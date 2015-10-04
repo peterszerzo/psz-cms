@@ -21,6 +21,25 @@ class Collection extends Backbone.Collection {
 
     get model() { return Model; }
 
+    /*
+     *
+     *
+     */
+    get dbCollection() { 
+        var name = this.model.prototype.resourceName;
+        return `${name}s`; 
+    }
+
+
+    /*
+     *
+     *
+     */
+    get apiUrl() {
+        var name = this.model.prototype.resourceName;
+        return `/api/v1/${name}s`; 
+    }
+
 
     /*
      * Sets url property, building up query string from json.
@@ -32,7 +51,27 @@ class Collection extends Backbone.Collection {
             value = query[key];
             queryString += `${key}=${value}&`;
         }
-        this.url = this.baseUrl + queryString;
+        this.url = this.apiUrl + queryString;
+    }
+
+
+    /*
+     *
+     *
+     */
+    getFetchPromise(query, options) {
+
+        return new Promise((resolve, reject) => {
+
+            this.setUrl(query);
+            this.fetch({ reset: true });
+            
+            this.on('reset', () => {
+                return resolve(this);
+            });
+
+       });
+
     }
 
 

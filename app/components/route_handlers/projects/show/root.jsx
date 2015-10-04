@@ -2,7 +2,7 @@ import React from 'react';
 import Header from './../../../general/header.jsx';
 import project from './../../../../models/project.js';
 
-import ProjectShowItem from './item.jsx';
+import ShowItem from './item.jsx';
 
 class Show extends React.Component {
 
@@ -17,11 +17,11 @@ class Show extends React.Component {
 	 *
 	 */
 	render() {
-		var project = this.getProject();
+		var resource = this.getResource();
 		return (
 			<div className='wrapper__content'>
 				<Header/>
-				<ProjectShowItem project={ project }/>
+				<ShowItem resource={ resource }/>
 			</div>
 		);
 	}
@@ -32,8 +32,8 @@ class Show extends React.Component {
 	 *
 	 */
 	componentDidMount() {
-		if (this.getProject() == null) {
-			this.fetchProject();
+		if (this.getResource() == null) {
+			this.fetchResource();
 		}
 	}
 
@@ -42,7 +42,7 @@ class Show extends React.Component {
 	 *
 	 *
 	 */
-	fetchProject() {
+	fetchResource() {
 		var coll, promise, id;
 		id = this.props.params.id;
 		coll = new project.Collection();
@@ -50,7 +50,7 @@ class Show extends React.Component {
 		promise = coll.getFetchPromise({ id: id });
 		promise.then((coll) => {
 			console.log(coll);
-			this.setState({ project: coll.models[0] });
+			this.setState({ resource: coll.models[0] });
 		}, () => { console.log('promise rejected'); });
 	}
 
@@ -59,8 +59,8 @@ class Show extends React.Component {
 	 *
 	 *
 	 */
-	getProject() {
-		return this.state.project || this.props.project;
+	getResource() {
+		return this.state.resource || this.props.resource;
 	}
 
 }

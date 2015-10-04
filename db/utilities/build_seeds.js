@@ -13,22 +13,25 @@ function readAndMatchEntries(options, next) {
 		var count = data.length,
 			matchedCount = 0;
 
+		function checkDone() {
+			if ((matchedCount === count) && next) {
+				console.log('finishing');
+				return next(data);
+			}
+		}
+
 		data.forEach((datum) => {
 			
 			fs.readFile(`${__dirname}/../md_content/${datum.id}.md`, 'utf-8', (err, body_text) => {
 
 				matchedCount += 1;
 
-				if ((matchedCount === count) && next) {
-					console.log('finishing');
-					return next(data);
+				if (err) { 
+					console.dir(err); return checkDone(); 
 				}
 
-				console.log(count, matchedCount);
-				if (err) { return; }
-
 				datum.body_text = body_text;
-				return;
+				return checkDone();
 			});
 
 		});

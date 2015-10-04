@@ -9,7 +9,7 @@ router.get('/projects', indexMiddleware.bind(this, { dbCollectionName: 'projects
 	res.json(_.where(req.dbResponse, { is_live: true }));
 });
 
-router.get('/blog', indexMiddleware.bind(this, { dbCollectionName: 'blog' }), function(req, res) {
+router.get('/blog_posts', indexMiddleware.bind(this, { dbCollectionName: 'blog_posts' }), function(req, res) {
 	res.json(_.where(req.dbResponse, { is_live: true }));
 });
 

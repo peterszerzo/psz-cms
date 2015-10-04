@@ -1,76 +1,105 @@
-.project-show, .project-groups {
-	margin: 0;
-	padding: 60px;
-}
-
-.project-group {
-	& > h1 {
-		margin: 75px 18% 15px 18%;
-		border-bottom: 3px solid transparentize(map-get($colors, greenish-blue), 0.85);
-		font-size: 36px;
-		padding: 8px;
-		text-align: center;
-	}
-}
-
-.project-list {
+.project {
 
 	$h: 300px;
 
-	width: 3 * $h; 
-	margin: 30px auto;
-	text-align: left;
-
-	& > li { display: inline-block; }
-
-	&__item {
-
-		display: inline-block;
-
-		fill: get-color(greenish-blue);
-		position: relative;
-		width: $h;
-		height: $h;
-		
-		transition: 0.5s ease-in-out;
-
-		& > * { position: absolute; }
-
-		& > *, &:hover > * { 
-			transition: 0.5s ease-in-out; 
-		}
-
-		&__logo {
-			width: 0.7 * $h;
-			height: 0.7 * $h;
-			left: 0.15 * $h;
-			top: 0.15 * $h;
-			opacity: 0.8;
-			z-index: 9;
-
-			.project-list__item:hover & {
-				opacity: 1;
-				top: 0.08 * $h;
-			}
-		}
-		
-		&__title {
-			color: $base-color;
-			font-size: 24px;
-			top: 76%;
-			width: 90%;
-			left: 5%;
-			opacity: 0;
-			text-align: center;
-
-			.project-list__item:hover & {
-				opacity: 1;
-				top: 81%;
-			}
-
-		}
-		
+	&-show, &-groups {
+		margin: 0;
+		padding: 60px 0;
 	}
 
+	&-groups {
+		width: $h;
+		@include bp-w(2 * $h + 40) {
+			width: 2 * $h;
+		}
+		@include bp-w(3 * $h + 40) {
+			width: 3 * $h;
+		}
+		margin: auto;
+	}
+
+	&-group {
+		margin-top: 75px;
+		& > h1 {
+			opacity: 1;
+			margin: 0;
+			font-size: 36px;
+			text-align: center;
+		}
+
+		&__separator {
+			height: 4px;
+			background-color: lighten(map-get($colors, purple), 5);
+			border-radius: 2px;
+			margin: 10px 20px 35px 20px;
+			opacity: 0.5;
+		}
+
+	}
+
+	&-list {
+
+		width: 100%; 
+		margin: 30px auto;
+		text-align: left;
+
+		& > li { display: inline-block; }
+
+		&__item {
+
+			display: inline-block;
+
+			fill: get-color(greenish-blue);
+			position: relative;
+			width: $h;
+			height: $h;
+			
+			transition: 0.5s ease-in-out;
+
+			& > * { position: absolute; }
+
+			& > *, &:hover > * { 
+				transition: 0.5s ease-in-out; 
+			}
+
+			&__logo {
+
+				.no-touch & {
+					width: 0.7 * $h;
+					height: 0.7 * $h;
+					left: 0.15 * $h;
+					top: 0.15 * $h;
+					opacity: 0.8;
+					z-index: 9;
+				}
+
+				.project-list__item:hover & {
+					opacity: 1;
+					top: 0.08 * $h;
+				}
+			}
+			
+			&__title {
+
+				.no-touch & {
+					color: $base-color;
+					font-size: 24px;
+					top: 76%;
+					width: 90%;
+					left: 5%;
+					opacity: 0;
+					text-align: center;
+				}
+
+				.project-list__item:hover & {
+					opacity: 1;
+					top: 81%;
+				}
+
+			}
+			
+		}
+
+	}
 
 }

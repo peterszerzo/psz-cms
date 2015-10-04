@@ -40,6 +40,8 @@ class Banner extends React.Component {
 	 *
 	 */
 	renderMessage() {
+		// Fix later.
+		return null;
 		var style = this.state.message.isShowing ? { opacity: 0.6 } : { opacity: 0 };
 		return (
 			<div className="banner__message" style={style}>
@@ -76,16 +78,6 @@ class Banner extends React.Component {
 	 */
 	navigateToRandom() {
 		this.context.router.transitionTo('/things/random');
-	}
-
-
-	/*
-	 *
-	 *
-	 */
-	getMessageStyle() {
-		if (this.state.isMessageShowing) { return { opacity: 0.6 }; }
-		return { opacity: 0 };
 	}
 
 

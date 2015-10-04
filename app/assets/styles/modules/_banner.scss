@@ -3,6 +3,8 @@
 	width: 100%;
 	height: 100%;
 
+	$c: darken(map-get($colors, purple), 7);
+
 	background-color: get-color(base);
 
 	position: relative;
@@ -20,7 +22,7 @@
 		height: $d;
 		border-radius: 100%;
 		margin: auto;
-		background-color: map-get($colors, greenish-blue);
+		background-color: $c;
 		opacity: 0.95;
 		transition: all 0.5s;
 		&:hover { 
@@ -70,14 +72,13 @@
 	&__message {
 		transition: all 0.75s;
 		position: absolute;
-		bottom: 30px;
-		left: 30px;
+		bottom: calc(50% - 190px);
 		color: white;
-		text-align: left;
+		text-align: center;
 		width: 100%;
-		font-size: 17px;
-		opacity: 0.8;
-		font-family: Palatino;
+		font-size: 19px;
+		opacity: 1;
+		font-family: 'Hallo';
 	}
 
 	&__geopath {
@@ -86,13 +87,13 @@
 		stroke: white;
 		fill: white;
 		stroke-width: 0.2px;
-		transition: all 0.2s ease-in-out;
+		transition: all 0.2s;
 
 		&--active, &:hover {
-			$c: map-get($colors, greenish-blue);
+			$c: darken(map-get($colors, purple), 7);
 			fill: $c;
 			stroke: $c;
-			transition: all 0.2s ease-in-out;
+			transition: all 0.2s;
 		}
 
 	}

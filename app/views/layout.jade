@@ -8,13 +8,13 @@ html
 		meta(name='viewport', content='initial-scale=1, maximum-scale=1, user-scalable=no')
 		link(rel="icon", type="image/png", href="/images/favicon/favicon.png")
 		link(rel="stylesheet", type="text/css", href="/styles/site.css")
-		
+		script(src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js", async)
+		script(src="/scripts/bundle.js")
 
 	body
 		
 		div(id='site', class='fill-parent')
 			!= reactOutput
 
-		script(src="/scripts/bundle.js")
 		script.
 			window.psz.start();

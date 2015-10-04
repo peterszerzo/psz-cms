@@ -1,9 +1,9 @@
 import React from 'react';
 
-import ProjectListItem from './item.jsx';
+import ListItem from './item.jsx';
 
 
-class ProjectList extends React.Component {
+class List extends React.Component {
 
 	/*
 	 *
@@ -23,11 +23,11 @@ class ProjectList extends React.Component {
 	 *
 	 */
 	renderList() {
-		return this.props.projects.map((project, index) => {
-			return <ProjectListItem project={project} key={index} />;
+		return this.props.resources.map((resource, index) => {
+			return <ListItem resource={resource} key={index} />;
 		});
 	}
 
 }
 
-export default ProjectList;
+export default List;

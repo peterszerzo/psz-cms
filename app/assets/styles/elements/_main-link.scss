@@ -1,0 +1,15 @@
+.main-link {
+	$c: darken(map-get($colors, purple), 7);
+	font-family: 'Hallo';
+	width: 170px;
+	display: block;
+	margin: auto;
+	text-align: center;
+	color: $c;
+	border: 2px solid $c;
+	border-radius: 6px;
+	padding: 6px;
+	font-size: 26px;
+	opacity: 0.4;
+	&:hover { opacity: 1; }
+}

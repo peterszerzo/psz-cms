@@ -4,17 +4,17 @@ import { Link } from 'react-router';
 import Logos from './../../../general/project_logos.jsx';
 
 
-class ProjectListItem extends React.Component {
+class ListItem extends React.Component {
 
 	/*
 	 *
 	 *
 	 */
 	render() {
-		var project = this.props.project;
+		var resource = this.props.resource;
 		return (
 			<li className={''}>
-				<Link className="project-list__item" to={'/projects/' + project.get('id')}>
+				<Link className="project-list__item" to={'/projects/' + resource.get('id')}>
 					{ this.renderBackgroundImage() }
 					<div className="project-list__item__title">{ this.getName() }</div>
 				</Link>
@@ -28,10 +28,9 @@ class ProjectListItem extends React.Component {
 	 *
 	 */
 	renderBackgroundImage() {
-		var project = this.props.project,
-			name = project.getIconName(),
-			Comp = Logos[name];
-		if (Comp == null) { return <Logos.Neutral className='project-list__item__logo' />; }
+		var resource = this.props.resource,
+			name = resource.getIconName(),
+			Comp = Logos[name] || Logos.Neutral;
 		return (<Comp className='project-list__item__logo' />);
 	}
 
@@ -41,8 +40,8 @@ class ProjectListItem extends React.Component {
 	 *
 	 */
 	getName() {
-		var name = this.props.project.get('name');
-		if (this.props.project.get('is_draft') === true) {
+		var name = this.props.resource.get('name');
+		if (this.props.resource.get('is_draft') === true) {
 			name += ' (draft)'
 		}
 		return name;
@@ -50,4 +49,4 @@ class ProjectListItem extends React.Component {
 
 }
 
-export default ProjectListItem;
+export default ListItem;
