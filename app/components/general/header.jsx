@@ -25,9 +25,9 @@ class Header extends React.Component {
 	}
 
 	getList() {
-		var activeType = this.props.type;
+		var activeLinkName = this.props.activeLinkName;
 		return this.state.buttons.map(function(button, index) {
-			var isActive = (activeType && (button.name === activeType || button.name.slice(0, -1) === activeType)),
+			var isActive = (activeLinkName && (button.name === activeLinkName)),
 				className = 'header__nav__item' + (isActive ? ' header__nav__item--active' : '');
 			return (
 				<li className={className} key={index} >
@@ -38,8 +38,9 @@ class Header extends React.Component {
 	}
 
 	render() {
+		var cls = this.props.isTransparent ? 'header header--transparent' : 'header';
 		return (
-			<div className='header'>
+			<div className={ cls }>
 				<Link className='header__main-link' to='/'>
 					<Buttons.BackToMain />
 				</Link>

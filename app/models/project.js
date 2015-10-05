@@ -9,6 +9,8 @@ class Model extends base.Model {
 
     get resourceName() { return 'project'; }
 
+    get resourceUrlBase() { return 'projects'; }
+
     /*
      *
      *

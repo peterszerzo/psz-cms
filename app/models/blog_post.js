@@ -9,6 +9,8 @@ class Model extends base.Model {
 
     get resourceName() { return 'blog_post'; }
 
+    get resourceUrlBase() { return 'blog'; }
+
 
     /*
      *

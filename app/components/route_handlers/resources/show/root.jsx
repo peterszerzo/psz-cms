@@ -19,7 +19,7 @@ class Show extends React.Component {
 		var resource = this.getResource();
 		return (
 			<div className='wrapper__content'>
-				<Header/>
+				<Header activeLinkName={this.getActiveLinkName()} />
 				<ShowItem resource={ resource }/>
 			</div>
 		);
@@ -43,6 +43,12 @@ class Show extends React.Component {
 	 */
 	getResourceConstructors() {
 		return null;
+	}
+
+
+	getActiveLinkName() {
+		var resourceUrlBase = this.getResourceConstructors().Model.prototype.resourceUrlBase;
+		return resourceUrlBase;
 	}
 
 

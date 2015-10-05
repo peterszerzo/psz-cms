@@ -6,6 +6,9 @@
 	height: $header-height;
 	top: 0;
 	background-color: rgba(get-color(base), 0.93);
+	&--transparent {
+		background: none;
+	}
 	color: white;
 	z-index: 100;
 
@@ -61,7 +64,7 @@
 				display: none;
 			}
 			svg {
-				opacity: 0.8;
+				opacity: 0.9;
 				text-align: center;
 				vertical-align: middle;
 				display: table-cell;

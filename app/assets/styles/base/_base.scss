@@ -38,10 +38,6 @@ ul {
 }
 
 img {
-	border-radius: 10px;
-	max-width: 500px;
-	@media screen and (max-width: $breakpoint) {
-		width: 250px;
-		margin: auto;
-	}
+	display: block;
+	width: 100%;
 }

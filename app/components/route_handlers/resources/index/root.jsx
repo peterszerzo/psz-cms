@@ -35,10 +35,16 @@ class Index extends React.Component {
 	render() {
 		return (
 			<div className='wrapper__content'>
-				<Header />
+				<Header activeLinkName={this.getActiveLinkName()} />
 				<Groups resources={this.getResources()}/>
 			</div>
 		);
+	}
+
+
+	getActiveLinkName() {
+		var resourceUrlBase = this.getResourceConstructors().Model.prototype.resourceUrlBase;
+		return resourceUrlBase;
 	}
 
 
