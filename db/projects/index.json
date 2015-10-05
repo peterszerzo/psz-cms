@@ -8,14 +8,27 @@
     },
 
     {
-        "id": "atlas",
+        "id": "newamerica",
+        "headline": "Lead developer for interactive web projects.",
         "url": "http://atlas.newamerica.org",
-        "type": "project",
+        "links": [
+            {
+                "name": "Atlas",
+                "url": "http://atlas.newamerica.org"
+            },
+            {
+                "name": "2014 Annual Report",
+                "url": "http://2014.newamerica.org"
+            },
+            {
+                "name": "My New America",
+                "url": "http://my.newamerica.org"
+            }
+        ],
         "group": "code",
-        "categories": [ "code" ],
         "dates": ["2014-12", "present"],
-        "name": "atlas.newamerica.org",
-        "title": "atlas.newamerica.org",
+        "name": "New America",
+        "title": "New America",
         "is_live": true,
         "languages": [ "JavaScript" ],
         "technologies": [ "React.js", "Backbone.js", "Marionette.js", "d3.js", "Leaflet.js", "Express.js" ]
@@ -23,14 +36,22 @@
 
     {
         "id": "ripsaw-js",
-        "is_live": true,
-        "name": "ripsaw.js",
-        "type": "project",
-        "group": "code",
         "title": "ripsaw.js",
-        "subtitle": "Guided Design for Non-designers",
-        "url": "http://pickled-plugins.github.io/ripsaw-js/",
-        "year": 2010,
+        "is_live": true,
+        "dates": ["2013-11", "present"],
+        "name": "ripsaw.js",
+        "group": "code",
+        "headline": "Open-source library for guided, interactive product design on HTML5 Canvas.",
+        "links": [
+            {
+                "name": "Website",
+                "url": "http://pickled-plugins.github.io/ripsaw-js/"
+            },
+            {
+                "name": "Source Code",
+                "url": "http://github.com/pickled-plugins/ripsaw-js"
+            }
+        ],
         "supervisors": [],
         "collaborators": [],
         "importance": 1,
@@ -45,8 +66,13 @@
         "title": "Giraffe for Rhino",
         "type": "project",
         "group": "code",
-        "subtitle": "A Strctural Engineering Add-on",
-        "url": "http://pickled-plugins.github.io/Giraffe-for-Rhino/",
+        "headline": "A Structural Engineering Plug-in for CAD package Rhinoceros 3D.",
+        "links": [
+            {
+                "name": "Site",
+                "url": "http://pickled-plugins.github.io/Giraffe-for-Rhino/"
+            }
+        ],
         "year": 2010,
         "supervisors": ["Michael Stein, PE"],
         "collaborators": [],
@@ -66,7 +92,6 @@
         "name": "Pendant Project",
         "title": "The Pendant Project",
         "subtitle": "Variations on a Set Frame",
-        "url": "https://www.etsy.com/shop/dchisel",
         "year": 2010,
         "supervisors": [],
         "collaborators": [ "Tiffany Cheezem", "Greta Shum", "Alison Cook" ],
@@ -80,16 +105,20 @@
         "name": "PBA",
         "dates": [ "2005" ],
         "group": "code",
-        "type": "project",
         "title": "Pascal Basketball Association",
-        "subtitle": "Our First Videogame",
-        "url": "http://pickled-plugins.github.io/pba/",
-        "supervisors": [],
+        "headline": "Feeling nostalgic of our first ever computer game.",
+        "links": [
+            {
+                "name": "Play PBA",
+                "url": "http://pickled-plugins.github.io/pba/"
+            },
+            {
+
+            }
+        ],
         "collaborators": ["Tamás Plugor", "Tamás Gajdó"],
-        "categories": [ "code" ],
         "importance": 1,
         "languages": [ "Borland Pascal", "Processing" ]
-
     },
 
     {
@@ -127,17 +156,11 @@
     {
         "id": "particle-springs",
         "is_live": false,
-        "name": "particle-springs",
-        "title": "Particle-springs experiments.",
+        "name": "Particles and springs experiments.",
+        "headline": "an interactive particle-spring design tool following architectural concept",
         "year": 2010,
         "supervisors": [],
         "collaborators": [],
-        "spoiler": [
-            "an interactive particle-spring design tool following architectural concept",
-            "the tool regenerates the structure if their main parameters are modified",
-            "upon adjustments, it provides instant feedback on tonnage and constructability, and integrates seamlessly with other software packages used for design development"
-        ],
-        "categories": [ "code", "design" ],
         "importance": 1,
         "is_live": false,
         "languages": [ "Visual Basic" ]
@@ -173,10 +196,9 @@
         "id": "algorithmic-tattoo",
         "is_live": true,
         "name": "algorithmic tattoo",
-        "type": "project",
         "group": "design",
         "title": "Algorithmic Tattoo",
-        "subtitle": "Body Art from the Creative Programmer",
+        "headline": "Body Art from the Creative Programmer",
         "dates": ["2014-11-25"],
         "supervisors": [],
         "collaborators": [],
@@ -187,17 +209,13 @@
 
     {
         "id": "dchisel",
-        "name": "dchisel",
-        "group": "design",
-        "type": "project",
-        "title": "Old portfolio site.",
+        "name": "dchisel.com",
+        "group": "archive",
+        "title": "First custom-built portfolio site.",
         "url": "http://dchisel.herokuapp.com/",
         "year": 2013,
-        "supervisors": [],
         "collaborators": [],
-        "spoiler": [
-            "my old personal website"
-        ],
+
         "categories": [ "code", "design" ],
         "importance": 1,
         "is_live": false,

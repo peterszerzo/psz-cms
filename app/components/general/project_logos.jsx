@@ -82,7 +82,7 @@ Logos.Battle = class extends React.Component {
 
 }
 
-Logos.Atlas = class extends React.Component {
+Logos.Newamerica = class extends React.Component {
 
 	render() {
 		var noFill = { fill: 'none' };

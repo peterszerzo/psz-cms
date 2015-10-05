@@ -2,8 +2,9 @@
 
     {
         "id": "about",
-        "name": "about",
-        "title": "Hi,",
+        "title": "Hi",
+        "group": "personal",
+        "name": "about me",
         "is_live": true
     },
 
