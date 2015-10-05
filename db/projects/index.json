@@ -91,7 +91,7 @@
         "dates": [ "2013-01", "2013-04" ],
         "name": "Pendant Project",
         "title": "The Pendant Project",
-        "subtitle": "Variations on a Set Frame",
+        "headline": "Design variations on a circle.",
         "year": 2010,
         "supervisors": [],
         "collaborators": [ "Tiffany Cheezem", "Greta Shum", "Alison Cook" ],
@@ -106,7 +106,7 @@
         "dates": [ "2005" ],
         "group": "code",
         "title": "Pascal Basketball Association",
-        "headline": "Feeling nostalgic of our first ever computer game.",
+        "headline": "Feeling nostalgic about our first ever computer game.",
         "links": [
             {
                 "name": "Play PBA",
@@ -127,7 +127,18 @@
         "group": "code",
         "type": "project",
         "title": "Deployable Smart Mast",
+        "headline": "A structure that reacts to its environment: motion control software and geometric design.",
         "year": 2010,
+        "links": [
+            {
+                "name": "Journal publication",
+                "url": "#"
+            },
+            {
+                "name": "Video",
+                "url": "/youtube"
+            }
+        ],
         "dates": ["2010-11", "2011-04"],
         "supervisors": ["Prof. Sigrid Adriaenssens", "Prof. Branko Glisic"],
         "collaborators": [],
@@ -142,6 +153,7 @@
         "name": "battle",
         "dates": [ "2012-03", "2012-05" ],
         "title": "Battle Shell",
+        "headline": "Algorithmic design in architecture: software design and execution, structural design.",
         "group": "design",
         "type": "project",
         "year": 2010,

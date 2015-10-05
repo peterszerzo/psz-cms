@@ -1,9 +1,16 @@
 .static {
-	width: 90%;
-	max-width: 768px;
+
+	$p: 25px;
+
+	width: 100%;
+	padding: 50px 25px;
+
 	margin: auto;
-	padding-top: 50px;
-	color: map-get($palette, grey);
+
+	@include bp-w(768px + 2 * $p) {
+		width: 768px;
+		padding: 50px 0;
+	}
 
 	blockquote {
 		font-style: italic;
@@ -16,14 +23,18 @@
 		padding: 25px;
 	}
 
+	p, a {
+		hyphens: auto;
+	}
+
 	li {
 		display: list-item;
 		padding: 5px 0;
 	}
 
 	a {
-		color: map-get($palette, grey);
-		border-bottom: 1px solid map-get($palette, purple);
+		color: map-get($colors, purple);
+		border-bottom: 1px solid map-get($colors, purple);
 		opacity: 0.7;
 		&:hover { opacity: 1; }
 	}

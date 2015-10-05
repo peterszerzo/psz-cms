@@ -18,7 +18,7 @@ pre, code {
 }
 
 pre {
-	background-color: transparentize(map-get($palette, base), 0.9);
+	background-color: transparentize(map-get($colors, purple), 0.9);
 	padding: 20px;
 	border-radius: 8px;
 }

@@ -13,13 +13,26 @@ import { Router, Route } from 'react-router';
 import createBrowserHistory from 'history/lib/createBrowserHistory';
 
 class App extends React.Component {
+
+	constructor(props) {
+		super(props);
+		this.state = {
+
+		};
+	}
+
 	render() {
 		return (
-			<div className='wrapper fill-parent'>
+			<div className='wrapper fill-parent' onScroll={this.logScroll.bind(this)}>
 				{this.props.children}
 			</div>
 		);
 	}
+
+	logScroll(e) {
+		console.log(React.findDOMNode(this).scrollTop);
+	}
+
 }
 
 var routes = (

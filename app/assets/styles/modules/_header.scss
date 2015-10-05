@@ -5,7 +5,7 @@
 	width: 100%;
 	height: $header-height;
 	top: 0;
-	background-color: rgba(get-color(base), 0.93);
+	background-color: transparentize(get-color(base), 0.05);
 	&--transparent {
 		background: none;
 	}
@@ -21,7 +21,7 @@
 			height: 40px; 
 			width: 40px; 
 			margin-top: 23px; 
-			margin-left: 30px;
+			margin-left: 20px;
 			fill: white; 
 		}
 	}
@@ -57,6 +57,7 @@
 		}
 
 		&__arrow {
+
 			cursor: pointer;
 			display: table;
 			text-align: center;
@@ -75,36 +76,48 @@
 			}
 
 			&:hover, &--active {
-				background-color: rgba(255, 255, 255, 0.05);
 				& > svg { opacity: 1; }
 			}
+
 		}
 
 		&__item {
 
 			z-index: 100;
 			display: none;
-			background-color: rgba(get-color(base), 0.93);
 
 			@media screen and (min-width: 800px) {
 				display: table;
-				background: none;
 				&:hover, &--active {
-				background-color: rgba(255, 255, 255, 0.05);
-				a { opacity: 1; }
-			}
-				
+					border-bottom: 6px solid lighten(map-get($colors, purple), 7);
+					.header--transparent & {
+						border-color: white;
+					}
+				}
 			}
 
 			a { 
+				height: 100%;
 				padding: 0 30px;
 				display: table-cell;
+				position: relative;
 				text-align: center;
 				vertical-align: middle;
 				font-family: 'Hallo';
 			}
 
-			
+			@media screen and (min-width: 800px) {
+				display: table;
+				background: none;
+				&:hover, &--active {
+					a { 
+						top: 3px;
+						opacity: 1;
+						
+					}
+				}
+				
+			}
 
 		}
 	}

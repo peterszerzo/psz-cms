@@ -31,7 +31,9 @@ class Header extends React.Component {
 				className = 'header__nav__item' + (isActive ? ' header__nav__item--active' : '');
 			return (
 				<li className={className} key={index} >
-					<Link to={button.url}>{ button.name }</Link>
+					<Link to={button.url}>
+						{ button.name }
+					</Link>
 				</li>
 			);
 		});

@@ -14,7 +14,7 @@ class ListItem extends React.Component {
 		var resource = this.props.resource;
 		return (
 			<li className={''}>
-				<Link className="project-list__item" to={'/projects/' + resource.get('id')}>
+				<Link className="project-list__item" to={resource.viewUrl}>
 					{ this.renderBackgroundImage() }
 					<div className="project-list__item__title">{ this.getName() }</div>
 				</Link>

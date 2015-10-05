@@ -9,6 +9,10 @@ import * as fs from 'fs';
  */
 class Model extends Backbone.Model {
 
+    get viewUrl() {
+        return `/${this.resourceUrlBase}/${this.get('id')}`;
+    }
+
 }
 
 

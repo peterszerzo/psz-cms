@@ -84,8 +84,9 @@
 	&__geopath {
 
 		cursor: pointer;
-		stroke: white;
-		fill: white;
+		$c: white;//lighten(map-get($colors, greenish-blue), 15);
+		stroke: $c;
+		fill: $c;
 		stroke-width: 0.2px;
 		transition: all 0.2s;
 

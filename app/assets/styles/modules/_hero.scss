@@ -14,14 +14,19 @@
 		height: 100%;
 		left: 0;
 		top: 0;
-		background-color: rgba(0, 0, 0, 0.05);
+		background-color: transparentize(map-get($colors, base), 0.4);
 	}
 
 	&__text {
 		position: absolute;
-		bottom: 20%;
-		left: 15%;
-		font-size: 100px;
+		bottom: 30%;
+		left: 25px;
+		font-size: 60px;
+		@include bp-w(768px) {
+			left: calc(50% - #{768px / 2});
+			font-size: 80px;
+		}
+		
 		font-family: 'Hallo';
 		color: white;
 	}
