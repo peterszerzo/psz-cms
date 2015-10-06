@@ -1,6 +1,9 @@
-var d3 = require('d3'),
-    Eye = require('./eye.js'),
-    geomUtil = require('./geometry_utilities.js');
+import d3 from 'd3';
+import { Events } from 'backbone';
+import _ from 'underscore';
+
+import Eye from './eye.js';
+import geomUtil from './geometry_utilities.js';
 
 /*
  * Globe animation module.
@@ -16,6 +19,8 @@ module.exports = function(fileName) {
         eye: undefined
     };
 
+    // Mix in events module.
+    _.extend(self, Events);
 
     /*
      *
@@ -117,6 +122,7 @@ module.exports = function(fileName) {
             .on('mouseleave', self.onFeatureMouseLeave.bind(self))
             .on('click', self.onFeatureClick);
         self.updateGeoPaths();
+        self.trigger('rendered');
         self.animationIntervalId = setInterval(self.update, self.timeStep * 1000);
     };
 

@@ -7,6 +7,7 @@ class Banner extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			isGlobeAnimationRendered: false,
 			message: {
 				isShowing: false,
 				shouldShowOnHover: true
@@ -20,8 +21,9 @@ class Banner extends React.Component {
 	 *
 	 */
 	render() {
+		var style = this.state.isGlobeAnimationRendered ? { opacity: 1 } : { opacity: 0 };
 		return (
-			<div className="banner fill-parent">
+			<div className="banner fill-parent" style={ style }>
 				<div className="banner__background"></div>
 				<div className="banner__globe"></div>
 				<Link className="banner__summary" to='/projects'>
@@ -60,6 +62,9 @@ class Banner extends React.Component {
 		this.globeAnimation.navigateToRandom = this.navigateToRandom.bind(this);
 		this.globeAnimation.triggerMessage = this.triggerMessage.bind(this);
 		this.globeAnimation.start();
+		this.globeAnimation.on('rendered', () => {
+			this.setState({ isGlobeAnimationRendered: true });
+		});
 	}
 
 	
