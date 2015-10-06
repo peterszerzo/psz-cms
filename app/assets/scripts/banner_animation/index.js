@@ -211,7 +211,7 @@ module.exports = function(fileName) {
             return 0;
         }
 
-        op = Math.pow((deltaMax - delta) / deltaMax, 4) * 0.9;
+        op = Math.pow((deltaMax - delta) / deltaMax, 4) * 1;
 
         op = Math.round(op * 1000) / 1000;
 

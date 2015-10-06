@@ -1,5 +1,5 @@
 export default `
-This is Peter, web developer, designer, (natural) language enthusiast, yogi, cook. An all-in-all friendly, enthusiastic fellow with eager-to-pedal feet, a green thumb and a curious mind.
+This is Peter, developer, designer, (natural) language enthusiast, yogi, cook. A friendly, low-bullshit fellow with eager-to-pedal feet, a green thumb and a curious mind.
 
 I develop sites and apps - the full-stack thereof - though my strengths and heart lie in clean, well-factored user interfaces and beautiful, elaborate graphics. I work with and get inspiration from the following technologies: React.js, Backbone.js, Marionette.js, d3.js, three.js, leaflet.js and Sass on the front-end, and Node.js, Express.js as well as Ruby on Rails behind the scenes.
 
