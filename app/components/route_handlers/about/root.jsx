@@ -21,6 +21,7 @@ class About extends React.Component {
 		this.state = {
 			greetingIndex: 0,
 			scrollTop: 0,
+			hasImageLoaded: false,
 			heroHeight: window.innerHeight
 		};
 	}
@@ -33,16 +34,13 @@ class About extends React.Component {
 				onScroll={this.handleScroll.bind(this)}
 			>
 				<Header activeLinkName='about' isTransparent={ this.state.scrollTop < this.state.heroHeight - 80 } />
-				<div 
-					className='hero' 
-					style={
-						{
-							backgroundImage: 'url(/images/me/me_1200.jpg)',
-							height: this.state.heroHeight
-						}
-					}
-				>
-					<div className='hero__overlay' />
+				<img 
+					style={ { opacity: 0.1, width: 10, height: 10, position: 'fixed' } } 
+					src='/images/me/me_1200.jpg' 
+					onLoad={this.handleImageLoad.bind(this)} 
+				/>
+				<div className='hero' style={this.getHeroStyle()}>
+					<div className='hero__overlay' style={{ opacity: this.state.hasImageLoaded ? null : '0.9' }} />
 					<div className='hero__text'>{ greetings[this.state.greetingIndex] }</div>
 				</div>
 				<div 
@@ -53,11 +51,11 @@ class About extends React.Component {
 		);
 	}
 
-	handleScroll(e) {
-		var node = React.findDOMNode(this);
-		this.setState({ scrollTop: node.scrollTop });
-	}
 
+	/*
+	 *
+	 *
+	 */
 	componentDidMount() {
 		this.greetingChangeInterval = setInterval(() => {
 			if (this.state.greetingIndex === (greetings.length - 1)) {
@@ -67,10 +65,47 @@ class About extends React.Component {
 		}, 2000);
 	}
 
+
+	/*
+	 *
+	 *
+	 */
 	componentWillUnmount() {
 		if (this.greetingChangeInterval) {
 			clearInterval(this.greetingChangeInterval);
 		}
+	}
+
+
+	/*
+	 *
+	 *
+	 */
+	getHeroStyle() {
+		if (!this.state.hasImageLoaded) { return {}; }
+		return {
+			backgroundImage: 'url(/images/me/me_1200.jpg)',
+			height: this.state.heroHeight
+		};
+	}
+
+
+	/*
+	 *
+	 *
+	 */
+	handleScroll(e) {
+		var node = React.findDOMNode(this);
+		this.setState({ scrollTop: node.scrollTop });
+	}
+
+
+	/*
+	 *
+	 *
+	 */
+	handleImageLoad() {
+		this.setState({ hasImageLoaded: true });
 	}
 
 }
