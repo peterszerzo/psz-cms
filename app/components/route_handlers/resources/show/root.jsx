@@ -18,7 +18,7 @@ class Show extends React.Component {
 	render() {
 		var resource = this.getResource();
 		return (
-			<div className='wrapper__content'>
+			<div className='wrapper__content fill-parent'>
 				<Header activeLinkName={this.getActiveLinkName()} />
 				<ShowItem resource={ resource }/>
 			</div>

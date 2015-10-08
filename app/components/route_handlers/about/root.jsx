@@ -19,15 +19,29 @@ class About extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			greetingIndex: 0
+			greetingIndex: 0,
+			scrollTop: 0,
+			heroHeight: window.innerHeight
 		};
 	}
 
 	render() {
 		return (
-			<div onScroll={this.handleScroll.bind(this)}>
-				<Header activeLinkName='about' isTransparent={true} />
-				<div className='hero' style={{backgroundImage: 'url(/images/me/me_1200.jpg)'}}>
+			<div 
+				className='wrapper__content fill-parent' 
+				style={{paddingTop: 0}} 
+				onScroll={this.handleScroll.bind(this)}
+			>
+				<Header activeLinkName='about' isTransparent={ this.state.scrollTop < this.state.heroHeight - 80 } />
+				<div 
+					className='hero' 
+					style={
+						{
+							backgroundImage: 'url(/images/me/me_1200.jpg)',
+							height: this.state.heroHeight
+						}
+					}
+				>
 					<div className='hero__overlay' />
 					<div className='hero__text'>{ greetings[this.state.greetingIndex] }</div>
 				</div>
@@ -40,7 +54,8 @@ class About extends React.Component {
 	}
 
 	handleScroll(e) {
-		console.log(e, e.scrollTop);
+		var node = React.findDOMNode(this);
+		this.setState({ scrollTop: node.scrollTop });
 	}
 
 	componentDidMount() {

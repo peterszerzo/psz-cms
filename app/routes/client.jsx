@@ -16,21 +16,14 @@ class App extends React.Component {
 
 	constructor(props) {
 		super(props);
-		this.state = {
-
-		};
 	}
 
 	render() {
 		return (
-			<div className='wrapper fill-parent' onScroll={this.logScroll.bind(this)}>
+			<div className='wrapper fill-parent'>
 				{this.props.children}
 			</div>
 		);
-	}
-
-	logScroll(e) {
-		console.log(React.findDOMNode(this).scrollTop);
 	}
 
 }

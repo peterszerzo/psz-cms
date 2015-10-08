@@ -6,7 +6,9 @@ class Header extends React.Component {
 
 	constructor() {
 		super();
-		this.state = {};
+		this.state = {
+			isExpanded: false
+		};
 		this.state.buttons = [
 			{
 				name: 'projects',
@@ -40,20 +42,27 @@ class Header extends React.Component {
 	}
 
 	render() {
-		var cls = this.props.isTransparent ? 'header header--transparent' : 'header';
+		var cls = 'header';
+		if (this.props.isTransparent) { cls += ' header--transparent'; }
+		if (this.state.isExpanded) { cls += ' header--expanded'; }
+		console.log(this.state.isExpanded);
 		return (
 			<div className={ cls }>
 				<Link className='header__main-link' to='/'>
 					<Buttons.BackToMain />
 				</Link>
 				<ul className='header__nav'>
-					<li className='header__nav__arrow'>
+					<li className='header__nav__arrow' onClick={this.toggleExpandedState.bind(this)}>
 						<Buttons.Arrow />
 					</li>
 					{this.getList()}
 				</ul>
 			</div>
 		);
+	}
+
+	toggleExpandedState() {
+		this.setState({ isExpanded: !this.state.isExpanded });
 	}
 	
 }
