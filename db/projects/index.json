@@ -25,7 +25,7 @@
                 "url": "http://my.newamerica.org"
             }
         ],
-        "group": "code",
+        "group": "featured",
         "dates": ["2014-12", "present"],
         "name": "New America",
         "title": "New America",
@@ -40,7 +40,7 @@
         "is_live": true,
         "dates": ["2013-11", "present"],
         "name": "ripsaw.js",
-        "group": "code",
+        "group": "featured",
         "headline": "Open-source library for guided, interactive product design on HTML5 Canvas.",
         "links": [
             {
@@ -76,7 +76,6 @@
         "year": 2010,
         "supervisors": ["Michael Stein, PE"],
         "collaborators": [],
-        "categories": [ "code" ],
         "importance": 1,
         "technologies": [ "Rhino PythonScript" ]
     },
@@ -87,7 +86,6 @@
         "is_live": true,
         "group": "design",
         "type": "project",
-        "categories": [ "design" ],
         "dates": [ "2013-01", "2013-04" ],
         "name": "Pendant Project",
         "title": "The Pendant Project",
@@ -104,7 +102,7 @@
         "is_live": true,
         "name": "PBA",
         "dates": [ "2005" ],
-        "group": "code",
+        "group": "nostalgia",
         "title": "Pascal Basketball Association",
         "headline": "Feeling nostalgic about our first ever computer game.",
         "links": [

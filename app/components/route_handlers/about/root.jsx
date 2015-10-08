@@ -16,6 +16,10 @@ var greetings = [
 
 class About extends React.Component {
 
+	/*
+	 *
+	 *
+	 */
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -26,6 +30,11 @@ class About extends React.Component {
 		};
 	}
 
+
+	/*
+	 *
+	 *
+	 */
 	render() {
 		return (
 			<div 
