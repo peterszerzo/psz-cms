@@ -1,10 +1,15 @@
 .project {
 
-	$h: 300px;
+	$h: 250px;
+
+	$r: 0.75;
 
 	&-show, &-groups {
 		margin: 0;
 		padding: 60px 0;
+		@include bp-w(768px) {
+			padding: 40px 0;
+		}
 	}
 
 	&-show {
@@ -32,7 +37,8 @@
 	}
 
 	&-group {
-		margin-top: 75px;
+		margin-top: 90px;
+		&:first-child { margin-top: 45px; }
 		& > h1 {
 			opacity: 1;
 			margin: 0;
@@ -40,12 +46,26 @@
 			text-align: center;
 		}
 
+		&__separator, &__description {
+			margin-left: 20px;
+			margin-right: 20px;
+		}
+
+		&__description {
+			margin-top: 5px;
+			margin-bottom: 5px;
+		}
+
 		&__separator {
 			$h1: 2px;
 			height: $h1;
 			background-color: lighten(map-get($colors, purple), 5);
 			border-radius: $h1 / 2;
-			margin: 10px 20px 35px 20px;
+
+			margin-left: 20px;
+			margin-right: 20px;
+			margin-top: 10px;
+			margin-bottom: 15px;
 			opacity: 0.5;
 		}
 
@@ -66,7 +86,7 @@
 			fill: get-color(greenish-blue);
 			position: relative;
 			width: $h;
-			height: $h;
+			height: $h * 0.9;
 			
 			transition: 0.5s ease-in-out;
 
@@ -78,19 +98,19 @@
 
 			&__logo {
 
-				width: 0.7 * $h;
-				height: 0.7 * $h;
-				left: 0.15 * $h;
+				width: $r * $h;
+				height: $r * $h;
+				left: (0.5 - $r / 2) * $h;
 				z-index: 9;
-				top: 0.08 * $h;
+				top: 0.00 * $h;
 
 				.project-list__item:hover & {
 					opacity: 1;
-					top: 0.08 * $h;
+					top: 0.00 * $h;
 				}
 
 				.no-touch & {
-					top: 0.15 * $h;
+					top: 0.06 * $h;
 					opacity: 0.95;
 				}
 			}
@@ -99,7 +119,7 @@
 
 				color: $base-color;
 				font-size: 24px;
-				top: 81%;
+				top: 85%;
 				width: 90%;
 				left: 5%;
 				opacity: 1;
@@ -117,7 +137,7 @@
 
 				.project-list__item:hover & {
 					opacity: 1;
-					top: 81%;
+					top: 85%;
 				}
 
 				.no-touch & {

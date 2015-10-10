@@ -9,6 +9,7 @@ class Banner extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			randomUrl: null,
 			isGlobeAnimationRendered: false,
 			message: {
 				isShowing: false,
@@ -65,6 +66,9 @@ class Banner extends React.Component {
 	 */
 	componentDidMount() {
 		var geoFileName = window.innerWidth > 500 ? 'geo.json' : 'geo_small.json';
+
+		this.fetchRandomUrl();
+
 		this.globeAnimation = globe(geoFileName);
 		this.globeAnimation.navigateToRandom = this.navigateToRandom.bind(this);
 		this.globeAnimation.triggerMessage = this.triggerMessage.bind(this);
@@ -72,6 +76,7 @@ class Banner extends React.Component {
 		this.globeAnimation.on('rendered', () => {
 			this.setState({ isGlobeAnimationRendered: true });
 		});
+
 	}
 
 	
@@ -88,8 +93,17 @@ class Banner extends React.Component {
 	 *
 	 *
 	 */
+	fetchRandomUrl() {
+
+	}
+
+
+	/*
+	 *
+	 *
+	 */
 	navigateToRandom() {
-		this.context.router.transitionTo('/things/random');
+		this.context.router.transitionTo(this.state.randomUrl);
 	}
 
 

@@ -10,7 +10,14 @@ var indexMiddleware = (options, req, res, next) => {
 
 	var query = req.query || {},
 		queryFields,
-		fields = {};
+		fields = {},
+		shouldReturnRandom = false;
+
+	if (options.query) {
+		for (let key in options.query) {
+			query[key] = options.query[key];
+		}
+	}
 
 	// If there is a fields query parameter, parse into MongoDB fields object and remove from query.
 	if (query.fields) {
@@ -28,6 +35,12 @@ var indexMiddleware = (options, req, res, next) => {
 
 	}
 
+	if (query.random) {
+		shouldReturnRandom = true;
+		delete query.random;
+
+	}
+
 	fs.readFile(`${__dirname}/../../../db/seeds/${options.dbCollectionName}.json`, (err, data) => {
 
 		if (err) { req.dbResponse = []; console.dir(err); return next(); }
@@ -42,7 +55,6 @@ var indexMiddleware = (options, req, res, next) => {
 
 				for (let field in fields) {
 					if (fields[field] === 0) {
-						console.log(field);
 						delete datum[field];
 					}
 				}
@@ -50,6 +62,14 @@ var indexMiddleware = (options, req, res, next) => {
 			});
 
 		}
+
+		if (shouldReturnRandom) {
+			let randomIndex = Math.floor(Math.random() * data.length);
+			// console.log(data.length, randomIndex, data[randomIndex]);
+			data = [ data[ randomIndex ] ];
+		}
+
+		console.log(data);
 
 		req.dbResponse = data;
 

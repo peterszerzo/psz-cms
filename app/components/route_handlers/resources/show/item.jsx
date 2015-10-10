@@ -19,7 +19,7 @@ class ShowItem extends React.Component {
 			);
 		}
 		return (
-			<div className="project-show fill-parent">
+			<div className="project-show">
 				<h1 className="title">{ this.getTitle() }</h1>
 				{ this.renderDates() }
 				{ this.renderHeadline() }

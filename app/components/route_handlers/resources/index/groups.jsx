@@ -11,6 +11,7 @@ class Groups extends React.Component {
 	 *
 	 */
 	render() {
+		console.log(this.props.groupDescriptions);
 		return (
 			<div className='project-groups'>
 				{ this.renderGroups() }
@@ -40,6 +41,9 @@ class Groups extends React.Component {
 				<div className='project-group' key={index}>
 					<h1 id={key}>{ key }</h1>
 					<div className='project-group__separator' />
+					<p className='project-group__description'>
+						{ this.props.groupDescriptions[key] }
+					</p>
 					<List resources={resources} />
 				</div>
 			);

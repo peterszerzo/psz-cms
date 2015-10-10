@@ -3,9 +3,12 @@
 	$p: 25px;
 
 	width: 100%;
-	padding: 50px 25px;
+	padding: 25px;
 
 	margin: auto;
+
+	p:first-child { padding-top: 0; margin-top: 0; }
+	p:last-child { padding-bottom: 0; margin-bottom: 0; }
 
 	@include bp-w(768px + 2 * $p) {
 		width: 768px;

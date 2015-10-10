@@ -36,7 +36,7 @@ class Index extends React.Component {
 		return (
 			<div className='wrapper__content fill-parent'>
 				<Header activeLinkName={this.getActiveLinkName()} />
-				<Groups resources={this.getResources()}/>
+				<Groups groupDescriptions={this.getGroupDescriptions()} resources={this.getResources()}/>
 			</div>
 		);
 	}
