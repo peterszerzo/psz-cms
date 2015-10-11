@@ -15,6 +15,10 @@ app.set('views', __dirname + '/app/views');
 app.set('view engine', 'jade');
 
 app.use(bodyParser.urlencoded({ extended: false, limit: '50mb' }));
+
+// GZip serving middleware must be declared before static folder declaration. 
+app.get([ '*.js', '*.json' ], require('./app/middleware/serve_gzip.js'));
+
 app.use(express.static('public'));
 
 app.use(router);

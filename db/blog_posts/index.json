@@ -43,7 +43,7 @@
         ],
         "name": "Scaling Tricks for Geo",
         "title": "On Scalable Interactive Mapping",
-        "headline": "Recent Favorite Coding Tricks",
+        "headline": "Recent Favorite Tricks",
         "is_live": true,
         "collaborators": [],
         "technologies": [ "Backbone.js", "Marionette.js", "d3.js", "Leaflet.js" ]

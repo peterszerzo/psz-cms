@@ -7,6 +7,7 @@ import source from 'vinyl-source-stream';
 import nodemon from 'gulp-nodemon';
 import uglify from 'gulp-uglify';
 import util from 'gulp-util';
+import gzip from 'gulp-gzip';
 
 var browserifyArgs = {
     entries: [ './app/assets/scripts/bundle.js' ]
@@ -29,7 +30,6 @@ var writeBundle = (bundler) => {
             console.dir(err);
         })
 		.pipe(source('bundle.js'))
-		.pipe(!!util.env.production ? uglify() : util.noop())
 		.pipe(gulp.dest('./public/scripts'));
 };
 
@@ -38,9 +38,11 @@ gulp.task('bundle', function() {
 	return writeBundle(getBrowserifyBundler());
 });
 
-gulp.task('bundle-uglify', () => {
+gulp.task('bundle-uglify', [ 'bundle' ], () => {
 	return gulp.src('./public/scripts/bundle.js')
 		.pipe(!!util.env.production ? uglify() : util.noop())
+		.pipe(gulp.dest('./public/scripts'))
+		.pipe(!!util.env.production ? gzip() : util.noop())
 		.pipe(gulp.dest('./public/scripts'));
 });
 

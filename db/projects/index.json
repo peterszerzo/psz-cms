@@ -64,12 +64,11 @@
         "dates": [ "2014-04", "2014-07" ],
         "name": "Giraffe for Rhino",
         "title": "Giraffe for Rhino",
-        "type": "project",
-        "group": "code",
+        "group": "recent",
         "headline": "A Structural Engineering Plug-in for CAD package Rhinoceros 3D.",
         "links": [
             {
-                "name": "Site",
+                "name": "Website",
                 "url": "http://pickled-plugins.github.io/Giraffe-for-Rhino/"
             }
         ],
@@ -84,12 +83,11 @@
 
         "id": "pendant-project",
         "is_live": true,
-        "group": "design",
-        "type": "project",
+        "group": "recent",
         "dates": [ "2013-01", "2013-04" ],
         "name": "Pendant Project",
         "title": "The Pendant Project",
-        "headline": "Design variations on a circle.",
+        "headline": "Jewelry design exercise within a set frame.",
         "year": 2010,
         "supervisors": [],
         "collaborators": [ "Tiffany Cheezem", "Greta Shum", "Alison Cook" ],
@@ -104,14 +102,15 @@
         "dates": [ "2005" ],
         "group": "nostalgia",
         "title": "Pascal Basketball Association",
-        "headline": "Feeling nostalgic about our first ever computer game.",
+        "headline": "Our first ever computer game.",
         "links": [
             {
                 "name": "Play PBA",
                 "url": "http://pickled-plugins.github.io/pba/"
             },
             {
-
+                "name": "View Code",
+                "url": "https://github.com/pickled-plugins/pba"
             }
         ],
         "collaborators": ["Tamás Plugor", "Tamás Gajdó"],
@@ -122,8 +121,7 @@
     {
         "id": "kinetic",
         "name": "kinetic",
-        "group": "code",
-        "type": "project",
+        "group": "recent",
         "title": "Deployable Smart Mast",
         "headline": "Algorithmic design for architecture.",
         "year": 2010,
@@ -152,27 +150,13 @@
         "dates": [ "2012-03", "2012-05" ],
         "title": "Battle Shell",
         "headline": "Algorithmic design in architecture: software design and execution, structural design.",
-        "group": "design",
-        "type": "project",
+        "group": "recent",
         "year": 2010,
         "supervisors": ["Prof. Sigrid Adriaenssens"],
         "collaborators": ["Laura Ettedgui", "Julianne Gola"],
         "categories": [ "code", "design" ],
         "importance": 1,
         "is_live": true,
-        "languages": [ "Visual Basic" ]
-    },
-
-    {
-        "id": "particle-springs",
-        "is_live": false,
-        "name": "Particles and springs experiments.",
-        "headline": "an interactive particle-spring design tool following architectural concept",
-        "year": 2010,
-        "supervisors": [],
-        "collaborators": [],
-        "importance": 1,
-        "is_live": false,
         "languages": [ "Visual Basic" ]
     },
 
@@ -206,13 +190,12 @@
         "id": "algorithmic-tattoo",
         "is_live": true,
         "name": "algorithmic tattoo",
-        "group": "design",
+        "group": "recent",
         "title": "Algorithmic Tattoo",
         "headline": "Body Art from the Creative Programmer",
         "dates": ["2014-11-25"],
         "supervisors": [],
         "collaborators": [],
-        "categories": [ "code", "design" ],
         "importance": 1,
         "languages": [ "JavaScript" ]
     },

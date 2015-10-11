@@ -19,9 +19,9 @@ class ProjectsIndex extends Index {
 	 */
 	getGroupDescriptions() {
 		return {
-			'featured': 'These are the projects that are on my mind lately: my day job, ',
-			'recent': 'Stuff ',
-			'nostalgia': 'Feeling nostalgic about '
+			'featured': 'A very incomplete collection of work and side projects that are on my mind lately.',
+			'recent': 'A mix of mostly finished technical and creative endeavors.',
+			'nostalgia': 'The childhood projects that got me started.'
 		};
 	}
 

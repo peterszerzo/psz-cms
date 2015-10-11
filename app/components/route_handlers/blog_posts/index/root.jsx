@@ -20,7 +20,7 @@ class BlogPostsIndex extends Index {
 	getGroupDescriptions() {
 		return {
 			'personal': 'Thoughts, stories, the occasional low-key rambling.',
-			'technical': 'A rather incomplete collection of things I learn while dabbling with technology.'
+			'technical': 'Tricks I learn while dabbling with technology.'
 		};
 	}
 

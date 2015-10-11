@@ -4,6 +4,8 @@ import { Link } from 'react-router';
 
 import Loader from './../../general/loader.jsx';
 
+import project from './../../../models/project.js';
+
 class Banner extends React.Component {
 
 	constructor(props) {
@@ -24,7 +26,6 @@ class Banner extends React.Component {
 	 *
 	 */
 	render() {
-
 		var style = this.state.isGlobeAnimationRendered ? { opacity: 1 } : { opacity: 0 };
 		return (
 			<div className='fill-parent'>
@@ -49,8 +50,6 @@ class Banner extends React.Component {
 	 *
 	 */
 	renderMessage() {
-		// Fix later.
-		return null;
 		var style = this.state.message.isShowing ? { opacity: 0.6 } : { opacity: 0 };
 		return (
 			<div className="banner__message" style={style}>
@@ -70,8 +69,10 @@ class Banner extends React.Component {
 		this.fetchRandomUrl();
 
 		this.globeAnimation = globe(geoFileName);
-		this.globeAnimation.navigateToRandom = this.navigateToRandom.bind(this);
-		this.globeAnimation.triggerMessage = this.triggerMessage.bind(this);
+
+		this.globeAnimation.onClick = this.navigateToRandom.bind(this);
+		this.globeAnimation.onHover = this.triggerMessage.bind(this);
+
 		this.globeAnimation.start();
 		this.globeAnimation.on('rendered', () => {
 			this.setState({ isGlobeAnimationRendered: true });
@@ -94,7 +95,11 @@ class Banner extends React.Component {
 	 *
 	 */
 	fetchRandomUrl() {
-
+		var coll = new project.Collection();
+		coll.getFetchPromise({ random: 'true' }).then((coll) => {
+			if (!coll.models || coll.models.length === 0) { return; }
+			this.setState({ randomUrl: coll.models[0].viewUrl });
+		});
 	}
 
 
@@ -103,7 +108,8 @@ class Banner extends React.Component {
 	 *
 	 */
 	navigateToRandom() {
-		this.context.router.transitionTo(this.state.randomUrl);
+		console.log('navigating');
+		this.props.history.replaceState(null, this.state.randomUrl);
 	}
 
 
@@ -112,6 +118,8 @@ class Banner extends React.Component {
 	 *
 	 */
 	triggerMessage() {
+
+		if (!this.state.randomUrl) { return; }
 
 		if (!this.state.message.shouldShowOnHover) { return; }
 
@@ -135,9 +143,5 @@ class Banner extends React.Component {
 	}
 
 }
-
-Banner.contextTypes = {
-	router: React.PropTypes.func
-};
 
 module.exports = Banner;

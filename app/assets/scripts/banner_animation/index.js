@@ -81,9 +81,8 @@ module.exports = function(fileName) {
      *
      */
     self.onFeatureClick = function(feature) {
-        // this is a method assigned by the parent React component after self is first created.
-        if (this.navigateToRandom != null) {
-            this.navigateToRandom();
+        if (self.onClick) {
+            self.onClick();
         }
     };
 
@@ -94,8 +93,8 @@ module.exports = function(fileName) {
      */
     self.onFeatureMouseEnter = function(feature) {
         feature._isActive = true;
-        if (this.triggerMessage != null) {
-            this.triggerMessage();
+        if (self.onHover) {
+            self.onHover();
         }
     };
 

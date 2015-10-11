@@ -65,11 +65,8 @@ var indexMiddleware = (options, req, res, next) => {
 
 		if (shouldReturnRandom) {
 			let randomIndex = Math.floor(Math.random() * data.length);
-			// console.log(data.length, randomIndex, data[randomIndex]);
 			data = [ data[ randomIndex ] ];
 		}
-
-		console.log(data);
 
 		req.dbResponse = data;
 
