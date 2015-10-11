@@ -11,7 +11,6 @@ class Groups extends React.Component {
 	 *
 	 */
 	render() {
-		console.log(this.props.groupDescriptions);
 		return (
 			<div className='project-groups'>
 				{ this.renderGroups() }

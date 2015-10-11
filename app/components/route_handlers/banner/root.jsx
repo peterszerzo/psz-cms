@@ -108,7 +108,6 @@ class Banner extends React.Component {
 	 *
 	 */
 	navigateToRandom() {
-		console.log('navigating');
 		this.props.history.replaceState(null, this.state.randomUrl);
 	}
 
