@@ -26,7 +26,9 @@
 		margin: auto;
 		background-color: $c;
 		opacity: 0.95;
-		transition: all 0.5s;
+		@include transition(all 0.5s);
+		@include animation(bounce 4.5s linear infinite);
+
 		&:hover { 
 			opacity: 0.99;
 			border: 2px solid rgba(255, 255, 255, 1);
@@ -66,7 +68,7 @@
 	&__background {
 		z-index: 0;
 		opacity: 0.4;
-		background-image: url('/images/circle-sky-1200.jpg');
+		background-image: url('/images/sky-1200.jpg');
 		background-position: 50% 50%;
 		background-size: cover;
 	}
@@ -86,7 +88,7 @@
 	&__geopath {
 
 		cursor: pointer;
-		$c: white;//lighten(map-get($colors, greenish-blue), 15);
+		$c: white;
 		stroke: $c;
 		fill: $c;
 		stroke-width: 0.2px;

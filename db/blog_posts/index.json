@@ -1,6 +1,25 @@
 [
 
     {
+        "id": "scaling-tricks-for-geo",
+        "dates": [ "2015-06-15" ],
+        "type": "blog",
+        "group": "technical",
+        "links": [
+            {
+                "name": "Demo",
+                "url": "http://pickled-plugins.github.io/scaling-tricks-for-geo"
+            }
+        ],
+        "name": "Scaling Tricks for Geo",
+        "title": "On Scalable Interactive Mapping",
+        "headline": "Recent Favorite Tricks",
+        "is_live": true,
+        "collaborators": [],
+        "technologies": [ "Backbone.js", "Marionette.js", "d3.js", "Leaflet.js" ]
+    },
+
+    {
         "id": "about",
         "title": "Hi",
         "group": "personal",
@@ -28,25 +47,5 @@
         "title": "Playground 1",
         "headline": "More Projects!",
         "is_live": true
-    },
-
-    {
-        "id": "scaling-tricks-for-geo",
-        "dates": [ "2015-06-15" ],
-        "type": "blog",
-        "group": "technical",
-        "links": [
-            {
-                "name": "Demo",
-                "url": "http://pickled-plugins.github.io/scaling-tricks-for-geo"
-            }
-        ],
-        "name": "Scaling Tricks for Geo",
-        "title": "On Scalable Interactive Mapping",
-        "headline": "Recent Favorite Tricks",
-        "is_live": true,
-        "collaborators": [],
-        "technologies": [ "Backbone.js", "Marionette.js", "d3.js", "Leaflet.js" ]
     }
-
 ]

@@ -91,7 +91,12 @@ class About extends React.Component {
 	 *
 	 */
 	getHeroStyle() {
-		if (!this.state.hasImageLoaded) { return {}; }
+		if (!this.state.hasImageLoaded) { 
+			return { 
+				backgroundColor: '#101C29',
+				height: this.state.heroHeight
+			}; 
+		}
 		return {
 			backgroundImage: 'url(/images/me/me_1200.jpg)',
 			height: this.state.heroHeight

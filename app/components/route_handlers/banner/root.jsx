@@ -50,7 +50,7 @@ class Banner extends React.Component {
 	 *
 	 */
 	renderMessage() {
-		var style = this.state.message.isShowing ? { opacity: 0.6 } : { opacity: 0 };
+		var style = this.state.message.isShowing ? { opacity: 1 } : { opacity: 0 };
 		return (
 			<div className="banner__message" style={style}>
 				{ 'hey, welcome! click a triangle for random content' }

@@ -1,14 +1,14 @@
-New America is a vibrant think-tank that is very much interested in technology - and as such, deserves the very best in interactive web tools. Leading coding efforts and contributing to design and UX discussions, I set out to create a couple during my time there.
+New America is a vibrant think-tank that is very much interested in technology - and as such, deserves the very best in interactive web tools. I currently lead coding efforts and contribute to design and UX to make this happen.
 
-The beating heart of my work was [Atlas](http://atlas.newamerica.org), a new data visualization and presentation tool. It delivers the Education Policy Program's carefully collected and synthesized data to policymakers, other analysts and the general public in a beautiful, clear, highly interactive format. Its back-end allows policy analysts to create custom interactive maps and charts without coding.
+The beating heart of my work is [Atlas](http://atlas.newamerica.org), a new data visualization and presentation tool. It delivers the Education Policy Program's carefully collected and synthesized data to policymakers, other analysts and the general public in a beautiful, clear, highly interactive format. Its back-end allows policy analysts to create custom interactive maps and charts without coding.
 
-I used the core codebase from Atlas while developing [the New America intranet](my.newamerica.org), the [2014 annual report](2014.newamerica.org), and doing some consultation and front-end bug fixes on the organization's [main site](https://newamerica.org). 
+I am using the core codebase from Atlas to develop the [2014 annual report](http://2014.newamerica.org), [the New America intranet](http://my.newamerica.org), while also doing some consultation and front-end bug fixes on the organization's [main site](https://www.newamerica.org/) on the side. These are busy, exciting, fun times with a whole lot of learning.
 
 # Technology
 
-Atlas is a native web application powered by Express.js. It is currently on its way to becoming a fully isomorphic application, with Backbone.js data models and React.js components shared by the client and the server.
+Atlas is a native web/single-page application powered by Express.js. It is very close to becoming a fully isomorphic application, with Backbone.js data models and React.js components shared by the client and the server.
 
-Data visualization and interactive mapping components are handled by the very capable d3.js and Leaflet.js. We've figured out some [nice ways](/things/scaling-tricks-for-geo) to integrate these libraries into our client-side codebase.
+Data visualization and interactive mapping components are handled by the very capable d3.js and Leaflet.js. We've figured out some [nice ways](/blog/scaling-tricks-for-geo) to integrate these libraries into our client-side codebase.
 
 # History
 

@@ -1,4 +1,4 @@
-The Deployable Smart Mast was my first really serious and really fun college research project, on the intersection of code, mechanics and geometry.
+The Deployable Smart Mast was my first really serious and really fun college research project on the intersection of code, mechanics and geometry.
 
 The mast was built as proof of concept for a structure that adapts its shape based on outside weather conditions, an idea explored under Prof. Sigrid Adriaenssens and Prof. Branko Glisic at Princeton. The acrylic prototype was equipped with a number of heat sensors along its height, and if any of them was triggered, a linear actuator changed the mast's height to stay clear of danger.
 

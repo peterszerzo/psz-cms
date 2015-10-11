@@ -128,11 +128,11 @@
         "links": [
             {
                 "name": "Journal publication",
-                "url": "#"
+                "url": "http://onlinelibrary.wiley.com/doi/10.1111/mice.12013/abstract"
             },
             {
-                "name": "Video",
-                "url": "/youtube"
+                "name": "Demo Video",
+                "url": "https://www.youtube.com/embed/BjMAruO2SGA"
             }
         ],
         "dates": ["2010-11", "2011-04"],
