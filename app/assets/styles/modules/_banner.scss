@@ -19,7 +19,7 @@
 		position: fixed;
 		display: block;
 		border: 2px solid rgba(255, 255, 255, 0);
-		padding: 55px 40px;
+		padding: 55px 30px;
 		width: $d;
 		height: $d;
 		border-radius: 100%;
@@ -44,12 +44,12 @@
 		}
 
 		h1 {
-			font-size: 28px;
+			@include font-size(32px);
 			margin: 25px 0 10px 0;
 		}
 
 		p {
-			font-size: 19px;
+			@include font-size(20px);
 			margin: 0;
 		}
 	}
@@ -76,11 +76,12 @@
 	&__message {
 		transition: all 0.75s;
 		position: absolute;
-		bottom: calc(50% - 190px);
+		bottom: calc(50% - 210px);
 		color: white;
 		text-align: center;
 		width: 100%;
-		font-size: 19px;
+		padding: 0 20%;
+		@include font-size(21px);
 		opacity: 1;
 		font-family: 'Hallo';
 	}

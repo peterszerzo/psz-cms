@@ -21,7 +21,7 @@ class ProjectsIndex extends Index {
 		return {
 			'featured': 'Things on my mind these days. An incomplete collection.',
 			'recent': 'A blend of mostly finished technical and creative endeavors.',
-			'nostalgia': 'The childhood project(s) that got me going.'
+			'nostalgia': 'The childhood project(s) that got me started.'
 		};
 	}
 

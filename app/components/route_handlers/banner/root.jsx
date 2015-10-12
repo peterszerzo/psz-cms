@@ -10,6 +10,7 @@ class Banner extends React.Component {
 
 	constructor(props) {
 		super(props);
+		console.log(window.innerWidth < 600);
 		this.state = {
 			randomUrl: null,
 			isGlobeAnimationRendered: false,
@@ -64,7 +65,15 @@ class Banner extends React.Component {
 	 *
 	 */
 	componentDidMount() {
-		var geoFileName = window.innerWidth > 500 ? 'geo.json' : 'geo_small.json';
+
+		var isWide = window.innerWidth > 500;
+
+		var geoFileName = isWide ? 'geo.json' : 'geo_small.json';
+
+		if (!isWide) {
+			this.state.message.isShowing = true;
+			this.forceUpdate();
+		}
 
 		this.fetchRandomUrl();
 
