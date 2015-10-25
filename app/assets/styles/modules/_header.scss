@@ -6,11 +6,14 @@
 	height: $header-height;
 	top: 0;
 
+	box-shadow: 0 0 15px #333;
+
 	background-color: transparentize(get-color(base), 0.05);
 	transition: all 0.2s;
 
 	&--transparent {
 		background: none;
+		box-shadow: none;
 	}
 
 	color: white;
