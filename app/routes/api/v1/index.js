@@ -13,4 +13,4 @@ router.get('/blog_posts', indexMiddleware.bind(this, { dbCollectionName: 'blog_p
 	res.json(_.where(req.dbResponse));
 });
 
-module.exports = router;
+export default router;
