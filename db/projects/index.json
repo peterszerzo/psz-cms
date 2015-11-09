@@ -1,13 +1,6 @@
 [
 
     {
-        "id": "peterszerzo-com",
-        "type": "project",
-        "group": "",
-        "technologies": [ "Express.js", "React.js" ]
-    },
-
-    {
         "id": "newamerica",
         "headline": "Lead developer for interactive web projects.",
         "url": "http://atlas.newamerica.org",
@@ -114,7 +107,7 @@
             }
         ],
         "collaborators": ["Tamás Plugor", "Tamás Gajdó"],
-        "importance": 1,
+        "order": 1,
         "languages": [ "Borland Pascal", "Processing" ]
     },
 
@@ -139,7 +132,7 @@
         "supervisors": ["Prof. Sigrid Adriaenssens", "Prof. Branko Glisic"],
         "collaborators": [],
         "categories": [ "code", "design" ],
-        "importance": 1,
+        "order": 1,
         "is_live": true,
         "languages": [ "MatLab", "Visual Basic" ]
     },
@@ -151,11 +144,10 @@
         "title": "Battle Shell",
         "headline": "Algorithmic design in architecture: software design and execution, structural design.",
         "group": "recent",
-        "year": 2010,
         "supervisors": ["Prof. Sigrid Adriaenssens"],
         "collaborators": ["Laura Ettedgui", "Julianne Gola"],
         "categories": [ "code", "design" ],
-        "importance": 1,
+        "order": 1,
         "is_live": true,
         "languages": [ "Visual Basic" ]
     },
@@ -165,23 +157,8 @@
         "is_live": false,
         "name": "minimal chess",
         "title": "Minimalistic Chess Board",
-        "year": 2010,
-        "supervisors": [],
-        "collaborators": [],
+        "dates": [ "2013-01" ],
         "categories": [ "design" ],
-        "importance": 1,
-        "is_live": false
-    },
-
-    {
-        "id": "albatross",
-        "is_live": false,
-        "name": "albatross",
-        "title": "Albatross",
-        "year": 2010,
-        "supervisors": [],
-        "collaborators": [],
-        "categories": [ "code" ],
         "importance": 1,
         "is_live": false
     },
@@ -196,15 +173,15 @@
         "dates": ["2014-11-25"],
         "supervisors": [],
         "collaborators": [],
-        "importance": 1,
-        "languages": [ "JavaScript" ]
+        "importance": 1
     },
 
     {
         "id": "dchisel",
         "name": "dchisel.com",
         "group": "archive",
-        "title": "First custom-built portfolio site.",
+        "title": "dchisel.com",
+        "headline": "First custom-built portfolio site",
         "url": "http://dchisel.herokuapp.com/",
         "year": 2013,
         "collaborators": [],
@@ -212,8 +189,7 @@
         "categories": [ "code", "design" ],
         "importance": 1,
         "is_live": false,
-        "languages": [ "PHP", "JavaScript" ],
-        "technologies": [ ]
+        "technologies": [ "Raw PHP", "jQuery" ]
     }
 
 ]

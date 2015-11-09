@@ -38,7 +38,7 @@ var getProjectLikeParams = function() {
 };
 
 var params = getProjectLikeParams();
-params.TableName = projectLikeTables[0];
+params.TableName = projectLikeTables[1];
 
 dynamoDb.createTable(params, function(err, table) {
 

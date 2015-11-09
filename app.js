@@ -7,7 +7,6 @@ var express = require('express'),
 var app = express(),
 	router = require('./app/routes/index.js');
  
- 
 // buildSeeds({ collectionName: 'blog_posts' }, function(err) { if (err) { return console.dir(err); } console.log('all good'); });
 // buildSeeds({ collectionName: 'projects' }, function(err) { if (err) { return console.dir(err); } console.log('all good'); });
 
