@@ -5,7 +5,7 @@ AWS.config.region = 'us-east-1';
 var dynamoDb = new AWS.DynamoDB();
 
 var params = {
-	TableName: 'test'
+	TableName: 'PszBlogPosts'
 };
 
 dynamoDb.deleteTable(params, function(err) {

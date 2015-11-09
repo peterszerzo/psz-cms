@@ -1,6 +1,6 @@
 import assert from 'assert';
 import mocha from 'mocha';
-import geomUtil from './../../app/assets/script/geometry_utilities.js';
+import geomUtil from './../../app/assets/scripts/banner_animation/geometry_utilities.js';
 
 describe('geomUtil', () => {
 
@@ -13,7 +13,9 @@ describe('geomUtil', () => {
 
 		it('converts spherical to cartesian', () => {
 			var coordinates = geomUtil.sphericalToCartesian(0, 90, 1);
-			assert.deepEqual(coordinates, [ 0, 0, 1 ]);
+			assert.equal(Math.abs(coordinates[0] - 0) < 0.0001, true);
+			assert.equal(coordinates[1], 0);
+			assert.equal(coordinates[2], 1);
 		});
 
 	});

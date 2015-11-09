@@ -42,6 +42,10 @@ class Index extends React.Component {
 	}
 
 
+	/*
+	 *
+	 *
+	 */
 	getActiveLinkName() {
 		var resourceUrlBase = this.getResourceConstructors().Model.prototype.resourceUrlBase;
 		return resourceUrlBase;

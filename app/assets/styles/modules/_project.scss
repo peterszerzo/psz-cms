@@ -6,44 +6,50 @@
 
 	&-show, &-groups {
 		margin: 0;
-		padding: 60px 0;
-		@include bp-w(768px) {
-			padding: 40px 0;
-		}
 	}
 
 	&-show {
+
+		padding: 80px 0 40px 0;
+
 		&__links {
-			text-align: center;
+			text-align: center; 
 			display: block;
 			li {
 				margin: 15px 15px;
 				display: inline-block;
 			}
-			.link {
-			}
 		}
-	}
-
-	&-groups {
-		width: $h;
-		@include bp-w(2 * $h + 40) {
-			width: 2 * $h;
-		}
-		@include bp-w(3 * $h + 40) {
-			width: 3 * $h;
-		}
-		margin: auto;
+		
 	}
 
 	&-group {
-		margin-top: 90px;
-		&:first-child { margin-top: 45px; }
-		& > h1 {
-			opacity: 1;
-			margin: 0;
-			font-size: 36px;
-			text-align: center;
+
+		width: 100%;
+		padding: 80px 0 40px 0;
+
+		&:nth-of-type(2n+0) {
+			background-color: #f6f6f6;
+		}
+
+		&__content {
+			width: $h;
+			@include bp-w(2 * $h + 40) {
+				width: 2 * $h;
+			}
+			@include bp-w(3 * $h + 40) {
+				width: 3 * $h;
+			}
+			margin-left: auto;
+			margin-right: auto;
+
+			& > h1 {
+				opacity: 1;
+				margin: 0;
+				font-size: 36px;
+				text-align: center;
+			}
+
 		}
 
 		&__separator, &__description {

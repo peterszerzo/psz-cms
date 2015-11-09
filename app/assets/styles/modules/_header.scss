@@ -6,7 +6,7 @@
 	height: $header-height;
 	top: 0;
 
-	box-shadow: 0 0 15px #333;
+	box-shadow: 0 0 10px #333;
 
 	background-color: transparentize(get-color(base), 0.05);
 	transition: all 0.2s;
@@ -25,10 +25,12 @@
 		width: 150px;
 
 		svg { 
-			height: 40px; 
-			width: 40px; 
-			margin-top: 20px; 
-			margin-left: 20px;
+			$h: 30px;
+			$m: ($header-height - $h) / 2;
+			height: $h; 
+			width: $h; 
+			margin-top: $m;
+			margin-left: $m;
 			fill: white; 
 		}
 	}
@@ -38,7 +40,7 @@
 		z-index: 100;
 
 		width: 130px;
-		height: 80px;
+		height: $header-height;
 		overflow: visible;
 		float: right;
 
@@ -53,7 +55,7 @@
 		&__arrow, &__item {
 			width: 130px;
 			float: right;
-			height: 100%;
+			height: $header-height;
 			padding: 0;
 		}
 
@@ -73,9 +75,9 @@
 				vertical-align: middle;
 				display: table-cell;
 				fill: white;
-				width: 40px;
-				height: 40px;
-				margin: 20px auto;
+				width: 30px;
+				height: 30px;
+				margin: 15px auto;
 			}
 
 			&:hover, &--active {
@@ -104,7 +106,7 @@
 				}
 				display: table;
 				&:hover, &--active {
-					border-bottom: 6px solid lighten(map-get($colors, purple), 7);
+					border-bottom: 4px solid lighten(map-get($colors, purple), 7);
 					.header--transparent & {
 						border-color: white;
 					}
@@ -126,7 +128,7 @@
 				background: none;
 				&:hover, &--active {
 					a { 
-						top: 3px;
+						top: 2px;
 						opacity: 1;
 					}
 				}

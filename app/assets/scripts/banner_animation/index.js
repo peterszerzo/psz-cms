@@ -218,7 +218,7 @@ module.exports = function(fileName) {
 
         op = Math.pow((deltaMax - delta) / deltaMax, 4) * 1;
 
-        op = Math.round(op * 1000) / 1000;
+        op = op.toFixed(2);
 
         return op; 
 

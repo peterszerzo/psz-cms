@@ -47,6 +47,44 @@ class Collection extends base.Collection {
 
     get model() { return Model; }
 
+    get dynamoDbTableOptions() { 
+
+        return {
+            TableName: 'PszProjects',
+
+            AttributeDefinitions: [
+                {
+                    AttributeName: 'Id',
+                    AttributeType: 'S'
+                }
+            ],
+
+            ProvisionedThroughput: {
+                ReadCapacityUnits: 1,
+                WriteCapacityUnits: 1
+            },
+
+            KeySchema: [
+                {
+                    AttributeName: 'Id',
+                    KeyType: 'HASH'
+                }
+            ]
+
+        };
+
+    }
+
+    get dynamoDbSchema() {
+        return {
+            Id: 'S',
+            Group: 'SS',
+            Category: 'S',
+            Dates: 'SS',
+            Links: ''
+        };
+    }
+
 }
 
 export default {
