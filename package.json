@@ -66,6 +66,7 @@
     "marked": "^0.3.3",
     "modernizr": "^3.0.0",
     "moment": "^2.10.5",
+    "pg": "^4.4.3",
     "react": "^0.14.2",
     "react-dom": "^0.14.2",
     "react-router": "1.0.0",
