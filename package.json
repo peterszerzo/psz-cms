@@ -49,7 +49,6 @@
     "watchify": "^3.4.0"
   },
   "dependencies": {
-    "aws-sdk": "^2.2.11",
     "babel": "^5.8.5",
     "babel-runtime": "^5.8.25",
     "backbone": "^1.2.1",

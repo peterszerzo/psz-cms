@@ -1,16 +1,12 @@
 import express from 'express';
-import indexMiddleware from './../../../middleware/crud_dynamodb/index.js';
+import { list } from './../../../middleware/crud_postgres/index.js';
 
 import _ from 'underscore';
 
 var router = express.Router();
 
-router.get('/projects', indexMiddleware.bind(this, { dbCollectionName: 'PszProjects', query: { is_live: true } }), function(req, res) {
-	res.json(_.where(req.dbResponse));
-});
-
-router.get('/blog_posts', indexMiddleware.bind(this, { dbCollectionName: 'PszBlogPosts', query: { is_live: true } }), function(req, res) {
-	res.json(_.where(req.dbResponse));
+router.get('/posts', list.bind(this, { tableName: 'posts', query: null, fields: {} }), function(req, res) {
+	res.json(req.dbResponse);
 });
 
 export default router;

@@ -71,12 +71,17 @@ class Model extends base.Model {
      */
     get defaults() {
         return {
-            order: 0,
+            display_order: 0,
             is_live: false,
             supervisors: [],
+            headline: '',
+            title: '',
+            name: 'Untitled',
             collaborators: [],
-            group: 'featured',
+            links: [],
+            post_group: 'featured',
             dates: [],
+            technologies: [],
             body_text: 'A fine body text.'
         };
     }
@@ -117,7 +122,7 @@ class Model extends base.Model {
                 type: 'json'
             },
             {
-                key: 'group',
+                key: 'post_group',
                 type: 'text'
             },
             {
@@ -129,7 +134,7 @@ class Model extends base.Model {
                 type: 'text'
             },
             {
-                key: 'order',
+                key: 'display_order',
                 type: 'integer',
             },
             {
@@ -273,10 +278,6 @@ class Collection extends base.Collection {
     }
 
 }
-
-console.log(new Model({ id: 'id', type: 'project', is_live: true, collaborators: [ 1, 2, { 'a': 'b' } ] }).getInsertIntoTableScript());
-
-console.log(new Model().getCreateTableScript());
 
 
 export default {

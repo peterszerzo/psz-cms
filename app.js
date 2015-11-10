@@ -1,7 +1,8 @@
 require('babel/register');
 
 var express = require('express'),
-	bodyParser = require('body-parser');
+	bodyParser = require('body-parser'),
+	pg = require('pg');
 
 var app = express(),
 	router = require('./app/routes/index.js');
@@ -16,10 +17,20 @@ app.get([ '*.js', '*.json' ], require('./app/middleware/serve_gzip.js'));
 
 app.use(express.static('public'));
 
-app.use(router);
+var port = process.env.PORT || 3000,
+	dbUrl = process.env['NODE_ENV'] === 'production' ? process.env['DATABASE_URL'] : 'postgres://localhost/peterszerzo';
 
-var port = process.env.PORT || 3000;
+pg.connect(dbUrl, function(err, client, done) {
 
-app.listen(port, function() {
-	console.log('Server listening on port ' + port);
+	app.use(function(req, res, next) {
+		req.dbClient = client;
+		next();
+	});
+
+	app.use(router);
+
+	app.listen(port, function() {
+		console.log('Server listening on port ' + port);
+	});
+
 });

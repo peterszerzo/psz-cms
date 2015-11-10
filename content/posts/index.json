@@ -22,7 +22,7 @@
                 "url": "http://my.newamerica.org"
             }
         ],
-        "group": "featured",
+        "post_group": "featured",
         "dates": ["2014-12", "present"],
         "languages": [ "JavaScript" ],
         "technologies": [ "React.js", "Backbone.js", "Marionette.js", "d3.js", "Leaflet.js", "Express.js" ]
@@ -35,7 +35,7 @@
         "is_live": true,
         "dates": ["2013-11", "present"],
         "name": "ripsaw.js",
-        "group": "featured",
+        "post_group": "featured",
         "headline": "Open-source library for guided, interactive product design on HTML5 Canvas.",
         "links": [
             {
@@ -59,7 +59,7 @@
         "dates": [ "2014-04", "2014-07" ],
         "name": "Giraffe for Rhino",
         "title": "Giraffe for Rhino",
-        "group": "recent",
+        "post_group": "recent",
         "headline": "A Structural Engineering Plug-in for CAD package Rhinoceros 3D.",
         "links": [
             {
@@ -78,7 +78,7 @@
         "id": "pendant-project",
         "type": "project",
         "is_live": true,
-        "group": "recent",
+        "post_group": "recent",
         "dates": [ "2013-01", "2013-04" ],
         "name": "Pendant Project",
         "title": "The Pendant Project",
@@ -95,7 +95,7 @@
         "is_live": true,
         "name": "PBA",
         "dates": [ "2005" ],
-        "group": "nostalgia",
+        "post_group": "nostalgia",
         "title": "Pascal Basketball Association",
         "headline": "Our first ever computer game.",
         "links": [
@@ -110,7 +110,7 @@
         ],
         "supervisors": [],
         "collaborators": ["Tamás Plugor", "Tamás Gajdó"],
-        "order": 1,
+        "display_order": 1,
         "languages": [ "Borland Pascal", "Processing" ]
     },
 
@@ -118,7 +118,7 @@
         "id": "kinetic",
         "type": "project",
         "name": "kinetic",
-        "group": "recent",
+        "post_group": "recent",
         "title": "Deployable Smart Mast",
         "headline": "Algorithmic design for architecture.",
         "year": 2010,
@@ -135,7 +135,7 @@
         "dates": ["2010-11", "2011-04"],
         "supervisors": ["Prof. Sigrid Adriaenssens", "Prof. Branko Glisic"],
         "collaborators": [],
-        "order": 1,
+        "display_order": 1,
         "is_live": true,
         "languages": [ "MatLab", "Visual Basic" ]
     },
@@ -147,10 +147,10 @@
         "dates": [ "2012-03", "2012-05" ],
         "title": "Battle Shell",
         "headline": "Algorithmic design in architecture: software design and execution, structural design.",
-        "group": "recent",
+        "post_group": "recent",
         "supervisors": ["Prof. Sigrid Adriaenssens"],
         "collaborators": ["Laura Ettedgui", "Julianne Gola"],
-        "order": 1,
+        "display_order": 1,
         "is_live": true,
         "languages": [ "Visual Basic" ]
     },
@@ -159,6 +159,7 @@
         "id": "minimal-chess",
         "type": "project",
         "is_live": false,
+        "post_group": "nostalgia",
         "name": "minimal chess",
         "title": "Minimalistic Chess Board",
         "dates": [ "2013-01" ],
@@ -172,7 +173,7 @@
         "type": "project",
         "is_live": true,
         "name": "algorithmic tattoo",
-        "group": "recent",
+        "post_group": "recent",
         "title": "Algorithmic Tattoo",
         "headline": "Body Art from the Creative Programmer",
         "supervisors": [],
@@ -184,7 +185,7 @@
         "id": "dchisel",
         "type": "project",
         "name": "dchisel.com",
-        "group": "archive",
+        "post_group": "archive",
         "title": "dchisel.com",
         "headline": "First custom-built portfolio site",
         "url": "http://dchisel.herokuapp.com/",
@@ -201,7 +202,7 @@
         "type": "blog_post",
         "dates": [ "2015-06-15" ],
         "type": "blog",
-        "group": "technical",
+        "post_group": "technical",
         "links": [
             {
                 "name": "Demo",
@@ -221,7 +222,7 @@
         "id": "about",
         "type": "page",
         "title": "Hi",
-        "group": "personal",
+        "post_group": "personal",
         "name": "about me",
         "supervisors": [],
         "collaborators": [],
@@ -235,7 +236,7 @@
         "headline": "Reflections on a Juvenile Stunt",
         "name": "On Deleting my Facebook",
         "is_draft": true,
-        "group": "personal",
+        "post_group": "personal",
         "supervisors": [],
         "collaborators": [],
         "is_live": true
@@ -247,7 +248,7 @@
         "dates": [ "2015-08-21" ],
         "name": "Playground 1",
         "type": "blog",
-        "group": "personal",
+        "post_group": "personal",
         "title": "Playground 1",
         "headline": "More Projects!",
         "supervisors": [],
