@@ -1,26 +1,15 @@
-import base from './base.js';
+import post from './post.js';
 import marked from 'marked';
 
 /*
  *
  *
  */
-class Model extends base.Model {
+class Model extends post.Model {
 
     get resourceName() { return 'project'; }
 
     get resourceUrlBase() { return 'projects'; }
-
-    /*
-     *
-     *
-     */
-    fetch(...args) {
-        // if on client
-        if (isOnClient()) {
-            super.fetch(...args);
-        }
-    }
 
 
     /*
@@ -43,7 +32,7 @@ class Model extends base.Model {
  *
  *
  */
-class Collection extends base.Collection {
+class Collection extends post.Collection {
 
     get model() { return Model; }
 
@@ -55,6 +44,10 @@ class Collection extends base.Collection {
             AttributeDefinitions: [
                 {
                     AttributeName: 'Id',
+                    AttributeType: 'S'
+                },
+                {
+                    AttributeName: 'Category',
                     AttributeType: 'S'
                 }
             ],
@@ -68,21 +61,15 @@ class Collection extends base.Collection {
                 {
                     AttributeName: 'Id',
                     KeyType: 'HASH'
+                },
+                {
+                    AttributeName: 'Category',
+                    KeyType: 'RANGE'
                 }
             ]
 
         };
 
-    }
-
-    get dynamoDbSchema() {
-        return {
-            Id: 'S',
-            Group: 'SS',
-            Category: 'S',
-            Dates: 'SS',
-            Links: ''
-        };
     }
 
 }

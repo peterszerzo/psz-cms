@@ -8,6 +8,10 @@ import project from './../../../models/project.js';
 
 class Banner extends React.Component {
 
+	/*
+	 *
+	 *
+	 */
 	constructor(props) {
 		super(props);
 		console.log(window.innerWidth < 600);

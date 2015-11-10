@@ -4,6 +4,10 @@ import { Link } from 'react-router';
 
 class Header extends React.Component {
 
+	/*
+	 *
+	 *
+	 */
 	constructor() {
 		super();
 		this.state = {
@@ -26,6 +30,11 @@ class Header extends React.Component {
 
 	}
 
+
+	/*
+	 *
+	 *
+	 */
 	getList() {
 		var activeLinkName = this.props.activeLinkName;
 		return this.state.buttons.map(function(button, index) {
@@ -41,6 +50,11 @@ class Header extends React.Component {
 		});
 	}
 
+
+	/*
+	 *
+	 *
+	 */
 	render() {
 		var cls = 'header';
 		if (this.props.isTransparent) { cls += ' header--transparent'; }
@@ -61,14 +75,15 @@ class Header extends React.Component {
 		);
 	}
 
+
+	/*
+	 *
+	 *
+	 */
 	toggleExpandedState() {
 		this.setState({ isExpanded: !this.state.isExpanded });
 	}
 	
 }
-
-Header.contextTypes = {
-	router: React.PropTypes.func
-};
 
 module.exports = Header;

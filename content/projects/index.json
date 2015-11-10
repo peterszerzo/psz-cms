@@ -1,0 +1,199 @@
+[
+
+    {
+        "id": "newamerica",
+        "headline": "Lead developer for interactive web projects.",
+        "url": "http://atlas.newamerica.org",
+        "links": [
+            {
+                "name": "Atlas",
+                "url": "http://atlas.newamerica.org"
+            },
+            {
+                "name": "2014 Annual Report",
+                "url": "http://2014.newamerica.org"
+            },
+            {
+                "name": "My New America",
+                "url": "http://my.newamerica.org"
+            }
+        ],
+        "group": "featured",
+        "dates": ["2014-12", "present"],
+        "name": "New America",
+        "title": "New America",
+        "is_live": true,
+        "supervisors": [],
+        "collaborators": [],
+        "languages": [ "JavaScript" ],
+        "technologies": [ "React.js", "Backbone.js", "Marionette.js", "d3.js", "Leaflet.js", "Express.js" ]
+    },
+
+    {
+        "id": "ripsaw-js",
+        "title": "ripsaw.js",
+        "is_live": true,
+        "dates": ["2013-11", "present"],
+        "name": "ripsaw.js",
+        "group": "featured",
+        "headline": "Open-source library for guided, interactive product design on HTML5 Canvas.",
+        "links": [
+            {
+                "name": "Website",
+                "url": "http://pickled-plugins.github.io/ripsaw-js/"
+            },
+            {
+                "name": "Source Code",
+                "url": "http://github.com/pickled-plugins/ripsaw-js"
+            }
+        ],
+        "supervisors": [],
+        "collaborators": [],
+        "technologies": [ "HTML Canvas" ]
+    },
+
+    {
+        "id": "giraffe-for-rhino",
+        "is_live": true,
+        "dates": [ "2014-04", "2014-07" ],
+        "name": "Giraffe for Rhino",
+        "title": "Giraffe for Rhino",
+        "group": "recent",
+        "headline": "A Structural Engineering Plug-in for CAD package Rhinoceros 3D.",
+        "links": [
+            {
+                "name": "Website",
+                "url": "http://pickled-plugins.github.io/Giraffe-for-Rhino/"
+            }
+        ],
+        "year": 2010,
+        "supervisors": ["Michael Stein, PE"],
+        "collaborators": [],
+        "importance": 1,
+        "technologies": [ "Rhino PythonScript" ]
+    },
+
+    {
+
+        "id": "pendant-project",
+        "is_live": true,
+        "group": "recent",
+        "dates": [ "2013-01", "2013-04" ],
+        "name": "Pendant Project",
+        "title": "The Pendant Project",
+        "headline": "Jewelry design exercise within a set frame.",
+        "year": 2010,
+        "supervisors": [],
+        "collaborators": [ "Tiffany Cheezem", "Greta Shum", "Alison Cook" ],
+        "importance": 1
+    },
+
+    {
+
+        "id": "pba",
+        "is_live": true,
+        "name": "PBA",
+        "dates": [ "2005" ],
+        "group": "nostalgia",
+        "title": "Pascal Basketball Association",
+        "headline": "Our first ever computer game.",
+        "links": [
+            {
+                "name": "Play PBA",
+                "url": "http://pickled-plugins.github.io/pba/"
+            },
+            {
+                "name": "View Code",
+                "url": "https://github.com/pickled-plugins/pba"
+            }
+        ],
+        "supervisors": [],
+        "collaborators": ["Tamás Plugor", "Tamás Gajdó"],
+        "order": 1,
+        "languages": [ "Borland Pascal", "Processing" ]
+    },
+
+    {
+        "id": "kinetic",
+        "name": "kinetic",
+        "group": "recent",
+        "title": "Deployable Smart Mast",
+        "headline": "Algorithmic design for architecture.",
+        "year": 2010,
+        "links": [
+            {
+                "name": "Journal publication",
+                "url": "http://onlinelibrary.wiley.com/doi/10.1111/mice.12013/abstract"
+            },
+            {
+                "name": "Demo Video",
+                "url": "https://www.youtube.com/embed/BjMAruO2SGA"
+            }
+        ],
+        "dates": ["2010-11", "2011-04"],
+        "supervisors": ["Prof. Sigrid Adriaenssens", "Prof. Branko Glisic"],
+        "collaborators": [],
+        "categories": [ "code", "design" ],
+        "order": 1,
+        "is_live": true,
+        "languages": [ "MatLab", "Visual Basic" ]
+    },
+
+    {
+        "id": "battle",
+        "name": "battle",
+        "dates": [ "2012-03", "2012-05" ],
+        "title": "Battle Shell",
+        "headline": "Algorithmic design in architecture: software design and execution, structural design.",
+        "group": "recent",
+        "supervisors": ["Prof. Sigrid Adriaenssens"],
+        "collaborators": ["Laura Ettedgui", "Julianne Gola"],
+        "categories": [ "code", "design" ],
+        "order": 1,
+        "is_live": true,
+        "languages": [ "Visual Basic" ]
+    },
+
+    {
+        "id": "minimal-chess",
+        "is_live": false,
+        "name": "minimal chess",
+        "title": "Minimalistic Chess Board",
+        "dates": [ "2013-01" ],
+        "categories": [ "design" ],
+        "supervisors": [],
+        "collaborators": [],
+        "importance": 1,
+        "is_live": false
+    },
+
+    {
+        "id": "algorithmic-tattoo",
+        "is_live": true,
+        "name": "algorithmic tattoo",
+        "group": "recent",
+        "title": "Algorithmic Tattoo",
+        "headline": "Body Art from the Creative Programmer",
+        "dates": ["2014-11-25"],
+        "supervisors": [],
+        "collaborators": [],
+        "importance": 1
+    },
+
+    {
+        "id": "dchisel",
+        "name": "dchisel.com",
+        "group": "archive",
+        "title": "dchisel.com",
+        "headline": "First custom-built portfolio site",
+        "url": "http://dchisel.herokuapp.com/",
+        "year": 2013,
+        "supervisors": [],
+        "collaborators": [],
+        "categories": [ "code", "design" ],
+        "importance": 1,
+        "is_live": false,
+        "technologies": [ "Raw PHP", "jQuery" ]
+    }
+
+]

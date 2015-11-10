@@ -1,0 +1,1 @@
+dchisel.com was my first custom-built website that got me started on the HTML-CSS-JavaScript-jQuery wagon, with a little PHP on the side.

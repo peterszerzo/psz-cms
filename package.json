@@ -59,7 +59,7 @@
     "dynamodb-doc": "^1.0.0",
     "express": "^4.13.3",
     "flux": "^2.1.1",
-    "history": "^1.11.1",
+    "history": "^1.13.0",
     "inflect": "^0.3.0",
     "jade": "^1.9.2",
     "jquery": "^2.1.4",
@@ -67,8 +67,9 @@
     "marked": "^0.3.3",
     "modernizr": "^3.0.0",
     "moment": "^2.10.5",
-    "react": "^0.13.3",
-    "react-router": "^1.0.0-rc1",
+    "react": "^0.14.2",
+    "react-dom": "^0.14.2",
+    "react-router": "1.0.0",
     "underscore": "^1.8.3"
   }
 }

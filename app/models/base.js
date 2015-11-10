@@ -1,8 +1,5 @@
-import $ from 'jquery';
-import * as Backbone from 'backbone';
-import * as fs from 'fs';
-import Inflect from 'inflect';
-
+import Backbone from 'backbone';
+import _ from 'underscore';
 
 /*
  * Sets url property, building up query string from json.
@@ -11,42 +8,67 @@ import Inflect from 'inflect';
 class Model extends Backbone.Model {
 
     /*
-     * 
+     *
      *
      */
-    get resourceName() { return 'base'; }
+    getInsertScript() {
 
-
-    /*
-     * Word fragment used to build up data url.
-     *
-     */
-    get resourceUrlBase() { return 'bases'; }
-
-
-    /*
-     * Url under which the resource is displayed on the client-side app.
-     *
-     */
-    get viewUrl() {
-        return `/${this.resourceUrlBase}/${this.get('id')}`;
     }
 
 
     /*
-     * Return JSON representation with camel-cased field names.
+     *
      *
      */
-    toCamelizedJson() {
-        var data = this.toJSON();
-        for (let key in data) {
-            let newKey = Inflect.camelize(key);
-            if (newKey !== key) {
-                data[newKey] = data[key];
-                delete data[key];
+    getFieldsString() {
+        return this.dbFields.map((field) => {
+            return `${field.key}`;
+        }).join(',');
+    }
+
+
+    /*
+     *
+     *
+     */
+    getFieldTypesString() {
+        return this.dbFields.map((field) => {
+            return `${field.key} ${field.type}`;
+        }).join(',');
+    }
+
+
+    /*
+     *
+     *
+     */
+    getValuesString() {
+        return this.dbFields.map((field) => {
+            var value = this.get(field.key);
+            if (_.isArray(value) || _.isObject(value)) { value = JSON.stringify(value); }
+            if (_.isString(value)) {
+                value = `'${value}'`;
             }
-        }
-        return data;
+            return value;
+        }).join(',');
+    }
+
+
+    /*
+     * 
+     *
+     */
+    getCreateTableScript() {
+        return `CREATE TABLE posts (${this.getFieldTypesString()});`;
+    }
+
+
+    /*
+     *
+     *
+     */
+    getInsertIntoTableScript() {
+        return `INSERT INTO posts (${this.getFieldsString()}) VALUES(${this.getValuesString()});`
     }
 
 }
@@ -66,98 +88,19 @@ class Collection extends Backbone.Collection {
     get model() { return Model; }
 
 
-    /*
-     * Replace fields with underscored versions.
-     *
-     */
-    parse(data) {
-        for (let key in data) {
-            let newKey = Inflect.underscore(key);
-            if (newKey !== key) {
-                data[newKey] = data[key];
-                delete data[key];
-            }
-        }
-        return data;
-    }
-
-
-    /*
-     * Use model's toCamelizedJson method to build up a corresponding JSON array.
-     *
-     */
-    toCamelizedJson() {
-        return this.models.map((model) => {
-            return model.toCamelizedJson();
-        });
-    }
-
-
-    /*
-     * 
-     *
-     */
-    get dbCollection() { 
-        var name = this.model.prototype.resourceName;
-        return `${name}s`; 
-    }
+    
 
 
     /*
      *
      *
      */
-    get apiUrl() {
-        var name = this.model.prototype.resourceName;
-        return `/api/v1/${name}s`; 
-    }
+    getInsertScripts() {
 
-
-    /*
-     * Sets url property, building up query string from json.
-     *
-     */
-	setUrl(query) {
-        var queryString = '?', key, value;
-        for (key in query) {
-            value = query[key];
-            queryString += `${key}=${value}&`;
-        }
-        this.url = this.apiUrl + queryString;
-    }
-
-
-    /*
-     *
-     *
-     */
-    getFetchPromise(query, options) {
-
-        return new Promise((resolve, reject) => {
-
-            this.setUrl(query);
-            this.fetch({ reset: true });
-            
-            this.on('reset', () => {
-                return resolve(this);
-            });
-
-       });
-
-    }
-
-
-    /*
-     * Reset collection to a include only one of its current models, picked at random.
-     */
-    resetToRandom() {
-        var randomIndex, randomModel;
-        randomIndex = Math.floor(Math.random() * this.models.length);
-        randomModel = this.models[randomIndex];
-        this.reset([randomModel]);
     }
 
 }
+
 
 
 export default {

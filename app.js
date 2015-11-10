@@ -1,15 +1,11 @@
 require('babel/register');
 
 var express = require('express'),
-	bodyParser = require('body-parser'),
-	buildSeeds = require('./db/utilities/build_seeds.js');
+	bodyParser = require('body-parser');
 
 var app = express(),
 	router = require('./app/routes/index.js');
  
-// buildSeeds({ collectionName: 'blog_posts' }, function(err) { if (err) { return console.dir(err); } console.log('all good'); });
-// buildSeeds({ collectionName: 'projects' }, function(err) { if (err) { return console.dir(err); } console.log('all good'); });
-
 app.set('views', __dirname + '/app/views');
 app.set('view engine', 'jade');
 

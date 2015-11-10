@@ -1,5 +1,5 @@
 import express from 'express';
-import indexMiddleware from './../../../middleware/crud/index.js';
+import indexMiddleware from './../../../middleware/crud_fs/index.js';
 
 import _ from 'underscore';
 
