@@ -1,32 +1,32 @@
-import React from 'react';
+import React from 'react'
+import { Router, Route } from 'react-router'
+import createBrowserHistory from 'history/lib/createBrowserHistory'
 
-import Banner from './../components/route_handlers/banner/root.jsx';
-import About from './../components/route_handlers/about/root.jsx';
+import Banner from './../components/route_handlers/banner/root.jsx'
+import About from './../components/route_handlers/about/root.jsx'
 
-import ProjectsIndex from  './../components/route_handlers/projects/index/root.jsx';
-import ProjectsShow from   './../components/route_handlers/projects/show/root.jsx';
+import ProjectsIndex from  './../components/route_handlers/projects/index/root.jsx'
+import ProjectsShow from   './../components/route_handlers/projects/show/root.jsx'
 
-import BlogPostsIndex from  './../components/route_handlers/blog_posts/index/root.jsx';
-import BlogPostsShow from   './../components/route_handlers/blog_posts/show/root.jsx';
-
-import { Router, Route } from 'react-router';
-import createBrowserHistory from 'history/lib/createBrowserHistory';
+import BlogPostsIndex from  './../components/route_handlers/blog_posts/index/root.jsx'
+import BlogPostsShow from   './../components/route_handlers/blog_posts/show/root.jsx'
 
 class App extends React.Component {
 
-	constructor(props) {
-		super(props);
-	}
-
+	/*
+	 *
+	 *
+	 */
 	render() {
 		return (
 			<div className='wrapper fill-parent'>
 				{this.props.children}
 			</div>
-		);
+		)
 	}
 
 }
+
 
 var routes = (
 	<Router history={createBrowserHistory()}>
@@ -43,6 +43,6 @@ var routes = (
 
 		</Route>
 	</Router>
-);
+)
 
-export default routes;
+export default routes

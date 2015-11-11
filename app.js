@@ -22,10 +22,12 @@ var port = process.env.PORT || 3000,
 
 pg.connect(dbUrl, function(err, client, done) {
 
-	app.use(function(req, res, next) {
-		req.dbClient = client;
-		next();
-	});
+	if (err != null) {
+		app.use(function(req, res, next) {
+			req.dbClient = client;
+			next();
+		});
+	}
 
 	app.use(router);
 

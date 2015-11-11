@@ -1,7 +1,9 @@
-import React from 'react';
+import React from 'react'
+import { Link } from 'react-router'
+
+import _ from 'underscore'
+
 import Header from './../../../general/header.jsx';
-import { Link } from 'react-router';
-import _ from 'underscore';
 
 import project from './../../../../models/project.js';
 
@@ -14,8 +16,8 @@ class Index extends React.Component {
 	 *
 	 */
 	constructor(props) {
-		super(props);
-		this.state = this.state || {};
+		super(props)
+		this.state = this.state || {}
 	}
 
 
@@ -36,9 +38,9 @@ class Index extends React.Component {
 		return (
 			<div className='wrapper__content fill-parent'>
 				<Header activeLinkName={this.getActiveLinkName()} />
-				<Groups groupDescriptions={this.getGroupDescriptions()} resources={this.getResources()}/>
+				<Groups groupDescriptions={this.props.groupDescriptions} resources={this.getResources()}/>
 			</div>
-		);
+		)
 	}
 
 
@@ -47,8 +49,9 @@ class Index extends React.Component {
 	 *
 	 */
 	getActiveLinkName() {
-		var resourceUrlBase = this.getResourceConstructors().Model.prototype.resourceUrlBase;
-		return resourceUrlBase;
+		var { Model } = this.props.resourceConstructors
+		var resourceUrlBase = Model.prototype.resourceUrlBase
+		return resourceUrlBase
 	}
 
 
@@ -57,12 +60,12 @@ class Index extends React.Component {
 	 *
 	 */
 	componentDidMount() {
-		var resource = this.getResourceConstructors();
+		var { Collection } = this.props.resourceConstructors
 		if (this.getResources() == null) {
-			let coll = new resource.Collection();
+			let coll = new Collection()
 			coll.getFetchPromise().then((coll) => {
-				this.setState({ resources: coll });
-			}, () => { console.log('promise rejected'); });
+				this.setState({ resources: coll })
+			}, () => { console.log('promise rejected') })
 		}
 	}
 
@@ -73,14 +76,10 @@ class Index extends React.Component {
 	 */
 	getResources() {
 		// projects are stored in props if rendered server-side, and on the state if rendered client-side.
-		if (this.state.resources != null) { return this.state.resources; }
-		return this.props.resources;
+		if (this.state.resources != null) { return this.state.resources }
+		return this.props.resources
 	}
 
 }
 
-Index.contextTypes = {
-	router: React.PropTypes.func
-}
-
-export default Index;
+export default Index

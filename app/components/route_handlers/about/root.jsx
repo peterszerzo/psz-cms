@@ -1,10 +1,10 @@
-import React from 'react';
-import marked from 'marked';
+import React from 'react'
+import marked from 'marked'
 
-import { Link } from 'react-router';
-import text from './text.js';
+import { Link } from 'react-router'
+import text from './text.js'
 
-import Header from './../../general/header.jsx';
+import Header from './../../general/header.jsx'
 
 var greetings = [
 	'Hello',
@@ -12,7 +12,7 @@ var greetings = [
 	'Salut',
 	'Hallo',
 	'Hej'
-];
+]
 
 class About extends React.Component {
 
@@ -21,13 +21,13 @@ class About extends React.Component {
 	 *
 	 */
 	constructor(props) {
-		super(props);
+		super(props)
 		this.state = {
 			greetingIndex: 0,
 			scrollTop: 0,
 			hasImageLoaded: false,
 			heroHeight: window.innerHeight
-		};
+		}
 	}
 
 
@@ -57,7 +57,7 @@ class About extends React.Component {
 					dangerouslySetInnerHTML={{__html: marked(text, { sanitize: true })}}
 				/>
 			</div>
-		);
+		)
 	}
 
 
@@ -71,7 +71,7 @@ class About extends React.Component {
 				return this.setState({ greetingIndex: 0 });
 			}
 			this.setState({ greetingIndex: this.state.greetingIndex + 1 });
-		}, 2000);
+		}, 2000)
 	}
 
 
@@ -81,7 +81,7 @@ class About extends React.Component {
 	 */
 	componentWillUnmount() {
 		if (this.greetingChangeInterval) {
-			clearInterval(this.greetingChangeInterval);
+			clearInterval(this.greetingChangeInterval)
 		}
 	}
 
@@ -95,12 +95,12 @@ class About extends React.Component {
 			return { 
 				backgroundColor: '#101C29',
 				height: this.state.heroHeight
-			}; 
+			}
 		}
 		return {
 			backgroundImage: 'url(/images/me/me_1200.jpg)',
 			height: this.state.heroHeight
-		};
+		}
 	}
 
 
@@ -109,8 +109,8 @@ class About extends React.Component {
 	 *
 	 */
 	handleScroll(e) {
-		var node = React.findDOMNode(this);
-		this.setState({ scrollTop: node.scrollTop });
+		var node = React.findDOMNode(this)
+		this.setState({ scrollTop: node.scrollTop })
 	}
 
 
@@ -119,9 +119,9 @@ class About extends React.Component {
 	 *
 	 */
 	handleImageLoad() {
-		this.setState({ hasImageLoaded: true });
+		this.setState({ hasImageLoaded: true })
 	}
 
 }
 
-export default About;
+export default About

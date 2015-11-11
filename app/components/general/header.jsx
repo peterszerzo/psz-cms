@@ -8,11 +8,11 @@ class Header extends React.Component {
 	 *
 	 *
 	 */
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
 		this.state = {
 			isExpanded: false
-		};
+		}
 		this.state.buttons = [
 			{
 				name: 'projects',
@@ -26,7 +26,7 @@ class Header extends React.Component {
 				name: 'about',
 				url: '/about'
 			}
-		].reverse();
+		].reverse()
 
 	}
 
@@ -36,7 +36,7 @@ class Header extends React.Component {
 	 *
 	 */
 	getList() {
-		var activeLinkName = this.props.activeLinkName;
+		var { activeLinkName } = this.props
 		return this.state.buttons.map(function(button, index) {
 			var isActive = (activeLinkName && (button.name === activeLinkName)),
 				className = 'header__nav__item' + (isActive ? ' header__nav__item--active' : '');
@@ -46,8 +46,8 @@ class Header extends React.Component {
 						{ button.name }
 					</Link>
 				</li>
-			);
-		});
+			)
+		})
 	}
 
 
@@ -57,9 +57,8 @@ class Header extends React.Component {
 	 */
 	render() {
 		var cls = 'header';
-		if (this.props.isTransparent) { cls += ' header--transparent'; }
-		if (this.state.isExpanded) { cls += ' header--expanded'; }
-		console.log(this.state.isExpanded);
+		if (this.props.isTransparent) { cls += ' header--transparent' }
+		if (this.state.isExpanded) { cls += ' header--expanded' }
 		return (
 			<div className={ cls }>
 				<Link className='header__main-link' to='/'>
@@ -72,7 +71,7 @@ class Header extends React.Component {
 					{this.getList()}
 				</ul>
 			</div>
-		);
+		)
 	}
 
 
@@ -81,9 +80,9 @@ class Header extends React.Component {
 	 *
 	 */
 	toggleExpandedState() {
-		this.setState({ isExpanded: !this.state.isExpanded });
+		this.setState({ isExpanded: !this.state.isExpanded })
 	}
 	
 }
 
-module.exports = Header;
+export default Header

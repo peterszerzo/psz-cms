@@ -1,30 +1,28 @@
-import Index from './../../resources/index/root.jsx';
+import React from 'react'
 
-import project from './../../../../models/project.js';
+import Index from './../../resources/index/root.jsx'
 
-class ProjectsIndex extends Index {
+import project from './../../../../models/project.js'
 
-	/*
-	 *
-	 *
-	 */
-	getResourceConstructors() {
-		return project;
-	}
-
-
-	/*
-	 *
-	 *
-	 */
-	getGroupDescriptions() {
-		return {
-			'featured': 'Things on my mind these days. An incomplete collection.',
-			'recent': 'A blend of mostly finished technical and creative endeavors.',
-			'nostalgia': 'The childhood project(s) that got me started.'
-		};
-	}
-
+var groupDescriptions = {
+	'featured': 'Things on my mind these days. An incomplete collection.',
+	'recent': 'A blend of mostly finished technical and creative endeavors.',
+	'nostalgia': 'The childhood project(s) that got me started.'
 }
 
-export default ProjectsIndex;
+// Higher-order component
+class ProjectsIndex extends React.Component {
+
+	render() {
+		return (
+			<Index 
+				{ ...this.props }
+				resourceConstructors={project} 
+				groupDescriptions={groupDescriptions} 
+			/>
+		)
+	}
+	
+}
+
+export default ProjectsIndex

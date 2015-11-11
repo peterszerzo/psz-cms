@@ -1,10 +1,9 @@
-import * as React from 'react';
-import globe from './../../../assets/scripts/banner_animation/index.js';
-import { Link } from 'react-router';
+import * as React from 'react'
+import { Link } from 'react-router'
 
-import Loader from './../../general/loader.jsx';
-
-import project from './../../../models/project.js';
+import globe from './../../../assets/scripts/banner_animation/index.js'
+import Loader from './../../general/loader.jsx'
+import project from './../../../models/project.js'
 
 class Banner extends React.Component {
 
@@ -13,8 +12,7 @@ class Banner extends React.Component {
 	 *
 	 */
 	constructor(props) {
-		super(props);
-		console.log(window.innerWidth < 600);
+		super(props)
 		this.state = {
 			randomUrl: null,
 			isGlobeAnimationRendered: false,
@@ -22,7 +20,7 @@ class Banner extends React.Component {
 				isShowing: false,
 				shouldShowOnHover: true
 			}
-		};
+		}
 	}
 
 
@@ -43,10 +41,9 @@ class Banner extends React.Component {
 						<p>for mindful code, design and writing</p>
 					</Link>
 					{ this.renderMessage() }
-					
 				</div>
 			</div>
-		);
+		)
 	}
 
 
@@ -55,12 +52,12 @@ class Banner extends React.Component {
 	 *
 	 */
 	renderMessage() {
-		var style = this.state.message.isShowing ? { opacity: 1 } : { opacity: 0 };
+		var style = this.state.message.isShowing ? { opacity: 1 } : { opacity: 0 }
 		return (
 			<div className="banner__message" style={style}>
 				{ 'hey, welcome! click a triangle for random content' }
 			</div>
-		);
+		)
 	}
 
 
@@ -70,26 +67,26 @@ class Banner extends React.Component {
 	 */
 	componentDidMount() {
 
-		var isWide = window.innerWidth > 500;
+		var isWide = window.innerWidth > 500
 
-		var geoFileName = isWide ? 'geo.json' : 'geo_small.json';
+		var geoFileName = isWide ? 'geo.json' : 'geo_small.json'
 
 		if (!isWide) {
-			this.state.message.isShowing = true;
-			this.forceUpdate();
+			this.state.message.isShowing = true
+			this.forceUpdate()
 		}
 
-		this.fetchRandomUrl();
+		this.fetchRandomUrl()
 
-		this.globeAnimation = globe(geoFileName);
+		this.globeAnimation = globe(geoFileName)
 
-		this.globeAnimation.onClick = this.navigateToRandom.bind(this);
-		this.globeAnimation.onHover = this.triggerMessage.bind(this);
+		this.globeAnimation.onClick = this.navigateToRandom.bind(this)
+		this.globeAnimation.onHover = this.triggerMessage.bind(this)
 
-		this.globeAnimation.start();
+		this.globeAnimation.start()
 		this.globeAnimation.on('rendered', () => {
-			this.setState({ isGlobeAnimationRendered: true });
-		});
+			this.setState({ isGlobeAnimationRendered: true })
+		})
 
 	}
 
@@ -99,7 +96,7 @@ class Banner extends React.Component {
 	 *
 	 */
 	componentWillUnmount() {
-		this.globeAnimation.stop();
+		this.globeAnimation.stop()
 	}
 
 
@@ -108,11 +105,11 @@ class Banner extends React.Component {
 	 *
 	 */
 	fetchRandomUrl() {
-		var coll = new project.Collection();
+		var coll = new project.Collection()
 		coll.getFetchPromise({ random: 'true' }).then((coll) => {
-			if (!coll.models || coll.models.length === 0) { return; }
-			this.setState({ randomUrl: coll.models[0].viewUrl });
-		});
+			if (!coll.models || coll.models.length === 0) { return }
+			this.setState({ randomUrl: coll.models[0].viewUrl })
+		})
 	}
 
 
@@ -121,7 +118,7 @@ class Banner extends React.Component {
 	 *
 	 */
 	navigateToRandom() {
-		this.props.history.replaceState(null, this.state.randomUrl);
+		this.props.history.replaceState(null, this.state.randomUrl)
 	}
 
 
@@ -131,29 +128,29 @@ class Banner extends React.Component {
 	 */
 	triggerMessage() {
 
-		if (!this.state.randomUrl) { return; }
+		if (!this.state.randomUrl) { return }
 
-		if (!this.state.message.shouldShowOnHover) { return; }
+		if (!this.state.message.shouldShowOnHover) { return }
 
 		this.setState({
 			message: {
 				isShowing: true,
 				shouldShowOnHover: false
 			}
-		});
+		})
 		
 		setTimeout(() => {
-			this.state.message.isShowing = false;
-			this.forceUpdate();
-		}, 4500);
+			this.state.message.isShowing = false
+			this.forceUpdate()
+		}, 4500)
 
 		setTimeout(() => {
-			this.state.message.shouldShowOnHover = true;
-			this.forceUpdate();
-		}, 9000);
+			this.state.message.shouldShowOnHover = true
+			this.forceUpdate()
+		}, 9000)
 
 	}
 
 }
 
-module.exports = Banner;
+export default Banner
