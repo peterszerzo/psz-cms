@@ -33,7 +33,6 @@ class Groups extends React.Component {
 			return model.get('group');
 		});
 
-		console.log('rendering project groups');
 		return Object.keys(groups).map((key, index) => {
 			var resources = groups[key];
 			if (resources == null) { return (<div/>); }

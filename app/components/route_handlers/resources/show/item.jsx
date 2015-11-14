@@ -5,106 +5,81 @@ import { Link } from 'react-router';
 
 import Loader from './../../../general/loader.jsx';
 
-class ShowItem extends React.Component {
 
-	/*
-	 *
-	 *
-	 */
-	render() {
-		var resource = this.props.resource;
-		if (resource == null) {
-			return (
-				<Loader />
-			);
-		}
+/*
+ * Render a list of links.
+ *
+ */
+var Links = (props) => {
+	var { links } = props
+	if (!links) { return <div/> }
+	var linksComps = links.map((link, i) => {
 		return (
-			<div className="project-show">
-				<h1 className="title">{ this.getTitle() }</h1>
-				{ this.renderHeadline() }
-				{ this.renderDates() }
-				{ this.renderLinks() }
-				{ this.renderBody() }
-			</div>
-		);
-	}
+			<li><a className="link" href={link.url} target="_blank">{link.name}</a></li>
+		)
+	});
+	return (
+		<ul className='project-show__links'>
+			{ linksComps }
+		</ul>
+	)
+}
 
 
-	/*
-	 *
-	 *
-	 */
-	renderHeadline() {
-		var headline = this.props.resource.get('headline');
-		if (!headline) { return; }
-		return (<h2 className="headline">{ headline }</h2>);
-	}
 
+/*
+ * Render a dash-formatted date pair.
+ *
+ */
+var Dates = (props) => {
 
-	/*
-	 *
-	 *
-	 */
-	renderLinks() {
-		var links = this.props.resource.get('links');
-		if (!links) { return; }
-		var linksComps = links.map((link, i) => {
-			return (
-				<li><a className="link" href={link.url} target="_blank">{link.name}</a></li>
-			);
-		});
-		return (
-			<ul className='project-show__links'>
-				{ linksComps }
-			</ul>
-		);
-	}
+	var { dates } = props
 
+	if (dates == null) { return <div/> }
+	let formattedDates = dates.map(function(date) {
+		if (date === 'present') { return date }
+		return moment(date, 'YYYY-MM').format('MMMM YYYY');
+	})
+	let content = formattedDates.join(' - ')
 
-	/*
-	 *
-	 *
-	 */
-	renderBody() {
-		var md = this.props.resource.get('body_text');
-		if (md == null) { return; }
-		return (
-			<div className="static" dangerouslySetInnerHTML={{ __html: marked(md) }}/>
-		);
-	}
-
-
-	/*
-	 *
-	 *
-	 */
-	renderDates() {
-		var dates = this.props.resource.get('dates'), 
-			formattedDates, content;
-		if (dates == null) { return; }
-		formattedDates = dates.map(function(date) {
-			if (date === 'present') { return date; }
-			return moment(date, 'YYYY-MM').format('MMMM YYYY');
-		});
-		content = formattedDates.join(' - ');
-		return (
-			<div className='date'>{content}</div>
-		);
-	}
-
-
-	/*
-	 *
-	 *
-	 */
-	getTitle() {
-		var title = this.props.resource.get('title');
-		if (this.props.resource.get('is_draft') === true) {
-			title += ' (draft)'
-		}
-		return title;
-	}
+	return (
+		<div className='date'>{ content }</div>
+	)
 
 }
 
-export default ShowItem;
+
+
+var ShowItem = (props) => {
+
+	var { resource } = props
+	
+	if (resource == null) { return <Loader /> }
+
+	var data = resource.toJSON()
+
+	var { headline, links, body_text, dates, title } = data
+
+	let body
+
+	if (body_text) {
+		body = <div className="static" dangerouslySetInnerHTML={{ __html: marked(body_text) }}/>
+	}
+
+	if (data['is_draft'] === true) {
+		title += ' (draft)'
+	}
+
+	return (
+		<div className="project-show">
+			<h1 className="title">{ title }</h1>
+			<h2 className='headline'>{ headline }</h2>
+			<Dates dates={dates} />
+			<Links links={links} />
+			{ body }
+		</div>
+	)
+
+}
+
+export default ShowItem

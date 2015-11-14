@@ -3,49 +3,29 @@ import { Link } from 'react-router';
 
 import Logos from './../../../general/project_logos.jsx';
 
+var ListItem = (props) => {
 
-class ListItem extends React.Component {
+	var { resource } = props
 
-	/*
-	 *
-	 *
-	 */
-	render() {
-		var resource = this.props.resource;
-		return (
-			<li className={''}>
-				<Link className="project-list__item" to={resource.viewUrl}>
-					{ this.renderBackgroundImage() }
-					<div className="project-list__item__title">{ this.getName() }</div>
-				</Link>
-			</li>
-		);
-	}
-
-
-	/*
-	 *
-	 *
-	 */
-	renderBackgroundImage() {
-		var resource = this.props.resource,
-			name = resource.getIconName(),
-			Comp = Logos[name] || Logos.Neutral;
+	function renderBackgroundImage() {
+		var iconName = resource.getIconName(),
+			Comp = Logos[iconName] || Logos.Neutral;
 		return (<Comp className='project-list__item__logo' />);
 	}
 
-
-	/*
-	 *
-	 *
-	 */
-	getName() {
-		var name = this.props.resource.get('name');
-		if (this.props.resource.get('is_draft') === true) {
-			name += ' (draft)'
-		}
-		return name;
+	var name = resource.get('name');
+	if (resource.get('is_draft') === true) {
+		name += ' (draft)'
 	}
+
+	return (
+		<li className={''}>
+			<Link className="project-list__item" to={resource.viewUrl}>
+				{ renderBackgroundImage() }
+				<div className="project-list__item__title">{ name }</div>
+			</Link>
+		</li>
+	);
 
 }
 

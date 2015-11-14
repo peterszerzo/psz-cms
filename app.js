@@ -6,7 +6,11 @@ var express = require('express'),
 
 var app = express(),
 	router = require('./app/routes/index.js');
- 
+
+if (process.env['NODE_ENV'] !== 'production') {
+	require('dotenv').load();
+}
+
 app.set('views', __dirname + '/app/views');
 app.set('view engine', 'jade');
 
@@ -17,16 +21,19 @@ app.get([ '*.js', '*.json' ], require('./app/middleware/serve_gzip.js'));
 
 app.use(express.static('public'));
 
-var port = process.env.PORT || 3000,
-	dbUrl = process.env['NODE_ENV'] === 'production' ? process.env['DATABASE_URL'] : 'postgres://localhost/peterszerzo';
+var port = process.env.PORT,
+	dbUrl = process.env['DATABASE_URL'];
 
 pg.connect(dbUrl, function(err, client, done) {
 
 	if (err != null) {
+		console.log(client);
 		app.use(function(req, res, next) {
 			req.dbClient = client;
 			next();
 		});
+	} else {
+		console.log(err);
 	}
 
 	app.use(router);

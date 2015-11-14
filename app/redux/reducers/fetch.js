@@ -1,4 +1,3 @@
-
 function fetch(state, action) {
 	switch (action.type) {
 		case 'FETCH_BLOG_POSTS':

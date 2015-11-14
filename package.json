@@ -54,6 +54,7 @@
     "backbone": "^1.2.1",
     "body-parser": "^1.12.4",
     "d3": "^3.5.6",
+    "dotenv": "^1.2.0",
     "express": "^4.13.3",
     "history": "^1.13.0",
     "inflect": "^0.3.0",
@@ -70,6 +71,7 @@
     "react-router": "1.0.0",
     "redux": "^3.0.4",
     "redux-devtools": "^2.1.5",
+    "redux-router": "^1.0.0-beta4",
     "underscore": "^1.8.3"
   }
 }

@@ -2,31 +2,21 @@ import React from 'react';
 
 import ListItem from './item.jsx';
 
+var List = (props) => {
 
-class List extends React.Component {
+	var { resources } = props
 
-	/*
-	 *
-	 *
-	 */
-	render() {
-		return (
-			<ul className="project-list">
-				{ this.renderList() }
-			</ul>
-		);
-	}
+	if (resources == null) { return <div/> }
 
+	var list = resources.map((resource, index) => {
+		return <ListItem resource={resource} key={index} />;
+	})
 
-	/*
-	 *
-	 *
-	 */
-	renderList() {
-		return this.props.resources.map((resource, index) => {
-			return <ListItem resource={resource} key={index} />;
-		});
-	}
+	return (
+		<ul className="project-list">
+			{ list }
+		</ul>
+	)
 
 }
 
