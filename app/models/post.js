@@ -2,14 +2,14 @@ import $ from 'jquery';
 import * as Backbone from 'backbone';
 import Inflect from 'inflect';
 
-import base from './base.js';
+import * as base from './base.js';
 
 
 /*
  * Sets url property, building up query string from json.
  *
  */
-class Model extends base.Model {
+export class Model extends base.Model {
 
     /*
      * 
@@ -78,7 +78,7 @@ class Model extends base.Model {
             name: 'Untitled',
             collaborators: [],
             links: [],
-            post_group: 'featured',
+            post_group: '',
             dates: [],
             technologies: [],
             body_text: 'A fine body text.'
@@ -176,7 +176,7 @@ class Model extends base.Model {
  * Sets url property, building up query string from json.
  *
  */
-class Collection extends base.Collection {
+export class Collection extends base.Collection {
 
     /*
      * Reference to the model constructor.
@@ -184,102 +184,4 @@ class Collection extends base.Collection {
      */
     get model() { return Model; }
 
-
-    /*
-     * Replace fields with underscored versions.
-     *
-     */
-    parse(data) {
-        for (let key in data) {
-            let newKey = Inflect.underscore(key);
-            if (newKey !== key) {
-                data[newKey] = data[key];
-                delete data[key];
-            }
-        }
-        return data;
-    }
-
-
-    /*
-     * Use model's toCamelizedJson method to build up a corresponding JSON array.
-     *
-     */
-    toCamelizedJson() {
-        return this.models.map((model) => {
-            return model.toCamelizedJson();
-        });
-    }
-
-
-    /*
-     * 
-     *
-     */
-    get dbCollection() { 
-        var name = this.model.prototype.resourceName;
-        return `${name}s`; 
-    }
-
-
-    /*
-     *
-     *
-     */
-    get apiUrl() {
-        var name = this.model.prototype.resourceName;
-        return `/api/v1/${name}s`; 
-    }
-
-
-    /*
-     * Sets url property, building up query string from json.
-     *
-     */
-	setUrl(query) {
-        var queryString = '?', key, value;
-        for (key in query) {
-            value = query[key];
-            queryString += `${key}=${value}&`;
-        }
-        this.url = this.apiUrl + queryString;
-    }
-
-
-    /*
-     *
-     *
-     */
-    getFetchPromise(query, options) {
-
-        return new Promise((resolve, reject) => {
-
-            this.setUrl(query);
-            this.fetch({ reset: true });
-            
-            this.on('reset', () => {
-                return resolve(this);
-            });
-
-       });
-
-    }
-
-
-    /*
-     * Reset collection to a include only one of its current models, picked at random.
-     */
-    resetToRandom() {
-        var randomIndex, randomModel;
-        randomIndex = Math.floor(Math.random() * this.models.length);
-        randomModel = this.models[randomIndex];
-        this.reset([randomModel]);
-    }
-
-}
-
-
-export default {
-	Model: Model,
-	Collection: Collection
 }

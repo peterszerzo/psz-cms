@@ -40,7 +40,7 @@ function readAndMatchEntries(options, next) {
 
 };
 
-export default function buildSeeds(options, next) {
+export function buildSeeds(options, next) {
 
 	readAndMatchEntries(options, (data) => {
 

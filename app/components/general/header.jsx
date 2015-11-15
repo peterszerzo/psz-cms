@@ -94,13 +94,10 @@ class HeaderComp extends Component {
 }
 
 
-class Header extends Component {
+export class Header extends Component {
 
 	render() {
 		return <HeaderComp {...this.props} buttons={buttons} />
 	}
 
 }
-
-
-export default Header

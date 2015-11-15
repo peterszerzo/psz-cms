@@ -25,17 +25,13 @@ class Groups extends React.Component {
 	 */
 	renderGroups() {
 
-		var resources = this.props.resources;
+		var { resourceGroups } = this.props
 
-		if (resources == null) { return (<Loader />); }
+		if (resourceGroups == null) { return (<Loader />); }
 
-		var groups = _.groupBy(resources.models, (model) => {
-			return model.get('group');
-		});
-
-		return Object.keys(groups).map((key, index) => {
-			var resources = groups[key];
-			if (resources == null) { return (<div/>); }
+		return Object.keys(resourceGroups).map((key, index) => {
+			var resources = resourceGroups[key]
+			if (resources == null) { return <div/> }
 			return (
 				<div className='project-group' key={index}>
 					<div className='project-group__content'>
@@ -53,4 +49,4 @@ class Groups extends React.Component {
 
 }
 
-export default Groups;
+export default Groups

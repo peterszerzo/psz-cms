@@ -1,4 +1,4 @@
-require('babel/register');
+require('babel-core/register');
 
 var fs = require('fs');
 
@@ -9,6 +9,8 @@ var createIndexScript = 'CREATE INDEX ON posts ';
 var post = require('./../../app/models/post.js');
 
 var postData = require('./../../content/seeds/posts.json');
+
+console.log(postData)
 
 var coll = new post.Collection(postData);
 

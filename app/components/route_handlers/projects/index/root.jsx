@@ -2,27 +2,26 @@ import React from 'react'
 
 import Index from './../../resources/index/root.jsx'
 
-import project from './../../../../models/project.js'
-
 var groupDescriptions = {
 	'featured': 'Things on my mind these days. An incomplete collection.',
 	'recent': 'A blend of mostly finished technical and creative endeavors.',
-	'nostalgia': 'The childhood project(s) that got me started.'
+	'nostalgia': 'The childhood project(s) that got me started.',
+	'personal': 'Thoughts, stories, the occasional low-key rambling.',
+	'technical': 'Tricks I learn while dabbling with technology.'
 }
 
 // Higher-order component
-class ProjectsIndex extends React.Component {
+function ProjectsIndex(props) {
 
-	render() {
-		return (
-			<Index 
-				{ ...this.props }
-				resourceConstructors={project} 
-				groupDescriptions={groupDescriptions} 
-			/>
-		)
-	}
-	
+	return (
+		<Index 
+			{ ...props }
+			activeLinkName={'projects'}
+			postType={'project'}
+			groupDescriptions={groupDescriptions} 
+		/>
+	)
+
 }
 
 export default ProjectsIndex

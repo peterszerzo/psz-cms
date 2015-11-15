@@ -1,9 +1,9 @@
-import React from 'react';
-import marked from 'marked';
-import moment from 'moment';
-import { Link } from 'react-router';
+import React from 'react'
+import marked from 'marked'
+import moment from 'moment'
+import { Link } from 'react-router'
 
-import Loader from './../../../general/loader.jsx';
+import { Loader } from './../../../general/loader.jsx'
 
 
 /*
@@ -15,7 +15,15 @@ var Links = (props) => {
 	if (!links) { return <div/> }
 	var linksComps = links.map((link, i) => {
 		return (
-			<li><a className="link" href={link.url} target="_blank">{link.name}</a></li>
+			<li key={i}>
+				<a
+					className="link" 
+					href={link.url} 
+					target="_blank"
+				>
+					{link.name}
+				</a>
+			</li>
 		)
 	});
 	return (
@@ -49,16 +57,17 @@ var Dates = (props) => {
 }
 
 
-
-var ShowItem = (props) => {
+/*
+ *
+ *
+ */
+function ShowItem(props) {
 
 	var { resource } = props
 	
 	if (resource == null) { return <Loader /> }
 
-	var data = resource.toJSON()
-
-	var { headline, links, body_text, dates, title } = data
+	var { headline, links, body_text, dates, title, is_draft } = resource
 
 	let body
 
@@ -66,7 +75,7 @@ var ShowItem = (props) => {
 		body = <div className="static" dangerouslySetInnerHTML={{ __html: marked(body_text) }}/>
 	}
 
-	if (data['is_draft'] === true) {
+	if (is_draft === true) {
 		title += ' (draft)'
 	}
 
@@ -74,8 +83,8 @@ var ShowItem = (props) => {
 		<div className="project-show">
 			<h1 className="title">{ title }</h1>
 			<h2 className='headline'>{ headline }</h2>
-			<Dates dates={dates} />
-			<Links links={links} />
+			<Dates dates={ dates } />
+			<Links links={ links } />
 			{ body }
 		</div>
 	)

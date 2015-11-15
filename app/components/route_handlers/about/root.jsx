@@ -4,7 +4,7 @@ import marked from 'marked'
 import { Link } from 'react-router'
 import text from './text.js'
 
-import Header from './../../general/header.jsx'
+import { Header } from './../../general/header.jsx'
 
 var greetings = [
 	'Hello',

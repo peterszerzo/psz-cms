@@ -1,10 +1,16 @@
 import React from 'react';
-import Header from './../../../general/header.jsx';
+import { Header } from './../../../general/header.jsx';
 
 import ShowItem from './item.jsx';
 
+import fetch from 'isomorphic-fetch'
+
 class Show extends React.Component {
 
+	/*
+	 *
+	 *
+	 */
 	constructor(props) {
 		super(props);
 		this.state = {};
@@ -16,10 +22,11 @@ class Show extends React.Component {
 	 *
 	 */
 	render() {
-		var resource = this.getResource();
+		var { resource } = this.state
+		console.log(this.state)
 		return (
 			<div className='wrapper__content fill-parent'>
-				<Header activeLinkName={this.getActiveLinkName()} />
+				<Header />
 				<ShowItem resource={ resource }/>
 			</div>
 		);
@@ -31,24 +38,7 @@ class Show extends React.Component {
 	 *
 	 */
 	componentDidMount() {
-		if (this.getResource() == null) {
-			this.fetchResource();
-		}
-	}
-
-
-	/*
-	 * Include on subclass, returning a { Model: Model, Collection: Collection } object.
-	 *
-	 */
-	getResourceConstructors() {
-		return null;
-	}
-
-
-	getActiveLinkName() {
-		var resourceUrlBase = this.getResourceConstructors().Model.prototype.resourceUrlBase;
-		return resourceUrlBase;
+		this.fetchResource();
 	}
 
 
@@ -57,25 +47,14 @@ class Show extends React.Component {
 	 *
 	 */
 	fetchResource() {
-		var coll, promise, id, resource;
-		resource = this.getResourceConstructors();
-		id = this.props.params.id;
-		coll = new resource.Collection();
-		promise = coll.getFetchPromise({ id: id });
-		promise.then((coll) => {
-			this.setState({ resource: coll.models[0] });
-		}, () => { console.log('promise rejected'); });
-	}
-
-
-	/*
-	 *
-	 *
-	 */
-	getResource() {
-		return this.state.resource || this.props.resource;
+		var { id } = this.props.params
+		fetch(`/api/v2/posts?id=${id}`)
+			.then(res => res.json())
+			.then((resources) => {
+				this.setState({ resource: resources[0] })
+			})
 	}
 
 }
 
-export default Show;
+export default Show

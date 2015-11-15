@@ -1,9 +1,12 @@
 import * as React from 'react'
+import _ from 'underscore'
 import { Link } from 'react-router'
 
 import globe from './../../../assets/scripts/banner_animation/index.js'
-import Loader from './../../general/loader.jsx'
-import project from './../../../models/project.js'
+import { Loader } from './../../general/loader.jsx'
+
+import fetch from 'isomorphic-fetch'
+
 
 class Banner extends React.Component {
 
@@ -14,7 +17,7 @@ class Banner extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			randomUrl: null,
+			randomPostId: null,
 			isGlobeAnimationRendered: false,
 			message: {
 				isShowing: false,
@@ -105,11 +108,13 @@ class Banner extends React.Component {
 	 *
 	 */
 	fetchRandomUrl() {
-		var coll = new project.Collection()
-		coll.getFetchPromise({ random: 'true' }).then((coll) => {
-			if (!coll.models || coll.models.length === 0) { return }
-			this.setState({ randomUrl: coll.models[0].viewUrl })
-		})
+		fetch('/api/v2/posts?fields=(id)')
+			.then(res => res.json())
+			.then((posts) => {
+				if (_.isArray(posts)) {
+					this.setState({ randomPostId: posts[Math.floor(Math.random() * posts.length)].id })
+				}
+			})
 	}
 
 
@@ -118,7 +123,11 @@ class Banner extends React.Component {
 	 *
 	 */
 	navigateToRandom() {
-		this.props.history.replaceState(null, this.state.randomUrl)
+		var { randomPostId } = this.state,
+			{ history } = this.props;
+		if (randomPostId) {
+			history.pushState(null, `/${randomPostId}`)
+		}
 	}
 
 
@@ -128,7 +137,7 @@ class Banner extends React.Component {
 	 */
 	triggerMessage() {
 
-		if (!this.state.randomUrl) { return }
+		if (!this.state.randomPostId) { return }
 
 		if (!this.state.message.shouldShowOnHover) { return }
 

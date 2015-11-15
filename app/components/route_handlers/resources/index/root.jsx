@@ -1,13 +1,20 @@
 import React from 'react'
 import { Link } from 'react-router'
-
+import fetch from 'isomorphic-fetch'
 import _ from 'underscore'
 
-import Header from './../../../general/header.jsx';
+import { Header } from './../../../general/header.jsx'
+import { Loader } from './../../../general/loader.jsx'
 
-import project from './../../../../models/project.js';
+import Groups from './groups.jsx'
 
-import Groups from './groups.jsx';
+var groupDescriptions = {
+	'featured': 'Things on my mind these days. An incomplete collection.',
+	'recent': 'A blend of mostly finished technical and creative endeavors.',
+	'nostalgia': 'The childhood project(s) that got me started.',
+	'personal': 'Thoughts, stories, the occasional low-key rambling.',
+	'technical': 'Tricks I learn while dabbling with technology.'
+}
 
 class Index extends React.Component {
 
@@ -25,20 +32,14 @@ class Index extends React.Component {
 	 *
 	 *
 	 */
-	getResourceConstructors() {
-		return project;
-	}
-
-
-	/*
-	 *
-	 *
-	 */
 	render() {
+		var { resources } = this.state
+		if (resources == null) { return <Loader /> }
+		var resourceGroups = _.groupBy(resources, resource => resource.post_group)
 		return (
 			<div className='wrapper__content fill-parent'>
-				<Header activeLinkName={this.getActiveLinkName()} />
-				<Groups groupDescriptions={this.props.groupDescriptions} resources={this.getResources()}/>
+				<Header activeLinkName={this.props.activeLinkName} />
+				<Groups groupDescriptions={groupDescriptions} resourceGroups={resourceGroups}/>
 			</div>
 		)
 	}
@@ -48,36 +49,14 @@ class Index extends React.Component {
 	 *
 	 *
 	 */
-	getActiveLinkName() {
-		var { Model } = this.props.resourceConstructors
-		var resourceUrlBase = Model.prototype.resourceUrlBase
-		return resourceUrlBase
-	}
-
-
-	/*
-	 *
-	 *
-	 */
 	componentDidMount() {
-		var { Collection } = this.props.resourceConstructors
-		if (this.getResources() == null) {
-			let coll = new Collection()
-			coll.getFetchPromise().then((coll) => {
-				this.setState({ resources: coll })
-			}, () => { console.log('promise rejected') })
-		}
-	}
 
+		fetch(`/api/v2/posts?type=${this.props.postType}&fields=(id,name,post_group)`)
+			.then(res => res.json())
+			.then((resources) => {
+				this.setState({ resources })
+			})
 
-	/*
-	 *
-	 *
-	 */
-	getResources() {
-		// projects are stored in props if rendered server-side, and on the state if rendered client-side.
-		if (this.state.resources != null) { return this.state.resources }
-		return this.props.resources
 	}
 
 }

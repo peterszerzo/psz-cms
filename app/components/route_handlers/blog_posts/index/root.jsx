@@ -1,7 +1,6 @@
 import React from 'react'
 
 import Index from './../../resources/index/root.jsx'
-import blogPost from './../../../../models/blog_post.js'
 
 var groupDescriptions = {
 	'personal': 'Thoughts, stories, the occasional low-key rambling.',
@@ -9,17 +8,17 @@ var groupDescriptions = {
 }
 
 // Higher-order component
-class BlogPostsIndex extends React.Component {
+function BlogPostsIndex(props) {
 
-	render() {
-		return (
-			<Index 
-				{ ...this.props }
-				resourceConstructors={blogPost} 
-				groupDescriptions={groupDescriptions} 
-			/>
-		)
-	}
+	return (
+		<Index 
+			{ ...props }
+			activeLinkName={'blog'}
+			postType={'blog_post'}
+			resourceName={'blog_post'} 
+			groupDescriptions={groupDescriptions} 
+		/>
+	)
 	
 }
 

@@ -1,6 +1,6 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import Router from 'react-router'
+// import * as style from './../styles/site.scss'
+
+import { render } from 'react-dom'
 
 import routes from './../../routes/client.jsx'
 
@@ -9,7 +9,8 @@ global.psz = {
 	start: () => {
 		// Developer signature
 		console.log('Hi, Mom!')
-		ReactDOM.render(routes, global.document.getElementById('site'))
+		var appContainer = global.document.getElementById('site')
+		render(routes, appContainer)
 	}
 
 }

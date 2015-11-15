@@ -1,11 +1,9 @@
 import React from 'react'
 
-var Loader = () => {
+export function Loader() {
 	return (
 		<div className='loader'>
 			<img src="/images/loader/ripple.gif" />
 		</div>
 	)
 }
-
-export default Loader
