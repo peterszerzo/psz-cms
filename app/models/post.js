@@ -1,6 +1,5 @@
 import $ from 'jquery';
 import * as Backbone from 'backbone';
-import * as fs from 'fs';
 import Inflect from 'inflect';
 
 import base from './base.js';

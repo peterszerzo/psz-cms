@@ -1,10 +1,6 @@
 import * as React from 'react'
 import { Link } from 'react-router'
 
-// Redux test
-// import { Provider } from 'redux'
-// import store from './../../../redux/store/index.js'
-
 import globe from './../../../assets/scripts/banner_animation/index.js'
 import Loader from './../../general/loader.jsx'
 import project from './../../../models/project.js'

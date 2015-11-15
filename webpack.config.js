@@ -1,9 +1,12 @@
+var path = require('path');
+
 module.exports = {
 
 	entry: './app/assets/scripts/bundle.js',
 
 	output: {
-		path: './public/scripts/bundle.js',
+		path: path.resolve('./public/scripts'),
+		publicPath: 'http://localhost:3000/',
 		filename: 'bundle.js'
 	},
 
@@ -11,7 +14,7 @@ module.exports = {
 		loaders: [
 		
 			{
-				test: '',
+				test: /(\.js)|(\.jsx)$/,
 				loader: 'babel-loader',
 				query: {
 					presets: [ 'es2015', 'react' ]

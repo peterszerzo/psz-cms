@@ -3,22 +3,42 @@ import pg from 'pg';
 
 export default function list(options, req, res, next) {
 
-	var { tableName, query, fields } = options
+	var { tableName, query } = options
 
 	query = query || {}
 
-	// Add query parameters from request to the ones coming from the middleware options
+	var columnSelector = '*'
+
+	// Clone the query passed to the middleware.
+	var masterQuery = _.clone(query)
+	
+	// Add query parameters from request to the ones coming from the middleware options.
 	for (let key in req.query) {
-		query[key] = req.query[key]
+		masterQuery[key] = req.query[key]
 	}
 
-	var whereString = (query && _.isObject(query)) ? Object.keys(query).map((key) => {
-		return `${key}='${query[key]}'`;
-	}).join(' ') : null
+	// If there is a fields query, set the column selector and remove field key from the query
+	var { fields } = masterQuery
+
+	if (fields) {
+		fields = fields.slice(1, -1)
+		columnSelector = fields
+		delete masterQuery.fields
+	}
+
+	// Build WHERE string
+	var whereString = (query && _.isObject(query)) ? Object.keys(masterQuery).map((key) => {
+		var val = masterQuery[key]
+		val = `'${val}'` 
+		return `${key}=${val}`
+	}).join(' AND ') : null
 
 	whereString = whereString ? `WHERE ${whereString}` : ''
 
-	req.dbClient.query(`SELECT * FROM ${tableName} ${whereString};`, (err, data) => {
+	// Build command
+	var command = `SELECT ${columnSelector} FROM ${tableName} ${whereString};`
+
+	req.dbClient.query(command, (err, data) => {
 
 		if (err) { 
 			console.log(err)

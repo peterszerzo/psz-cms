@@ -1,9 +1,7 @@
-function reducer(state = { testProp: null }, action) {
+export function reducer(state = {}, action) {
 
 	if (action.type === 'SET_TEST_PROP') {
 		state.testProp = true
 	}
 
 }
-
-export default reducer

@@ -2,6 +2,13 @@ import React from 'react'
 import { Router, Route } from 'react-router'
 import createBrowserHistory from 'history/lib/createBrowserHistory'
 
+// import { Provider } from 'react-redux'
+// import { createStore, combineReducers } from 'redux'
+
+import { syncReduxAndRouter, routeReducer } from 'redux-simple-router'
+
+import reducer from './../redux/reducers/index'
+
 import Banner from './../components/route_handlers/banner/root.jsx'
 import About from './../components/route_handlers/about/root.jsx'
 
@@ -28,9 +35,13 @@ class App extends React.Component {
 
 }
 
+var history = createBrowserHistory()
+// var store = createStore()
+
+// syncReduxAndRouter
 
 var routes = (
-	<Router history={createBrowserHistory()}>
+	<Router history={history}>
 		<Route component={App}>
 			<Route path='/' component={Banner} />
 
