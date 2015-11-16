@@ -1,7 +1,6 @@
 import express from 'express'
-import _ from 'underscore'
 
-import { list } from './../../../middleware/crud_postgres/index.js'
+import { list } from './../../../middleware/crud/index.js'
 
 var router = express.Router()
 

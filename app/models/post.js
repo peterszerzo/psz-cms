@@ -1,68 +1,10 @@
-import $ from 'jquery';
 import * as Backbone from 'backbone';
-import Inflect from 'inflect';
-
-import * as base from './base.js';
-
 
 /*
  * Sets url property, building up query string from json.
  *
  */
-export class Model extends base.Model {
-
-    /*
-     * 
-     *
-     */
-    get resourceName() { return 'base'; }
-
-
-    /*
-     * Word fragment used to build up data url.
-     *
-     */
-    get resourceUrlBase() { return 'bases'; }
-
-
-    /*
-     * Url under which the resource is displayed on the client-side app.
-     *
-     */
-    get viewUrl() {
-        return `/${this.resourceUrlBase}/${this.get('id')}`;
-    }
-
-
-    /*
-     * Return JSON representation with camel-cased field names.
-     *
-     */
-    toCamelizedJson() {
-        var data = this.toJSON();
-        for (let key in data) {
-            let newKey = Inflect.camelize(key);
-            if (newKey !== key) {
-                data[newKey] = data[key];
-                delete data[key];
-            }
-        }
-        return data;
-    }
-
-
-    /*
-     *
-     *
-     */
-    getIconName() {
-        var id = this.get('id'),
-            name = id.split('-').map(function(word) {
-                return (word[0].toUpperCase() + word.slice(1));
-            }).join('');
-        return name;
-    }
-
+export class Model extends Backbone.Model {
 
     /*
      *
@@ -176,7 +118,7 @@ export class Model extends base.Model {
  * Sets url property, building up query string from json.
  *
  */
-export class Collection extends base.Collection {
+export class Collection extends Backbone.Collection {
 
     /*
      * Reference to the model constructor.
