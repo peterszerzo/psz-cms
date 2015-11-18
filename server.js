@@ -1,8 +1,6 @@
 import express from 'express'
 import bodyParser from 'body-parser'
 import pg from 'pg'
-import webpackDevMiddleware from 'webpack-dev-middleware'
-import webpack from 'webpack'
 
 import serveGzipMiddleware from './app/middleware/serve_gzip.js'
 import router from './app/routes/index.js'
