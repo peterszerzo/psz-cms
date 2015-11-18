@@ -1,129 +1,123 @@
-import * as Backbone from 'backbone';
+import Base from './base.js'
 
-/*
- * Sets url property, building up query string from json.
- *
- */
-export class Model extends Backbone.Model {
+var Post = Object.create(Base)
 
-    /*
-     *
-     *
-     */
-    get defaults() {
-        return {
-            display_order: 0,
-            is_live: false,
-            supervisors: [],
-            headline: '',
-            title: '',
-            name: 'Untitled',
-            collaborators: [],
-            links: [],
-            post_group: '',
-            dates: [],
-            technologies: [],
-            body_text: 'A fine body text.'
-        };
-    }
+Post.fields = [
 
+	{
+	    key: 'id',
+	    type: 'text',
+	    defaultValue: 'choose-id',
+	    formComponent: 'Input'
+	},
 
-    /*
-     *
-     *
-     */
-    get dbFields() {
-        return [
-            {
-                key: 'id',
-                type: 'text'
-            },
-            {
-                key: 'type',
-                type: 'text'
-            },
-            {
-                key: 'title',
-                type: 'text'
-            },
-            {
-                key: 'headline',
-                type: 'text'
-            },
-            {
-                key: 'name',
-                type: 'text'
-            }, 
-            {
-                key: 'supervisors',
-                type: 'json'
-            },
-            {
-                key: 'collaborators',
-                type: 'json'
-            },
-            {
-                key: 'post_group',
-                type: 'text'
-            },
-            {
-                key: 'technologies',
-                type: 'json'
-            },
-            {
-                key: 'body_text',
-                type: 'text'
-            },
-            {
-                key: 'display_order',
-                type: 'integer',
-            },
-            {
-                key: 'dates',
-                type: 'json'
-            },
-            {
-                key: 'links',
-                type: 'json'
-            },
-            {
-                key: 'is_live',
-                type: 'boolean'
-            }
-        ];
-    }
+	{
+	    key: 'type',
+	    type: 'text',
+	    defaultValue: 'project',
+	    formComponent: 'Input'
+	},
 
+	{
+	    key: 'title',
+	    type: 'text',
+	    defaultValue: 'Project title',
+	    formComponent: 'Input'
+	},
 
-    /*
-     *
-     *
-     */
-    get dbIndeces() {
-        return [
-            {
-                key: 'id',
-                type: 'unique'
-            },
-            {
-                key: 'type'
-            }
-        ];
-    }
+	{
+	    key: 'headline',
+	    type: 'text',
+	    defaultValue: '',
+	    formComponent: 'Input'
+	},
 
-}
+	{
+	    key: 'name',
+	    type: 'text',
+	    defaultValue: 'Project name',
+	    formComponent: 'Input'
+	}, 
 
+	{
+	    key: 'supervisors',
+	    type: 'json',
+	    defaultValue: [],
+	    formComponent: 'CommaSeparatedArrayInput'
+	},
 
+	{
+	    key: 'collaborators',
+	    type: 'json',
+	    defaultValue: [],
+	    formComponent: 'Input'
+	},
 
-/*
- * Sets url property, building up query string from json.
- *
- */
-export class Collection extends Backbone.Collection {
+	{
+	    key: 'post_group',
+	    type: 'text',
+	    defaultValue: 'featured',
+	    formComponent: 'Input'
+	},
 
-    /*
-     * Reference to the model constructor.
-     *
-     */
-    get model() { return Model; }
+	{
+	    key: 'built_with',
+	    type: 'json',
+	    defaultValue: [],
+	    formComponent: 'Input'
+	},
+
+	{
+	    key: 'body_text',
+	    type: 'text',
+	    defaultValue: "Stay tuned for this post's body text.",
+	    formComponent: 'TextArea'
+	},
+
+	{
+	    key: 'display_order',
+	    type: 'integer',
+	    defaultValue: 0,
+	    formComponent: 'Input'
+	},
+
+	{
+	    key: 'dates',
+	    type: 'json',
+	    defaultValue: [],
+	    formComponent: 'Input'
+	},
+
+	{
+	    key: 'links',
+	    type: 'json',
+	    defaultValue: [],
+	    formComponent: 'Input'
+	},
+
+	{
+	    key: 'is_live',
+	    type: 'boolean',
+	    defaultValue: false,
+	    formComponent: 'Checkbox',
+	    options: [ { value: true, name: 'Yes' }, { value: false, name: 'No' } ]
+	}
+]
+
+Post.create = function(data) { 
+
+	var self = Object.create(Post)
+
+	self.data = {}
+
+	for (let key in data) {
+		self.data[key] = data[key]
+	}
+
+	self.tableName = 'posts'
+
+	return self
 
 }
+
+export default Post

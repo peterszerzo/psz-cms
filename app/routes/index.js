@@ -4,7 +4,6 @@ import * as React from 'react'
 
 var router = express.Router()
 
-router.use('/api/v1', require('./api/v1/index.js').default)
 router.use('/api/v2', require('./api/v2/index.js').default)
 
 router.get('*', (req, res) => {

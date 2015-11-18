@@ -1,13 +1,31 @@
 [
 
     {
+        "id": "liquid-lab",
+        "type": "project",
+        "is_live": true,
+        "name": "Liquid Lab",
+        "title": "Liquid Lab",
+        "headline": "Design project with General Assembly",
+        "links": [
+            {
+                "name": "Project site",
+                "url": "http://pickled-plugins.github.io/liquidlab"
+            }
+        ],
+        "post_group": "featured",
+        "dates": [ "2015-9-1", "2015-10-26" ],
+        "languages": [ "JavaScript" ],
+        "built_with": [ "React.js", "Sketch", "SASS" ]
+    },
+
+    {
         "id": "newamerica",
         "type": "project",
         "is_live": true,
         "name": "New America",
         "title": "New America",
         "headline": "Lead developer for interactive web projects.",
-        "url": "http://atlas.newamerica.org",
         "links": [
             {
                 "name": "Atlas",
@@ -24,8 +42,7 @@
         ],
         "post_group": "featured",
         "dates": ["2014-12", "present"],
-        "languages": [ "JavaScript" ],
-        "technologies": [ "React.js", "Backbone.js", "Marionette.js", "d3.js", "Leaflet.js", "Express.js" ]
+        "built_with": [ "React.js", "Backbone.js", "Marionette.js", "d3.js", "Leaflet.js", "Express.js" ]
     },
 
     {
@@ -49,7 +66,7 @@
         ],
         "supervisors": [],
         "collaborators": [],
-        "technologies": [ "HTML Canvas" ]
+        "built_with": [ "HTML Canvas" ]
     },
 
     {
@@ -70,7 +87,7 @@
         "year": 2010,
         "supervisors": ["Michael Stein, PE"],
         "collaborators": [],
-        "technologies": [ "Rhino PythonScript" ]
+        "built_with": [ "Rhino PythonScript" ]
     },
 
     {
@@ -194,7 +211,7 @@
         "is_live": false,
         "supervisors": [],
         "collaborators": [],
-        "technologies": [ "Raw PHP", "jQuery" ]
+        "built_with": [ "Raw PHP", "jQuery" ]
     },
 
     {
@@ -215,7 +232,7 @@
         "is_live": true,
         "supervisors": [],
         "collaborators": [],
-        "technologies": [ "Backbone.js", "Marionette.js", "d3.js", "Leaflet.js" ]
+        "built_with": [ "Backbone.js", "Marionette.js", "d3.js", "Leaflet.js" ]
     },
 
     {

@@ -1,11 +1,10 @@
-import React from 'react';
-
-var Logos = {};
-
-var noFill = { fill: 'none' };
+import React from 'react'
 
 
-Logos.Neutral = (props) => {
+var noFill = { fill: 'none' }
+
+
+export function Neutral(props) {
 
 	return (
 		<svg className={props.className} viewBox="0 0 400 400">
@@ -18,7 +17,35 @@ Logos.Neutral = (props) => {
 }
 
 
-Logos.OnDeletingMyFacebook = (props) => {
+export function LiquidLab(props) {
+
+	return (
+		<svg className={props.className} viewBox="0 0 400 400">
+			<g>
+				<circle cx="200" cy="200" r="199.221"/>
+			</g>
+			<g>
+				<path fill="#FFFFFF" d="M131.314,252.77c7.672,19.869,20.423,34.582,35.472,44.824
+					c3.185,2.167,6.235,3.957,9.062,5.398c1.018,0.519,1.941,0.96,2.765,1.328c0.54,0.241,0.953,0.414,1.231,0.522
+					c2.888,1.133,6.153,0.744,8.695-1.036l83.457-58.438c4.191-2.935,5.21-8.71,2.275-12.901c-2.934-4.19-8.711-5.208-12.9-2.274
+					c0,0-77.979,56.073-79.195,55.453c-2.153-1.101-2.445-1.653-4.966-3.368c-12.132-8.256-22.409-20.115-28.613-36.181
+					c-8.584-22.231-8.418-50.342,3.186-85.314c1.611-4.855-1.021-10.099-5.874-11.71c-4.857-1.609-10.1,1.021-11.709,5.876
+					C121.299,193.829,121.105,226.333,131.314,252.77z"/>
+				<path fill="#FFFFFF" d="M235.387,138.678c10.984,10.656,17.347,23.521,20.2,36.998
+					c0.685,3.234,0.915,3.847,1.118,6.513c0.068,0.903-76.874,54.757-76.874,54.757c-4.191,2.935-5.209,8.711-2.274,12.9
+					c2.934,4.191,8.709,5.209,12.901,2.275l81.133-56.81c2.409-1.688,3.874-4.419,3.946-7.36c0.01-0.318,0.01-0.803-0.004-1.443
+					c-0.022-0.985-0.077-2.102-0.17-3.342c-0.264-3.457-0.791-7.261-1.652-11.326c-3.564-16.845-11.56-33.007-25.421-46.459
+					c-18.251-17.709-44.741-28.589-80.326-30.844c-5.106-0.324-9.508,3.555-9.831,8.659c-0.323,5.105,3.554,9.507,8.659,9.831
+					C198.138,115.012,220.44,124.173,235.387,138.678z"/>
+			</g>
+		</svg>
+	)
+
+}
+
+
+
+export function OnDeletingMyFacebook(props) {
 
 	return (
 		<svg className={props.className} viewBox="0 0 400 400">
@@ -36,7 +63,7 @@ Logos.OnDeletingMyFacebook = (props) => {
 }
 
 
-Logos.Playground1 = (props) => {
+export function Playground1(props) {
 
 	return (
 		<svg className={props.className} viewBox="0 0 400 400">
@@ -60,7 +87,7 @@ Logos.Playground1 = (props) => {
 
 }
 
-Logos.Battle = (props) => {
+export function Battle(props) {
 
 	return (
 		<svg className={props.className} viewBox="0 0 400 400">
@@ -76,7 +103,7 @@ Logos.Battle = (props) => {
 
 }
 
-Logos.Newamerica = (props) => {
+export function Newamerica(props) {
 
 	return (
 		<svg className={props.className} viewBox="0 0 400 400">
@@ -96,7 +123,7 @@ Logos.Newamerica = (props) => {
 
 }
 
-Logos.About = (props) => {
+export function About(props) {
 
 	return (
 		<svg className={props.className} viewBox="0 0 400 400">
@@ -113,7 +140,7 @@ Logos.About = (props) => {
 
 }
 
-Logos.Kinetic = (props) => {
+export function Kinetic(props) {
 
 	return (
 		<svg className={props.className} viewBox="0 0 400 400">
@@ -146,7 +173,7 @@ Logos.Kinetic = (props) => {
 
 }
 
-Logos.ScalingTricksForGeo = (props) => {
+export function ScalingTricksForGeo(props) {
 
 	return (
 		<svg className={props.className} viewBox="0 0 400 400">
@@ -167,7 +194,7 @@ Logos.ScalingTricksForGeo = (props) => {
 
 }
 
-Logos.RipsawJs = (props) => {
+export function RipsawJs(props) {
 
 	return (
 		<svg className={props.className} viewBox="0 0 400 400">
@@ -194,7 +221,7 @@ Logos.RipsawJs = (props) => {
 }
 
 
-Logos.Pba = (props) => {
+export function Pba(props) {
 
 	return (
 		<svg className={props.className} viewBox="0 0 400 400">
@@ -219,7 +246,7 @@ Logos.Pba = (props) => {
 }
 
 
-Logos.GiraffeForRhino = (props) => {
+export function GiraffeForRhino(props) {
 
 	return (
 		<svg className={props.className} viewBox="0 0 400 400">
@@ -246,7 +273,7 @@ Logos.GiraffeForRhino = (props) => {
 }
 
 
-Logos.AlgorithmicTattoo = (props) => {
+export function AlgorithmicTattoo(props) {
 
 	return (
 		<svg className={props.className} viewBox="0 0 400 400">
@@ -298,7 +325,7 @@ Logos.AlgorithmicTattoo = (props) => {
 }
 
 
-Logos.PendantProject = (props) => {
+export function PendantProject(props) {
 
 	return (
 		<svg className={props.className} viewBox="0 0 400 400">
@@ -340,5 +367,3 @@ Logos.PendantProject = (props) => {
 	);
 
 }
-
-export default Logos;

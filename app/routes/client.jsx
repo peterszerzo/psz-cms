@@ -2,43 +2,35 @@ import React from 'react'
 import { Router, Route } from 'react-router'
 import createBrowserHistory from 'history/lib/createBrowserHistory'
 
-// import { Provider } from 'react-redux'
-// import { createStore, combineReducers } from 'redux'
-
-import { syncReduxAndRouter, routeReducer } from 'redux-simple-router'
-
-import reducer from './../redux/reducers/index'
-
 import Banner from './../components/route_handlers/banner/root.jsx'
 import About from './../components/route_handlers/about/root.jsx'
 
-import ProjectsIndex from  './../components/route_handlers/projects/index/root.jsx'
 
-import BlogPostsIndex from  './../components/route_handlers/blog_posts/index/root.jsx'
+import Index from './../components/route_handlers/posts/index/root.jsx'
+import Show from './../components/route_handlers/posts/show/root.jsx'
 
-import Show from './../components/route_handlers/resources/show/root.jsx'
+// App component
+function App(props) {
 
-
-class App extends React.Component {
-
-	/*
-	 *
-	 *
-	 */
-	render() {
-		return (
-			<div className='wrapper fill-parent'>
-				{this.props.children}
-			</div>
-		)
-	}
+	return (
+		<div className='wrapper fill-parent'>
+			{ props.children }
+		</div>
+	)
 
 }
 
-var history = createBrowserHistory()
-// var store = createStore()
+console.log(Index)
 
-// syncReduxAndRouter
+function ProjectsIndex(props) {
+	return <Index { ...props } activeLinkName={'projects'} postType={'project'} />
+}
+
+function BlogPostsIndex(props) {
+	return <Index { ...props } activeLinkName={'blog'} postType={'blog_post'} />
+}
+
+var history = createBrowserHistory()
 
 var routes = (
 	<Router history={history}>

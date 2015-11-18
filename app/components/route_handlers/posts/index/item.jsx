@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-import Logos from './../../../general/project_logos.jsx';
+import * as Logos from './../../../general/project_logos.jsx';
 
 var ListItem = (props) => {
 

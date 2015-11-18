@@ -1,23 +1,27 @@
-require('babel-core/register');
+/*
+ *
+ * CREATE TABLE posts (id string, type string, links json)
+ * CREATE INDEX ON posts
+ *
+ *
+ */
 
-var fs = require('fs');
 
-var createScript = 'CREATE TABLE posts (id string, type string, links json)';
+require('babel-core/register')
 
-var createIndexScript = 'CREATE INDEX ON posts ';
+var fs = require('fs')
+var Post = require('./../../app/models/post.js').default
 
-var post = require('./../../app/models/post.js');
+var postData = require('./../../content/seeds/posts.json')
 
-var postData = require('./../../content/seeds/posts.json');
+var insertScripts = postData.map(function(postDatum) {
+	var post = Post.create(postDatum)
+	return post.getSqlInsertCommand()
+}).join('\n')
 
-console.log(postData)
+var post = Post.create()
 
-var coll = new post.Collection(postData);
+var createScript = post.getTableCreateCommand()
 
-var insertScripts = coll.models.map(function(model) { return model.getInsertIntoTableScript(); }).join('\n');
-
-var createScripts = coll.models[0].getCreateTableScript();
-
-fs.writeFile('./services/postgres/create.sql', createScripts);
-
-fs.writeFile('./services/postgres/insert.sql', insertScripts);
+fs.writeFile('./services/postgres/create.sql', createScript)
+fs.writeFile('./services/postgres/insert.sql', insertScripts)

@@ -6,7 +6,7 @@ import text from './text.js'
 
 import { Header } from './../../general/header.jsx'
 
-var greetings = [
+var greetings = [ 
 	'Hello',
 	'Sziasztok',
 	'Salut',
