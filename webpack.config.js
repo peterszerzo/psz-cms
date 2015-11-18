@@ -1,4 +1,5 @@
-var path = require('path');
+var path = require('path'),
+	webpack = require('webpack');
 
 module.exports = {
 
@@ -27,6 +28,14 @@ module.exports = {
 			}
 
 		]
-	}
+	},
+
+	plugins: [
+		new webpack.optimize.UglifyJsPlugin({
+			mangle: {
+				except: [ '$super', '$', 'exports', 'require' ]
+			}
+		})
+	]
 
 }

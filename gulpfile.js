@@ -1,8 +1,20 @@
-require('babel-core/register');
+var gulp = require('gulp'),
+	nodemon = require('gulp-nodemon'),
+	mocha = require('gulp-mocha');
 
-var gulp = require('gulp');
+// Server watch and live reload.
+gulp.task('dev', function() {
+	nodemon({
+		script: './app.js',
+		ext: 'js scss jade',
+		tasks: function(changedFiles) {
+			return [ 'style' ];
+		}
+	}).on('restart', function() { console.log('restarted'); });
+})
 
-require('./gulp_tasks/style.js');
-require('./gulp_tasks/spec.js');
-require('./gulp_tasks/dev.js');
-require('./gulp_tasks/deploy.js');
+// Run specs. 
+gulp.task('spec', function() {
+    return gulp.src('./spec/**/*_spec.js')
+        .pipe(mocha({ reporter: 'spec' }));
+})

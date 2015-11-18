@@ -9,7 +9,8 @@
   "readme": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "deploy": "git add -A && git commit -m 'fresh deploy' && git push origin master && git push heroku master"
+    "compress": "gzip < public/scripts/bundle.js > public/scripts/bundle.js.gz",
+    "deploy": "npm run compress && git add -A && git commit -m 'fresh deploy' && git push origin master && git push heroku master"
   },
   "repository": {
     "type": "git",
