@@ -1,9 +1,8 @@
-import React from 'react';
-import { Header } from './../../../general/header.jsx';
-
-import ShowItem from './item.jsx';
-
+import React from 'react'
 import fetch from 'isomorphic-fetch'
+
+import { Header } from './../../../general/header.jsx'
+import ShowItem from './item.jsx'
 
 class Show extends React.Component {
 
@@ -23,7 +22,6 @@ class Show extends React.Component {
 	 */
 	render() {
 		var { resource } = this.state
-		console.log(this.state)
 		return (
 			<div className='wrapper__content fill-parent'>
 				<Header />
@@ -38,7 +36,7 @@ class Show extends React.Component {
 	 *
 	 */
 	componentDidMount() {
-		this.fetchResource();
+		this.fetchResource()
 	}
 
 

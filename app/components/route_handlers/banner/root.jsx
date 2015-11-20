@@ -1,13 +1,18 @@
 import * as React from 'react'
 import _ from 'underscore'
 import { Link } from 'react-router'
+import { connect } from 'react-redux'
+import { pushState } from 'redux-router'
 
 import globe from './../../../assets/scripts/banner_animation/index.js'
 import { Loader } from './../../general/loader.jsx'
 
 import fetch from 'isomorphic-fetch'
 
-
+/*
+ *
+ *
+ */
 class Banner extends React.Component {
 
 	/*
@@ -124,10 +129,15 @@ class Banner extends React.Component {
 	 */
 	navigateToRandom() {
 		var { randomPostId } = this.state,
-			{ history } = this.props;
+			{ dispatch, history } = this.props;
 		if (randomPostId) {
-			history.pushState(null, `/${randomPostId}`)
+			let url = `/${randomPostId}`
+			this.props.dispatch(pushState(null, `/${randomPostId}`))
+			// history.pushState(null, `/${randomPostId}`)
 		}
+
+
+
 	}
 
 
@@ -162,4 +172,7 @@ class Banner extends React.Component {
 
 }
 
-export default Banner
+export default connect(state => ({ 
+	router: state.router,
+	app: state.app
+}))(Banner)

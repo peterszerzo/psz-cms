@@ -1,7 +1,11 @@
-export function reducer(state = {}, action) {
+export default function reducer(state = {}, action) {
 
 	if (action.type === 'SET_TEST_PROP') {
-		state.testProp = true
+		state.testProp = 'just set test prop'
+	} else {
+		state.testProp = 'default test prop'
 	}
+
+	return state
 
 }

@@ -17,6 +17,7 @@ module.exports = {
 			{
 				test: /(\.js)|(\.jsx)$/,
 				loader: 'babel-loader',
+				exclude: /(node_modules|bower_components)/,
 				query: {
 					presets: [ 'es2015', 'react', 'stage-0' ]
 				}
@@ -31,11 +32,11 @@ module.exports = {
 	},
 
 	plugins: [
-		new webpack.optimize.UglifyJsPlugin({
-			mangle: {
-				except: [ '$super', '$', 'exports', 'require' ]
-			}
-		})
+		// new webpack.optimize.UglifyJsPlugin({
+		// 	mangle: {
+		// 		except: [ '$super', '$', 'exports', 'require' ]
+		// 	}
+		// })
 	]
 
 }
