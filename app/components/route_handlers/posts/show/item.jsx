@@ -10,7 +10,7 @@ import { Loader } from './../../../general/loader.jsx'
  * Render a list of links.
  *
  */
-var Links = (props) => {
+function Links(props) {
 	var { links } = props
 	if (!links) { return <div/> }
 	var linksComps = links.map((link, i) => {
@@ -39,7 +39,7 @@ var Links = (props) => {
  * Render a dash-formatted date pair.
  *
  */
-var Dates = (props) => {
+function Dates(props) {
 
 	var { dates } = props
 

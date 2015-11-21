@@ -1,17 +1,25 @@
 # peterszerzo.com
 
-My new personal website.
+My current personal website - an evolving experiment with designs and technologies that tends to not sit still for more than 2 weeks (read its story [here](/docs/story.md)).
 
-## Story
+## Development environment
 
-### November 2014
+Clone the repository and provide a ``.env`` file at the root with the environment variables. These are currently the following:
 
-Projects listing page design.
+	NODE_ENV=development
+	PORT=3000
+	DATABASE_URL=postgres://localhost/peterszerzo
 
-### December 2014
+Run ``npm install`` and ``npm install webpack -g``. This sets up all modules needed for the build.
 
-First experiments to create front page animation (not intended for a front page animation yet).
+Finally, run two terminal windows with the following scripts:
 
-### July 2015
+* ``webpack --watch``
+* ``node app.js``
 
-Move to React.js.
+This will be a little more streamlined shortly.
+
+## Docs
+
+Are right here:
+* [Testing](/docs/testing.md)

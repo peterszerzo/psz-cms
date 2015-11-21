@@ -11,6 +11,7 @@ import { Provider } from 'react-redux'
 
 import Index from './../components/route_handlers/posts/index/root.jsx'
 import Show from './../components/route_handlers/posts/show/root.jsx'
+import EditPost from './../components/route_handlers/posts/edit/root.jsx'
 
 import reducer from './../redux/reducers/index.js'
 
@@ -41,6 +42,9 @@ var routes = (
 					<Route path='/about' component={About} />
 					<Route path='/projects' component={ProjectsIndex} />
 					<Route path='/blog' component={BlogPostsIndex} />
+					<Route path='/admin/posts'>
+						<Route path='new' component={EditPost} />
+					</Route>
 					<Route path='/:id' component={Show} />
 				</Route>
 			</Router>

@@ -1,5 +1,6 @@
-import React from 'react'
+// Project logo svg's.
 
+import React from 'react'
 
 var noFill = { fill: 'none' }
 

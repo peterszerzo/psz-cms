@@ -52,13 +52,13 @@
 
 	var _client2 = _interopRequireDefault(_client);
 
-	var _qajax = __webpack_require__(358);
+	var _qajax = __webpack_require__(359);
 
 	var _qajax2 = _interopRequireDefault(_qajax);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	__webpack_require__(362);
+	__webpack_require__(363);
 
 	global.Qajax = _qajax2.default;
 
@@ -18668,7 +18668,11 @@
 
 	var _root8 = _interopRequireDefault(_root7);
 
-	var _index = __webpack_require__(357);
+	var _root9 = __webpack_require__(357);
+
+	var _root10 = _interopRequireDefault(_root9);
+
+	var _index = __webpack_require__(358);
 
 	var _index2 = _interopRequireDefault(_index);
 
@@ -18710,6 +18714,11 @@
 					_react2.default.createElement(_reactRouter.Route, { path: '/about', component: _root4.default }),
 					_react2.default.createElement(_reactRouter.Route, { path: '/projects', component: ProjectsIndex }),
 					_react2.default.createElement(_reactRouter.Route, { path: '/blog', component: BlogPostsIndex }),
+					_react2.default.createElement(
+						_reactRouter.Route,
+						{ path: '/admin/posts' },
+						_react2.default.createElement(_reactRouter.Route, { path: 'new', component: _root10.default })
+					),
 					_react2.default.createElement(_reactRouter.Route, { path: '/:id', component: _root8.default })
 				)
 			)
@@ -52072,7 +52081,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var noFill = { fill: 'none' };
+	var noFill = { fill: 'none' }; // Project logo svg's.
 
 	function Neutral(props) {
 
@@ -52531,7 +52540,7 @@
 	 * Render a list of links.
 	 *
 	 */
-	var Links = function Links(props) {
+	function Links(props) {
 		var links = props.links;
 
 		if (!links) {
@@ -52557,13 +52566,13 @@
 			{ className: 'project-show__links' },
 			linksComps
 		);
-	};
+	}
 
 	/*
 	 * Render a dash-formatted date pair.
 	 *
 	 */
-	var Dates = function Dates(props) {
+	function Dates(props) {
 		var dates = props.dates;
 
 		if (dates == null) {
@@ -52582,7 +52591,7 @@
 			{ className: 'date' },
 			content
 		);
-	};
+	}
 
 	/*
 	 *
@@ -64095,6 +64104,90 @@
 
 /***/ },
 /* 357 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _react = __webpack_require__(147);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _header = __webpack_require__(259);
+
+	var _edit = __webpack_require__(374);
+
+	var _edit2 = _interopRequireDefault(_edit);
+
+	var _post = __webpack_require__(368);
+
+	var _post2 = _interopRequireDefault(_post);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	/*
+	 * 
+	 *
+	 */
+
+	var EditPost = (function (_React$Component) {
+		_inherits(EditPost, _React$Component);
+
+		/*
+	  *
+	  *
+	  */
+
+		function EditPost(props) {
+			_classCallCheck(this, EditPost);
+
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(EditPost).call(this, props));
+
+			_this.state = {
+				resource: {}
+			};
+			return _this;
+		}
+
+		/*
+	  *
+	  *
+	  */
+
+		_createClass(EditPost, [{
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					{ className: 'wrapper__content fill-parent' },
+					_react2.default.createElement(_header.Header, null),
+					_react2.default.createElement(
+						'div',
+						null,
+						_react2.default.createElement(_edit2.default, { fields: _post2.default.fields })
+					)
+				);
+			}
+		}]);
+
+		return EditPost;
+	})(_react2.default.Component);
+
+	exports.default = EditPost;
+
+/***/ },
+/* 358 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -64117,14 +64210,14 @@
 	}
 
 /***/ },
-/* 358 */
+/* 359 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(359)(__webpack_require__(360), window.XMLHttpRequest, window.FormData);
+	module.exports = __webpack_require__(360)(__webpack_require__(361), window.XMLHttpRequest, window.FormData);
 
 
 /***/ },
-/* 359 */
+/* 360 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -64390,7 +64483,7 @@
 
 
 /***/ },
-/* 360 */
+/* 361 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process, setImmediate) {// vim:ts=4:sts=4:sw=4:
@@ -66442,10 +66535,10 @@
 
 	});
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(361).setImmediate))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(362).setImmediate))
 
 /***/ },
-/* 361 */
+/* 362 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(setImmediate, clearImmediate) {var nextTick = __webpack_require__(3).nextTick;
@@ -66524,19 +66617,19 @@
 	exports.clearImmediate = typeof clearImmediate === "function" ? clearImmediate : function(id) {
 	  delete immediateIds[id];
 	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(361).setImmediate, __webpack_require__(361).clearImmediate))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(362).setImmediate, __webpack_require__(362).clearImmediate))
 
 /***/ },
-/* 362 */
+/* 363 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(363);
+	var content = __webpack_require__(364);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(366)(content, {});
+	var update = __webpack_require__(367)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -66553,21 +66646,21 @@
 	}
 
 /***/ },
-/* 363 */
+/* 364 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(364)();
+	exports = module.exports = __webpack_require__(365)();
 	// imports
-	exports.i(__webpack_require__(365), "");
+	exports.i(__webpack_require__(366), "");
 
 	// module
-	exports.push([module.id, "@-webkit-keyframes bounce {\n  0% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  12.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  25% {\n    -moz-transform: translateY(9px);\n    -o-transform: translateY(9px);\n    -ms-transform: translateY(9px);\n    -webkit-transform: translateY(9px);\n    transform: translateY(9px); }\n  37.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  50% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  62.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  75% {\n    -moz-transform: translateY(-9px);\n    -o-transform: translateY(-9px);\n    -ms-transform: translateY(-9px);\n    -webkit-transform: translateY(-9px);\n    transform: translateY(-9px); }\n  87.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  100% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); } }\n\n@-moz-keyframes bounce {\n  0% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  12.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  25% {\n    -moz-transform: translateY(9px);\n    -o-transform: translateY(9px);\n    -ms-transform: translateY(9px);\n    -webkit-transform: translateY(9px);\n    transform: translateY(9px); }\n  37.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  50% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  62.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  75% {\n    -moz-transform: translateY(-9px);\n    -o-transform: translateY(-9px);\n    -ms-transform: translateY(-9px);\n    -webkit-transform: translateY(-9px);\n    transform: translateY(-9px); }\n  87.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  100% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); } }\n\n@-ms-keyframes bounce {\n  0% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  12.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  25% {\n    -moz-transform: translateY(9px);\n    -o-transform: translateY(9px);\n    -ms-transform: translateY(9px);\n    -webkit-transform: translateY(9px);\n    transform: translateY(9px); }\n  37.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  50% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  62.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  75% {\n    -moz-transform: translateY(-9px);\n    -o-transform: translateY(-9px);\n    -ms-transform: translateY(-9px);\n    -webkit-transform: translateY(-9px);\n    transform: translateY(-9px); }\n  87.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  100% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); } }\n\n@-o-keyframes bounce {\n  0% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  12.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  25% {\n    -moz-transform: translateY(9px);\n    -o-transform: translateY(9px);\n    -ms-transform: translateY(9px);\n    -webkit-transform: translateY(9px);\n    transform: translateY(9px); }\n  37.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  50% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  62.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  75% {\n    -moz-transform: translateY(-9px);\n    -o-transform: translateY(-9px);\n    -ms-transform: translateY(-9px);\n    -webkit-transform: translateY(-9px);\n    transform: translateY(-9px); }\n  87.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  100% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); } }\n\n@keyframes bounce {\n  0% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  12.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  25% {\n    -moz-transform: translateY(9px);\n    -o-transform: translateY(9px);\n    -ms-transform: translateY(9px);\n    -webkit-transform: translateY(9px);\n    transform: translateY(9px); }\n  37.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  50% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  62.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  75% {\n    -moz-transform: translateY(-9px);\n    -o-transform: translateY(-9px);\n    -ms-transform: translateY(-9px);\n    -webkit-transform: translateY(-9px);\n    transform: translateY(-9px); }\n  87.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  100% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); } }\n\n.wrapper__content {\n  padding-top: 60px;\n  overflow-x: hidden;\n  overflow-y: scroll; }\n\n* {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n  -webkit-font-smoothing: antialiased; }\n\nhtml, body {\n  width: 100%;\n  height: 100%;\n  overflow: hidden;\n  margin: 0; }\n\npre, code {\n  width: 100%;\n  overflow-x: scroll; }\n\npre {\n  background-color: rgba(79, 63, 145, 0.1);\n  padding: 20px;\n  border-radius: 8px; }\n\na {\n  text-decoration: none;\n  color: white;\n  opacity: 0.6; }\n  a:hover {\n    opacity: 1; }\n\nul {\n  list-style-type: none;\n  padding: 0;\n  margin: 0; }\n  ul li {\n    display: block; }\n\nimg {\n  display: block;\n  width: 100%; }\n\n@font-face {\n  font-family: 'Hallo';\n  src: url(\"/fonts/Hallo-Sans/Hallo sans.otf\");\n  font-style: normal;\n  font-stretch: normal; }\n\n* {\n  font-family: 'Hallo';\n  font-weight: normal; }\n\nh1, h2, h3, h4 {\n  font-family: 'Hallo'; }\n\np, a, li {\n  font-family: 'Palatino'; }\n\np, a, li, code {\n  font-size: 22px; }\n\ncode {\n  font-family: \"Courier New\";\n  font-size: 18px;\n  padding: 0 4px; }\n  p code {\n    font-size: 22px; }\n\np, li {\n  line-height: 165%; }\n\ncode {\n  line-height: 135%; }\n\nh1 {\n  font-size: 44px;\n  margin-top: 35px;\n  margin-bottom: 15px; }\n\nh2 {\n  font-size: 32px;\n  margin-top: 30px;\n  margin-bottom: 10px; }\n\nh3 {\n  font-size: 26px; }\n\n.hidden {\n  display: none !important; }\n\n.active {\n  opacity: 1 !important;\n  transition: opacity 0.5s ease-in-out; }\n\n.fill-parent {\n  width: 100%;\n  height: 100%; }\n\n.title, .headline {\n  text-align: center;\n  padding: 0 5%;\n  width: 100%;\n  margin: auto;\n  word-wrap: break-word; }\n\n.title {\n  font-size: 44px;\n  margin: 30px 0 10px 0; }\n  @media only screen and (min-width: 768px) {\n    .title {\n      font-size: 64px;\n      margin: 45px 0 20px 0; } }\n\n.headline {\n  font-size: 32px;\n  max-width: 800px;\n  opacity: 0.80;\n  font-weight: normal;\n  margin-top: 35px;\n  margin-bottom: 50px; }\n  @media screen and (min-width: 600px) {\n    .headline {\n      font-size: 28px; } }\n\n.date {\n  text-align: center;\n  font-size: 24px;\n  opacity: 0.7;\n  padding: 0 0 30px 0; }\n\n.loader {\n  text-align: center;\n  margin-top: 30px;\n  height: 60px; }\n  .loader img {\n    display: inline-block;\n    width: 60px;\n    height: 60px; }\n\n.link {\n  font-family: 'Hallo';\n  width: 170px;\n  margin: auto;\n  text-align: center;\n  color: #413478;\n  border: 2px solid #413478;\n  border-radius: 2px;\n  padding: 6px 12px;\n  font-size: 26px;\n  opacity: 0.6;\n  transition: all 0.3s; }\n  .link:hover {\n    opacity: 1;\n    transition: all 0.3s; }\n\n.banner {\n  width: 100%;\n  height: 100%;\n  transition: all 0.5s;\n  background-color: #0d1722;\n  position: relative; }\n  .banner__summary {\n    z-index: 2;\n    top: calc(50% - 250px/2);\n    left: calc(50% - 250px/2);\n    position: fixed;\n    display: block;\n    border: 2px solid rgba(255, 255, 255, 0);\n    padding: 55px 30px;\n    width: 250px;\n    height: 250px;\n    border-radius: 100%;\n    margin: auto;\n    background-color: #413478;\n    opacity: 0.95;\n    -webkit-transition: all 0.5s;\n    -moz-transition: all 0.5s;\n    -ms-transition: all 0.5s;\n    -o-transition: all 0.5s;\n    transition: all 0.5s;\n    -webkit-animation: bounce 4.5s linear infinite;\n    -moz-animation: bounce 4.5s linear infinite;\n    -ms-animation: bounce 4.5s linear infinite;\n    -o-animation: bounce 4.5s linear infinite;\n    animation: bounce 4.5s linear infinite; }\n    .banner__summary:hover {\n      opacity: 0.99;\n      border: 2px solid white;\n      transition: all 0.5s; }\n    .banner__summary h1, .banner__summary p {\n      font-family: 'Hallo';\n      margin: 0;\n      padding: 0;\n      text-align: center;\n      line-height: 125%; }\n    .banner__summary h1 {\n      font-size: 32px;\n      font-size: 2rem;\n      margin: 25px 0 10px 0; }\n    .banner__summary p {\n      font-size: 20px;\n      font-size: 1.25rem;\n      margin: 0; }\n  .banner__globe, .banner__background {\n    position: absolute;\n    width: 100%;\n    height: 100%; }\n  .banner__globe {\n    z-index: 1; }\n  .banner__background {\n    z-index: 0;\n    opacity: 0.4;\n    background-image: url(\"/images/sky-1200.jpg\");\n    background-position: 50% 50%;\n    background-size: cover; }\n  .banner__message {\n    transition: all 0.75s;\n    position: absolute;\n    bottom: calc(50% - 210px);\n    color: white;\n    text-align: center;\n    width: 100%;\n    padding: 0 20%;\n    font-size: 21px;\n    font-size: 1.3125rem;\n    opacity: 1;\n    font-family: 'Hallo'; }\n  .banner__geopath {\n    cursor: pointer;\n    stroke: white;\n    fill: white;\n    stroke-width: 0.2px;\n    transition: all 0.2s; }\n    .banner__geopath--active, .banner__geopath:hover {\n      fill: #413478;\n      stroke: #413478;\n      transition: all 0.2s; }\n\n.header {\n  overflow: visible;\n  position: fixed;\n  width: 100%;\n  height: 60px;\n  top: 0;\n  box-shadow: 0 0 10px #333;\n  background-color: rgba(13, 23, 34, 0.95);\n  transition: all 0.2s;\n  color: white;\n  z-index: 100; }\n  .header--transparent {\n    background: none;\n    box-shadow: none; }\n  .header__main-link {\n    height: 100%;\n    width: 150px; }\n    .header__main-link svg {\n      height: 30px;\n      width: 30px;\n      margin-top: 15px;\n      margin-left: 15px;\n      fill: white; }\n  .header__nav {\n    z-index: 100;\n    width: 130px;\n    height: 60px;\n    overflow: visible;\n    float: right;\n    text-align: right;\n    padding: 0; }\n    @media screen and (min-width: 800px) {\n      .header__nav {\n        width: auto;\n        float: auto; } }\n    .header__nav__arrow, .header__nav__item {\n      width: 130px;\n      float: right;\n      height: 60px;\n      padding: 0; }\n    .header__nav__arrow {\n      cursor: pointer;\n      display: table;\n      text-align: center; }\n      @media screen and (min-width: 800px) {\n        .header__nav__arrow {\n          display: none; } }\n      .header__nav__arrow svg {\n        opacity: 0.9;\n        text-align: center;\n        vertical-align: middle;\n        display: table-cell;\n        fill: white;\n        width: 30px;\n        height: 30px;\n        margin: 15px auto; }\n      .header__nav__arrow:hover > svg, .header__nav__arrow--active > svg {\n        opacity: 1; }\n    .header__nav__item {\n      z-index: 100;\n      display: none; }\n      .header__nav:hover .header__nav__item, .header--expanded .header__nav__item {\n        background-color: rgba(13, 23, 34, 0.95);\n        display: table; }\n      .header--transparent .header__nav__item {\n        background: none !important; }\n      @media screen and (min-width: 800px) {\n        .header__nav__item {\n          display: table; }\n          .header__nav:hover .header__nav__item {\n            background: none; }\n          .header__nav__item:hover, .header__nav__item--active {\n            border-bottom: 4px solid #5d4aaa; }\n            .header--transparent .header__nav__item:hover, .header--transparent .header__nav__item--active {\n              border-color: white; } }\n      .header__nav__item a {\n        height: 100%;\n        padding: 0 30px;\n        display: table-cell;\n        position: relative;\n        text-align: center;\n        vertical-align: middle;\n        font-family: 'Hallo'; }\n      @media screen and (min-width: 800px) {\n        .header__nav__item {\n          display: table;\n          background: none; }\n          .header__nav__item:hover a, .header__nav__item--active a {\n            top: 2px;\n            opacity: 1; } }\n\n.project-show, .project-groups {\n  margin: 0; }\n\n.project-show {\n  padding: 80px 0 40px 0; }\n  .project-show__links {\n    text-align: center;\n    display: block; }\n    .project-show__links li {\n      margin: 15px 15px;\n      display: inline-block; }\n\n.project-group {\n  width: 100%;\n  padding: 80px 0 40px 0; }\n  .project-group:nth-of-type(2n+0) {\n    background-color: #f6f6f6; }\n  .project-group__content {\n    width: 250px;\n    margin-left: auto;\n    margin-right: auto; }\n    @media only screen and (min-width: 540px) {\n      .project-group__content {\n        width: 500px; } }\n    @media only screen and (min-width: 790px) {\n      .project-group__content {\n        width: 750px; } }\n    .project-group__content > h1 {\n      opacity: 1;\n      margin: 0;\n      font-size: 36px;\n      text-align: center; }\n  .project-group__separator, .project-group__description {\n    margin-left: 20px;\n    margin-right: 20px; }\n  .project-group__description {\n    margin-top: 5px;\n    margin-bottom: 5px; }\n  .project-group__separator {\n    height: 2px;\n    background-color: #5947a3;\n    border-radius: 1px;\n    margin-left: 20px;\n    margin-right: 20px;\n    margin-top: 10px;\n    margin-bottom: 15px;\n    opacity: 0.5; }\n\n.project-list {\n  width: 100%;\n  margin: 30px auto;\n  text-align: left; }\n  .project-list > li {\n    display: inline-block; }\n  .project-list__item {\n    display: inline-block;\n    fill: #0E3647;\n    position: relative;\n    width: 250px;\n    height: 225px;\n    -webkit-transition: all 0.75s;\n    -moz-transition: all 0.75s;\n    -ms-transition: all 0.75s;\n    -o-transition: all 0.75s;\n    transition: all 0.75s; }\n    .project-list__item > * {\n      position: absolute; }\n    .project-list__item > *, .project-list__item:hover > * {\n      -webkit-transition: all 0.75s;\n      -moz-transition: all 0.75s;\n      -ms-transition: all 0.75s;\n      -o-transition: all 0.75s;\n      transition: all 0.75s; }\n    .project-list__item__logo {\n      width: 187.5px;\n      height: 187.5px;\n      left: 31.25px;\n      z-index: 9;\n      top: 0px; }\n      .project-list__item:hover .project-list__item__logo {\n        opacity: 1;\n        top: 0px; }\n      .no-touch .project-list__item__logo {\n        top: 15px;\n        opacity: 0.95; }\n    .project-list__item__title {\n      color: #071c29;\n      font-size: 24px;\n      top: 85%;\n      width: 90%;\n      left: 5%;\n      opacity: 1;\n      text-align: center; }\n      .no-touch .project-list__item__title {\n        color: #071c29;\n        font-size: 24px;\n        top: 76%;\n        width: 90%;\n        left: 5%;\n        opacity: 1;\n        text-align: center; }\n      .project-list__item:hover .project-list__item__title {\n        opacity: 1;\n        top: 85%; }\n      .no-touch .project-list__item__title {\n        top: 76%;\n        opacity: 0; }\n\n.static {\n  width: 100%;\n  padding: 25px;\n  margin: auto; }\n  .static p:first-child {\n    padding-top: 0;\n    margin-top: 0; }\n  .static p:last-child {\n    padding-bottom: 0;\n    margin-bottom: 0; }\n  @media only screen and (min-width: 818px) {\n    .static {\n      width: 768px;\n      padding: 50px 0; } }\n  .static blockquote {\n    font-style: italic;\n    margin: 35px 0 35px 40px; }\n  .static ul {\n    list-style-type: circle;\n    list-style-position: outside;\n    padding: 25px; }\n  .static p, .static a {\n    hyphens: auto; }\n  .static li {\n    display: list-item;\n    padding: 5px 0; }\n  .static a {\n    color: #4F3F91;\n    border-bottom: 1px solid #4F3F91;\n    opacity: 0.7; }\n    .static a:hover {\n      opacity: 1; }\n  .static img, .static iframe {\n    width: 100%;\n    display: block;\n    margin: 40px auto;\n    border-radius: 4px; }\n    @media screen and (max-width: 780px) {\n      .static img, .static iframe {\n        width: 250px;\n        margin: auto; } }\n  .static iframe {\n    height: 400px; }\n\n.hero {\n  position: relative;\n  width: 100%;\n  content: '';\n  background-size: cover;\n  background-position: 50% 0%;\n  background-repeat: no-repeat;\n  height: 600px; }\n  .hero__overlay {\n    position: absolute;\n    width: 100%;\n    height: 100%;\n    left: 0;\n    top: 0;\n    -webkit-transition: all 0.5s;\n    -moz-transition: all 0.5s;\n    -ms-transition: all 0.5s;\n    -o-transition: all 0.5s;\n    transition: all 0.5s;\n    background-color: rgba(13, 23, 34, 0.6); }\n  .hero__text {\n    position: absolute;\n    bottom: 30%;\n    left: 25px;\n    font-size: 60px;\n    font-family: 'Hallo';\n    color: white; }\n    @media only screen and (min-width: 768px) {\n      .hero__text {\n        left: calc(50% - 768px/2);\n        font-size: 80px; } }\n", ""]);
+	exports.push([module.id, "@-webkit-keyframes bounce {\n  0% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  12.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  25% {\n    -moz-transform: translateY(9px);\n    -o-transform: translateY(9px);\n    -ms-transform: translateY(9px);\n    -webkit-transform: translateY(9px);\n    transform: translateY(9px); }\n  37.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  50% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  62.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  75% {\n    -moz-transform: translateY(-9px);\n    -o-transform: translateY(-9px);\n    -ms-transform: translateY(-9px);\n    -webkit-transform: translateY(-9px);\n    transform: translateY(-9px); }\n  87.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  100% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); } }\n\n@-moz-keyframes bounce {\n  0% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  12.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  25% {\n    -moz-transform: translateY(9px);\n    -o-transform: translateY(9px);\n    -ms-transform: translateY(9px);\n    -webkit-transform: translateY(9px);\n    transform: translateY(9px); }\n  37.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  50% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  62.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  75% {\n    -moz-transform: translateY(-9px);\n    -o-transform: translateY(-9px);\n    -ms-transform: translateY(-9px);\n    -webkit-transform: translateY(-9px);\n    transform: translateY(-9px); }\n  87.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  100% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); } }\n\n@-ms-keyframes bounce {\n  0% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  12.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  25% {\n    -moz-transform: translateY(9px);\n    -o-transform: translateY(9px);\n    -ms-transform: translateY(9px);\n    -webkit-transform: translateY(9px);\n    transform: translateY(9px); }\n  37.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  50% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  62.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  75% {\n    -moz-transform: translateY(-9px);\n    -o-transform: translateY(-9px);\n    -ms-transform: translateY(-9px);\n    -webkit-transform: translateY(-9px);\n    transform: translateY(-9px); }\n  87.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  100% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); } }\n\n@-o-keyframes bounce {\n  0% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  12.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  25% {\n    -moz-transform: translateY(9px);\n    -o-transform: translateY(9px);\n    -ms-transform: translateY(9px);\n    -webkit-transform: translateY(9px);\n    transform: translateY(9px); }\n  37.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  50% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  62.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  75% {\n    -moz-transform: translateY(-9px);\n    -o-transform: translateY(-9px);\n    -ms-transform: translateY(-9px);\n    -webkit-transform: translateY(-9px);\n    transform: translateY(-9px); }\n  87.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  100% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); } }\n\n@keyframes bounce {\n  0% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  12.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  25% {\n    -moz-transform: translateY(9px);\n    -o-transform: translateY(9px);\n    -ms-transform: translateY(9px);\n    -webkit-transform: translateY(9px);\n    transform: translateY(9px); }\n  37.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  50% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  62.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  75% {\n    -moz-transform: translateY(-9px);\n    -o-transform: translateY(-9px);\n    -ms-transform: translateY(-9px);\n    -webkit-transform: translateY(-9px);\n    transform: translateY(-9px); }\n  87.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  100% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); } }\n\n.wrapper__content {\n  padding-top: 60px;\n  overflow-x: hidden;\n  overflow-y: scroll; }\n\n* {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n  -webkit-font-smoothing: antialiased; }\n\nhtml, body {\n  width: 100%;\n  height: 100%;\n  overflow: hidden;\n  margin: 0; }\n\npre, code {\n  width: 100%;\n  overflow-x: scroll; }\n\npre {\n  background-color: rgba(79, 63, 145, 0.1);\n  padding: 20px;\n  border-radius: 8px; }\n\na {\n  text-decoration: none;\n  color: white;\n  opacity: 0.6; }\n  a:hover {\n    opacity: 1; }\n\nul {\n  list-style-type: none;\n  padding: 0;\n  margin: 0; }\n  ul li {\n    display: block; }\n\nimg {\n  display: block;\n  width: 100%; }\n\n@font-face {\n  font-family: 'Hallo';\n  src: url(\"/fonts/Hallo-Sans/Hallo sans.otf\");\n  font-style: normal;\n  font-stretch: normal; }\n\n* {\n  font-family: 'Hallo';\n  font-weight: normal; }\n\nh1, h2, h3, h4 {\n  font-family: 'Hallo'; }\n\np, a, li {\n  font-family: 'Palatino'; }\n\np, a, li, code {\n  font-size: 22px; }\n\ncode {\n  font-family: \"Courier New\";\n  font-size: 18px;\n  padding: 0 4px; }\n  p code {\n    font-size: 22px; }\n\np, li {\n  line-height: 165%; }\n\ncode {\n  line-height: 135%; }\n\nh1 {\n  font-size: 44px;\n  margin-top: 35px;\n  margin-bottom: 15px; }\n\nh2 {\n  font-size: 32px;\n  margin-top: 30px;\n  margin-bottom: 10px; }\n\nh3 {\n  font-size: 26px; }\n\n.hidden {\n  display: none !important; }\n\n.active {\n  opacity: 1 !important;\n  transition: opacity 0.5s ease-in-out; }\n\n.fill-parent {\n  width: 100%;\n  height: 100%; }\n\n.title, .headline {\n  text-align: center;\n  padding: 0 5%;\n  width: 100%;\n  margin: auto;\n  word-wrap: break-word; }\n\n.title {\n  font-size: 44px;\n  font-size: 2.75rem;\n  margin: 30px 0 10px 0; }\n  @media only screen and (min-width: 768px) {\n    .title {\n      font-size: 64px;\n      font-size: 4rem;\n      margin: 45px 0 20px 0; } }\n\n.headline {\n  font-size: 30px;\n  font-size: 1.875rem;\n  max-width: 800px;\n  opacity: 0.80;\n  font-weight: normal;\n  margin-top: 20px;\n  margin-bottom: 80px; }\n  @media screen and (min-width: 600px) {\n    .headline {\n      font-size: 36px;\n      font-size: 2.25rem; } }\n\n.date {\n  text-align: center;\n  font-size: 24px;\n  opacity: 0.7;\n  padding: 0 0 30px 0; }\n\n.loader {\n  text-align: center;\n  margin-top: 30px;\n  height: 60px; }\n  .loader img {\n    display: inline-block;\n    width: 60px;\n    height: 60px; }\n\n.link {\n  font-family: 'Hallo';\n  width: 170px;\n  margin: auto;\n  text-align: center;\n  color: #413478;\n  border: 1.5px solid #413478;\n  padding: 8px 16px;\n  font-size: 26px;\n  opacity: 0.6;\n  transition: all 0.3s; }\n  .link:hover {\n    opacity: 1;\n    color: white;\n    background-color: #413478;\n    transition: all 0.3s; }\n\n.banner {\n  width: 100%;\n  height: 100%;\n  transition: all 0.5s;\n  background-color: #0d1722;\n  position: relative; }\n  .banner__summary {\n    z-index: 2;\n    top: calc(50% - 250px/2);\n    left: calc(50% - 250px/2);\n    position: fixed;\n    display: block;\n    border: 2px solid rgba(255, 255, 255, 0);\n    padding: 55px 30px;\n    width: 250px;\n    height: 250px;\n    border-radius: 100%;\n    margin: auto;\n    background-color: #413478;\n    opacity: 0.95;\n    -webkit-transition: all 0.5s;\n    -moz-transition: all 0.5s;\n    -ms-transition: all 0.5s;\n    -o-transition: all 0.5s;\n    transition: all 0.5s;\n    -webkit-animation: bounce 4.5s linear infinite;\n    -moz-animation: bounce 4.5s linear infinite;\n    -ms-animation: bounce 4.5s linear infinite;\n    -o-animation: bounce 4.5s linear infinite;\n    animation: bounce 4.5s linear infinite; }\n    .banner__summary:hover {\n      opacity: 0.99;\n      border: 2px solid white;\n      transition: all 0.5s; }\n    .banner__summary h1, .banner__summary p {\n      font-family: 'Hallo';\n      margin: 0;\n      padding: 0;\n      text-align: center;\n      line-height: 125%; }\n    .banner__summary h1 {\n      font-size: 32px;\n      font-size: 2rem;\n      margin: 25px 0 10px 0; }\n    .banner__summary p {\n      font-size: 20px;\n      font-size: 1.25rem;\n      margin: 0; }\n  .banner__globe, .banner__background {\n    position: absolute;\n    width: 100%;\n    height: 100%; }\n  .banner__globe {\n    z-index: 1; }\n  .banner__background {\n    z-index: 0;\n    opacity: 0.4;\n    background-image: url(\"/images/sky-1200.jpg\");\n    background-position: 50% 50%;\n    background-size: cover; }\n  .banner__message {\n    transition: all 0.75s;\n    position: absolute;\n    bottom: calc(50% - 210px);\n    color: white;\n    text-align: center;\n    width: 100%;\n    padding: 0 20%;\n    font-size: 21px;\n    font-size: 1.3125rem;\n    opacity: 1;\n    font-family: 'Hallo'; }\n  .banner__geopath {\n    cursor: pointer;\n    stroke: white;\n    fill: white;\n    stroke-width: 0.2px;\n    transition: all 0.2s; }\n    .banner__geopath--active, .banner__geopath:hover {\n      fill: #413478;\n      stroke: #413478;\n      transition: all 0.2s; }\n\n.header {\n  overflow: visible;\n  position: fixed;\n  width: 100%;\n  height: 60px;\n  top: 0;\n  box-shadow: 0 0 10px #333;\n  background-color: rgba(13, 23, 34, 0.95);\n  transition: all 0.2s;\n  color: white;\n  z-index: 100; }\n  .header--transparent {\n    background: none;\n    box-shadow: none; }\n  .header__main-link {\n    height: 100%;\n    width: 150px; }\n    .header__main-link svg {\n      height: 30px;\n      width: 30px;\n      margin-top: 15px;\n      margin-left: 15px;\n      fill: white; }\n  .header__nav {\n    z-index: 100;\n    width: 130px;\n    height: 60px;\n    overflow: visible;\n    float: right;\n    text-align: right;\n    padding: 0; }\n    @media screen and (min-width: 800px) {\n      .header__nav {\n        width: auto;\n        float: auto; } }\n    .header__nav__arrow, .header__nav__item {\n      width: 130px;\n      float: right;\n      height: 60px;\n      padding: 0; }\n    .header__nav__arrow {\n      cursor: pointer;\n      display: table;\n      text-align: center; }\n      @media screen and (min-width: 800px) {\n        .header__nav__arrow {\n          display: none; } }\n      .header__nav__arrow svg {\n        opacity: 0.9;\n        text-align: center;\n        vertical-align: middle;\n        display: table-cell;\n        fill: white;\n        width: 30px;\n        height: 30px;\n        margin: 15px auto; }\n      .header__nav__arrow:hover > svg, .header__nav__arrow--active > svg {\n        opacity: 1; }\n    .header__nav__item {\n      z-index: 100;\n      display: none; }\n      .header__nav:hover .header__nav__item, .header--expanded .header__nav__item {\n        background-color: rgba(13, 23, 34, 0.95);\n        display: table; }\n      .header--transparent .header__nav__item {\n        background: none !important; }\n      @media screen and (min-width: 800px) {\n        .header__nav__item {\n          display: table; }\n          .header__nav:hover .header__nav__item {\n            background: none; }\n          .header__nav__item:hover, .header__nav__item--active {\n            border-bottom: 4px solid #5d4aaa; }\n            .header--transparent .header__nav__item:hover, .header--transparent .header__nav__item--active {\n              border-color: white; } }\n      .header__nav__item a {\n        height: 100%;\n        padding: 0 30px;\n        display: table-cell;\n        position: relative;\n        text-align: center;\n        vertical-align: middle;\n        font-family: 'Hallo'; }\n      @media screen and (min-width: 800px) {\n        .header__nav__item {\n          display: table;\n          background: none; }\n          .header__nav__item:hover a, .header__nav__item--active a {\n            top: 2px;\n            opacity: 1; } }\n\n.project-show, .project-groups {\n  margin: 0; }\n\n.project-show {\n  padding: 80px 0 40px 0; }\n  .project-show__links {\n    text-align: center;\n    display: block; }\n    .project-show__links li {\n      margin: 15px 15px;\n      display: inline-block; }\n\n.project-group {\n  width: 100%;\n  padding: 100px 0 40px 0; }\n  .project-group:nth-of-type(2n+0) {\n    background-color: #f6f6f6; }\n  .project-group__content {\n    width: 250px;\n    margin-left: auto;\n    margin-right: auto; }\n    @media only screen and (min-width: 540px) {\n      .project-group__content {\n        width: 500px; } }\n    @media only screen and (min-width: 790px) {\n      .project-group__content {\n        width: 750px; } }\n    .project-group__content > h1 {\n      opacity: 1;\n      margin: 0;\n      font-size: 36px;\n      text-align: center; }\n  .project-group__separator, .project-group__description {\n    margin-left: 20px;\n    margin-right: 20px; }\n  .project-group__description {\n    margin-top: 5px;\n    margin-bottom: 5px; }\n  .project-group__separator {\n    height: 2px;\n    background-color: #5947a3;\n    border-radius: 1px;\n    margin-left: 20px;\n    margin-right: 20px;\n    margin-top: 10px;\n    margin-bottom: 15px;\n    opacity: 0.5; }\n\n.project-list {\n  width: 100%;\n  margin: 30px auto;\n  text-align: left; }\n  .project-list > li {\n    display: inline-block; }\n  .project-list__item {\n    display: inline-block;\n    fill: #0E3647;\n    position: relative;\n    width: 250px;\n    height: 225px;\n    -webkit-transition: all 0.75s;\n    -moz-transition: all 0.75s;\n    -ms-transition: all 0.75s;\n    -o-transition: all 0.75s;\n    transition: all 0.75s; }\n    .project-list__item > * {\n      position: absolute; }\n    .project-list__item > *, .project-list__item:hover > * {\n      -webkit-transition: all 0.75s;\n      -moz-transition: all 0.75s;\n      -ms-transition: all 0.75s;\n      -o-transition: all 0.75s;\n      transition: all 0.75s; }\n    .project-list__item__logo {\n      width: 187.5px;\n      height: 187.5px;\n      left: 31.25px;\n      z-index: 9;\n      top: 0px; }\n      .project-list__item:hover .project-list__item__logo {\n        opacity: 1;\n        top: 0px; }\n      .no-touch .project-list__item__logo {\n        top: 15px;\n        opacity: 0.95; }\n    .project-list__item__title {\n      color: #071c29;\n      font-size: 28px;\n      font-size: 1.75rem;\n      top: 85%;\n      width: 90%;\n      left: 5%;\n      opacity: 1;\n      text-align: center; }\n      .no-touch .project-list__item__title {\n        color: #071c29;\n        font-size: 24px;\n        top: 76%;\n        width: 90%;\n        left: 5%;\n        opacity: 1;\n        text-align: center; }\n      .project-list__item:hover .project-list__item__title {\n        opacity: 1;\n        top: 85%; }\n      .no-touch .project-list__item__title {\n        top: 76%;\n        opacity: 0; }\n\n.static {\n  width: 100%;\n  padding: 25px;\n  margin: auto; }\n  .static p:first-child {\n    padding-top: 0;\n    margin-top: 0; }\n  .static p:last-child {\n    padding-bottom: 0;\n    margin-bottom: 0; }\n  @media only screen and (min-width: 818px) {\n    .static {\n      width: 768px;\n      padding: 50px 0; } }\n  .static blockquote {\n    font-style: italic;\n    margin: 35px 0 35px 40px; }\n  .static ul {\n    list-style-type: circle;\n    list-style-position: outside;\n    padding: 25px; }\n  .static p, .static a {\n    hyphens: auto; }\n  .static li {\n    display: list-item;\n    padding: 5px 0; }\n  .static a {\n    color: #4F3F91;\n    border-bottom: 1px solid #4F3F91;\n    opacity: 0.7; }\n    .static a:hover {\n      opacity: 1; }\n  .static img, .static iframe {\n    width: 100%;\n    display: block;\n    margin: 40px auto;\n    border-radius: 4px; }\n    @media screen and (max-width: 780px) {\n      .static img, .static iframe {\n        width: 250px;\n        margin: auto; } }\n  .static iframe {\n    height: 400px; }\n\n.hero {\n  position: relative;\n  width: 100%;\n  content: '';\n  background-size: cover;\n  background-position: 50% 0%;\n  background-repeat: no-repeat;\n  height: 600px; }\n  .hero__overlay {\n    position: absolute;\n    width: 100%;\n    height: 100%;\n    left: 0;\n    top: 0;\n    -webkit-transition: all 0.5s;\n    -moz-transition: all 0.5s;\n    -ms-transition: all 0.5s;\n    -o-transition: all 0.5s;\n    transition: all 0.5s;\n    background-color: rgba(13, 23, 34, 0.6); }\n  .hero__text {\n    position: absolute;\n    bottom: 30%;\n    left: 25px;\n    font-size: 60px;\n    font-family: 'Hallo';\n    color: white; }\n    @media only screen and (min-width: 768px) {\n      .hero__text {\n        left: calc(50% - 768px/2);\n        font-size: 80px; } }\n\n.form {\n  width: 100%;\n  padding: 50px 0;\n  max-width: 600px;\n  margin: auto; }\n  .form input, .form select, .form textarea, .form button {\n    outline: none;\n    border: 1px solid #555; }\n  .form input, .form textarea {\n    width: 100%;\n    font-size: 24px;\n    font-size: 1.5rem;\n    padding: 8px 5px; }\n    .form input:focus, .form textarea:focus {\n      background-color: #ddd; }\n  .form label {\n    font-family: 'Hallo';\n    font-size: 44px;\n    font-size: 2.75rem;\n    margin: 10px 0; }\n  .form__hint {\n    font-family: 'Palatino';\n    font-size: 24px;\n    font-size: 1.5rem;\n    margin: 10px 0; }\n  .form__wrapper {\n    margin: 50px 0; }\n", ""]);
 
 	// exports
 
 
 /***/ },
-/* 364 */
+/* 365 */
 /***/ function(module, exports) {
 
 	/*
@@ -66623,10 +66716,10 @@
 
 
 /***/ },
-/* 365 */
+/* 366 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(364)();
+	exports = module.exports = __webpack_require__(365)();
 	// imports
 
 
@@ -66637,7 +66730,7 @@
 
 
 /***/ },
-/* 366 */
+/* 367 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -66888,6 +66981,819 @@
 		if(oldSrc)
 			URL.revokeObjectURL(oldSrc);
 	}
+
+
+/***/ },
+/* 368 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _base = __webpack_require__(369);
+
+	var _base2 = _interopRequireDefault(_base);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	// Inherit from base.
+	var Post = Object.create(_base2.default);
+
+	Post.fields = [{
+		key: 'id',
+		type: 'text',
+		defaultValue: 'choose-id',
+		formComponentName: 'Text',
+		labelText: 'Post ID',
+		hint: 'Same as url fragment'
+	}, {
+		key: 'type',
+		type: 'text',
+		defaultValue: 'project',
+		formComponentName: 'Text',
+		labelText: 'Post ID',
+		hint: 'Same as url fragment'
+	}, {
+		key: 'title',
+		type: 'text',
+		defaultValue: 'Project title',
+		formComponentName: 'Text',
+		labelText: 'Post ID',
+		hint: 'Same as url fragment'
+	}, {
+		key: 'headline',
+		type: 'text',
+		defaultValue: '',
+		formComponentName: 'Text',
+		labelText: 'Post ID',
+		hint: 'Same as url fragment'
+	}, {
+		key: 'name',
+		type: 'text',
+		defaultValue: 'Project name',
+		formComponentName: 'Text',
+		labelText: 'Post ID',
+		hint: 'Same as url fragment'
+	}, {
+		key: 'supervisors',
+		type: 'json',
+		defaultValue: [],
+		formComponentName: 'Text',
+		labelText: 'Post ID',
+		hint: 'Same as url fragment'
+	}, {
+		key: 'collaborators',
+		type: 'json',
+		defaultValue: [],
+		formComponentName: 'Text',
+		labelText: 'Post ID (same as url fragment)',
+		hint: 'Same as url fragment'
+	}, {
+		key: 'post_group',
+		type: 'text',
+		defaultValue: 'featured',
+		formComponentName: 'Text',
+		labelText: 'Post ID (same as url fragment)',
+		hint: 'Same as url fragment'
+	}, {
+		key: 'built_with',
+		type: 'json',
+		defaultValue: [],
+		formComponentName: 'Text',
+		labelText: 'Post ID (same as url fragment)',
+		hint: 'Same as url fragment'
+	}, {
+		key: 'body_text',
+		type: 'text',
+		defaultValue: "Stay tuned for this post's body text.",
+		formComponentName: 'Text',
+		labelText: 'Body Text',
+		hint: 'Same as url fragment'
+	}, {
+		key: 'display_order',
+		type: 'integer',
+		defaultValue: 0,
+		formComponentName: 'Text',
+		labelText: 'Post ID',
+		hint: 'Same as url fragment'
+	}, {
+		key: 'dates',
+		type: 'json',
+		defaultValue: [],
+		formComponentName: 'Text',
+		labelText: 'Post ID',
+		hint: 'Same as url fragment'
+	}, {
+		key: 'links',
+		type: 'json',
+		defaultValue: [],
+		formComponentName: 'Text',
+		labelText: 'Post ID',
+		hint: 'Same as url fragment'
+	}, {
+		key: 'is_live',
+		type: 'boolean',
+		defaultValue: false,
+		formComponent: 'Text',
+		options: [{ value: true, name: 'Yes' }, { value: false, name: 'No' }],
+		labelText: 'Post ID',
+		hint: 'Same as url fragment'
+	}];
+
+	Post.create = function (data) {
+
+		var self = Object.create(Post);
+
+		self.data = {};
+
+		for (var key in data) {
+			self.data[key] = data[key];
+		}
+
+		self.tableName = 'posts';
+
+		return self;
+	};
+
+	exports.default = Post;
+
+/***/ },
+/* 369 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+					value: true
+	});
+
+	var _underscore = __webpack_require__(212);
+
+	var _underscore2 = _interopRequireDefault(_underscore);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function escapeText(val) {
+					if (typeof val != 'string') return val;
+					return val.replace(/[\0\x08\x09\x1a\n\r"'\\\%]/g, function (char) {
+									switch (char) {
+													case "\0":
+																	return "\\0";
+													case "\x08":
+																	return "\\b";
+													case "\x09":
+																	return "\\t";
+													case "\x1a":
+																	return "\\z";
+													case "\n":
+																	return "\\n";
+													case "\r":
+																	return "\\r";
+													case "\"":
+													case "'":
+													case "\\":
+													case "%":
+																	return "\\" + char; // prepends a backslash to backslash, percent,
+													// and double/single quotes
+									}
+					});
+	}
+
+	var Base = {
+
+					// Set on superclass.
+					data: {},
+
+					// Set on superclass.
+					fields: [],
+
+					/*
+	     * 
+	     *
+	     */
+					sanitizeValue: function sanitizeValue(key, value) {},
+
+					/*
+	     *
+	     *
+	     */
+					setDefaults: function setDefaults() {
+									var fields = this.fields;
+									var data = this.data;
+
+									console.log(this, data, fields);
+
+									fields.forEach(function (field) {
+													var defaultValue = field.defaultValue;
+													var key = field.key;
+
+													if (data[key] == null && defaultValue != null) {
+																	data[key] = defaultValue;
+													}
+									});
+					},
+
+					/*
+	     *
+	     *
+	     */
+					getValuesString: function getValuesString() {
+									var fields = this.fields;
+									var data = this.data;
+
+									return fields.map(function (field) {
+													var key = field.key;
+													var defaultValue = field.defaultValue;
+
+													var value = data[key];
+
+													if (value == null) {
+																	value = defaultValue;
+													}
+
+													if (_underscore2.default.isArray(value) || _underscore2.default.isObject(value)) {
+																	value = '\'' + JSON.stringify(value) + '\'';
+													} else if (_underscore2.default.isString(value)) {
+																	var escapeMarker = '';
+																	if (value.length > 50) {
+																					escapeMarker = 'E';
+																	}
+																	value = escapeMarker + '\'' + escapeText(value) + '\'';
+													}
+
+													return value;
+									}).join(',');
+					},
+
+					/*
+	     * Returns comma-separated list of field keys.
+	     *
+	     */
+					getFieldKeysString: function getFieldKeysString() {
+									return this.fields.map(function (field) {
+													return field.key;
+									}).join(',');
+					},
+
+					/*
+	     * Returns comma-separated field key + type string.
+	     *
+	     */
+					getFieldKeyTypesString: function getFieldKeyTypesString() {
+									return this.fields.map(function (field) {
+													return field.key + ' ' + field.type;
+									}).join(',');
+					},
+
+					/*
+	     *
+	     *
+	     */
+					getSqlInsertCommand: function getSqlInsertCommand() {
+									return 'INSERT INTO ' + this.tableName + ' (' + this.getFieldKeysString() + ') VALUES(' + this.getValuesString() + ');';
+					},
+
+					/*
+	     *
+	     *
+	     */
+					getTableCreateCommand: function getTableCreateCommand() {
+									return 'CREATE TABLE ' + this.tableName + ' (' + this.getFieldKeyTypesString() + ');';
+					}
+	};
+
+	exports.default = Base;
+
+/***/ },
+/* 370 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	__webpack_require__(377);
+
+	var _react = __webpack_require__(147);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _underscore = __webpack_require__(212);
+
+	var _underscore2 = _interopRequireDefault(_underscore);
+
+	var _index = __webpack_require__(371);
+
+	var Subcomponents = _interopRequireWildcard(_index);
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	/*
+	 *
+	 *
+	 */
+
+	var Form = (function (_React$Component) {
+		_inherits(Form, _React$Component);
+
+		function Form() {
+			_classCallCheck(this, Form);
+
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(Form).apply(this, arguments));
+		}
+
+		_createClass(Form, [{
+			key: 'render',
+
+			/*
+	   *
+	   *
+	   */
+			value: function render() {
+				var style = this.props.isEnabled ? {} : { opacity: 0.5 };
+				return _react2.default.createElement(
+					'form',
+					{
+						className: 'form',
+						onSubmit: this.sendFormDataToParent.bind(this),
+						style: style
+					},
+					this.renderFormComponents(),
+					_react2.default.createElement('input', {
+						type: 'submit',
+						disabled: !this.props.isEnabled,
+						value: this.props.submitButtonText || 'Submit Form'
+					})
+				);
+			}
+
+			/*
+	   *
+	   *
+	   */
+
+		}, {
+			key: 'renderFormComponents',
+			value: function renderFormComponents() {
+				var _this2 = this;
+
+				return this.props.fields.map(function (field, i) {
+					var FormComp = Subcomponents[field.formComponentName] || Subcomponents.Text;
+					return _react2.default.createElement(FormComp, {
+						key: i,
+						id: field.key,
+						labelText: field.labelText,
+						hint: field.hint,
+						isEnabled: _this2.props.isEnabled,
+						saveDataOnParent: _this2.saveDataFromChild.bind(_this2),
+						initialValue: _this2.props.resource[field.key]
+					});
+				});
+			}
+
+			/*
+	   *
+	   *
+	   */
+
+		}, {
+			key: 'saveDataFromChild',
+			value: function saveDataFromChild(childData) {
+				this.props.handleFormFieldChange(childData);
+			}
+
+			/*
+	   * Run method passed down from parent.
+	   *
+	   */
+
+		}, {
+			key: 'sendFormDataToParent',
+			value: function sendFormDataToParent(e) {
+				e.preventDefault();
+				this.props.onSubmit(this.props.model);
+			}
+		}]);
+
+		return Form;
+	})(_react2.default.Component);
+
+	exports.default = Form;
+
+/***/ },
+/* 371 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _text = __webpack_require__(372);
+
+	Object.defineProperty(exports, 'Text', {
+	  enumerable: true,
+	  get: function get() {
+	    return _text.default;
+	  }
+	});
+
+	var _radio = __webpack_require__(373);
+
+	Object.defineProperty(exports, 'Radio', {
+	  enumerable: true,
+	  get: function get() {
+	    return _radio.default;
+	  }
+	});
+
+/***/ },
+/* 372 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _react = __webpack_require__(147);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	/*
+	 *
+	 *
+	 */
+
+	var Text = (function (_React$Component) {
+		_inherits(Text, _React$Component);
+
+		function Text() {
+			_classCallCheck(this, Text);
+
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(Text).apply(this, arguments));
+		}
+
+		_createClass(Text, [{
+			key: 'render',
+
+			/*
+	   *
+	   *
+	   */
+			value: function render() {
+				var InputComponent = !this.props.isMultiline ? 'input' : 'textarea';
+				return _react2.default.createElement(
+					'div',
+					{ className: 'form__wrapper' },
+					_react2.default.createElement(
+						'label',
+						{ 'for': this.props.id },
+						this.props.labelText
+					),
+					_react2.default.createElement(
+						'p',
+						{ className: 'form__hint' },
+						this.props.hint
+					),
+					_react2.default.createElement(InputComponent, {
+						type: 'text',
+						onChange: this.saveDataOnParent.bind(this),
+						disabled: !this.props.isEnabled,
+						name: this.props.id,
+						id: this.props.id,
+						value: this.props.initialValue,
+						placeholder: this.props.placeholder
+					})
+				);
+			}
+
+			/*
+	   *
+	   *
+	   */
+
+		}, {
+			key: 'saveDataOnParent',
+			value: function saveDataOnParent(e) {
+				this.props.saveDataOnParent({
+					id: this.props.id,
+					value: e.target.value
+				});
+			}
+		}]);
+
+		return Text;
+	})(_react2.default.Component);
+
+	exports.default = Text;
+
+/***/ },
+/* 373 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _react = __webpack_require__(147);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _underscore = __webpack_require__(212);
+
+	var _underscore2 = _interopRequireDefault(_underscore);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Radio = (function (_React$Component) {
+		_inherits(Radio, _React$Component);
+
+		function Radio() {
+			_classCallCheck(this, Radio);
+
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(Radio).apply(this, arguments));
+		}
+
+		_createClass(Radio, [{
+			key: 'render',
+
+			/*
+	   *
+	   *
+	   */
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					{ className: 'form__wrapper' },
+					_react2.default.createElement(
+						'label',
+						{ 'for': this.props.id },
+						this.props.labelText
+					),
+					_react2.default.createElement(
+						'p',
+						{ className: 'form__hint' },
+						this.props.hint
+					),
+					this.renderOptions()
+				);
+			}
+
+			/*
+	   *
+	   *
+	   */
+
+		}, {
+			key: 'renderOptions',
+			value: function renderOptions() {
+				var _this2 = this;
+
+				return this.props.options.map(function (option, i) {
+					var option = option.key,
+					    isChecked = _this2.isOptionChecked(option, i);
+					return _react2.default.createElement(
+						'div',
+						{ className: 'form__radio', key: i },
+						_react2.default.createElement('input', {
+							type: 'checkbox',
+							name: _this2.props.id,
+							id: _this2.props.id + '-opt-' + i,
+							disabled: !_this2.props.isEnabled,
+							checked: isChecked,
+							onChange: _this2.saveDataOnParent.bind(_this2),
+							value: option
+						}),
+						_react2.default.createElement(
+							'p',
+							{ onDoubleClick: _this2.navigateToForeignModelEdit.bind(_this2, foreignModel) },
+							foreignModel.get(field)
+						)
+					);
+				});
+			}
+
+			/*
+	   *
+	   *
+	   */
+
+		}, {
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+				// If there was no initial value passed to the component, pass back the first option to the parent.
+				this.fetchForeignCollection();
+				if (!_underscore2.default.isArray(this.props.initialValue)) {
+					this.props.saveDataOnParent({ id: this.props.id, value: [] });
+				}
+			}
+
+			/*
+	   *
+	   *
+	   */
+
+		}, {
+			key: 'isOptionChecked',
+			value: function isOptionChecked(option, i) {
+				// ! initialValue is an array !
+				return this.props.initialValue === option;
+			}
+
+			/*
+	   *
+	   *
+	   */
+
+		}, {
+			key: 'saveDataOnParent',
+			value: function saveDataOnParent(e) {
+				this.props.saveDataOnParent({
+					id: this.props.id,
+					value: e.target.value
+				});
+			}
+		}]);
+
+		return Radio;
+	})(_react2.default.Component);
+
+	exports.default = Radio;
+
+/***/ },
+/* 374 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _react = __webpack_require__(147);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _root = __webpack_require__(370);
+
+	var _root2 = _interopRequireDefault(_root);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	/*
+	 * Edit resource component.
+	 *
+	 */
+
+	var Edit = (function (_React$Component) {
+		_inherits(Edit, _React$Component);
+
+		/*
+	  * Set initial state.
+	  *
+	  */
+
+		function Edit(props) {
+			_classCallCheck(this, Edit);
+
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Edit).call(this, props));
+
+			_this.handleFormFieldChange = _this.handleFormFieldChange.bind(_this);
+
+			// Set resource object on state.
+			var resource = {};
+			_this.props.fields.forEach(function (field) {
+				resource[field.key] = field.defaultValue || '';
+			});
+			_this.state = { resource: resource };
+			return _this;
+		}
+
+		/*
+	  *
+	  *
+	  */
+
+		_createClass(Edit, [{
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					null,
+					_react2.default.createElement(_root2.default, {
+						fields: this.props.fields,
+						resource: this.state.resource,
+						handleFormFieldChange: this.handleFormFieldChange,
+						isEnabled: true
+					})
+				);
+			}
+
+			/*
+	   *
+	   *
+	   */
+
+		}, {
+			key: 'handleFormFieldChange',
+			value: function handleFormFieldChange(childData) {
+				var newResource = Object.assign({}, this.state.resource);
+				newResource[childData.id] = childData.value;
+				this.setState({ resource: newResource });
+			}
+		}]);
+
+		return Edit;
+	})(_react2.default.Component);
+
+	exports.default = Edit;
+
+/***/ },
+/* 375 */,
+/* 376 */,
+/* 377 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(378);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(367)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/sass-loader/index.js!./style.scss", function() {
+				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/sass-loader/index.js!./style.scss");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 378 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(365)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "", ""]);
+
+	// exports
 
 
 /***/ }

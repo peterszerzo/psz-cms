@@ -1,5 +1,6 @@
 import Base from './base.js'
 
+// Inherit from base.
 var Post = Object.create(Base)
 
 Post.fields = [
@@ -8,99 +9,127 @@ Post.fields = [
 	    key: 'id',
 	    type: 'text',
 	    defaultValue: 'choose-id',
-	    formComponent: 'Input'
+	    formComponentName: 'Text',
+	    labelText: 'Post ID',
+	    hint: 'Same as url fragment'
 	},
 
 	{
 	    key: 'type',
 	    type: 'text',
 	    defaultValue: 'project',
-	    formComponent: 'Input'
+	    formComponentName: 'Text',
+	    labelText: 'Post ID',
+	    hint: 'Same as url fragment'
 	},
 
 	{
 	    key: 'title',
 	    type: 'text',
 	    defaultValue: 'Project title',
-	    formComponent: 'Input'
+	    formComponentName: 'Text',
+	    labelText: 'Post ID',
+	    hint: 'Same as url fragment'
 	},
 
 	{
 	    key: 'headline',
 	    type: 'text',
 	    defaultValue: '',
-	    formComponent: 'Input'
+	    formComponentName: 'Text',
+	    labelText: 'Post ID',
+	    hint: 'Same as url fragment'
 	},
 
 	{
 	    key: 'name',
 	    type: 'text',
 	    defaultValue: 'Project name',
-	    formComponent: 'Input'
+	    formComponentName: 'Text',
+	    labelText: 'Post ID',
+	    hint: 'Same as url fragment'
 	}, 
 
 	{
 	    key: 'supervisors',
 	    type: 'json',
 	    defaultValue: [],
-	    formComponent: 'CommaSeparatedArrayInput'
+	    formComponentName: 'Text',
+	    labelText: 'Post ID',
+	    hint: 'Same as url fragment'
 	},
 
 	{
 	    key: 'collaborators',
 	    type: 'json',
 	    defaultValue: [],
-	    formComponent: 'Input'
+	    formComponentName: 'Text',
+	    labelText: 'Post ID (same as url fragment)',
+	    hint: 'Same as url fragment'
 	},
 
 	{
 	    key: 'post_group',
 	    type: 'text',
 	    defaultValue: 'featured',
-	    formComponent: 'Input'
+	    formComponentName: 'Text',
+	    labelText: 'Post ID (same as url fragment)',
+	    hint: 'Same as url fragment'
 	},
 
 	{
 	    key: 'built_with',
 	    type: 'json',
 	    defaultValue: [],
-	    formComponent: 'Input'
+	    formComponentName: 'Text',
+	    labelText: 'Post ID (same as url fragment)',
+	    hint: 'Same as url fragment'
 	},
 
 	{
 	    key: 'body_text',
 	    type: 'text',
 	    defaultValue: "Stay tuned for this post's body text.",
-	    formComponent: 'TextArea'
+	    formComponentName: 'Text',
+	    labelText: 'Body Text',
+	    hint: 'Same as url fragment'
 	},
 
 	{
 	    key: 'display_order',
 	    type: 'integer',
 	    defaultValue: 0,
-	    formComponent: 'Input'
+	    formComponentName: 'Text',
+	    labelText: 'Post ID',
+	    hint: 'Same as url fragment'
 	},
 
 	{
 	    key: 'dates',
 	    type: 'json',
 	    defaultValue: [],
-	    formComponent: 'Input'
+	    formComponentName: 'Text',
+	    labelText: 'Post ID',
+	    hint: 'Same as url fragment'
 	},
 
 	{
 	    key: 'links',
 	    type: 'json',
 	    defaultValue: [],
-	    formComponent: 'Input'
+	    formComponentName: 'Text',
+	    labelText: 'Post ID',
+	    hint: 'Same as url fragment'
 	},
 
 	{
 	    key: 'is_live',
 	    type: 'boolean',
 	    defaultValue: false,
-	    formComponent: 'Checkbox',
-	    options: [ { value: true, name: 'Yes' }, { value: false, name: 'No' } ]
+	    formComponent: 'Text',
+	    options: [ { value: true, name: 'Yes' }, { value: false, name: 'No' } ],
+	    labelText: 'Post ID',
+	    hint: 'Same as url fragment'
 	}
 ]
 
