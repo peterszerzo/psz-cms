@@ -157,13 +157,11 @@ class Banner extends React.Component {
 		})
 		
 		setTimeout(() => {
-			this.state.message.isShowing = false
-			this.forceUpdate()
+			this.setState({ message: Object.assign({}, this.state.message, { isShowing: false }) })
 		}, 4500)
 
 		setTimeout(() => {
-			this.state.message.shouldShowOnHover = true
-			this.forceUpdate()
+			this.setState({ message: Object.assign({}, this.state.message, { shouldShowOnHover: false }) })
 		}, 9000)
 
 	}

@@ -25,6 +25,7 @@ class Show extends React.Component {
 		var { resource } = this.state
 		return (
 			<div className='wrapper__content fill-parent'>
+				{ this.renderTestImage() }
 				<ShowItem 
 					isHeroImageLoaded={ this.state.isHeroImageLoaded } 
 					resource={ resource }
@@ -35,11 +36,38 @@ class Show extends React.Component {
 
 
 	/*
+	 *
+	 *
+	 */
+	renderTestImage() {
+		var { resource } = this.state
+		if (!resource) { return }
+		var imageUrl = `/images/posts/${resource.id}/hero.jpg`
+		return (
+			<img
+				style={ { opacity: 0.1, width: 10, height: 10, position: 'fixed' } } 
+				src={ imageUrl }
+				onLoad={this.handleImageLoad.bind(this)} 
+			/>
+		)
+	}
+
+
+	/*
 	 * If project was passed down in props, no need to fetch again.
 	 *
 	 */
 	componentDidMount() {
 		this.fetchResource()
+	}
+
+
+	/*
+	 *
+	 *
+	 */
+	handleImageLoad() {
+		this.setState({ isHeroImageLoaded: true })
 	}
 
 

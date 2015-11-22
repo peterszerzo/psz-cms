@@ -81,12 +81,16 @@ function ShowItem(props) {
 		title += ' (draft)'
 	}
 
-	var heroOverlayOpacity = props.isHeroImageLoaded ? '0.7' : '1'
+	var { isHeroImageLoaded } = props
+
+	var heroOverlayOpacity = isHeroImageLoaded ? '0.7' : '1'
+
+	var heroBackgroundStyle = isHeroImageLoaded ? { backgroundImage: `url('${imageUrl}')` } : null
 
 	return (
 		<div className="project-show fill-parent">
 			<div className='hero fill-parent'>
-				<div className='hero__background hero__background--blurred' style={{ backgroundImage: `url('${imageUrl}')` }} />
+				<div className='hero__background hero__background--blurred' style={ heroBackgroundStyle } />
 				<div className='hero__overlay' style={{ opacity: heroOverlayOpacity }}/>
 				<div className='hero__top-bar'>
 					<Dates dates={ dates } />

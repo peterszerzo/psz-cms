@@ -52,7 +52,7 @@
 
 	var _client2 = _interopRequireDefault(_client);
 
-	var _qajax = __webpack_require__(369);
+	var _qajax = __webpack_require__(364);
 
 	var _qajax2 = _interopRequireDefault(_qajax);
 
@@ -18676,7 +18676,7 @@
 
 	var _root10 = _interopRequireDefault(_root9);
 
-	var _index = __webpack_require__(366);
+	var _index = __webpack_require__(370);
 
 	var _index2 = _interopRequireDefault(_index);
 
@@ -24933,13 +24933,11 @@
 				});
 
 				setTimeout(function () {
-					_this4.state.message.isShowing = false;
-					_this4.forceUpdate();
+					_this4.setState({ message: Object.assign({}, _this4.state.message, { isShowing: false }) });
 				}, 4500);
 
 				setTimeout(function () {
-					_this4.state.message.shouldShowOnHover = true;
-					_this4.forceUpdate();
+					_this4.setState({ message: Object.assign({}, _this4.state.message, { shouldShowOnHover: false }) });
 				}, 9000);
 			}
 		}]);
@@ -50031,7 +50029,7 @@
 
 			_this.state = {
 				greetingIndex: 0,
-				hasImageLoaded: false
+				isHeroImageLoaded: false
 			};
 			return _this;
 		}
@@ -50047,11 +50045,7 @@
 				return _react2.default.createElement(
 					'div',
 					{ className: 'fill-parent' },
-					_react2.default.createElement('img', {
-						style: { opacity: 0.1, width: 10, height: 10, position: 'fixed' },
-						src: imageUrl,
-						onLoad: this.handleImageLoad.bind(this)
-					}),
+					this.renderTestImage(),
 					_react2.default.createElement(
 						'div',
 						{ className: 'hero fill-parent' },
@@ -50068,6 +50062,21 @@
 						dangerouslySetInnerHTML: { __html: (0, _marked2.default)(_text2.default, { sanitize: true }) }
 					})
 				);
+			}
+
+			/*
+	   *
+	   *
+	   */
+
+		}, {
+			key: 'renderTestImage',
+			value: function renderTestImage() {
+				return _react2.default.createElement('img', {
+					style: { opacity: 0.1, width: 10, height: 10, position: 'fixed' },
+					src: imageUrl,
+					onLoad: this.handleImageLoad.bind(this)
+				});
 			}
 
 			/*
@@ -50109,8 +50118,8 @@
 		}, {
 			key: 'getHeroBackgroundStyle',
 			value: function getHeroBackgroundStyle() {
-				if (this.state.hasImageLoaded) {
-					return { backgroundImage: 'url(/images/me/me_1200.jpg)' };
+				if (this.state.isHeroImageLoaded) {
+					return { backgroundImage: 'url(' + imageUrl + ')' };
 				}
 			}
 
@@ -50122,7 +50131,7 @@
 		}, {
 			key: 'handleImageLoad',
 			value: function handleImageLoad() {
-				this.setState({ hasImageLoaded: true });
+				this.setState({ isHeroImageLoaded: true });
 			}
 		}]);
 
@@ -51518,8 +51527,6 @@
 				var _props$app$ui = this.props.app.ui;
 				var windowHeight = _props$app$ui.windowHeight;
 				var scrollTop = _props$app$ui.scrollTop;
-
-				console.log(this.props.app.ui);
 				var pathname = this.props.router.location.pathname;
 
 				var isDiscrete = ['/projects', '/blog'].indexOf(pathname) === -1 && windowHeight > scrollTop;
@@ -52565,11 +52572,33 @@
 				return _react2.default.createElement(
 					'div',
 					{ className: 'wrapper__content fill-parent' },
+					this.renderTestImage(),
 					_react2.default.createElement(_item2.default, {
 						isHeroImageLoaded: this.state.isHeroImageLoaded,
 						resource: resource
 					})
 				);
+			}
+
+			/*
+	   *
+	   *
+	   */
+
+		}, {
+			key: 'renderTestImage',
+			value: function renderTestImage() {
+				var resource = this.state.resource;
+
+				if (!resource) {
+					return;
+				}
+				var imageUrl = '/images/posts/' + resource.id + '/hero.jpg';
+				return _react2.default.createElement('img', {
+					style: { opacity: 0.1, width: 10, height: 10, position: 'fixed' },
+					src: imageUrl,
+					onLoad: this.handleImageLoad.bind(this)
+				});
 			}
 
 			/*
@@ -52581,6 +52610,17 @@
 			key: 'componentDidMount',
 			value: function componentDidMount() {
 				this.fetchResource();
+			}
+
+			/*
+	   *
+	   *
+	   */
+
+		}, {
+			key: 'handleImageLoad',
+			value: function handleImageLoad() {
+				this.setState({ isHeroImageLoaded: true });
 			}
 
 			/*
@@ -52723,7 +52763,11 @@
 			title += ' (draft)';
 		}
 
-		var heroOverlayOpacity = props.isHeroImageLoaded ? '0.7' : '1';
+		var isHeroImageLoaded = props.isHeroImageLoaded;
+
+		var heroOverlayOpacity = isHeroImageLoaded ? '0.7' : '1';
+
+		var heroBackgroundStyle = isHeroImageLoaded ? { backgroundImage: 'url(\'' + imageUrl + '\')' } : null;
 
 		return _react2.default.createElement(
 			'div',
@@ -52731,7 +52775,7 @@
 			_react2.default.createElement(
 				'div',
 				{ className: 'hero fill-parent' },
-				_react2.default.createElement('div', { className: 'hero__background hero__background--blurred', style: { backgroundImage: 'url(\'' + imageUrl + '\')' } }),
+				_react2.default.createElement('div', { className: 'hero__background hero__background--blurred', style: heroBackgroundStyle }),
 				_react2.default.createElement('div', { className: 'hero__overlay', style: { opacity: heroOverlayOpacity } }),
 				_react2.default.createElement(
 					'div',
@@ -64250,7 +64294,7 @@
 
 	var _edit2 = _interopRequireDefault(_edit);
 
-	var _post = __webpack_require__(364);
+	var _post = __webpack_require__(368);
 
 	var _post2 = _interopRequireDefault(_post);
 
@@ -64326,7 +64370,7 @@
 
 	var _root2 = _interopRequireDefault(_root);
 
-	var _qajax = __webpack_require__(369);
+	var _qajax = __webpack_require__(364);
 
 	var _qajax2 = _interopRequireDefault(_qajax);
 
@@ -64869,374 +64913,11 @@
 /* 364 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	module.exports = __webpack_require__(365)(__webpack_require__(366), window.XMLHttpRequest, window.FormData);
 
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _base = __webpack_require__(365);
-
-	var _base2 = _interopRequireDefault(_base);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	// Inherit from base.
-	var Post = Object.create(_base2.default);
-
-	Post.fields = [{
-		key: 'id',
-		type: 'text',
-		defaultValue: 'choose-id',
-		formComponentName: 'Text',
-		labelText: 'Post ID',
-		hint: 'Same as url fragment'
-	}, {
-		key: 'type',
-		type: 'text',
-		defaultValue: 'project',
-		formComponentName: 'Text',
-		labelText: 'Post type',
-		hint: 'project | blog_post'
-	}, {
-		key: 'title',
-		type: 'text',
-		defaultValue: 'Project title',
-		formComponentName: 'Text',
-		labelText: 'Post title',
-		hint: 'Enter project title'
-	}, {
-		key: 'headline',
-		type: 'text',
-		defaultValue: '',
-		formComponentName: 'Text',
-		labelText: 'Post headline',
-		hint: 'Or subtitle...'
-	}, {
-		key: 'name',
-		type: 'text',
-		defaultValue: 'Project name',
-		formComponentName: 'Text',
-		labelText: 'Post name',
-		hint: 'Appears at links to the post from the listing page.'
-	}, {
-		key: 'supervisors',
-		type: 'json',
-		defaultValue: '[]',
-		formComponentName: 'Text',
-		labelText: 'Supervisors',
-		hint: 'Enter array'
-	}, {
-		key: 'collaborators',
-		type: 'json',
-		defaultValue: '[]',
-		formComponentName: 'Text',
-		labelText: 'Collaborators',
-		hint: 'Enter array'
-	}, {
-		key: 'post_group',
-		type: 'text',
-		defaultValue: 'featured',
-		formComponentName: 'Text',
-		labelText: 'Post group',
-		hint: 'featured | etc.'
-	}, {
-		key: 'built_with',
-		type: 'json',
-		defaultValue: '[]',
-		formComponentName: 'Text',
-		labelText: 'Built with',
-		hint: 'Enter list of technologies'
-	}, {
-		key: 'body_text',
-		type: 'text',
-		defaultValue: "Stay tuned for this post's body text.",
-		formComponentName: 'Text',
-		labelText: 'Body Text',
-		hint: 'Enter html.'
-	}, {
-		key: 'display_order',
-		type: 'integer',
-		defaultValue: '0',
-		formComponentName: 'Text',
-		labelText: 'Display order',
-		hint: 'Add order in which post should appear.'
-	}, {
-		key: 'dates',
-		type: 'json',
-		defaultValue: [],
-		formComponentName: 'Text',
-		labelText: 'Dates',
-		hint: 'Enter as array: [ "2013-11", "2014-9" ]'
-	}, {
-		key: 'links',
-		type: 'json',
-		defaultValue: [],
-		formComponentName: 'Text',
-		labelText: 'Links',
-		hint: 'Enter as array of objects: [ { name: "", url: "" }, { name: "", url: "" } ]'
-	}, {
-		key: 'is_live',
-		type: 'boolean',
-		defaultValue: false,
-		formComponent: 'Text',
-		options: [{ value: true, name: 'Yes' }, { value: false, name: 'No' }],
-		labelText: 'Is live',
-		hint: 'Set as true or false depending on whether post is live.'
-	}];
-
-	Post.tableName = 'posts';
-
-	exports.default = Post;
 
 /***/ },
 /* 365 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _underscore = __webpack_require__(212);
-
-	var _underscore2 = _interopRequireDefault(_underscore);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	/*
-	 * Escapes string to be inserted into a SQL database.
-	 *
-	 */
-	function escapeText(val) {
-		if (typeof val != 'string') return val;
-		return val.replace(/[\0\x08\x09\x1a\n\r"'\\\%]/g, function (char) {
-			switch (char) {
-				case "\0":
-					return "\\0";
-				case "\x08":
-					return "\\b";
-				case "\x09":
-					return "\\t";
-				case "\x1a":
-					return "\\z";
-				case "\n":
-					return "\\n";
-				case "\r":
-					return "\\r";
-				case "\"":
-				case "'":
-				case "\\":
-				case "%":
-					return "\\" + char; // prepends a backslash to backslash, percent,
-				// and double/single quotes
-			}
-		});
-	}
-
-	/*
-	 * Base model.
-	 *
-	 */
-	var Base = {
-
-		// Set on superclass.
-		data: {},
-
-		// Set on superclass.
-		fields: [],
-
-		/*
-	  * 
-	  *
-	  */
-		sanitizeValue: function sanitizeValue(key, value) {},
-
-		/*
-	  *
-	  *
-	  */
-		create: function create(data) {
-			var self = Object.create(this);
-			self.data = data;
-			return self;
-		},
-
-		/*
-	  * For missing values, adds default.
-	  *
-	  */
-		setDefaults: function setDefaults() {
-			var fields = this.fields;
-			var data = this.data;
-
-			fields.forEach(function (field) {
-				var defaultValue = field.defaultValue;
-				var key = field.key;
-
-				if (data[key] == null && defaultValue != null) {
-					data[key] = defaultValue;
-				}
-			});
-		},
-
-		/*
-	  *
-	  *
-	  */
-		getValuesString: function getValuesString() {
-			var fields = this.fields;
-			var data = this.data;
-
-			return fields.map(function (field) {
-				var key = field.key;
-				var defaultValue = field.defaultValue;
-
-				var value = data[key];
-
-				if (value == null) {
-					value = defaultValue;
-				}
-
-				if (_underscore2.default.isArray(value) || _underscore2.default.isObject(value)) {
-					value = '\'' + JSON.stringify(value) + '\'';
-				} else if (_underscore2.default.isString(value)) {
-					var escapeMarker = '';
-					if (value.length > 15) {
-						escapeMarker = 'E';
-					}
-					value = escapeMarker + '\'' + escapeText(value) + '\'';
-				}
-
-				return value;
-			}).join(',');
-		},
-
-		/*
-	  * Returns comma-separated list of field keys.
-	  *
-	  */
-		getFieldKeysString: function getFieldKeysString() {
-			return this.fields.map(function (field) {
-				return field.key;
-			}).join(',');
-		},
-
-		/*
-	  * Returns comma-separated field key + type string.
-	  *
-	  */
-		getFieldKeyTypesString: function getFieldKeyTypesString() {
-			return this.fields.map(function (field) {
-				return field.key + ' ' + field.type;
-			}).join(',');
-		},
-
-		/*
-	  * Returns command used to insert into sql database.
-	  * @returns {string}
-	  */
-		getSqlInsertCommand: function getSqlInsertCommand() {
-			return 'INSERT INTO ' + this.tableName + ' (' + this.getFieldKeysString() + ') VALUES(' + this.getValuesString() + ');';
-		},
-
-		/*
-	  * Returns command used to create table.
-	  * @returns {string}
-	  */
-		getTableCreateCommand: function getTableCreateCommand() {
-			return 'CREATE TABLE ' + this.tableName + ' (' + this.getFieldKeyTypesString() + ');';
-		}
-	};
-
-	exports.default = Base;
-
-/***/ },
-/* 366 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _ui = __webpack_require__(367);
-
-	var _ui2 = _interopRequireDefault(_ui);
-
-	var _test = __webpack_require__(368);
-
-	var _test2 = _interopRequireDefault(_test);
-
-	var _redux = __webpack_require__(220);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	exports.default = (0, _redux.combineReducers)({
-		ui: _ui2.default,
-		test: _test2.default
-	});
-
-/***/ },
-/* 367 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	exports.default = uiReducer;
-	function uiReducer() {
-		var state = arguments.length <= 0 || arguments[0] === undefined ? { windowHeight: 100, scrollTop: 0 } : arguments[0];
-		var action = arguments[1];
-		var type = action.type;
-		var value = action.value;
-
-		if (type === 'SET_WINDOW_DIMENSIONS') {
-			state = Object.assign({}, state, { windowHeight: value.height, windowWidth: value.width });
-		} else if (type === 'SET_SCROLL_TOP') {
-			state = Object.assign({}, state, { scrollTop: value });
-		}
-
-		return state;
-	}
-
-/***/ },
-/* 368 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	exports.default = testReducer;
-	function testReducer() {
-		var state = arguments.length <= 0 || arguments[0] === undefined ? 'not set' : arguments[0];
-		var action = arguments[1];
-		var type = action.type;
-
-		if (type === 'SET_TEST_PROP') {
-			state = 'set';
-		} else {
-			state = 'not set';
-		}
-
-		return state;
-	}
-
-/***/ },
-/* 369 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__(370)(__webpack_require__(371), window.XMLHttpRequest, window.FormData);
-
-
-/***/ },
-/* 370 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -65502,7 +65183,7 @@
 
 
 /***/ },
-/* 371 */
+/* 366 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process, setImmediate) {// vim:ts=4:sts=4:sw=4:
@@ -67554,10 +67235,10 @@
 
 	});
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(372).setImmediate))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(367).setImmediate))
 
 /***/ },
-/* 372 */
+/* 367 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(setImmediate, clearImmediate) {var nextTick = __webpack_require__(3).nextTick;
@@ -67636,7 +67317,370 @@
 	exports.clearImmediate = typeof clearImmediate === "function" ? clearImmediate : function(id) {
 	  delete immediateIds[id];
 	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(372).setImmediate, __webpack_require__(372).clearImmediate))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(367).setImmediate, __webpack_require__(367).clearImmediate))
+
+/***/ },
+/* 368 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _base = __webpack_require__(369);
+
+	var _base2 = _interopRequireDefault(_base);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	// Inherit from base.
+	var Post = Object.create(_base2.default);
+
+	Post.fields = [{
+		key: 'id',
+		type: 'text',
+		defaultValue: 'choose-id',
+		formComponentName: 'Text',
+		labelText: 'Post ID',
+		hint: 'Same as url fragment'
+	}, {
+		key: 'type',
+		type: 'text',
+		defaultValue: 'project',
+		formComponentName: 'Text',
+		labelText: 'Post type',
+		hint: 'project | blog_post'
+	}, {
+		key: 'title',
+		type: 'text',
+		defaultValue: 'Project title',
+		formComponentName: 'Text',
+		labelText: 'Post title',
+		hint: 'Enter project title'
+	}, {
+		key: 'headline',
+		type: 'text',
+		defaultValue: '',
+		formComponentName: 'Text',
+		labelText: 'Post headline',
+		hint: 'Or subtitle...'
+	}, {
+		key: 'name',
+		type: 'text',
+		defaultValue: 'Project name',
+		formComponentName: 'Text',
+		labelText: 'Post name',
+		hint: 'Appears at links to the post from the listing page.'
+	}, {
+		key: 'supervisors',
+		type: 'json',
+		defaultValue: '[]',
+		formComponentName: 'Text',
+		labelText: 'Supervisors',
+		hint: 'Enter array'
+	}, {
+		key: 'collaborators',
+		type: 'json',
+		defaultValue: '[]',
+		formComponentName: 'Text',
+		labelText: 'Collaborators',
+		hint: 'Enter array'
+	}, {
+		key: 'post_group',
+		type: 'text',
+		defaultValue: 'featured',
+		formComponentName: 'Text',
+		labelText: 'Post group',
+		hint: 'featured | etc.'
+	}, {
+		key: 'built_with',
+		type: 'json',
+		defaultValue: '[]',
+		formComponentName: 'Text',
+		labelText: 'Built with',
+		hint: 'Enter list of technologies'
+	}, {
+		key: 'body_text',
+		type: 'text',
+		defaultValue: "Stay tuned for this post's body text.",
+		formComponentName: 'Text',
+		labelText: 'Body Text',
+		hint: 'Enter html.'
+	}, {
+		key: 'display_order',
+		type: 'integer',
+		defaultValue: '0',
+		formComponentName: 'Text',
+		labelText: 'Display order',
+		hint: 'Add order in which post should appear.'
+	}, {
+		key: 'dates',
+		type: 'json',
+		defaultValue: [],
+		formComponentName: 'Text',
+		labelText: 'Dates',
+		hint: 'Enter as array: [ "2013-11", "2014-9" ]'
+	}, {
+		key: 'links',
+		type: 'json',
+		defaultValue: [],
+		formComponentName: 'Text',
+		labelText: 'Links',
+		hint: 'Enter as array of objects: [ { name: "", url: "" }, { name: "", url: "" } ]'
+	}, {
+		key: 'is_live',
+		type: 'boolean',
+		defaultValue: false,
+		formComponent: 'Text',
+		options: [{ value: true, name: 'Yes' }, { value: false, name: 'No' }],
+		labelText: 'Is live',
+		hint: 'Set as true or false depending on whether post is live.'
+	}];
+
+	Post.tableName = 'posts';
+
+	exports.default = Post;
+
+/***/ },
+/* 369 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _underscore = __webpack_require__(212);
+
+	var _underscore2 = _interopRequireDefault(_underscore);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/*
+	 * Escapes string to be inserted into a SQL database.
+	 *
+	 */
+	function escapeText(val) {
+		if (typeof val != 'string') return val;
+		return val.replace(/[\0\x08\x09\x1a\n\r"'\\\%]/g, function (char) {
+			switch (char) {
+				case "\0":
+					return "\\0";
+				case "\x08":
+					return "\\b";
+				case "\x09":
+					return "\\t";
+				case "\x1a":
+					return "\\z";
+				case "\n":
+					return "\\n";
+				case "\r":
+					return "\\r";
+				case "\"":
+				case "'":
+				case "\\":
+				case "%":
+					return "\\" + char; // prepends a backslash to backslash, percent,
+				// and double/single quotes
+			}
+		});
+	}
+
+	/*
+	 * Base model.
+	 *
+	 */
+	var Base = {
+
+		// Set on superclass.
+		data: {},
+
+		// Set on superclass.
+		fields: [],
+
+		/*
+	  * 
+	  *
+	  */
+		sanitizeValue: function sanitizeValue(key, value) {},
+
+		/*
+	  *
+	  *
+	  */
+		create: function create(data) {
+			var self = Object.create(this);
+			self.data = data;
+			return self;
+		},
+
+		/*
+	  * For missing values, adds default.
+	  *
+	  */
+		setDefaults: function setDefaults() {
+			var fields = this.fields;
+			var data = this.data;
+
+			fields.forEach(function (field) {
+				var defaultValue = field.defaultValue;
+				var key = field.key;
+
+				if (data[key] == null && defaultValue != null) {
+					data[key] = defaultValue;
+				}
+			});
+		},
+
+		/*
+	  *
+	  *
+	  */
+		getValuesString: function getValuesString() {
+			var fields = this.fields;
+			var data = this.data;
+
+			return fields.map(function (field) {
+				var key = field.key;
+				var defaultValue = field.defaultValue;
+
+				var value = data[key];
+
+				if (value == null) {
+					value = defaultValue;
+				}
+
+				if (_underscore2.default.isArray(value) || _underscore2.default.isObject(value)) {
+					value = '\'' + JSON.stringify(value) + '\'';
+				} else if (_underscore2.default.isString(value)) {
+					var escapeMarker = '';
+					if (value.length > 15) {
+						escapeMarker = 'E';
+					}
+					value = escapeMarker + '\'' + escapeText(value) + '\'';
+				}
+
+				return value;
+			}).join(',');
+		},
+
+		/*
+	  * Returns comma-separated list of field keys.
+	  *
+	  */
+		getFieldKeysString: function getFieldKeysString() {
+			return this.fields.map(function (field) {
+				return field.key;
+			}).join(',');
+		},
+
+		/*
+	  * Returns comma-separated field key + type string.
+	  *
+	  */
+		getFieldKeyTypesString: function getFieldKeyTypesString() {
+			return this.fields.map(function (field) {
+				return field.key + ' ' + field.type;
+			}).join(',');
+		},
+
+		/*
+	  * Returns command used to insert into sql database.
+	  * @returns {string}
+	  */
+		getSqlInsertCommand: function getSqlInsertCommand() {
+			return 'INSERT INTO ' + this.tableName + ' (' + this.getFieldKeysString() + ') VALUES(' + this.getValuesString() + ');';
+		},
+
+		/*
+	  * Returns command used to create table.
+	  * @returns {string}
+	  */
+		getTableCreateCommand: function getTableCreateCommand() {
+			return 'CREATE TABLE ' + this.tableName + ' (' + this.getFieldKeyTypesString() + ');';
+		}
+	};
+
+	exports.default = Base;
+
+/***/ },
+/* 370 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _ui = __webpack_require__(371);
+
+	var _ui2 = _interopRequireDefault(_ui);
+
+	var _test = __webpack_require__(372);
+
+	var _test2 = _interopRequireDefault(_test);
+
+	var _redux = __webpack_require__(220);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = (0, _redux.combineReducers)({
+		ui: _ui2.default,
+		test: _test2.default
+	});
+
+/***/ },
+/* 371 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.default = uiReducer;
+	function uiReducer() {
+		var state = arguments.length <= 0 || arguments[0] === undefined ? { windowHeight: 100, scrollTop: 0 } : arguments[0];
+		var action = arguments[1];
+		var type = action.type;
+		var value = action.value;
+
+		if (type === 'SET_WINDOW_DIMENSIONS') {
+			state = Object.assign({}, state, { windowHeight: value.height, windowWidth: value.width });
+		} else if (type === 'SET_SCROLL_TOP') {
+			state = Object.assign({}, state, { scrollTop: value });
+		}
+
+		return state;
+	}
+
+/***/ },
+/* 372 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.default = testReducer;
+	function testReducer() {
+		var state = arguments.length <= 0 || arguments[0] === undefined ? 'not set' : arguments[0];
+		var action = arguments[1];
+		var type = action.type;
+
+		if (type === 'SET_TEST_PROP') {
+			state = 'set';
+		} else {
+			state = 'not set';
+		}
+
+		return state;
+	}
 
 /***/ },
 /* 373 */

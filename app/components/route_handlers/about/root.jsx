@@ -31,7 +31,7 @@ class About extends React.Component {
 		super(props)
 		this.state = {
 			greetingIndex: 0,
-			hasImageLoaded: false
+			isHeroImageLoaded: false
 		}
 	}
 
@@ -43,11 +43,7 @@ class About extends React.Component {
 	render() {
 		return (
 			<div className='fill-parent'>
-				<img
-					style={ { opacity: 0.1, width: 10, height: 10, position: 'fixed' } } 
-					src={ imageUrl }
-					onLoad={this.handleImageLoad.bind(this)} 
-				/>
+				{ this.renderTestImage() }
 				<div className='hero fill-parent'>
 					<div className='hero__background' style={this.getHeroBackgroundStyle()} />
 					<div className='hero__overlay' style={{ opacity: this.state.hasImageLoaded ? '0.6' : '0.8' }} />
@@ -58,6 +54,21 @@ class About extends React.Component {
 					dangerouslySetInnerHTML={{__html: marked(text, { sanitize: true })}}
 				/>
 			</div>
+		)
+	}
+
+
+	/*
+	 *
+	 *
+	 */
+	renderTestImage() {
+		return (
+			<img
+				style={ { opacity: 0.1, width: 10, height: 10, position: 'fixed' } } 
+				src={ imageUrl }
+				onLoad={this.handleImageLoad.bind(this)} 
+			/>
 		)
 	}
 
@@ -92,8 +103,8 @@ class About extends React.Component {
 	 *
 	 */
 	getHeroBackgroundStyle() {
-		if (this.state.hasImageLoaded) {
-			return { backgroundImage: 'url(/images/me/me_1200.jpg)' }
+		if (this.state.isHeroImageLoaded) {
+			return { backgroundImage: `url(${imageUrl})` }
 		}
 	}
 
@@ -103,7 +114,7 @@ class About extends React.Component {
 	 *
 	 */
 	handleImageLoad() {
-		this.setState({ hasImageLoaded: true })
+		this.setState({ isHeroImageLoaded: true })
 	}
 
 }

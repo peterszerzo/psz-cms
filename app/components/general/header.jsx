@@ -46,7 +46,6 @@ class Header extends Component {
 	 */
 	render() {
 		var { windowHeight, scrollTop } = this.props.app.ui
-		console.log(this.props.app.ui)
 		var { pathname } = this.props.router.location
 		var isDiscrete = ([ '/projects', '/blog' ].indexOf(pathname) === -1) && (windowHeight > scrollTop)
 		
