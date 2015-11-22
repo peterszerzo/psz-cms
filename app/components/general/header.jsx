@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
-import Buttons from './buttons.jsx'
 import { Link } from 'react-router'
+import { connect } from 'react-redux'
+
+import * as Buttons from './buttons.jsx'
+
 
 var buttons = [
 	{
@@ -23,7 +26,7 @@ var buttons = [
  *
  *
  */
-class HeaderComp extends Component {
+class Header extends Component {
 
 	/*
 	 *
@@ -41,8 +44,40 @@ class HeaderComp extends Component {
 	 *
 	 *
 	 */
-	getList() {
-		var { activeLinkName, buttons } = this.props
+	render() {
+		var { windowHeight, scrollTop } = this.props.app.ui
+		console.log(this.props.app.ui)
+		var { pathname } = this.props.router.location
+		var isDiscrete = ([ '/projects', '/blog' ].indexOf(pathname) === -1) && (windowHeight > scrollTop)
+		
+		var cls = classNames({
+			'header': true,
+			'header--discrete': isDiscrete,
+			'header--expanded': this.state.isExpanded
+		})
+		var opacity = this.props.router.location.pathname === '/' ? '0' : '1'
+		return (
+			<div className={ cls } style={{ opacity: opacity }}>
+				<Link className='header__main-link' to='/'>
+					<Buttons.BackToMain />
+				</Link>
+				<ul className='header__nav'>
+					<li className='header__nav__arrow' onClick={this.toggleExpandedState.bind(this)}>
+						<Buttons.Arrow />
+					</li>
+					{this.renderList()}
+				</ul>
+			</div>
+		)
+	}
+
+
+	/*
+	 *
+	 *
+	 */
+	renderList() {
+		var { activeLinkName } = this.props
 		return buttons.map(function(button, index) {
 			var isActive = (activeLinkName && (button.name === activeLinkName)),
 				className = 'header__nav__item' + (isActive ? ' header__nav__item--active' : '');
@@ -57,30 +92,7 @@ class HeaderComp extends Component {
 	}
 
 
-	/*
-	 *
-	 *
-	 */
-	render() {
-		var cls = classNames({
-			'header': true,
-			'header--transparent': this.props.isTransparent,
-			'header--expanded': this.state.isExpanded
-		})
-		return (
-			<div className={ cls }>
-				<Link className='header__main-link' to='/'>
-					<Buttons.BackToMain />
-				</Link>
-				<ul className='header__nav'>
-					<li className='header__nav__arrow' onClick={this.toggleExpandedState.bind(this)}>
-						<Buttons.Arrow />
-					</li>
-					{this.getList()}
-				</ul>
-			</div>
-		)
-	}
+	
 
 
 	/*
@@ -94,10 +106,7 @@ class HeaderComp extends Component {
 }
 
 
-export class Header extends Component {
-
-	render() {
-		return <HeaderComp {...this.props} buttons={buttons} />
-	}
-
-}
+export default connect(state => ({ 
+	router: state.router,
+	app: state.app
+}))(Header)

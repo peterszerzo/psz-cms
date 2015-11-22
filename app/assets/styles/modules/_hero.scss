@@ -2,32 +2,65 @@
 	position: relative;
 	width: 100%;
 	content: '';
-	background-size: cover;
-	background-position: 50% 0%;
-	background-repeat: no-repeat;
-	height: 600px;
+	
 
-	&__overlay {
+	color: white;
+
+	&__background, &__overlay, &__title-bar {
 		position: absolute;
 		width: 100%;
 		height: 100%;
 		left: 0;
 		top: 0;
+		
+	}
+
+	&__background {
+		background-size: cover;
+		background-position: 50% 0%;
+		background-repeat: no-repeat;
+		&--blurred {
+			-webkit-filter: blur(3px);
+			filter: blur(3px);
+		}
+	}
+
+	&__overlay {
 		@include transition(all 0.5s);
-		background-color: transparentize(map-get($colors, base), 0.4);
+		background-color: map-get($colors, base);
+	}
+
+	&__top-bar {
+		width: 100%;
+		position: absolute;
+		top: $header-height + 10px;
+	}
+
+	&__title-bar {
+		display: flex;
+		&__content {
+			margin: auto;
+			padding: 0 30px;
+		}
+	}
+
+	&__nav-bar {
+		width: 100%;
+		position: absolute;
+		bottom: $header-height + 10px;
 	}
 
 	&__text {
 		position: absolute;
-		bottom: 30%;
+		bottom: 20%;
 		left: 25px;
-		font-size: 60px;
+		@include font-size(64px);
 		@include bp-w(768px) {
 			left: calc(50% - #{768px / 2});
 			font-size: 80px;
 		}
 		
-		font-family: 'Hallo';
+		font-family: 'PT Sans';
 		color: white;
 	}
 	

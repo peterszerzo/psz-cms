@@ -11,8 +11,8 @@
 	background-color: transparentize(get-color(base), 0.05);
 	transition: all 0.2s;
 
-	&--transparent {
-		background: none;
+	&--discrete {
+		background-color: rgba(255, 255, 255, 0);
 		box-shadow: none;
 	}
 
@@ -39,10 +39,14 @@
 
 		z-index: 100;
 
-		width: 130px;
+		width: 100px;
 		height: $header-height;
 		overflow: visible;
 		float: right;
+
+		.header--discrete & {
+			width: 100px;
+		}
 
 		@media screen and (min-width: 800px) {
 			width: auto;
@@ -53,7 +57,7 @@
 		padding: 0;
 
 		&__arrow, &__item {
-			width: 130px;
+			width: 100px;
 			float: right;
 			height: $header-height;
 			padding: 0;
@@ -65,8 +69,14 @@
 			display: table;
 			text-align: center;
 
+			display: none;
+
 			@media screen and (min-width: 800px) {
 				display: none;
+			}
+
+			.header--discrete & {
+				display: table;
 			}
 
 			svg {
@@ -91,48 +101,47 @@
 			z-index: 100;
 			display: none;
 
+			&:hover { border-bottom: 4px solid lighten(map-get($colors, purple), 7); }
+
 			.header__nav:hover &, .header--expanded & {
 				background-color: transparentize(get-color(base), 0.05);
 				display: table;
 			}
 
-			.header--transparent & {
+			.header--discrete & {
+				display: none;
+			}
+
+			.header--discrete & {
 				background: none !important;
+				border-color: white;
 			}
 
 			@media screen and (min-width: 800px) {
+
+				display: table;
+
 				.header__nav:hover & {
 					background: none;
 				}
-				display: table;
-				&:hover, &--active {
-					border-bottom: 4px solid lighten(map-get($colors, purple), 7);
-					.header--transparent & {
-						border-color: white;
-					}
-				}
+
 			}
 
 			a { 
 				height: 100%;
-				padding: 0 30px;
+				padding: 0 0px;
 				display: table-cell;
 				position: relative;
 				text-align: center;
 				vertical-align: middle;
-				font-family: 'Hallo';
+				font-family: 'PT Sans';
+				@include font-size(18px);
+				&:hover { top: 2px; opacity: 1; }
 			}
 
 			@media screen and (min-width: 800px) {
 				display: table;
 				background: none;
-				&:hover, &--active {
-					a { 
-						top: 2px;
-						opacity: 1;
-					}
-				}
-				
 			}
 
 		}

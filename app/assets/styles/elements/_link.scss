@@ -1,20 +1,19 @@
 .link {
 
-	$c: darken(map-get($colors, purple), 7);
-	font-family: 'Hallo';
+	$c: white;
 	width: 170px;
+	font-family: 'PT Sans';
 	margin: auto;
 	text-align: center;
 	color: $c;
-	border: 1.5px solid $c;
+	border: 2px solid $c;
 	padding: 8px 16px;
-	font-size: 26px;
-	opacity: 0.6;
+	@include font-size(18px);
+	opacity: 1;
 	transition: all 0.3s;
 
 	&:hover { 
-		opacity: 1;
-		color: white;
+		color: #000;
 		background-color: $c;
 		transition: all 0.3s;
 	}

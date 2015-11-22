@@ -1,1 +1,0 @@
-CREATE TABLE posts (id text,type text,title text,headline text,name text,supervisors json,collaborators json,post_group text,technologies json,body_text text,display_order integer,dates json,links json,is_live boolean);

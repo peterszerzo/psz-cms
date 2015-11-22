@@ -1,5 +1,9 @@
 import _ from 'underscore'
 
+/*
+ * Escapes string to be inserted into a SQL database.
+ *
+ */
 function escapeText(val) {
     if (typeof val != 'string')
     return val;
@@ -28,6 +32,10 @@ function escapeText(val) {
 }
 
 
+/*
+ * Base model.
+ *
+ */
 var Base = {
 
 	// Set on superclass.
@@ -50,10 +58,19 @@ var Base = {
 	 *
 	 *
 	 */
+	create(data) {
+		var self = Object.create(this)
+		self.data = data
+		return self
+	},
+
+
+	/*
+	 * For missing values, adds default.
+	 *
+	 */
 	setDefaults() {
 		var { fields, data } = this
-
-		console.log(this, data, fields)
 
 		fields.forEach((field) => {
 			var { defaultValue, key } = field
@@ -83,9 +100,9 @@ var Base = {
 	        if (_.isArray(value) || _.isObject(value)) { 
 	            value = `'${JSON.stringify(value)}'`; 
 	        } else if (_.isString(value)) {
-	            let escapeMarker = '';
-	            if (value.length > 50) { escapeMarker = 'E'; }
-	            value = `${escapeMarker}'${escapeText(value)}'`;
+	            let escapeMarker = ''
+	            if (value.length > 15) { escapeMarker = 'E' }
+	            value = `${escapeMarker}'${escapeText(value)}'`
 	        }
 
 	        return value
@@ -114,8 +131,8 @@ var Base = {
 
 
 	/*
-	 *
-	 *
+	 * Returns command used to insert into sql database.
+	 * @returns {string}
 	 */
 	getSqlInsertCommand() {
 		return `INSERT INTO ${this.tableName} (${this.getFieldKeysString()}) VALUES(${this.getValuesString()});`
@@ -123,8 +140,8 @@ var Base = {
 
 
 	/*
-	 *
-	 *
+	 * Returns command used to create table.
+	 * @returns {string}
 	 */
 	getTableCreateCommand() {
 		return `CREATE TABLE ${this.tableName} (${this.getFieldKeyTypesString()});`;

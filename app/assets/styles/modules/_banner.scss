@@ -36,7 +36,7 @@
 		}
 
 		h1, p { 
-			font-family: 'Hallo';
+			font-family: 'PT Sans';
 			margin: 0;
 			padding: 0;
 			text-align: center;
@@ -45,11 +45,11 @@
 
 		h1 {
 			@include font-size(32px);
-			margin: 25px 0 10px 0;
+			margin: 28px 0 10px 0;
 		}
 
 		p {
-			@include font-size(20px);
+			@include font-size(18px);
 			margin: 0;
 		}
 	}
@@ -81,9 +81,9 @@
 		text-align: center;
 		width: 100%;
 		padding: 0 20%;
-		@include font-size(21px);
+		@include font-size(18px);
 		opacity: 1;
-		font-family: 'Hallo';
+		font-family: 'PT Sans';
 	}
 
 	&__geopath {

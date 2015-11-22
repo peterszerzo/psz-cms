@@ -1,3 +1,5 @@
+// Not yet used.
+
 function fetch(state, action) {
 	switch (action.type) {
 		case 'FETCH_POSTS':

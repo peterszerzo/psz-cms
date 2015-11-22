@@ -1,11 +1,9 @@
-export default function reducer(state = {}, action) {
+import uiReducer from './ui.js'
+import testReducer from './test.js'
 
-	if (action.type === 'SET_TEST_PROP') {
-		state.testProp = 'just set test prop'
-	} else {
-		state.testProp = 'default test prop'
-	}
+import { combineReducers } from 'redux'
 
-	return state
-
-}
+export default combineReducers({
+	ui: uiReducer,
+	test: testReducer
+})

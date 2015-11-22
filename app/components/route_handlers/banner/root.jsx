@@ -37,19 +37,17 @@ class Banner extends React.Component {
 	 *
 	 */
 	render() {
-		var style = this.state.isGlobeAnimationRendered ? { opacity: 1 } : { opacity: 0 };
+		var { isGlobeAnimationRendered } = this.state
+		var style = isGlobeAnimationRendered ? { opacity: 1 } : { opacity: 0 }
 		return (
-			<div className='fill-parent'>
-				{ this.state.isGlobeAnimationRendered ? null : React.createElement(Loader) }
-				<div className="banner fill-parent" style={ style }>
-					<div className="banner__background"></div>
-					<div className="banner__globe"></div>
-					<Link className="banner__summary" to='/projects'>
-						<h1>a little room</h1>
-						<p>for mindful code, design and writing</p>
-					</Link>
-					{ this.renderMessage() }
-				</div>
+			<div className="banner fill-parent" style={ style }>
+				<div className="banner__background"></div>
+				<div className="banner__globe"></div>
+				<Link className="banner__summary" to='/projects'>
+					<h1>a little room</h1>
+					<p>for mindful code, design and writing</p>
+				</Link>
+				{ this.renderMessage() }
 			</div>
 		)
 	}

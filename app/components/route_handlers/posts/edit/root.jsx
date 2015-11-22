@@ -6,7 +6,6 @@ import Edit from './../../../general/crud/edit.jsx'
 
 import Post from './../../../../models/post.js'
 
-
 /*
  * 
  *
@@ -19,9 +18,6 @@ class EditPost extends React.Component {
 	 */
 	constructor(props) {
 		super(props)
-		this.state = {
-			resource: {}
-		}
 	}
 
 
@@ -31,11 +27,12 @@ class EditPost extends React.Component {
 	 */
 	render() {
 		return (
-			<div className='wrapper__content fill-parent'>
-				<Header />
-				<div>
-					<Edit fields={Post.fields} />
-				</div>
+			<div className='wrapper__clear-header fill-parent'>
+				<Edit 
+					fields={Post.fields}
+					ajaxMethod={'post'}
+					ajaxUrl={'/api/v2/posts'}
+				/>
 			</div>
 		)
 	}

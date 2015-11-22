@@ -19,8 +19,8 @@ Post.fields = [
 	    type: 'text',
 	    defaultValue: 'project',
 	    formComponentName: 'Text',
-	    labelText: 'Post ID',
-	    hint: 'Same as url fragment'
+	    labelText: 'Post type',
+	    hint: 'project | blog_post'
 	},
 
 	{
@@ -28,8 +28,8 @@ Post.fields = [
 	    type: 'text',
 	    defaultValue: 'Project title',
 	    formComponentName: 'Text',
-	    labelText: 'Post ID',
-	    hint: 'Same as url fragment'
+	    labelText: 'Post title',
+	    hint: 'Enter project title'
 	},
 
 	{
@@ -37,8 +37,8 @@ Post.fields = [
 	    type: 'text',
 	    defaultValue: '',
 	    formComponentName: 'Text',
-	    labelText: 'Post ID',
-	    hint: 'Same as url fragment'
+	    labelText: 'Post headline',
+	    hint: 'Or subtitle...'
 	},
 
 	{
@@ -46,26 +46,26 @@ Post.fields = [
 	    type: 'text',
 	    defaultValue: 'Project name',
 	    formComponentName: 'Text',
-	    labelText: 'Post ID',
-	    hint: 'Same as url fragment'
+	    labelText: 'Post name',
+	    hint: 'Appears at links to the post from the listing page.'
 	}, 
 
 	{
 	    key: 'supervisors',
 	    type: 'json',
-	    defaultValue: [],
+	    defaultValue: '[]',
 	    formComponentName: 'Text',
-	    labelText: 'Post ID',
-	    hint: 'Same as url fragment'
+	    labelText: 'Supervisors',
+	    hint: 'Enter array'
 	},
 
 	{
 	    key: 'collaborators',
 	    type: 'json',
-	    defaultValue: [],
+	    defaultValue: '[]',
 	    formComponentName: 'Text',
-	    labelText: 'Post ID (same as url fragment)',
-	    hint: 'Same as url fragment'
+	    labelText: 'Collaborators',
+	    hint: 'Enter array'
 	},
 
 	{
@@ -73,17 +73,17 @@ Post.fields = [
 	    type: 'text',
 	    defaultValue: 'featured',
 	    formComponentName: 'Text',
-	    labelText: 'Post ID (same as url fragment)',
-	    hint: 'Same as url fragment'
+	    labelText: 'Post group',
+	    hint: 'featured | etc.'
 	},
 
 	{
 	    key: 'built_with',
 	    type: 'json',
-	    defaultValue: [],
+	    defaultValue: '[]',
 	    formComponentName: 'Text',
-	    labelText: 'Post ID (same as url fragment)',
-	    hint: 'Same as url fragment'
+	    labelText: 'Built with',
+	    hint: 'Enter list of technologies'
 	},
 
 	{
@@ -92,16 +92,16 @@ Post.fields = [
 	    defaultValue: "Stay tuned for this post's body text.",
 	    formComponentName: 'Text',
 	    labelText: 'Body Text',
-	    hint: 'Same as url fragment'
+	    hint: 'Enter html.'
 	},
 
 	{
 	    key: 'display_order',
 	    type: 'integer',
-	    defaultValue: 0,
+	    defaultValue: '0',
 	    formComponentName: 'Text',
-	    labelText: 'Post ID',
-	    hint: 'Same as url fragment'
+	    labelText: 'Display order',
+	    hint: 'Add order in which post should appear.'
 	},
 
 	{
@@ -109,8 +109,8 @@ Post.fields = [
 	    type: 'json',
 	    defaultValue: [],
 	    formComponentName: 'Text',
-	    labelText: 'Post ID',
-	    hint: 'Same as url fragment'
+	    labelText: 'Dates',
+	    hint: 'Enter as array: [ "2013-11", "2014-9" ]'
 	},
 
 	{
@@ -118,8 +118,8 @@ Post.fields = [
 	    type: 'json',
 	    defaultValue: [],
 	    formComponentName: 'Text',
-	    labelText: 'Post ID',
-	    hint: 'Same as url fragment'
+	    labelText: 'Links',
+	    hint: 'Enter as array of objects: [ { name: "", url: "" }, { name: "", url: "" } ]'
 	},
 
 	{
@@ -128,25 +128,11 @@ Post.fields = [
 	    defaultValue: false,
 	    formComponent: 'Text',
 	    options: [ { value: true, name: 'Yes' }, { value: false, name: 'No' } ],
-	    labelText: 'Post ID',
-	    hint: 'Same as url fragment'
+	    labelText: 'Is live',
+	    hint: 'Set as true or false depending on whether post is live.'
 	}
 ]
 
-Post.create = function(data) { 
-
-	var self = Object.create(Post)
-
-	self.data = {}
-
-	for (let key in data) {
-		self.data[key] = data[key]
-	}
-
-	self.tableName = 'posts'
-
-	return self
-
-}
+Post.tableName = 'posts'
 
 export default Post

@@ -1,7 +1,6 @@
 import React from 'react'
 import fetch from 'isomorphic-fetch'
 
-import { Header } from './../../../general/header.jsx'
 import ShowItem from './item.jsx'
 
 class Show extends React.Component {
@@ -11,8 +10,10 @@ class Show extends React.Component {
 	 *
 	 */
 	constructor(props) {
-		super(props);
-		this.state = {};
+		super(props)
+		this.state = {
+			isHeroImageLoaded: false
+		}
 	}
 
 
@@ -24,8 +25,10 @@ class Show extends React.Component {
 		var { resource } = this.state
 		return (
 			<div className='wrapper__content fill-parent'>
-				<Header />
-				<ShowItem resource={ resource }/>
+				<ShowItem 
+					isHeroImageLoaded={ this.state.isHeroImageLoaded } 
+					resource={ resource }
+				/>
 			</div>
 		);
 	}

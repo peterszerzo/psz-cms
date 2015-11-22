@@ -1,8 +1,6 @@
-var React = require('react');
+import React from 'react'
 
-var Buttons = {};
-
-Buttons.BackToMain = (props) => {
+export function BackToMain(props) {
 	return (
 		<svg viewBox="0 0 200 200">
 			<g>
@@ -14,7 +12,7 @@ Buttons.BackToMain = (props) => {
 	)
 }
 
-Buttons.Arrow = (props) => {
+export function Arrow(props) {
 	return (
 		<svg viewBox="0 0 200 200">
 			<g>
@@ -23,5 +21,3 @@ Buttons.Arrow = (props) => {
 		</svg>
 	)
 }
-
-export default Buttons

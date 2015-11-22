@@ -1,9 +1,10 @@
 .wrapper {
 	
-	&__content {
+	overflow-x: hidden;
+	overflow-y: scroll;
+
+	&__clear-header {
 		padding-top: $header-height;
-		overflow-x: hidden;
-		overflow-y: scroll;
 	}
 
 }

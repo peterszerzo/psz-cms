@@ -9,20 +9,13 @@ import { createStore, compose, combineReducers } from 'redux'
 import { reduxReactRouter, routerStateReducer, ReduxRouter } from 'redux-router'
 import { Provider } from 'react-redux'
 
+import Layout from './../components/general/layout.jsx'
+
 import Index from './../components/route_handlers/posts/index/root.jsx'
 import Show from './../components/route_handlers/posts/show/root.jsx'
 import EditPost from './../components/route_handlers/posts/edit/root.jsx'
 
 import reducer from './../redux/reducers/index.js'
-
-// App component
-function App(props) {
-	return (
-		<div className='wrapper fill-parent'>
-			{ props.children }
-		</div>
-	)
-}
 
 function ProjectsIndex(props) { return <Index { ...props } activeLinkName={'projects'} postType={'project'} /> }
 function BlogPostsIndex(props) { return <Index { ...props } activeLinkName={'blog'} postType={'blog_post'} /> }
@@ -37,14 +30,16 @@ var routes = (
 	<Provider store={store}>
 		<ReduxRouter>
 			<Router>
-				<Route component={App}>
+				<Route component={Layout}>
 					<Route path='/' component={Banner} />
 					<Route path='/about' component={About} />
 					<Route path='/projects' component={ProjectsIndex} />
 					<Route path='/blog' component={BlogPostsIndex} />
-					<Route path='/admin/posts'>
-						<Route path='new' component={EditPost} />
-					</Route>
+					{
+					// <Route path='/admin/posts'>
+					// 	<Route path='new' component={EditPost} />
+					// </Route>
+					}
 					<Route path='/:id' component={Show} />
 				</Route>
 			</Router>

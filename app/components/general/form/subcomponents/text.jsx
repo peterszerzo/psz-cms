@@ -35,7 +35,7 @@ class Text extends React.Component {
 	 *
 	 */
 	saveDataOnParent(e) {
-		this.props.saveDataOnParent({
+		this.props.handleFormFieldChange({
 			id: this.props.id,
 			value: e.target.value
 		})

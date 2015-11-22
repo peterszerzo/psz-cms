@@ -7,7 +7,7 @@ import router from './app/routes/index.js'
 
 var app = express()
 
-var { NODE_ENV, PORT, DATABASE_URL } = process.env
+var { NODE_ENV, PORT, DATABASE_URL, S3_BUCKET_NAME } = process.env
 
 var isDev = NODE_ENV !== 'production'
 
@@ -20,21 +20,27 @@ app.use(bodyParser.json())
 // GZip serving middleware must be declared before static folder declaration. 
 app.get([ '*.js', '*.json' ], serveGzipMiddleware)
 
+// Serve post images from S3 bucket.
+app.get('/images/posts/:id/:file', (req, res) => {
+	var { id, file } = req.params
+	res.redirect(`http://${S3_BUCKET_NAME}/images/posts/${id}/${file}`)
+})
+
 app.use(express.static('public'))
 
 pg.connect(DATABASE_URL, function(err, client, done) {
 
 	if (err == null) {
 		app.use(function(req, res, next) {
-			req.dbClient = client;
-			next();
+			req.dbClient = client
+			next()
 		});
 	}
 
-	app.use(router);
+	app.use(router)
 
 	app.listen(PORT, function() {
-		console.log(`Server listening on port ${PORT}`);
-	});
+		console.log(`Server listening on port ${PORT}`)
+	})
 
-});
+})

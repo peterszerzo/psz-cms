@@ -67,6 +67,8 @@ function ShowItem(props) {
 	
 	if (resource == null) { return <Loader /> }
 
+	var imageUrl = `/images/posts/${resource.id}/hero.jpg`
+
 	var { headline, links, body_text, dates, title, is_draft } = resource
 
 	let body
@@ -79,12 +81,26 @@ function ShowItem(props) {
 		title += ' (draft)'
 	}
 
+	var heroOverlayOpacity = props.isHeroImageLoaded ? '0.7' : '1'
+
 	return (
-		<div className="project-show">
-			<h1 className="title">{ title }</h1>
-			<h2 className='headline'>{ headline }</h2>
-			<Dates dates={ dates } />
-			<Links links={ links } />
+		<div className="project-show fill-parent">
+			<div className='hero fill-parent'>
+				<div className='hero__background hero__background--blurred' style={{ backgroundImage: `url('${imageUrl}')` }} />
+				<div className='hero__overlay' style={{ opacity: heroOverlayOpacity }}/>
+				<div className='hero__top-bar'>
+					<Dates dates={ dates } />
+				</div>
+				<div className='hero__title-bar'>
+					<div className='hero__title-bar__content'>
+						<h1 className="title">{ title }</h1>
+						<h2 className='headline'>{ headline }</h2>
+					</div>
+				</div>
+				<div className='hero__nav-bar'>
+					<Links links={ links } />
+				</div>
+			</div>
 			{ body }
 		</div>
 	)

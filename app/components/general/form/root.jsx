@@ -1,16 +1,23 @@
-import './style.scss'
-
 import React from 'react'
 import _ from 'underscore'
 
 import * as Subcomponents from './subcomponents/index.js'
 
 /*
- *
+ * Reusable form component.
  *
  */
 class Form extends React.Component {
 
+	/*
+	 *
+	 *
+	 */
+	constructor(props) {
+		super(props)
+		this.handleFormFieldChange = this.handleFormFieldChange.bind(this)
+		this.handleFormSubmit = this.handleFormSubmit.bind(this)
+	}
 
 	/*
 	 *
@@ -21,7 +28,7 @@ class Form extends React.Component {
 		return (
 			<form
 				className='form'
-				onSubmit={this.sendFormDataToParent.bind(this)}
+				onSubmit={this.handleFormSubmit}
 				style={style}
 			>
 				{ this.renderFormComponents() }
@@ -49,7 +56,7 @@ class Form extends React.Component {
 					labelText={field.labelText}
 					hint={field.hint}
 					isEnabled={this.props.isEnabled}
-					saveDataOnParent={this.saveDataFromChild.bind(this)}
+					handleFormFieldChange={this.handleFormFieldChange.bind(this)}
 					initialValue={this.props.resource[field.key]}
 				/>
 			)
@@ -62,8 +69,8 @@ class Form extends React.Component {
 	 *
 	 *
 	 */
-	saveDataFromChild(childData) {
-		this.props.handleFormFieldChange(childData)
+	handleFormFieldChange(changedFormFieldData) {
+		this.props.handleFormFieldChange(changedFormFieldData)
 	}
 
 	
@@ -71,9 +78,9 @@ class Form extends React.Component {
 	 * Run method passed down from parent.
 	 *
 	 */
-	sendFormDataToParent(e) {
-		e.preventDefault();
-		this.props.onSubmit(this.props.model);
+	handleFormSubmit(e) {
+		e.preventDefault()
+		this.props.handleFormSubmit()
 	}
 
 }

@@ -3,7 +3,6 @@ import { Link } from 'react-router'
 import fetch from 'isomorphic-fetch'
 import _ from 'underscore'
 
-import { Header } from './../../../general/header.jsx'
 import { Loader } from './../../../general/loader.jsx'
 
 import Groups from './groups.jsx'
@@ -16,6 +15,11 @@ var groupDescriptions = {
 	'technical': 'Tricks I learn while dabbling with technology.'
 }
 
+
+/*
+ *
+ *
+ */
 class Index extends React.Component {
 
 	/*
@@ -37,8 +41,7 @@ class Index extends React.Component {
 		if (resources == null) { return <Loader /> }
 		var resourceGroups = _.groupBy(resources, resource => resource.post_group)
 		return (
-			<div className='wrapper__content fill-parent'>
-				<Header activeLinkName={this.props.activeLinkName} />
+			<div className='wrapper__clear-header fill-parent'>
 				<Groups groupDescriptions={groupDescriptions} resourceGroups={resourceGroups}/>
 			</div>
 		)
@@ -46,8 +49,8 @@ class Index extends React.Component {
 
 
 	/*
-	 *
-	 *
+	 * Fetch post summary and set to state.
+	 * TODO: set through Redux action instead.
 	 */
 	componentDidMount() {
 

@@ -52,13 +52,13 @@
 
 	var _client2 = _interopRequireDefault(_client);
 
-	var _qajax = __webpack_require__(359);
+	var _qajax = __webpack_require__(369);
 
 	var _qajax2 = _interopRequireDefault(_qajax);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	__webpack_require__(363);
+	__webpack_require__(373);
 
 	global.Qajax = _qajax2.default;
 
@@ -18660,32 +18660,27 @@
 
 	var _reactRedux = __webpack_require__(213);
 
-	var _root5 = __webpack_require__(262);
+	var _layout = __webpack_require__(262);
+
+	var _layout2 = _interopRequireDefault(_layout);
+
+	var _root5 = __webpack_require__(263);
 
 	var _root6 = _interopRequireDefault(_root5);
 
-	var _root7 = __webpack_require__(267);
+	var _root7 = __webpack_require__(268);
 
 	var _root8 = _interopRequireDefault(_root7);
 
-	var _root9 = __webpack_require__(357);
+	var _root9 = __webpack_require__(358);
 
 	var _root10 = _interopRequireDefault(_root9);
 
-	var _index = __webpack_require__(358);
+	var _index = __webpack_require__(366);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	// App component
-	function App(props) {
-		return _react2.default.createElement(
-			'div',
-			{ className: 'wrapper fill-parent' },
-			props.children
-		);
-	}
 
 	function ProjectsIndex(props) {
 		return _react2.default.createElement(_root6.default, _extends({}, props, { activeLinkName: 'projects', postType: 'project' }));
@@ -18709,16 +18704,11 @@
 				null,
 				_react2.default.createElement(
 					_reactRouter.Route,
-					{ component: App },
+					{ component: _layout2.default },
 					_react2.default.createElement(_reactRouter.Route, { path: '/', component: _root2.default }),
 					_react2.default.createElement(_reactRouter.Route, { path: '/about', component: _root4.default }),
 					_react2.default.createElement(_reactRouter.Route, { path: '/projects', component: ProjectsIndex }),
 					_react2.default.createElement(_reactRouter.Route, { path: '/blog', component: BlogPostsIndex }),
-					_react2.default.createElement(
-						_reactRouter.Route,
-						{ path: '/admin/posts' },
-						_react2.default.createElement(_reactRouter.Route, { path: 'new', component: _root10.default })
-					),
 					_react2.default.createElement(_reactRouter.Route, { path: '/:id', component: _root8.default })
 				)
 			)
@@ -24793,32 +24783,29 @@
 		_createClass(Banner, [{
 			key: 'render',
 			value: function render() {
-				var style = this.state.isGlobeAnimationRendered ? { opacity: 1 } : { opacity: 0 };
+				var isGlobeAnimationRendered = this.state.isGlobeAnimationRendered;
+
+				var style = isGlobeAnimationRendered ? { opacity: 1 } : { opacity: 0 };
 				return React.createElement(
 					'div',
-					{ className: 'fill-parent' },
-					this.state.isGlobeAnimationRendered ? null : React.createElement(_loader.Loader),
+					{ className: 'banner fill-parent', style: style },
+					React.createElement('div', { className: 'banner__background' }),
+					React.createElement('div', { className: 'banner__globe' }),
 					React.createElement(
-						'div',
-						{ className: 'banner fill-parent', style: style },
-						React.createElement('div', { className: 'banner__background' }),
-						React.createElement('div', { className: 'banner__globe' }),
+						_reactRouter.Link,
+						{ className: 'banner__summary', to: '/projects' },
 						React.createElement(
-							_reactRouter.Link,
-							{ className: 'banner__summary', to: '/projects' },
-							React.createElement(
-								'h1',
-								null,
-								'a little room'
-							),
-							React.createElement(
-								'p',
-								null,
-								'for mindful code, design and writing'
-							)
+							'h1',
+							null,
+							'a little room'
 						),
-						this.renderMessage()
-					)
+						React.createElement(
+							'p',
+							null,
+							'for mindful code, design and writing'
+						)
+					),
+					this.renderMessage()
 				);
 			}
 
@@ -49571,6 +49558,10 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	/*
+	 * Loading icon.
+	 *
+	 */
 	function Loader() {
 		return _react2.default.createElement(
 			'div',
@@ -49994,6 +49985,8 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _reactDom = __webpack_require__(1);
+
 	var _marked = __webpack_require__(257);
 
 	var _marked2 = _interopRequireDefault(_marked);
@@ -50016,6 +50009,13 @@
 
 	var greetings = ['Hello', 'Sziasztok', 'Salut', 'Hallo', 'Hej'];
 
+	var imageUrl = '/images/me/me_1200.jpg';
+
+	/*
+	 *
+	 *
+	 */
+
 	var About = (function (_React$Component) {
 		_inherits(About, _React$Component);
 
@@ -50031,9 +50031,7 @@
 
 			_this.state = {
 				greetingIndex: 0,
-				scrollTop: 0,
-				hasImageLoaded: false,
-				heroHeight: window.innerHeight
+				hasImageLoaded: false
 			};
 			return _this;
 		}
@@ -50048,21 +50046,17 @@
 			value: function render() {
 				return _react2.default.createElement(
 					'div',
-					{
-						className: 'wrapper__content fill-parent',
-						style: { paddingTop: 0 },
-						onScroll: this.handleScroll.bind(this)
-					},
-					_react2.default.createElement(_header.Header, { activeLinkName: 'about', isTransparent: this.state.scrollTop < this.state.heroHeight - 80 }),
+					{ className: 'fill-parent' },
 					_react2.default.createElement('img', {
 						style: { opacity: 0.1, width: 10, height: 10, position: 'fixed' },
-						src: '/images/me/me_1200.jpg',
+						src: imageUrl,
 						onLoad: this.handleImageLoad.bind(this)
 					}),
 					_react2.default.createElement(
 						'div',
-						{ className: 'hero', style: this.getHeroStyle() },
-						_react2.default.createElement('div', { className: 'hero__overlay', style: { opacity: this.state.hasImageLoaded ? null : '0.9' } }),
+						{ className: 'hero fill-parent' },
+						_react2.default.createElement('div', { className: 'hero__background', style: this.getHeroBackgroundStyle() }),
+						_react2.default.createElement('div', { className: 'hero__overlay', style: { opacity: this.state.hasImageLoaded ? '0.6' : '0.8' } }),
 						_react2.default.createElement(
 							'div',
 							{ className: 'hero__text' },
@@ -50113,30 +50107,11 @@
 	   */
 
 		}, {
-			key: 'getHeroStyle',
-			value: function getHeroStyle() {
-				if (!this.state.hasImageLoaded) {
-					return {
-						backgroundColor: '#101C29',
-						height: this.state.heroHeight
-					};
+			key: 'getHeroBackgroundStyle',
+			value: function getHeroBackgroundStyle() {
+				if (this.state.hasImageLoaded) {
+					return { backgroundImage: 'url(/images/me/me_1200.jpg)' };
 				}
-				return {
-					backgroundImage: 'url(/images/me/me_1200.jpg)',
-					height: this.state.heroHeight
-				};
-			}
-
-			/*
-	   *
-	   *
-	   */
-
-		}, {
-			key: 'handleScroll',
-			value: function handleScroll(e) {
-				var node = _react2.default.findDOMNode(this);
-				this.setState({ scrollTop: node.scrollTop });
 			}
 
 			/*
@@ -51465,14 +51440,11 @@
 
 	'use strict';
 
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
-	exports.Header = undefined;
 
 	var _react = __webpack_require__(147);
 
@@ -51482,11 +51454,15 @@
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
+	var _reactRouter = __webpack_require__(159);
+
+	var _reactRedux = __webpack_require__(213);
+
 	var _buttons = __webpack_require__(261);
 
-	var _buttons2 = _interopRequireDefault(_buttons);
+	var Buttons = _interopRequireWildcard(_buttons);
 
-	var _reactRouter = __webpack_require__(159);
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -51512,18 +51488,18 @@
 	 *
 	 */
 
-	var HeaderComp = (function (_Component) {
-		_inherits(HeaderComp, _Component);
+	var Header = (function (_Component) {
+		_inherits(Header, _Component);
 
 		/*
 	  *
 	  *
 	  */
 
-		function HeaderComp(props) {
-			_classCallCheck(this, HeaderComp);
+		function Header(props) {
+			_classCallCheck(this, Header);
 
-			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(HeaderComp).call(this, props));
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Header).call(this, props));
 
 			_this.state = {
 				isExpanded: false
@@ -51536,12 +51512,54 @@
 	  *
 	  */
 
-		_createClass(HeaderComp, [{
-			key: 'getList',
-			value: function getList() {
-				var _props = this.props;
-				var activeLinkName = _props.activeLinkName;
-				var buttons = _props.buttons;
+		_createClass(Header, [{
+			key: 'render',
+			value: function render() {
+				var _props$app$ui = this.props.app.ui;
+				var windowHeight = _props$app$ui.windowHeight;
+				var scrollTop = _props$app$ui.scrollTop;
+
+				console.log(this.props.app.ui);
+				var pathname = this.props.router.location.pathname;
+
+				var isDiscrete = ['/projects', '/blog'].indexOf(pathname) === -1 && windowHeight > scrollTop;
+
+				var cls = (0, _classnames2.default)({
+					'header': true,
+					'header--discrete': isDiscrete,
+					'header--expanded': this.state.isExpanded
+				});
+				var opacity = this.props.router.location.pathname === '/' ? '0' : '1';
+				return _react2.default.createElement(
+					'div',
+					{ className: cls, style: { opacity: opacity } },
+					_react2.default.createElement(
+						_reactRouter.Link,
+						{ className: 'header__main-link', to: '/' },
+						_react2.default.createElement(Buttons.BackToMain, null)
+					),
+					_react2.default.createElement(
+						'ul',
+						{ className: 'header__nav' },
+						_react2.default.createElement(
+							'li',
+							{ className: 'header__nav__arrow', onClick: this.toggleExpandedState.bind(this) },
+							_react2.default.createElement(Buttons.Arrow, null)
+						),
+						this.renderList()
+					)
+				);
+			}
+
+			/*
+	   *
+	   *
+	   */
+
+		}, {
+			key: 'renderList',
+			value: function renderList() {
+				var activeLinkName = this.props.activeLinkName;
 
 				return buttons.map(function (button, index) {
 					var isActive = activeLinkName && button.name === activeLinkName,
@@ -51564,67 +51582,21 @@
 	   */
 
 		}, {
-			key: 'render',
-			value: function render() {
-				var cls = (0, _classnames2.default)({
-					'header': true,
-					'header--transparent': this.props.isTransparent,
-					'header--expanded': this.state.isExpanded
-				});
-				return _react2.default.createElement(
-					'div',
-					{ className: cls },
-					_react2.default.createElement(
-						_reactRouter.Link,
-						{ className: 'header__main-link', to: '/' },
-						_react2.default.createElement(_buttons2.default.BackToMain, null)
-					),
-					_react2.default.createElement(
-						'ul',
-						{ className: 'header__nav' },
-						_react2.default.createElement(
-							'li',
-							{ className: 'header__nav__arrow', onClick: this.toggleExpandedState.bind(this) },
-							_react2.default.createElement(_buttons2.default.Arrow, null)
-						),
-						this.getList()
-					)
-				);
-			}
-
-			/*
-	   *
-	   *
-	   */
-
-		}, {
 			key: 'toggleExpandedState',
 			value: function toggleExpandedState() {
 				this.setState({ isExpanded: !this.state.isExpanded });
 			}
 		}]);
 
-		return HeaderComp;
-	})(_react.Component);
-
-	var Header = exports.Header = (function (_Component2) {
-		_inherits(Header, _Component2);
-
-		function Header() {
-			_classCallCheck(this, Header);
-
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(Header).apply(this, arguments));
-		}
-
-		_createClass(Header, [{
-			key: 'render',
-			value: function render() {
-				return _react2.default.createElement(HeaderComp, _extends({}, this.props, { buttons: buttons }));
-			}
-		}]);
-
 		return Header;
 	})(_react.Component);
+
+	exports.default = (0, _reactRedux.connect)(function (state) {
+		return {
+			router: state.router,
+			app: state.app
+		};
+	})(Header);
 
 /***/ },
 /* 260 */
@@ -51689,40 +51661,164 @@
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
-	var React = __webpack_require__(147);
+	exports.BackToMain = BackToMain;
+	exports.Arrow = Arrow;
 
-	var Buttons = {};
+	var _react = __webpack_require__(147);
 
-	Buttons.BackToMain = function (props) {
-		return React.createElement(
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function BackToMain(props) {
+		return _react2.default.createElement(
 			"svg",
 			{ viewBox: "0 0 200 200" },
-			React.createElement(
+			_react2.default.createElement(
 				"g",
 				null,
-				React.createElement("polygon", { points: "169.869,122.333 104.26,84.454 169.869,46.575 " }),
-				React.createElement("polygon", { points: "91.883,63.283 45.827,36.692 91.883,10.101 " }),
-				React.createElement("polygon", { points: "132.218,186.898 76.302,154.616 132.218,122.333 " })
+				_react2.default.createElement("polygon", { points: "169.869,122.333 104.26,84.454 169.869,46.575 " }),
+				_react2.default.createElement("polygon", { points: "91.883,63.283 45.827,36.692 91.883,10.101 " }),
+				_react2.default.createElement("polygon", { points: "132.218,186.898 76.302,154.616 132.218,122.333 " })
 			)
 		);
-	};
+	}
 
-	Buttons.Arrow = function (props) {
-		return React.createElement(
+	function Arrow(props) {
+		return _react2.default.createElement(
 			"svg",
 			{ viewBox: "0 0 200 200" },
-			React.createElement(
+			_react2.default.createElement(
 				"g",
 				null,
-				React.createElement("polygon", { points: "137.878,67.196 100.001,132.804 62.122,67.196" })
+				_react2.default.createElement("polygon", { points: "137.878,67.196 100.001,132.804 62.122,67.196" })
 			)
 		);
-	};
-
-	exports.default = Buttons;
+	}
 
 /***/ },
 /* 262 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _react = __webpack_require__(147);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(1);
+
+	var _reactRedux = __webpack_require__(213);
+
+	var _header = __webpack_require__(259);
+
+	var _header2 = _interopRequireDefault(_header);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	/*
+	 *
+	 *
+	 */
+
+	var Layout = (function (_React$Component) {
+		_inherits(Layout, _React$Component);
+
+		/*
+	  *
+	  *
+	  */
+
+		function Layout(props) {
+			_classCallCheck(this, Layout);
+
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Layout).call(this, props));
+
+			_this.setWindowDimensions = _this.setWindowDimensions.bind(_this);
+			_this.handleScroll = _this.handleScroll.bind(_this);
+			return _this;
+		}
+
+		/*
+	  *
+	  *
+	  */
+
+		_createClass(Layout, [{
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					{ className: 'wrapper fill-parent', onScroll: this.handleScroll },
+					_react2.default.createElement(_header2.default, null),
+					this.props.children
+				);
+			}
+
+			/*
+	   *
+	   *
+	   */
+
+		}, {
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+				this.setWindowDimensions();
+				// Component is live forever - no need to remove event listener.
+				window.addEventListener('resize', this.setWindowDimensions);
+			}
+
+			/*
+	   *
+	   *
+	   */
+
+		}, {
+			key: 'setWindowDimensions',
+			value: function setWindowDimensions() {
+				this.props.dispatch({ type: 'SET_WINDOW_DIMENSIONS', value: {
+						height: window.innerHeight,
+						width: window.innerWidth
+					} });
+			}
+
+			/*
+	   *
+	   *
+	   */
+
+		}, {
+			key: 'handleScroll',
+			value: function handleScroll(e) {
+				var node = (0, _reactDom.findDOMNode)(this);
+				this.props.dispatch({ type: 'SET_SCROLL_TOP', value: node.scrollTop });
+			}
+		}]);
+
+		return Layout;
+	})(_react2.default.Component);
+
+	exports.default = (0, _reactRedux.connect)(function (state) {
+		return {
+			router: state.router,
+			app: state.app
+		};
+	})(Layout);
+
+/***/ },
+/* 263 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -51747,11 +51843,9 @@
 
 	var _underscore2 = _interopRequireDefault(_underscore);
 
-	var _header = __webpack_require__(259);
-
 	var _loader = __webpack_require__(253);
 
-	var _groups = __webpack_require__(263);
+	var _groups = __webpack_require__(264);
 
 	var _groups2 = _interopRequireDefault(_groups);
 
@@ -51770,6 +51864,11 @@
 		'personal': 'Thoughts, stories, the occasional low-key rambling.',
 		'technical': 'Tricks I learn while dabbling with technology.'
 	};
+
+	/*
+	 *
+	 *
+	 */
 
 	var Index = (function (_React$Component) {
 		_inherits(Index, _React$Component);
@@ -51806,15 +51905,14 @@
 				});
 				return _react2.default.createElement(
 					'div',
-					{ className: 'wrapper__content fill-parent' },
-					_react2.default.createElement(_header.Header, { activeLinkName: this.props.activeLinkName }),
+					{ className: 'wrapper__clear-header fill-parent' },
 					_react2.default.createElement(_groups2.default, { groupDescriptions: groupDescriptions, resourceGroups: resourceGroups })
 				);
 			}
 
 			/*
-	   *
-	   *
+	   * Fetch post summary and set to state.
+	   * TODO: set through Redux action instead.
 	   */
 
 		}, {
@@ -51836,7 +51934,7 @@
 	exports.default = Index;
 
 /***/ },
-/* 263 */
+/* 264 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -51855,7 +51953,7 @@
 
 	var _underscore2 = _interopRequireDefault(_underscore);
 
-	var _list = __webpack_require__(264);
+	var _list = __webpack_require__(265);
 
 	var _list2 = _interopRequireDefault(_list);
 
@@ -51946,7 +52044,7 @@
 	exports.default = Groups;
 
 /***/ },
-/* 264 */
+/* 265 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -51959,7 +52057,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _item = __webpack_require__(265);
+	var _item = __webpack_require__(266);
 
 	var _item2 = _interopRequireDefault(_item);
 
@@ -51986,7 +52084,7 @@
 	exports.default = List;
 
 /***/ },
-/* 265 */
+/* 266 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -52001,7 +52099,7 @@
 
 	var _reactRouter = __webpack_require__(159);
 
-	var _project_logos = __webpack_require__(266);
+	var _project_logos = __webpack_require__(267);
 
 	var Logos = _interopRequireWildcard(_project_logos);
 
@@ -52052,7 +52150,7 @@
 	exports.default = ListItem;
 
 /***/ },
-/* 266 */
+/* 267 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -52404,7 +52502,7 @@
 	}
 
 /***/ },
-/* 267 */
+/* 268 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -52423,9 +52521,7 @@
 
 	var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
 
-	var _header = __webpack_require__(259);
-
-	var _item = __webpack_require__(268);
+	var _item = __webpack_require__(269);
 
 	var _item2 = _interopRequireDefault(_item);
 
@@ -52450,7 +52546,9 @@
 
 			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Show).call(this, props));
 
-			_this.state = {};
+			_this.state = {
+				isHeroImageLoaded: false
+			};
 			return _this;
 		}
 
@@ -52467,8 +52565,10 @@
 				return _react2.default.createElement(
 					'div',
 					{ className: 'wrapper__content fill-parent' },
-					_react2.default.createElement(_header.Header, null),
-					_react2.default.createElement(_item2.default, { resource: resource })
+					_react2.default.createElement(_item2.default, {
+						isHeroImageLoaded: this.state.isHeroImageLoaded,
+						resource: resource
+					})
 				);
 			}
 
@@ -52509,7 +52609,7 @@
 	exports.default = Show;
 
 /***/ },
-/* 268 */
+/* 269 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -52526,7 +52626,7 @@
 
 	var _marked2 = _interopRequireDefault(_marked);
 
-	var _moment = __webpack_require__(269);
+	var _moment = __webpack_require__(270);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -52604,6 +52704,8 @@
 			return _react2.default.createElement(_loader.Loader, null);
 		}
 
+		var imageUrl = '/images/posts/' + resource.id + '/hero.jpg';
+
 		var headline = resource.headline;
 		var links = resource.links;
 		var body_text = resource.body_text;
@@ -52621,21 +52723,45 @@
 			title += ' (draft)';
 		}
 
+		var heroOverlayOpacity = props.isHeroImageLoaded ? '0.7' : '1';
+
 		return _react2.default.createElement(
 			'div',
-			{ className: 'project-show' },
+			{ className: 'project-show fill-parent' },
 			_react2.default.createElement(
-				'h1',
-				{ className: 'title' },
-				title
+				'div',
+				{ className: 'hero fill-parent' },
+				_react2.default.createElement('div', { className: 'hero__background hero__background--blurred', style: { backgroundImage: 'url(\'' + imageUrl + '\')' } }),
+				_react2.default.createElement('div', { className: 'hero__overlay', style: { opacity: heroOverlayOpacity } }),
+				_react2.default.createElement(
+					'div',
+					{ className: 'hero__top-bar' },
+					_react2.default.createElement(Dates, { dates: dates })
+				),
+				_react2.default.createElement(
+					'div',
+					{ className: 'hero__title-bar' },
+					_react2.default.createElement(
+						'div',
+						{ className: 'hero__title-bar__content' },
+						_react2.default.createElement(
+							'h1',
+							{ className: 'title' },
+							title
+						),
+						_react2.default.createElement(
+							'h2',
+							{ className: 'headline' },
+							headline
+						)
+					)
+				),
+				_react2.default.createElement(
+					'div',
+					{ className: 'hero__nav-bar' },
+					_react2.default.createElement(Links, { links: links })
+				)
 			),
-			_react2.default.createElement(
-				'h2',
-				{ className: 'headline' },
-				headline
-			),
-			_react2.default.createElement(Dates, { dates: dates }),
-			_react2.default.createElement(Links, { links: links }),
 			body
 		);
 	}
@@ -52643,7 +52769,7 @@
 	exports.default = ShowItem;
 
 /***/ },
-/* 269 */
+/* 270 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(module) {//! moment.js
@@ -52914,7 +53040,7 @@
 	                module && module.exports) {
 	            try {
 	                oldLocale = globalLocale._abbr;
-	                __webpack_require__(271)("./" + name);
+	                __webpack_require__(272)("./" + name);
 	                // because defineLocale currently also sets the global locale, we
 	                // want to undo that for lazy loaded locales
 	                locale_locales__getSetGlobalLocale(oldLocale);
@@ -55841,10 +55967,10 @@
 	    return _moment;
 
 	}));
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(270)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(271)(module)))
 
 /***/ },
-/* 270 */
+/* 271 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -55860,180 +55986,180 @@
 
 
 /***/ },
-/* 271 */
+/* 272 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var map = {
-		"./af": 272,
-		"./af.js": 272,
-		"./ar": 273,
-		"./ar-ma": 274,
-		"./ar-ma.js": 274,
-		"./ar-sa": 275,
-		"./ar-sa.js": 275,
-		"./ar-tn": 276,
-		"./ar-tn.js": 276,
-		"./ar.js": 273,
-		"./az": 277,
-		"./az.js": 277,
-		"./be": 278,
-		"./be.js": 278,
-		"./bg": 279,
-		"./bg.js": 279,
-		"./bn": 280,
-		"./bn.js": 280,
-		"./bo": 281,
-		"./bo.js": 281,
-		"./br": 282,
-		"./br.js": 282,
-		"./bs": 283,
-		"./bs.js": 283,
-		"./ca": 284,
-		"./ca.js": 284,
-		"./cs": 285,
-		"./cs.js": 285,
-		"./cv": 286,
-		"./cv.js": 286,
-		"./cy": 287,
-		"./cy.js": 287,
-		"./da": 288,
-		"./da.js": 288,
-		"./de": 289,
-		"./de-at": 290,
-		"./de-at.js": 290,
-		"./de.js": 289,
-		"./el": 291,
-		"./el.js": 291,
-		"./en-au": 292,
-		"./en-au.js": 292,
-		"./en-ca": 293,
-		"./en-ca.js": 293,
-		"./en-gb": 294,
-		"./en-gb.js": 294,
-		"./eo": 295,
-		"./eo.js": 295,
-		"./es": 296,
-		"./es.js": 296,
-		"./et": 297,
-		"./et.js": 297,
-		"./eu": 298,
-		"./eu.js": 298,
-		"./fa": 299,
-		"./fa.js": 299,
-		"./fi": 300,
-		"./fi.js": 300,
-		"./fo": 301,
-		"./fo.js": 301,
-		"./fr": 302,
-		"./fr-ca": 303,
-		"./fr-ca.js": 303,
-		"./fr.js": 302,
-		"./fy": 304,
-		"./fy.js": 304,
-		"./gl": 305,
-		"./gl.js": 305,
-		"./he": 306,
-		"./he.js": 306,
-		"./hi": 307,
-		"./hi.js": 307,
-		"./hr": 308,
-		"./hr.js": 308,
-		"./hu": 309,
-		"./hu.js": 309,
-		"./hy-am": 310,
-		"./hy-am.js": 310,
-		"./id": 311,
-		"./id.js": 311,
-		"./is": 312,
-		"./is.js": 312,
-		"./it": 313,
-		"./it.js": 313,
-		"./ja": 314,
-		"./ja.js": 314,
-		"./jv": 315,
-		"./jv.js": 315,
-		"./ka": 316,
-		"./ka.js": 316,
-		"./km": 317,
-		"./km.js": 317,
-		"./ko": 318,
-		"./ko.js": 318,
-		"./lb": 319,
-		"./lb.js": 319,
-		"./lt": 320,
-		"./lt.js": 320,
-		"./lv": 321,
-		"./lv.js": 321,
-		"./me": 322,
-		"./me.js": 322,
-		"./mk": 323,
-		"./mk.js": 323,
-		"./ml": 324,
-		"./ml.js": 324,
-		"./mr": 325,
-		"./mr.js": 325,
-		"./ms": 326,
-		"./ms-my": 327,
-		"./ms-my.js": 327,
-		"./ms.js": 326,
-		"./my": 328,
-		"./my.js": 328,
-		"./nb": 329,
-		"./nb.js": 329,
-		"./ne": 330,
-		"./ne.js": 330,
-		"./nl": 331,
-		"./nl.js": 331,
-		"./nn": 332,
-		"./nn.js": 332,
-		"./pl": 333,
-		"./pl.js": 333,
-		"./pt": 334,
-		"./pt-br": 335,
-		"./pt-br.js": 335,
-		"./pt.js": 334,
-		"./ro": 336,
-		"./ro.js": 336,
-		"./ru": 337,
-		"./ru.js": 337,
-		"./si": 338,
-		"./si.js": 338,
-		"./sk": 339,
-		"./sk.js": 339,
-		"./sl": 340,
-		"./sl.js": 340,
-		"./sq": 341,
-		"./sq.js": 341,
-		"./sr": 342,
-		"./sr-cyrl": 343,
-		"./sr-cyrl.js": 343,
-		"./sr.js": 342,
-		"./sv": 344,
-		"./sv.js": 344,
-		"./ta": 345,
-		"./ta.js": 345,
-		"./th": 346,
-		"./th.js": 346,
-		"./tl-ph": 347,
-		"./tl-ph.js": 347,
-		"./tr": 348,
-		"./tr.js": 348,
-		"./tzl": 349,
-		"./tzl.js": 349,
-		"./tzm": 350,
-		"./tzm-latn": 351,
-		"./tzm-latn.js": 351,
-		"./tzm.js": 350,
-		"./uk": 352,
-		"./uk.js": 352,
-		"./uz": 353,
-		"./uz.js": 353,
-		"./vi": 354,
-		"./vi.js": 354,
-		"./zh-cn": 355,
-		"./zh-cn.js": 355,
-		"./zh-tw": 356,
-		"./zh-tw.js": 356
+		"./af": 273,
+		"./af.js": 273,
+		"./ar": 274,
+		"./ar-ma": 275,
+		"./ar-ma.js": 275,
+		"./ar-sa": 276,
+		"./ar-sa.js": 276,
+		"./ar-tn": 277,
+		"./ar-tn.js": 277,
+		"./ar.js": 274,
+		"./az": 278,
+		"./az.js": 278,
+		"./be": 279,
+		"./be.js": 279,
+		"./bg": 280,
+		"./bg.js": 280,
+		"./bn": 281,
+		"./bn.js": 281,
+		"./bo": 282,
+		"./bo.js": 282,
+		"./br": 283,
+		"./br.js": 283,
+		"./bs": 284,
+		"./bs.js": 284,
+		"./ca": 285,
+		"./ca.js": 285,
+		"./cs": 286,
+		"./cs.js": 286,
+		"./cv": 287,
+		"./cv.js": 287,
+		"./cy": 288,
+		"./cy.js": 288,
+		"./da": 289,
+		"./da.js": 289,
+		"./de": 290,
+		"./de-at": 291,
+		"./de-at.js": 291,
+		"./de.js": 290,
+		"./el": 292,
+		"./el.js": 292,
+		"./en-au": 293,
+		"./en-au.js": 293,
+		"./en-ca": 294,
+		"./en-ca.js": 294,
+		"./en-gb": 295,
+		"./en-gb.js": 295,
+		"./eo": 296,
+		"./eo.js": 296,
+		"./es": 297,
+		"./es.js": 297,
+		"./et": 298,
+		"./et.js": 298,
+		"./eu": 299,
+		"./eu.js": 299,
+		"./fa": 300,
+		"./fa.js": 300,
+		"./fi": 301,
+		"./fi.js": 301,
+		"./fo": 302,
+		"./fo.js": 302,
+		"./fr": 303,
+		"./fr-ca": 304,
+		"./fr-ca.js": 304,
+		"./fr.js": 303,
+		"./fy": 305,
+		"./fy.js": 305,
+		"./gl": 306,
+		"./gl.js": 306,
+		"./he": 307,
+		"./he.js": 307,
+		"./hi": 308,
+		"./hi.js": 308,
+		"./hr": 309,
+		"./hr.js": 309,
+		"./hu": 310,
+		"./hu.js": 310,
+		"./hy-am": 311,
+		"./hy-am.js": 311,
+		"./id": 312,
+		"./id.js": 312,
+		"./is": 313,
+		"./is.js": 313,
+		"./it": 314,
+		"./it.js": 314,
+		"./ja": 315,
+		"./ja.js": 315,
+		"./jv": 316,
+		"./jv.js": 316,
+		"./ka": 317,
+		"./ka.js": 317,
+		"./km": 318,
+		"./km.js": 318,
+		"./ko": 319,
+		"./ko.js": 319,
+		"./lb": 320,
+		"./lb.js": 320,
+		"./lt": 321,
+		"./lt.js": 321,
+		"./lv": 322,
+		"./lv.js": 322,
+		"./me": 323,
+		"./me.js": 323,
+		"./mk": 324,
+		"./mk.js": 324,
+		"./ml": 325,
+		"./ml.js": 325,
+		"./mr": 326,
+		"./mr.js": 326,
+		"./ms": 327,
+		"./ms-my": 328,
+		"./ms-my.js": 328,
+		"./ms.js": 327,
+		"./my": 329,
+		"./my.js": 329,
+		"./nb": 330,
+		"./nb.js": 330,
+		"./ne": 331,
+		"./ne.js": 331,
+		"./nl": 332,
+		"./nl.js": 332,
+		"./nn": 333,
+		"./nn.js": 333,
+		"./pl": 334,
+		"./pl.js": 334,
+		"./pt": 335,
+		"./pt-br": 336,
+		"./pt-br.js": 336,
+		"./pt.js": 335,
+		"./ro": 337,
+		"./ro.js": 337,
+		"./ru": 338,
+		"./ru.js": 338,
+		"./si": 339,
+		"./si.js": 339,
+		"./sk": 340,
+		"./sk.js": 340,
+		"./sl": 341,
+		"./sl.js": 341,
+		"./sq": 342,
+		"./sq.js": 342,
+		"./sr": 343,
+		"./sr-cyrl": 344,
+		"./sr-cyrl.js": 344,
+		"./sr.js": 343,
+		"./sv": 345,
+		"./sv.js": 345,
+		"./ta": 346,
+		"./ta.js": 346,
+		"./th": 347,
+		"./th.js": 347,
+		"./tl-ph": 348,
+		"./tl-ph.js": 348,
+		"./tr": 349,
+		"./tr.js": 349,
+		"./tzl": 350,
+		"./tzl.js": 350,
+		"./tzm": 351,
+		"./tzm-latn": 352,
+		"./tzm-latn.js": 352,
+		"./tzm.js": 351,
+		"./uk": 353,
+		"./uk.js": 353,
+		"./uz": 354,
+		"./uz.js": 354,
+		"./vi": 355,
+		"./vi.js": 355,
+		"./zh-cn": 356,
+		"./zh-cn.js": 356,
+		"./zh-tw": 357,
+		"./zh-tw.js": 357
 	};
 	function webpackContext(req) {
 		return __webpack_require__(webpackContextResolve(req));
@@ -56046,11 +56172,11 @@
 	};
 	webpackContext.resolve = webpackContextResolve;
 	module.exports = webpackContext;
-	webpackContext.id = 271;
+	webpackContext.id = 272;
 
 
 /***/ },
-/* 272 */
+/* 273 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -56058,7 +56184,7 @@
 	//! author : Werner Mollentze : https://github.com/wernerm
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -56127,7 +56253,7 @@
 	}));
 
 /***/ },
-/* 273 */
+/* 274 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -56137,7 +56263,7 @@
 	//! Native plural forms: forabi https://github.com/forabi
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -56267,7 +56393,7 @@
 	}));
 
 /***/ },
-/* 274 */
+/* 275 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -56276,7 +56402,7 @@
 	//! author : Abdel Said : https://github.com/abdelsaid
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -56330,7 +56456,7 @@
 	}));
 
 /***/ },
-/* 275 */
+/* 276 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -56338,7 +56464,7 @@
 	//! author : Suhail Alkowaileet : https://github.com/xsoh
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -56437,14 +56563,14 @@
 	}));
 
 /***/ },
-/* 276 */
+/* 277 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale  : Tunisian Arabic (ar-tn)
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -56498,7 +56624,7 @@
 	}));
 
 /***/ },
-/* 277 */
+/* 278 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -56506,7 +56632,7 @@
 	//! author : topchiyev : https://github.com/topchiyev
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -56606,7 +56732,7 @@
 	}));
 
 /***/ },
-/* 278 */
+/* 279 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -56616,7 +56742,7 @@
 	//! Author : Menelion Elensúle : https://github.com/Oire
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -56757,7 +56883,7 @@
 	}));
 
 /***/ },
-/* 279 */
+/* 280 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -56765,7 +56891,7 @@
 	//! author : Krasen Borisov : https://github.com/kraz
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -56851,7 +56977,7 @@
 	}));
 
 /***/ },
-/* 280 */
+/* 281 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -56859,7 +56985,7 @@
 	//! author : Kaushik Gandhi : https://github.com/kaushikgandhi
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -56968,7 +57094,7 @@
 	}));
 
 /***/ },
-/* 281 */
+/* 282 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -56976,7 +57102,7 @@
 	//! author : Thupten N. Chakrishar : https://github.com/vajradog
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -57082,7 +57208,7 @@
 	}));
 
 /***/ },
-/* 282 */
+/* 283 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -57090,7 +57216,7 @@
 	//! author : Jean-Baptiste Le Duigou : https://github.com/jbleduigou
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -57193,7 +57319,7 @@
 	}));
 
 /***/ },
-/* 283 */
+/* 284 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -57202,7 +57328,7 @@
 	//! based on (hr) translation by Bojan Marković
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -57338,7 +57464,7 @@
 	}));
 
 /***/ },
-/* 284 */
+/* 285 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -57346,7 +57472,7 @@
 	//! author : Juan G. Hurtado : https://github.com/juanghurtado
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -57421,7 +57547,7 @@
 	}));
 
 /***/ },
-/* 285 */
+/* 286 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -57429,7 +57555,7 @@
 	//! author : petrbela : https://github.com/petrbela
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -57582,7 +57708,7 @@
 	}));
 
 /***/ },
-/* 286 */
+/* 287 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -57590,7 +57716,7 @@
 	//! author : Anatoly Mironov : https://github.com/mirontoli
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -57649,7 +57775,7 @@
 	}));
 
 /***/ },
-/* 287 */
+/* 288 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -57657,7 +57783,7 @@
 	//! author : Robert Allen
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -57732,7 +57858,7 @@
 	}));
 
 /***/ },
-/* 288 */
+/* 289 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -57740,7 +57866,7 @@
 	//! author : Ulrik Nielsen : https://github.com/mrbase
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -57796,7 +57922,7 @@
 	}));
 
 /***/ },
-/* 289 */
+/* 290 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -57805,7 +57931,7 @@
 	//! author: Menelion Elensúle: https://github.com/Oire
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -57875,7 +58001,7 @@
 	}));
 
 /***/ },
-/* 290 */
+/* 291 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -57885,7 +58011,7 @@
 	//! author : Martin Groller : https://github.com/MadMG
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -57955,7 +58081,7 @@
 	}));
 
 /***/ },
-/* 291 */
+/* 292 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -57963,7 +58089,7 @@
 	//! author : Aggelos Karalias : https://github.com/mehiel
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -58053,14 +58179,14 @@
 	}));
 
 /***/ },
-/* 292 */
+/* 293 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : australian english (en-au)
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -58123,7 +58249,7 @@
 	}));
 
 /***/ },
-/* 293 */
+/* 294 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -58131,7 +58257,7 @@
 	//! author : Jonathan Abourbih : https://github.com/jonbca
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -58190,7 +58316,7 @@
 	}));
 
 /***/ },
-/* 294 */
+/* 295 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -58198,7 +58324,7 @@
 	//! author : Chris Gedrim : https://github.com/chrisgedrim
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -58261,7 +58387,7 @@
 	}));
 
 /***/ },
-/* 295 */
+/* 296 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -58271,7 +58397,7 @@
 	//!          Se ne, bonvolu korekti kaj avizi min por ke mi povas lerni!
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -58338,7 +58464,7 @@
 	}));
 
 /***/ },
-/* 296 */
+/* 297 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -58346,7 +58472,7 @@
 	//! author : Julio Napurí : https://github.com/julionc
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -58421,7 +58547,7 @@
 	}));
 
 /***/ },
-/* 297 */
+/* 298 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -58430,7 +58556,7 @@
 	//! improvements : Illimar Tambek : https://github.com/ragulka
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -58505,7 +58631,7 @@
 	}));
 
 /***/ },
-/* 298 */
+/* 299 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -58513,7 +58639,7 @@
 	//! author : Eneko Illarramendi : https://github.com/eillarra
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -58573,7 +58699,7 @@
 	}));
 
 /***/ },
-/* 299 */
+/* 300 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -58581,7 +58707,7 @@
 	//! author : Ebrahim Byagowi : https://github.com/ebraminio
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -58682,7 +58808,7 @@
 	}));
 
 /***/ },
-/* 300 */
+/* 301 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -58690,7 +58816,7 @@
 	//! author : Tarmo Aidantausta : https://github.com/bleadof
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -58793,7 +58919,7 @@
 	}));
 
 /***/ },
-/* 301 */
+/* 302 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -58801,7 +58927,7 @@
 	//! author : Ragnar Johannesen : https://github.com/ragnar123
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -58857,7 +58983,7 @@
 	}));
 
 /***/ },
-/* 302 */
+/* 303 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -58865,7 +58991,7 @@
 	//! author : John Fischer : https://github.com/jfroffice
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -58923,7 +59049,7 @@
 	}));
 
 /***/ },
-/* 303 */
+/* 304 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -58931,7 +59057,7 @@
 	//! author : Jonathan Abourbih : https://github.com/jonbca
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -58985,7 +59111,7 @@
 	}));
 
 /***/ },
-/* 304 */
+/* 305 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -58993,7 +59119,7 @@
 	//! author : Robin van der Vliet : https://github.com/robin0van0der0v
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -59060,7 +59186,7 @@
 	}));
 
 /***/ },
-/* 305 */
+/* 306 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -59068,7 +59194,7 @@
 	//! author : Juan G. Hurtado : https://github.com/juanghurtado
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -59139,7 +59265,7 @@
 	}));
 
 /***/ },
-/* 306 */
+/* 307 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -59149,7 +59275,7 @@
 	//! author : Tal Ater : https://github.com/TalAter
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -59225,7 +59351,7 @@
 	}));
 
 /***/ },
-/* 307 */
+/* 308 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -59233,7 +59359,7 @@
 	//! author : Mayank Singhal : https://github.com/mayanksinghal
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -59352,7 +59478,7 @@
 	}));
 
 /***/ },
-/* 308 */
+/* 309 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -59360,7 +59486,7 @@
 	//! author : Bojan Marković : https://github.com/bmarkovic
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -59496,7 +59622,7 @@
 	}));
 
 /***/ },
-/* 309 */
+/* 310 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -59504,7 +59630,7 @@
 	//! author : Adam Brunner : https://github.com/adambrunner
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -59609,7 +59735,7 @@
 	}));
 
 /***/ },
-/* 310 */
+/* 311 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -59617,7 +59743,7 @@
 	//! author : Armendarabyan : https://github.com/armendarabyan
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -59724,7 +59850,7 @@
 	}));
 
 /***/ },
-/* 311 */
+/* 312 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -59733,7 +59859,7 @@
 	//! reference: http://id.wikisource.org/wiki/Pedoman_Umum_Ejaan_Bahasa_Indonesia_yang_Disempurnakan
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -59811,7 +59937,7 @@
 	}));
 
 /***/ },
-/* 312 */
+/* 313 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -59819,7 +59945,7 @@
 	//! author : Hinrik Örn Sigurðsson : https://github.com/hinrik
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -59942,7 +60068,7 @@
 	}));
 
 /***/ },
-/* 313 */
+/* 314 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -59951,7 +60077,7 @@
 	//! author: Mattia Larentis: https://github.com/nostalgiaz
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -60016,7 +60142,7 @@
 	}));
 
 /***/ },
-/* 314 */
+/* 315 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -60024,7 +60150,7 @@
 	//! author : LI Long : https://github.com/baryon
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -60085,7 +60211,7 @@
 	}));
 
 /***/ },
-/* 315 */
+/* 316 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -60094,7 +60220,7 @@
 	//! reference: http://jv.wikipedia.org/wiki/Basa_Jawa
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -60172,7 +60298,7 @@
 	}));
 
 /***/ },
-/* 316 */
+/* 317 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -60180,7 +60306,7 @@
 	//! author : Irakli Janiashvili : https://github.com/irakli-janiashvili
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -60279,7 +60405,7 @@
 	}));
 
 /***/ },
-/* 317 */
+/* 318 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -60287,7 +60413,7 @@
 	//! author : Kruy Vanna : https://github.com/kruyvanna
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -60341,7 +60467,7 @@
 	}));
 
 /***/ },
-/* 318 */
+/* 319 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -60353,7 +60479,7 @@
 	//! - Jeeeyul Lee <jeeeyul@gmail.com>
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -60413,7 +60539,7 @@
 	}));
 
 /***/ },
-/* 319 */
+/* 320 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -60421,7 +60547,7 @@
 	//! author : mweimerskirch : https://github.com/mweimerskirch, David Raison : https://github.com/kwisatz
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -60551,7 +60677,7 @@
 	}));
 
 /***/ },
-/* 320 */
+/* 321 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -60559,7 +60685,7 @@
 	//! author : Mindaugas Mozūras : https://github.com/mmozuras
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -60680,7 +60806,7 @@
 	}));
 
 /***/ },
-/* 321 */
+/* 322 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -60689,7 +60815,7 @@
 	//! author : Jānis Elmeris : https://github.com/JanisE
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -60780,7 +60906,7 @@
 	}));
 
 /***/ },
-/* 322 */
+/* 323 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -60788,7 +60914,7 @@
 	//! author : Miodrag Nikač <miodrag@restartit.me> : https://github.com/miodragnikac
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -60893,7 +61019,7 @@
 	}));
 
 /***/ },
-/* 323 */
+/* 324 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -60901,7 +61027,7 @@
 	//! author : Borislav Mickov : https://github.com/B0k0
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -60987,7 +61113,7 @@
 	}));
 
 /***/ },
-/* 324 */
+/* 325 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -60995,7 +61121,7 @@
 	//! author : Floyd Pink : https://github.com/floydpink
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -61062,7 +61188,7 @@
 	}));
 
 /***/ },
-/* 325 */
+/* 326 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -61070,7 +61196,7 @@
 	//! author : Harshad Kale : https://github.com/kalehv
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -61187,7 +61313,7 @@
 	}));
 
 /***/ },
-/* 326 */
+/* 327 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -61195,7 +61321,7 @@
 	//! author : Weldan Jamili : https://github.com/weldan
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -61273,7 +61399,7 @@
 	}));
 
 /***/ },
-/* 327 */
+/* 328 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -61281,7 +61407,7 @@
 	//! author : Weldan Jamili : https://github.com/weldan
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -61359,7 +61485,7 @@
 	}));
 
 /***/ },
-/* 328 */
+/* 329 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -61367,7 +61493,7 @@
 	//! author : Squar team, mysquar.com
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -61456,7 +61582,7 @@
 	}));
 
 /***/ },
-/* 329 */
+/* 330 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -61465,7 +61591,7 @@
 	//!           Sigurd Gartmann : https://github.com/sigurdga
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -61521,7 +61647,7 @@
 	}));
 
 /***/ },
-/* 330 */
+/* 331 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -61529,7 +61655,7 @@
 	//! author : suvash : https://github.com/suvash
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -61648,7 +61774,7 @@
 	}));
 
 /***/ },
-/* 331 */
+/* 332 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -61656,7 +61782,7 @@
 	//! author : Joris Röling : https://github.com/jjupiter
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -61723,7 +61849,7 @@
 	}));
 
 /***/ },
-/* 332 */
+/* 333 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -61731,7 +61857,7 @@
 	//! author : https://github.com/mechuwind
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -61787,7 +61913,7 @@
 	}));
 
 /***/ },
-/* 333 */
+/* 334 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -61795,7 +61921,7 @@
 	//! author : Rafal Hirsz : https://github.com/evoL
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -61896,7 +62022,7 @@
 	}));
 
 /***/ },
-/* 334 */
+/* 335 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -61904,7 +62030,7 @@
 	//! author : Jefferson : https://github.com/jalex79
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -61964,7 +62090,7 @@
 	}));
 
 /***/ },
-/* 335 */
+/* 336 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -61972,7 +62098,7 @@
 	//! author : Caio Ribeiro Pereira : https://github.com/caio-ribeiro-pereira
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -62028,7 +62154,7 @@
 	}));
 
 /***/ },
-/* 336 */
+/* 337 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -62037,7 +62163,7 @@
 	//! author : Valentin Agachi : https://github.com/avaly
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -62106,7 +62232,7 @@
 	}));
 
 /***/ },
-/* 337 */
+/* 338 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -62115,7 +62241,7 @@
 	//! Author : Menelion Elensúle : https://github.com/Oire
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -62274,7 +62400,7 @@
 	}));
 
 /***/ },
-/* 338 */
+/* 339 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -62282,7 +62408,7 @@
 	//! author : Sampath Sitinamaluwa : https://github.com/sampathsris
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -62343,7 +62469,7 @@
 	}));
 
 /***/ },
-/* 339 */
+/* 340 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -62352,7 +62478,7 @@
 	//! based on work of petrbela : https://github.com/petrbela
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -62505,7 +62631,7 @@
 	}));
 
 /***/ },
-/* 340 */
+/* 341 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -62513,7 +62639,7 @@
 	//! author : Robert Sedovšek : https://github.com/sedovsek
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -62669,7 +62795,7 @@
 	}));
 
 /***/ },
-/* 341 */
+/* 342 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -62679,7 +62805,7 @@
 	//! author : Oerd Cukalla : https://github.com/oerd (fixes)
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -62742,7 +62868,7 @@
 	}));
 
 /***/ },
-/* 342 */
+/* 343 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -62750,7 +62876,7 @@
 	//! author : Milan Janačković<milanjanackovic@gmail.com> : https://github.com/milan-j
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -62854,7 +62980,7 @@
 	}));
 
 /***/ },
-/* 343 */
+/* 344 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -62862,7 +62988,7 @@
 	//! author : Milan Janačković<milanjanackovic@gmail.com> : https://github.com/milan-j
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -62966,7 +63092,7 @@
 	}));
 
 /***/ },
-/* 344 */
+/* 345 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -62974,7 +63100,7 @@
 	//! author : Jens Alm : https://github.com/ulmus
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -63037,7 +63163,7 @@
 	}));
 
 /***/ },
-/* 345 */
+/* 346 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -63045,7 +63171,7 @@
 	//! author : Arjunkumar Krishnamoorthy : https://github.com/tk120404
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -63136,7 +63262,7 @@
 	}));
 
 /***/ },
-/* 346 */
+/* 347 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -63144,7 +63270,7 @@
 	//! author : Kridsada Thanabulpong : https://github.com/sirn
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -63205,7 +63331,7 @@
 	}));
 
 /***/ },
-/* 347 */
+/* 348 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -63213,7 +63339,7 @@
 	//! author : Dan Hagman
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -63271,7 +63397,7 @@
 	}));
 
 /***/ },
-/* 348 */
+/* 349 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -63280,7 +63406,7 @@
 	//!           Burak Yiğit Kaya: https://github.com/BYK
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -63365,7 +63491,7 @@
 	}));
 
 /***/ },
-/* 349 */
+/* 350 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -63373,7 +63499,7 @@
 	//! author : Robin van der Vliet : https://github.com/robin0van0der0v with the help of Iustì Canun
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -63454,7 +63580,7 @@
 	}));
 
 /***/ },
-/* 350 */
+/* 351 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -63462,7 +63588,7 @@
 	//! author : Abdel Said : https://github.com/abdelsaid
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -63516,7 +63642,7 @@
 	}));
 
 /***/ },
-/* 351 */
+/* 352 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -63524,7 +63650,7 @@
 	//! author : Abdel Said : https://github.com/abdelsaid
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -63578,7 +63704,7 @@
 	}));
 
 /***/ },
-/* 352 */
+/* 353 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -63587,7 +63713,7 @@
 	//! Author : Menelion Elensúle : https://github.com/Oire
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -63735,7 +63861,7 @@
 	}));
 
 /***/ },
-/* 353 */
+/* 354 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -63743,7 +63869,7 @@
 	//! author : Sardor Muminov : https://github.com/muminoff
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -63797,7 +63923,7 @@
 	}));
 
 /***/ },
-/* 354 */
+/* 355 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -63805,7 +63931,7 @@
 	//! author : Bang Nguyen : https://github.com/bangnk
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -63867,7 +63993,7 @@
 	}));
 
 /***/ },
-/* 355 */
+/* 356 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -63876,7 +64002,7 @@
 	//! author : Zeno Zeng : https://github.com/zenozeng
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -63998,7 +64124,7 @@
 	}));
 
 /***/ },
-/* 356 */
+/* 357 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -64006,7 +64132,7 @@
 	//! author : Ben : https://github.com/ben-lin
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(269)) :
+	    true ? factory(__webpack_require__(270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -64103,7 +64229,7 @@
 	}));
 
 /***/ },
-/* 357 */
+/* 358 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -64120,11 +64246,11 @@
 
 	var _header = __webpack_require__(259);
 
-	var _edit = __webpack_require__(374);
+	var _edit = __webpack_require__(359);
 
 	var _edit2 = _interopRequireDefault(_edit);
 
-	var _post = __webpack_require__(368);
+	var _post = __webpack_require__(364);
 
 	var _post2 = _interopRequireDefault(_post);
 
@@ -64152,12 +64278,7 @@
 		function EditPost(props) {
 			_classCallCheck(this, EditPost);
 
-			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(EditPost).call(this, props));
-
-			_this.state = {
-				resource: {}
-			};
-			return _this;
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(EditPost).call(this, props));
 		}
 
 		/*
@@ -64170,13 +64291,12 @@
 			value: function render() {
 				return _react2.default.createElement(
 					'div',
-					{ className: 'wrapper__content fill-parent' },
-					_react2.default.createElement(_header.Header, null),
-					_react2.default.createElement(
-						'div',
-						null,
-						_react2.default.createElement(_edit2.default, { fields: _post2.default.fields })
-					)
+					{ className: 'wrapper__clear-header fill-parent' },
+					_react2.default.createElement(_edit2.default, {
+						fields: _post2.default.fields,
+						ajaxMethod: 'post',
+						ajaxUrl: '/api/v2/posts'
+					})
 				);
 			}
 		}]);
@@ -64187,7 +64307,880 @@
 	exports.default = EditPost;
 
 /***/ },
-/* 358 */
+/* 359 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _react = __webpack_require__(147);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _root = __webpack_require__(360);
+
+	var _root2 = _interopRequireDefault(_root);
+
+	var _qajax = __webpack_require__(369);
+
+	var _qajax2 = _interopRequireDefault(_qajax);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var EDIT_STATUSES = ['editing', 'save-pending', 'save-succeeded', 'save-failed'];
+
+	/*
+	 * Edit resource component.
+	 *
+	 */
+
+	var Edit = (function (_React$Component) {
+		_inherits(Edit, _React$Component);
+
+		/*
+	  * Set initial state.
+	  *
+	  */
+
+		function Edit(props) {
+			_classCallCheck(this, Edit);
+
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Edit).call(this, props));
+
+			_this.handleFormFieldChange = _this.handleFormFieldChange.bind(_this);
+			_this.handleFormSubmit = _this.handleFormSubmit.bind(_this);
+
+			_this.state = {
+				editStatus: 'editing'
+			};
+
+			return _this;
+		}
+
+		/*
+	  *
+	  *
+	  */
+
+		_createClass(Edit, [{
+			key: 'render',
+			value: function render() {
+				if (!this.state.resource) {
+					return _react2.default.createElement('div', null);
+				}
+				return _react2.default.createElement(
+					'div',
+					null,
+					_react2.default.createElement(_root2.default, {
+						fields: this.props.fields,
+						resource: this.state.resource,
+						handleFormFieldChange: this.handleFormFieldChange,
+						handleFormSubmit: this.handleFormSubmit,
+						isEnabled: this.state.editStatus === 'editing'
+					})
+				);
+			}
+
+			/*
+	   *
+	   *
+	   */
+
+		}, {
+			key: 'componentWillMount',
+			value: function componentWillMount() {
+				var _this2 = this;
+
+				if (this.props.getUrl) {
+					// send ajax request to get resource
+				} else {
+						(function () {
+							var resource = {};
+							_this2.props.fields.forEach(function (field) {
+								var defaultValue = field.defaultValue;
+
+								resource[field.key] = defaultValue == null ? '' : defaultValue;
+							});
+							_this2.setState({ resource: resource });
+						})();
+					}
+			}
+
+			/*
+	   *
+	   *
+	   */
+
+		}, {
+			key: 'handleFormFieldChange',
+			value: function handleFormFieldChange(childData) {
+				var newResource = Object.assign({}, this.state.resource);
+				newResource[childData.id] = childData.value;
+				this.setState({ resource: newResource });
+			}
+
+			/*
+	   *
+	   *
+	   */
+
+		}, {
+			key: 'handleFormSubmit',
+			value: function handleFormSubmit() {
+				(0, _qajax2.default)({
+					url: this.props.ajaxUrl,
+					method: this.props.ajaxMethod,
+					data: this.state.resource
+				}).then(_qajax2.default.filterSuccess).then(function (xhr) {
+					console.log(JSON.parse(xhr.response));
+				}, function (err) {
+					console.log(err);
+				});
+			}
+		}]);
+
+		return Edit;
+	})(_react2.default.Component);
+
+	exports.default = Edit;
+
+/***/ },
+/* 360 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _react = __webpack_require__(147);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _underscore = __webpack_require__(212);
+
+	var _underscore2 = _interopRequireDefault(_underscore);
+
+	var _index = __webpack_require__(361);
+
+	var Subcomponents = _interopRequireWildcard(_index);
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	/*
+	 * Reusable form component.
+	 *
+	 */
+
+	var Form = (function (_React$Component) {
+		_inherits(Form, _React$Component);
+
+		/*
+	  *
+	  *
+	  */
+
+		function Form(props) {
+			_classCallCheck(this, Form);
+
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Form).call(this, props));
+
+			_this.handleFormFieldChange = _this.handleFormFieldChange.bind(_this);
+			_this.handleFormSubmit = _this.handleFormSubmit.bind(_this);
+			return _this;
+		}
+
+		/*
+	  *
+	  *
+	  */
+
+		_createClass(Form, [{
+			key: 'render',
+			value: function render() {
+				var style = this.props.isEnabled ? {} : { opacity: 0.5 };
+				return _react2.default.createElement(
+					'form',
+					{
+						className: 'form',
+						onSubmit: this.handleFormSubmit,
+						style: style
+					},
+					this.renderFormComponents(),
+					_react2.default.createElement('input', {
+						type: 'submit',
+						disabled: !this.props.isEnabled,
+						value: this.props.submitButtonText || 'Submit Form'
+					})
+				);
+			}
+
+			/*
+	   *
+	   *
+	   */
+
+		}, {
+			key: 'renderFormComponents',
+			value: function renderFormComponents() {
+				var _this2 = this;
+
+				return this.props.fields.map(function (field, i) {
+					var FormComp = Subcomponents[field.formComponentName] || Subcomponents.Text;
+					return _react2.default.createElement(FormComp, {
+						key: i,
+						id: field.key,
+						labelText: field.labelText,
+						hint: field.hint,
+						isEnabled: _this2.props.isEnabled,
+						handleFormFieldChange: _this2.handleFormFieldChange.bind(_this2),
+						initialValue: _this2.props.resource[field.key]
+					});
+				});
+			}
+
+			/*
+	   *
+	   *
+	   */
+
+		}, {
+			key: 'handleFormFieldChange',
+			value: function handleFormFieldChange(changedFormFieldData) {
+				this.props.handleFormFieldChange(changedFormFieldData);
+			}
+
+			/*
+	   * Run method passed down from parent.
+	   *
+	   */
+
+		}, {
+			key: 'handleFormSubmit',
+			value: function handleFormSubmit(e) {
+				e.preventDefault();
+				this.props.handleFormSubmit();
+			}
+		}]);
+
+		return Form;
+	})(_react2.default.Component);
+
+	exports.default = Form;
+
+/***/ },
+/* 361 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _text = __webpack_require__(362);
+
+	Object.defineProperty(exports, 'Text', {
+	  enumerable: true,
+	  get: function get() {
+	    return _text.default;
+	  }
+	});
+
+	var _radio = __webpack_require__(363);
+
+	Object.defineProperty(exports, 'Radio', {
+	  enumerable: true,
+	  get: function get() {
+	    return _radio.default;
+	  }
+	});
+
+/***/ },
+/* 362 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _react = __webpack_require__(147);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	/*
+	 *
+	 *
+	 */
+
+	var Text = (function (_React$Component) {
+		_inherits(Text, _React$Component);
+
+		function Text() {
+			_classCallCheck(this, Text);
+
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(Text).apply(this, arguments));
+		}
+
+		_createClass(Text, [{
+			key: 'render',
+
+			/*
+	   *
+	   *
+	   */
+			value: function render() {
+				var InputComponent = !this.props.isMultiline ? 'input' : 'textarea';
+				return _react2.default.createElement(
+					'div',
+					{ className: 'form__wrapper' },
+					_react2.default.createElement(
+						'label',
+						{ 'for': this.props.id },
+						this.props.labelText
+					),
+					_react2.default.createElement(
+						'p',
+						{ className: 'form__hint' },
+						this.props.hint
+					),
+					_react2.default.createElement(InputComponent, {
+						type: 'text',
+						onChange: this.saveDataOnParent.bind(this),
+						disabled: !this.props.isEnabled,
+						name: this.props.id,
+						id: this.props.id,
+						value: this.props.initialValue,
+						placeholder: this.props.placeholder
+					})
+				);
+			}
+
+			/*
+	   *
+	   *
+	   */
+
+		}, {
+			key: 'saveDataOnParent',
+			value: function saveDataOnParent(e) {
+				this.props.handleFormFieldChange({
+					id: this.props.id,
+					value: e.target.value
+				});
+			}
+		}]);
+
+		return Text;
+	})(_react2.default.Component);
+
+	exports.default = Text;
+
+/***/ },
+/* 363 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _react = __webpack_require__(147);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _underscore = __webpack_require__(212);
+
+	var _underscore2 = _interopRequireDefault(_underscore);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	/*
+	 *
+	 *
+	 */
+
+	var Radio = (function (_React$Component) {
+		_inherits(Radio, _React$Component);
+
+		/*
+	  *
+	  *
+	  */
+
+		function Radio(props) {
+			_classCallCheck(this, Radio);
+
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Radio).call(this, props));
+
+			_this.handleFormFieldChange = _this.handleFormFieldChange.bind(_this);
+			return _this;
+		}
+
+		/*
+	  *
+	  *
+	  */
+
+		_createClass(Radio, [{
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					{ className: 'form__wrapper' },
+					_react2.default.createElement(
+						'label',
+						{ 'for': this.props.id },
+						this.props.labelText
+					),
+					_react2.default.createElement(
+						'p',
+						{ className: 'form__hint' },
+						this.props.hint
+					),
+					this.renderOptions()
+				);
+			}
+
+			/*
+	   *
+	   *
+	   */
+
+		}, {
+			key: 'renderOptions',
+			value: function renderOptions() {
+				var _this2 = this;
+
+				return this.props.options.map(function (option, i) {
+					var option = option.key,
+					    isChecked = _this2.isOptionChecked(option, i);
+					return _react2.default.createElement(
+						'div',
+						{ className: 'form__radio', key: i },
+						_react2.default.createElement('input', {
+							type: 'checkbox',
+							name: _this2.props.id,
+							id: _this2.props.id + '-opt-' + i,
+							disabled: !_this2.props.isEnabled,
+							checked: isChecked,
+							onChange: _this2.handleFormFieldChange.bind(_this2),
+							value: option
+						}),
+						_react2.default.createElement(
+							'p',
+							{ onDoubleClick: _this2.navigateToForeignModelEdit.bind(_this2, foreignModel) },
+							foreignModel.get(field)
+						)
+					);
+				});
+			}
+
+			/*
+	   *
+	   *
+	   */
+
+		}, {
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+				// If there was no initial value passed to the component, pass back the first option to the parent.
+				this.fetchForeignCollection();
+				if (!_underscore2.default.isArray(this.props.initialValue)) {
+					this.props.saveDataOnParent({ id: this.props.id, value: [] });
+				}
+			}
+
+			/*
+	   *
+	   *
+	   */
+
+		}, {
+			key: 'isOptionChecked',
+			value: function isOptionChecked(option, i) {
+				return this.props.initialValue === option;
+			}
+
+			/*
+	   *
+	   *
+	   */
+
+		}, {
+			key: 'handleFormFieldChange',
+			value: function handleFormFieldChange(e) {
+				this.props.handleFormFieldChange({
+					id: this.props.id,
+					value: e.target.value
+				});
+			}
+		}]);
+
+		return Radio;
+	})(_react2.default.Component);
+
+	exports.default = Radio;
+
+/***/ },
+/* 364 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _base = __webpack_require__(365);
+
+	var _base2 = _interopRequireDefault(_base);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	// Inherit from base.
+	var Post = Object.create(_base2.default);
+
+	Post.fields = [{
+		key: 'id',
+		type: 'text',
+		defaultValue: 'choose-id',
+		formComponentName: 'Text',
+		labelText: 'Post ID',
+		hint: 'Same as url fragment'
+	}, {
+		key: 'type',
+		type: 'text',
+		defaultValue: 'project',
+		formComponentName: 'Text',
+		labelText: 'Post type',
+		hint: 'project | blog_post'
+	}, {
+		key: 'title',
+		type: 'text',
+		defaultValue: 'Project title',
+		formComponentName: 'Text',
+		labelText: 'Post title',
+		hint: 'Enter project title'
+	}, {
+		key: 'headline',
+		type: 'text',
+		defaultValue: '',
+		formComponentName: 'Text',
+		labelText: 'Post headline',
+		hint: 'Or subtitle...'
+	}, {
+		key: 'name',
+		type: 'text',
+		defaultValue: 'Project name',
+		formComponentName: 'Text',
+		labelText: 'Post name',
+		hint: 'Appears at links to the post from the listing page.'
+	}, {
+		key: 'supervisors',
+		type: 'json',
+		defaultValue: '[]',
+		formComponentName: 'Text',
+		labelText: 'Supervisors',
+		hint: 'Enter array'
+	}, {
+		key: 'collaborators',
+		type: 'json',
+		defaultValue: '[]',
+		formComponentName: 'Text',
+		labelText: 'Collaborators',
+		hint: 'Enter array'
+	}, {
+		key: 'post_group',
+		type: 'text',
+		defaultValue: 'featured',
+		formComponentName: 'Text',
+		labelText: 'Post group',
+		hint: 'featured | etc.'
+	}, {
+		key: 'built_with',
+		type: 'json',
+		defaultValue: '[]',
+		formComponentName: 'Text',
+		labelText: 'Built with',
+		hint: 'Enter list of technologies'
+	}, {
+		key: 'body_text',
+		type: 'text',
+		defaultValue: "Stay tuned for this post's body text.",
+		formComponentName: 'Text',
+		labelText: 'Body Text',
+		hint: 'Enter html.'
+	}, {
+		key: 'display_order',
+		type: 'integer',
+		defaultValue: '0',
+		formComponentName: 'Text',
+		labelText: 'Display order',
+		hint: 'Add order in which post should appear.'
+	}, {
+		key: 'dates',
+		type: 'json',
+		defaultValue: [],
+		formComponentName: 'Text',
+		labelText: 'Dates',
+		hint: 'Enter as array: [ "2013-11", "2014-9" ]'
+	}, {
+		key: 'links',
+		type: 'json',
+		defaultValue: [],
+		formComponentName: 'Text',
+		labelText: 'Links',
+		hint: 'Enter as array of objects: [ { name: "", url: "" }, { name: "", url: "" } ]'
+	}, {
+		key: 'is_live',
+		type: 'boolean',
+		defaultValue: false,
+		formComponent: 'Text',
+		options: [{ value: true, name: 'Yes' }, { value: false, name: 'No' }],
+		labelText: 'Is live',
+		hint: 'Set as true or false depending on whether post is live.'
+	}];
+
+	Post.tableName = 'posts';
+
+	exports.default = Post;
+
+/***/ },
+/* 365 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _underscore = __webpack_require__(212);
+
+	var _underscore2 = _interopRequireDefault(_underscore);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/*
+	 * Escapes string to be inserted into a SQL database.
+	 *
+	 */
+	function escapeText(val) {
+		if (typeof val != 'string') return val;
+		return val.replace(/[\0\x08\x09\x1a\n\r"'\\\%]/g, function (char) {
+			switch (char) {
+				case "\0":
+					return "\\0";
+				case "\x08":
+					return "\\b";
+				case "\x09":
+					return "\\t";
+				case "\x1a":
+					return "\\z";
+				case "\n":
+					return "\\n";
+				case "\r":
+					return "\\r";
+				case "\"":
+				case "'":
+				case "\\":
+				case "%":
+					return "\\" + char; // prepends a backslash to backslash, percent,
+				// and double/single quotes
+			}
+		});
+	}
+
+	/*
+	 * Base model.
+	 *
+	 */
+	var Base = {
+
+		// Set on superclass.
+		data: {},
+
+		// Set on superclass.
+		fields: [],
+
+		/*
+	  * 
+	  *
+	  */
+		sanitizeValue: function sanitizeValue(key, value) {},
+
+		/*
+	  *
+	  *
+	  */
+		create: function create(data) {
+			var self = Object.create(this);
+			self.data = data;
+			return self;
+		},
+
+		/*
+	  * For missing values, adds default.
+	  *
+	  */
+		setDefaults: function setDefaults() {
+			var fields = this.fields;
+			var data = this.data;
+
+			fields.forEach(function (field) {
+				var defaultValue = field.defaultValue;
+				var key = field.key;
+
+				if (data[key] == null && defaultValue != null) {
+					data[key] = defaultValue;
+				}
+			});
+		},
+
+		/*
+	  *
+	  *
+	  */
+		getValuesString: function getValuesString() {
+			var fields = this.fields;
+			var data = this.data;
+
+			return fields.map(function (field) {
+				var key = field.key;
+				var defaultValue = field.defaultValue;
+
+				var value = data[key];
+
+				if (value == null) {
+					value = defaultValue;
+				}
+
+				if (_underscore2.default.isArray(value) || _underscore2.default.isObject(value)) {
+					value = '\'' + JSON.stringify(value) + '\'';
+				} else if (_underscore2.default.isString(value)) {
+					var escapeMarker = '';
+					if (value.length > 15) {
+						escapeMarker = 'E';
+					}
+					value = escapeMarker + '\'' + escapeText(value) + '\'';
+				}
+
+				return value;
+			}).join(',');
+		},
+
+		/*
+	  * Returns comma-separated list of field keys.
+	  *
+	  */
+		getFieldKeysString: function getFieldKeysString() {
+			return this.fields.map(function (field) {
+				return field.key;
+			}).join(',');
+		},
+
+		/*
+	  * Returns comma-separated field key + type string.
+	  *
+	  */
+		getFieldKeyTypesString: function getFieldKeyTypesString() {
+			return this.fields.map(function (field) {
+				return field.key + ' ' + field.type;
+			}).join(',');
+		},
+
+		/*
+	  * Returns command used to insert into sql database.
+	  * @returns {string}
+	  */
+		getSqlInsertCommand: function getSqlInsertCommand() {
+			return 'INSERT INTO ' + this.tableName + ' (' + this.getFieldKeysString() + ') VALUES(' + this.getValuesString() + ');';
+		},
+
+		/*
+	  * Returns command used to create table.
+	  * @returns {string}
+	  */
+		getTableCreateCommand: function getTableCreateCommand() {
+			return 'CREATE TABLE ' + this.tableName + ' (' + this.getFieldKeyTypesString() + ');';
+		}
+	};
+
+	exports.default = Base;
+
+/***/ },
+/* 366 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _ui = __webpack_require__(367);
+
+	var _ui2 = _interopRequireDefault(_ui);
+
+	var _test = __webpack_require__(368);
+
+	var _test2 = _interopRequireDefault(_test);
+
+	var _redux = __webpack_require__(220);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = (0, _redux.combineReducers)({
+		ui: _ui2.default,
+		test: _test2.default
+	});
+
+/***/ },
+/* 367 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -64195,29 +65188,55 @@
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
-	exports.default = reducer;
-	function reducer() {
-		var state = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+	exports.default = uiReducer;
+	function uiReducer() {
+		var state = arguments.length <= 0 || arguments[0] === undefined ? { windowHeight: 100, scrollTop: 0 } : arguments[0];
 		var action = arguments[1];
+		var type = action.type;
+		var value = action.value;
 
-		if (action.type === 'SET_TEST_PROP') {
-			state.testProp = 'just set test prop';
-		} else {
-			state.testProp = 'default test prop';
+		if (type === 'SET_WINDOW_DIMENSIONS') {
+			state = Object.assign({}, state, { windowHeight: value.height, windowWidth: value.width });
+		} else if (type === 'SET_SCROLL_TOP') {
+			state = Object.assign({}, state, { scrollTop: value });
 		}
 
 		return state;
 	}
 
 /***/ },
-/* 359 */
+/* 368 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.default = testReducer;
+	function testReducer() {
+		var state = arguments.length <= 0 || arguments[0] === undefined ? 'not set' : arguments[0];
+		var action = arguments[1];
+		var type = action.type;
+
+		if (type === 'SET_TEST_PROP') {
+			state = 'set';
+		} else {
+			state = 'not set';
+		}
+
+		return state;
+	}
+
+/***/ },
+/* 369 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(360)(__webpack_require__(361), window.XMLHttpRequest, window.FormData);
+	module.exports = __webpack_require__(370)(__webpack_require__(371), window.XMLHttpRequest, window.FormData);
 
 
 /***/ },
-/* 360 */
+/* 370 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -64483,7 +65502,7 @@
 
 
 /***/ },
-/* 361 */
+/* 371 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process, setImmediate) {// vim:ts=4:sts=4:sw=4:
@@ -66535,10 +67554,10 @@
 
 	});
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(362).setImmediate))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(372).setImmediate))
 
 /***/ },
-/* 362 */
+/* 372 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(setImmediate, clearImmediate) {var nextTick = __webpack_require__(3).nextTick;
@@ -66617,19 +67636,19 @@
 	exports.clearImmediate = typeof clearImmediate === "function" ? clearImmediate : function(id) {
 	  delete immediateIds[id];
 	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(362).setImmediate, __webpack_require__(362).clearImmediate))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(372).setImmediate, __webpack_require__(372).clearImmediate))
 
 /***/ },
-/* 363 */
+/* 373 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(364);
+	var content = __webpack_require__(374);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(367)(content, {});
+	var update = __webpack_require__(377)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -66646,21 +67665,21 @@
 	}
 
 /***/ },
-/* 364 */
+/* 374 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(365)();
+	exports = module.exports = __webpack_require__(375)();
 	// imports
-	exports.i(__webpack_require__(366), "");
+	exports.i(__webpack_require__(376), "");
 
 	// module
-	exports.push([module.id, "@-webkit-keyframes bounce {\n  0% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  12.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  25% {\n    -moz-transform: translateY(9px);\n    -o-transform: translateY(9px);\n    -ms-transform: translateY(9px);\n    -webkit-transform: translateY(9px);\n    transform: translateY(9px); }\n  37.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  50% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  62.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  75% {\n    -moz-transform: translateY(-9px);\n    -o-transform: translateY(-9px);\n    -ms-transform: translateY(-9px);\n    -webkit-transform: translateY(-9px);\n    transform: translateY(-9px); }\n  87.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  100% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); } }\n\n@-moz-keyframes bounce {\n  0% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  12.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  25% {\n    -moz-transform: translateY(9px);\n    -o-transform: translateY(9px);\n    -ms-transform: translateY(9px);\n    -webkit-transform: translateY(9px);\n    transform: translateY(9px); }\n  37.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  50% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  62.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  75% {\n    -moz-transform: translateY(-9px);\n    -o-transform: translateY(-9px);\n    -ms-transform: translateY(-9px);\n    -webkit-transform: translateY(-9px);\n    transform: translateY(-9px); }\n  87.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  100% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); } }\n\n@-ms-keyframes bounce {\n  0% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  12.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  25% {\n    -moz-transform: translateY(9px);\n    -o-transform: translateY(9px);\n    -ms-transform: translateY(9px);\n    -webkit-transform: translateY(9px);\n    transform: translateY(9px); }\n  37.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  50% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  62.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  75% {\n    -moz-transform: translateY(-9px);\n    -o-transform: translateY(-9px);\n    -ms-transform: translateY(-9px);\n    -webkit-transform: translateY(-9px);\n    transform: translateY(-9px); }\n  87.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  100% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); } }\n\n@-o-keyframes bounce {\n  0% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  12.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  25% {\n    -moz-transform: translateY(9px);\n    -o-transform: translateY(9px);\n    -ms-transform: translateY(9px);\n    -webkit-transform: translateY(9px);\n    transform: translateY(9px); }\n  37.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  50% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  62.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  75% {\n    -moz-transform: translateY(-9px);\n    -o-transform: translateY(-9px);\n    -ms-transform: translateY(-9px);\n    -webkit-transform: translateY(-9px);\n    transform: translateY(-9px); }\n  87.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  100% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); } }\n\n@keyframes bounce {\n  0% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  12.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  25% {\n    -moz-transform: translateY(9px);\n    -o-transform: translateY(9px);\n    -ms-transform: translateY(9px);\n    -webkit-transform: translateY(9px);\n    transform: translateY(9px); }\n  37.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  50% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  62.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  75% {\n    -moz-transform: translateY(-9px);\n    -o-transform: translateY(-9px);\n    -ms-transform: translateY(-9px);\n    -webkit-transform: translateY(-9px);\n    transform: translateY(-9px); }\n  87.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  100% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); } }\n\n.wrapper__content {\n  padding-top: 60px;\n  overflow-x: hidden;\n  overflow-y: scroll; }\n\n* {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n  -webkit-font-smoothing: antialiased; }\n\nhtml, body {\n  width: 100%;\n  height: 100%;\n  overflow: hidden;\n  margin: 0; }\n\npre, code {\n  width: 100%;\n  overflow-x: scroll; }\n\npre {\n  background-color: rgba(79, 63, 145, 0.1);\n  padding: 20px;\n  border-radius: 8px; }\n\na {\n  text-decoration: none;\n  color: white;\n  opacity: 0.6; }\n  a:hover {\n    opacity: 1; }\n\nul {\n  list-style-type: none;\n  padding: 0;\n  margin: 0; }\n  ul li {\n    display: block; }\n\nimg {\n  display: block;\n  width: 100%; }\n\n@font-face {\n  font-family: 'Hallo';\n  src: url(\"/fonts/Hallo-Sans/Hallo sans.otf\");\n  font-style: normal;\n  font-stretch: normal; }\n\n* {\n  font-family: 'Hallo';\n  font-weight: normal; }\n\nh1, h2, h3, h4 {\n  font-family: 'Hallo'; }\n\np, a, li {\n  font-family: 'Palatino'; }\n\np, a, li, code {\n  font-size: 22px; }\n\ncode {\n  font-family: \"Courier New\";\n  font-size: 18px;\n  padding: 0 4px; }\n  p code {\n    font-size: 22px; }\n\np, li {\n  line-height: 165%; }\n\ncode {\n  line-height: 135%; }\n\nh1 {\n  font-size: 44px;\n  margin-top: 35px;\n  margin-bottom: 15px; }\n\nh2 {\n  font-size: 32px;\n  margin-top: 30px;\n  margin-bottom: 10px; }\n\nh3 {\n  font-size: 26px; }\n\n.hidden {\n  display: none !important; }\n\n.active {\n  opacity: 1 !important;\n  transition: opacity 0.5s ease-in-out; }\n\n.fill-parent {\n  width: 100%;\n  height: 100%; }\n\n.title, .headline {\n  text-align: center;\n  padding: 0 5%;\n  width: 100%;\n  margin: auto;\n  word-wrap: break-word; }\n\n.title {\n  font-size: 44px;\n  font-size: 2.75rem;\n  margin: 30px 0 10px 0; }\n  @media only screen and (min-width: 768px) {\n    .title {\n      font-size: 64px;\n      font-size: 4rem;\n      margin: 45px 0 20px 0; } }\n\n.headline {\n  font-size: 30px;\n  font-size: 1.875rem;\n  max-width: 800px;\n  opacity: 0.80;\n  font-weight: normal;\n  margin-top: 20px;\n  margin-bottom: 80px; }\n  @media screen and (min-width: 600px) {\n    .headline {\n      font-size: 36px;\n      font-size: 2.25rem; } }\n\n.date {\n  text-align: center;\n  font-size: 24px;\n  opacity: 0.7;\n  padding: 0 0 30px 0; }\n\n.loader {\n  text-align: center;\n  margin-top: 30px;\n  height: 60px; }\n  .loader img {\n    display: inline-block;\n    width: 60px;\n    height: 60px; }\n\n.link {\n  font-family: 'Hallo';\n  width: 170px;\n  margin: auto;\n  text-align: center;\n  color: #413478;\n  border: 1.5px solid #413478;\n  padding: 8px 16px;\n  font-size: 26px;\n  opacity: 0.6;\n  transition: all 0.3s; }\n  .link:hover {\n    opacity: 1;\n    color: white;\n    background-color: #413478;\n    transition: all 0.3s; }\n\n.banner {\n  width: 100%;\n  height: 100%;\n  transition: all 0.5s;\n  background-color: #0d1722;\n  position: relative; }\n  .banner__summary {\n    z-index: 2;\n    top: calc(50% - 250px/2);\n    left: calc(50% - 250px/2);\n    position: fixed;\n    display: block;\n    border: 2px solid rgba(255, 255, 255, 0);\n    padding: 55px 30px;\n    width: 250px;\n    height: 250px;\n    border-radius: 100%;\n    margin: auto;\n    background-color: #413478;\n    opacity: 0.95;\n    -webkit-transition: all 0.5s;\n    -moz-transition: all 0.5s;\n    -ms-transition: all 0.5s;\n    -o-transition: all 0.5s;\n    transition: all 0.5s;\n    -webkit-animation: bounce 4.5s linear infinite;\n    -moz-animation: bounce 4.5s linear infinite;\n    -ms-animation: bounce 4.5s linear infinite;\n    -o-animation: bounce 4.5s linear infinite;\n    animation: bounce 4.5s linear infinite; }\n    .banner__summary:hover {\n      opacity: 0.99;\n      border: 2px solid white;\n      transition: all 0.5s; }\n    .banner__summary h1, .banner__summary p {\n      font-family: 'Hallo';\n      margin: 0;\n      padding: 0;\n      text-align: center;\n      line-height: 125%; }\n    .banner__summary h1 {\n      font-size: 32px;\n      font-size: 2rem;\n      margin: 25px 0 10px 0; }\n    .banner__summary p {\n      font-size: 20px;\n      font-size: 1.25rem;\n      margin: 0; }\n  .banner__globe, .banner__background {\n    position: absolute;\n    width: 100%;\n    height: 100%; }\n  .banner__globe {\n    z-index: 1; }\n  .banner__background {\n    z-index: 0;\n    opacity: 0.4;\n    background-image: url(\"/images/sky-1200.jpg\");\n    background-position: 50% 50%;\n    background-size: cover; }\n  .banner__message {\n    transition: all 0.75s;\n    position: absolute;\n    bottom: calc(50% - 210px);\n    color: white;\n    text-align: center;\n    width: 100%;\n    padding: 0 20%;\n    font-size: 21px;\n    font-size: 1.3125rem;\n    opacity: 1;\n    font-family: 'Hallo'; }\n  .banner__geopath {\n    cursor: pointer;\n    stroke: white;\n    fill: white;\n    stroke-width: 0.2px;\n    transition: all 0.2s; }\n    .banner__geopath--active, .banner__geopath:hover {\n      fill: #413478;\n      stroke: #413478;\n      transition: all 0.2s; }\n\n.header {\n  overflow: visible;\n  position: fixed;\n  width: 100%;\n  height: 60px;\n  top: 0;\n  box-shadow: 0 0 10px #333;\n  background-color: rgba(13, 23, 34, 0.95);\n  transition: all 0.2s;\n  color: white;\n  z-index: 100; }\n  .header--transparent {\n    background: none;\n    box-shadow: none; }\n  .header__main-link {\n    height: 100%;\n    width: 150px; }\n    .header__main-link svg {\n      height: 30px;\n      width: 30px;\n      margin-top: 15px;\n      margin-left: 15px;\n      fill: white; }\n  .header__nav {\n    z-index: 100;\n    width: 130px;\n    height: 60px;\n    overflow: visible;\n    float: right;\n    text-align: right;\n    padding: 0; }\n    @media screen and (min-width: 800px) {\n      .header__nav {\n        width: auto;\n        float: auto; } }\n    .header__nav__arrow, .header__nav__item {\n      width: 130px;\n      float: right;\n      height: 60px;\n      padding: 0; }\n    .header__nav__arrow {\n      cursor: pointer;\n      display: table;\n      text-align: center; }\n      @media screen and (min-width: 800px) {\n        .header__nav__arrow {\n          display: none; } }\n      .header__nav__arrow svg {\n        opacity: 0.9;\n        text-align: center;\n        vertical-align: middle;\n        display: table-cell;\n        fill: white;\n        width: 30px;\n        height: 30px;\n        margin: 15px auto; }\n      .header__nav__arrow:hover > svg, .header__nav__arrow--active > svg {\n        opacity: 1; }\n    .header__nav__item {\n      z-index: 100;\n      display: none; }\n      .header__nav:hover .header__nav__item, .header--expanded .header__nav__item {\n        background-color: rgba(13, 23, 34, 0.95);\n        display: table; }\n      .header--transparent .header__nav__item {\n        background: none !important; }\n      @media screen and (min-width: 800px) {\n        .header__nav__item {\n          display: table; }\n          .header__nav:hover .header__nav__item {\n            background: none; }\n          .header__nav__item:hover, .header__nav__item--active {\n            border-bottom: 4px solid #5d4aaa; }\n            .header--transparent .header__nav__item:hover, .header--transparent .header__nav__item--active {\n              border-color: white; } }\n      .header__nav__item a {\n        height: 100%;\n        padding: 0 30px;\n        display: table-cell;\n        position: relative;\n        text-align: center;\n        vertical-align: middle;\n        font-family: 'Hallo'; }\n      @media screen and (min-width: 800px) {\n        .header__nav__item {\n          display: table;\n          background: none; }\n          .header__nav__item:hover a, .header__nav__item--active a {\n            top: 2px;\n            opacity: 1; } }\n\n.project-show, .project-groups {\n  margin: 0; }\n\n.project-show {\n  padding: 80px 0 40px 0; }\n  .project-show__links {\n    text-align: center;\n    display: block; }\n    .project-show__links li {\n      margin: 15px 15px;\n      display: inline-block; }\n\n.project-group {\n  width: 100%;\n  padding: 100px 0 40px 0; }\n  .project-group:nth-of-type(2n+0) {\n    background-color: #f6f6f6; }\n  .project-group__content {\n    width: 250px;\n    margin-left: auto;\n    margin-right: auto; }\n    @media only screen and (min-width: 540px) {\n      .project-group__content {\n        width: 500px; } }\n    @media only screen and (min-width: 790px) {\n      .project-group__content {\n        width: 750px; } }\n    .project-group__content > h1 {\n      opacity: 1;\n      margin: 0;\n      font-size: 36px;\n      text-align: center; }\n  .project-group__separator, .project-group__description {\n    margin-left: 20px;\n    margin-right: 20px; }\n  .project-group__description {\n    margin-top: 5px;\n    margin-bottom: 5px; }\n  .project-group__separator {\n    height: 2px;\n    background-color: #5947a3;\n    border-radius: 1px;\n    margin-left: 20px;\n    margin-right: 20px;\n    margin-top: 10px;\n    margin-bottom: 15px;\n    opacity: 0.5; }\n\n.project-list {\n  width: 100%;\n  margin: 30px auto;\n  text-align: left; }\n  .project-list > li {\n    display: inline-block; }\n  .project-list__item {\n    display: inline-block;\n    fill: #0E3647;\n    position: relative;\n    width: 250px;\n    height: 225px;\n    -webkit-transition: all 0.75s;\n    -moz-transition: all 0.75s;\n    -ms-transition: all 0.75s;\n    -o-transition: all 0.75s;\n    transition: all 0.75s; }\n    .project-list__item > * {\n      position: absolute; }\n    .project-list__item > *, .project-list__item:hover > * {\n      -webkit-transition: all 0.75s;\n      -moz-transition: all 0.75s;\n      -ms-transition: all 0.75s;\n      -o-transition: all 0.75s;\n      transition: all 0.75s; }\n    .project-list__item__logo {\n      width: 187.5px;\n      height: 187.5px;\n      left: 31.25px;\n      z-index: 9;\n      top: 0px; }\n      .project-list__item:hover .project-list__item__logo {\n        opacity: 1;\n        top: 0px; }\n      .no-touch .project-list__item__logo {\n        top: 15px;\n        opacity: 0.95; }\n    .project-list__item__title {\n      color: #071c29;\n      font-size: 28px;\n      font-size: 1.75rem;\n      top: 85%;\n      width: 90%;\n      left: 5%;\n      opacity: 1;\n      text-align: center; }\n      .no-touch .project-list__item__title {\n        color: #071c29;\n        font-size: 24px;\n        top: 76%;\n        width: 90%;\n        left: 5%;\n        opacity: 1;\n        text-align: center; }\n      .project-list__item:hover .project-list__item__title {\n        opacity: 1;\n        top: 85%; }\n      .no-touch .project-list__item__title {\n        top: 76%;\n        opacity: 0; }\n\n.static {\n  width: 100%;\n  padding: 25px;\n  margin: auto; }\n  .static p:first-child {\n    padding-top: 0;\n    margin-top: 0; }\n  .static p:last-child {\n    padding-bottom: 0;\n    margin-bottom: 0; }\n  @media only screen and (min-width: 818px) {\n    .static {\n      width: 768px;\n      padding: 50px 0; } }\n  .static blockquote {\n    font-style: italic;\n    margin: 35px 0 35px 40px; }\n  .static ul {\n    list-style-type: circle;\n    list-style-position: outside;\n    padding: 25px; }\n  .static p, .static a {\n    hyphens: auto; }\n  .static li {\n    display: list-item;\n    padding: 5px 0; }\n  .static a {\n    color: #4F3F91;\n    border-bottom: 1px solid #4F3F91;\n    opacity: 0.7; }\n    .static a:hover {\n      opacity: 1; }\n  .static img, .static iframe {\n    width: 100%;\n    display: block;\n    margin: 40px auto;\n    border-radius: 4px; }\n    @media screen and (max-width: 780px) {\n      .static img, .static iframe {\n        width: 250px;\n        margin: auto; } }\n  .static iframe {\n    height: 400px; }\n\n.hero {\n  position: relative;\n  width: 100%;\n  content: '';\n  background-size: cover;\n  background-position: 50% 0%;\n  background-repeat: no-repeat;\n  height: 600px; }\n  .hero__overlay {\n    position: absolute;\n    width: 100%;\n    height: 100%;\n    left: 0;\n    top: 0;\n    -webkit-transition: all 0.5s;\n    -moz-transition: all 0.5s;\n    -ms-transition: all 0.5s;\n    -o-transition: all 0.5s;\n    transition: all 0.5s;\n    background-color: rgba(13, 23, 34, 0.6); }\n  .hero__text {\n    position: absolute;\n    bottom: 30%;\n    left: 25px;\n    font-size: 60px;\n    font-family: 'Hallo';\n    color: white; }\n    @media only screen and (min-width: 768px) {\n      .hero__text {\n        left: calc(50% - 768px/2);\n        font-size: 80px; } }\n\n.form {\n  width: 100%;\n  padding: 50px 0;\n  max-width: 600px;\n  margin: auto; }\n  .form input, .form select, .form textarea, .form button {\n    outline: none;\n    border: 1px solid #555; }\n  .form input, .form textarea {\n    width: 100%;\n    font-size: 24px;\n    font-size: 1.5rem;\n    padding: 8px 5px; }\n    .form input:focus, .form textarea:focus {\n      background-color: #ddd; }\n  .form label {\n    font-family: 'Hallo';\n    font-size: 44px;\n    font-size: 2.75rem;\n    margin: 10px 0; }\n  .form__hint {\n    font-family: 'Palatino';\n    font-size: 24px;\n    font-size: 1.5rem;\n    margin: 10px 0; }\n  .form__wrapper {\n    margin: 50px 0; }\n", ""]);
+	exports.push([module.id, "@-webkit-keyframes bounce {\n  0% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  12.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  25% {\n    -moz-transform: translateY(9px);\n    -o-transform: translateY(9px);\n    -ms-transform: translateY(9px);\n    -webkit-transform: translateY(9px);\n    transform: translateY(9px); }\n  37.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  50% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  62.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  75% {\n    -moz-transform: translateY(-9px);\n    -o-transform: translateY(-9px);\n    -ms-transform: translateY(-9px);\n    -webkit-transform: translateY(-9px);\n    transform: translateY(-9px); }\n  87.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  100% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); } }\n\n@-moz-keyframes bounce {\n  0% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  12.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  25% {\n    -moz-transform: translateY(9px);\n    -o-transform: translateY(9px);\n    -ms-transform: translateY(9px);\n    -webkit-transform: translateY(9px);\n    transform: translateY(9px); }\n  37.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  50% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  62.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  75% {\n    -moz-transform: translateY(-9px);\n    -o-transform: translateY(-9px);\n    -ms-transform: translateY(-9px);\n    -webkit-transform: translateY(-9px);\n    transform: translateY(-9px); }\n  87.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  100% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); } }\n\n@-ms-keyframes bounce {\n  0% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  12.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  25% {\n    -moz-transform: translateY(9px);\n    -o-transform: translateY(9px);\n    -ms-transform: translateY(9px);\n    -webkit-transform: translateY(9px);\n    transform: translateY(9px); }\n  37.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  50% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  62.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  75% {\n    -moz-transform: translateY(-9px);\n    -o-transform: translateY(-9px);\n    -ms-transform: translateY(-9px);\n    -webkit-transform: translateY(-9px);\n    transform: translateY(-9px); }\n  87.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  100% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); } }\n\n@-o-keyframes bounce {\n  0% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  12.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  25% {\n    -moz-transform: translateY(9px);\n    -o-transform: translateY(9px);\n    -ms-transform: translateY(9px);\n    -webkit-transform: translateY(9px);\n    transform: translateY(9px); }\n  37.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  50% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  62.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  75% {\n    -moz-transform: translateY(-9px);\n    -o-transform: translateY(-9px);\n    -ms-transform: translateY(-9px);\n    -webkit-transform: translateY(-9px);\n    transform: translateY(-9px); }\n  87.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  100% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); } }\n\n@keyframes bounce {\n  0% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  12.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  25% {\n    -moz-transform: translateY(9px);\n    -o-transform: translateY(9px);\n    -ms-transform: translateY(9px);\n    -webkit-transform: translateY(9px);\n    transform: translateY(9px); }\n  37.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  50% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  62.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  75% {\n    -moz-transform: translateY(-9px);\n    -o-transform: translateY(-9px);\n    -ms-transform: translateY(-9px);\n    -webkit-transform: translateY(-9px);\n    transform: translateY(-9px); }\n  87.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  100% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); } }\n\n.wrapper {\n  overflow-x: hidden;\n  overflow-y: scroll; }\n  .wrapper__clear-header {\n    padding-top: 60px; }\n\n* {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n  -webkit-font-smoothing: antialiased; }\n\nhtml, body {\n  width: 100%;\n  height: 100%;\n  overflow: hidden;\n  margin: 0; }\n\npre, code {\n  width: 100%;\n  overflow-x: scroll; }\n\npre {\n  background-color: rgba(79, 63, 145, 0.1);\n  padding: 20px;\n  border-radius: 8px; }\n\na {\n  text-decoration: none;\n  color: white;\n  opacity: 0.6; }\n  a:hover {\n    opacity: 1; }\n\nul {\n  list-style-type: none;\n  padding: 0;\n  margin: 0; }\n  ul li {\n    display: block; }\n\nimg {\n  display: block;\n  width: 100%; }\n\n@font-face {\n  font-family: 'Hallo';\n  src: url(\"/fonts/Hallo-Sans/Hallo sans.otf\");\n  font-style: normal;\n  font-stretch: normal; }\n\n* {\n  font-family: 'PT Sans';\n  font-weight: normal; }\n\nh1, h2, h3, h4 {\n  font-family: 'PT Sans'; }\n\np, a, li {\n  font-family: 'PT Serif'; }\n\np, a, li, code {\n  font-size: 22px; }\n\ncode {\n  font-family: \"Courier New\";\n  font-size: 18px;\n  padding: 0 4px; }\n  p code {\n    font-size: 22px; }\n\np, li {\n  line-height: 165%; }\n\ncode {\n  line-height: 135%; }\n\nh1 {\n  font-size: 44px;\n  margin-top: 35px;\n  margin-bottom: 15px; }\n\nh2 {\n  font-size: 32px;\n  margin-top: 30px;\n  margin-bottom: 10px; }\n\nh3 {\n  font-size: 26px; }\n\n.hidden {\n  display: none !important; }\n\n.active {\n  opacity: 1 !important;\n  transition: opacity 0.5s ease-in-out; }\n\n.fill-parent {\n  width: 100%;\n  height: 100%; }\n\n.title, .headline {\n  text-align: center;\n  padding: 0 10px;\n  width: 100%;\n  margin: auto;\n  font-family: 'PT Sans';\n  word-wrap: break-word; }\n\n.title {\n  font-size: 48px;\n  font-size: 3rem;\n  margin: 30px 0 20px 0; }\n  @media only screen and (min-width: 768px) {\n    .title {\n      font-size: 72px;\n      font-size: 4.5rem;\n      margin: 45px 0 20px 0; } }\n\n.headline {\n  font-size: 22px;\n  font-size: 1.375rem;\n  max-width: 800px;\n  font-weight: normal;\n  margin-top: 0px;\n  margin-bottom: 80px; }\n  @media screen and (min-width: 600px) {\n    .headline {\n      font-size: 36px;\n      font-size: 2.25rem; } }\n\n.date {\n  text-align: center;\n  font-size: 18px;\n  font-size: 1.125rem;\n  padding: 0 0 30px 0; }\n\n.loader {\n  text-align: center;\n  margin-top: 30px;\n  height: 60px; }\n  .loader img {\n    display: inline-block;\n    width: 60px;\n    height: 60px; }\n\n.link {\n  width: 170px;\n  font-family: 'PT Sans';\n  margin: auto;\n  text-align: center;\n  color: white;\n  border: 2px solid white;\n  padding: 8px 16px;\n  font-size: 18px;\n  font-size: 1.125rem;\n  opacity: 1;\n  transition: all 0.3s; }\n  .link:hover {\n    color: #000;\n    background-color: white;\n    transition: all 0.3s; }\n\n.banner {\n  width: 100%;\n  height: 100%;\n  transition: all 0.5s;\n  background-color: #0d1722;\n  position: relative; }\n  .banner__summary {\n    z-index: 2;\n    top: calc(50% - 250px/2);\n    left: calc(50% - 250px/2);\n    position: fixed;\n    display: block;\n    border: 2px solid rgba(255, 255, 255, 0);\n    padding: 55px 30px;\n    width: 250px;\n    height: 250px;\n    border-radius: 100%;\n    margin: auto;\n    background-color: #413478;\n    opacity: 0.95;\n    -webkit-transition: all 0.5s;\n    -moz-transition: all 0.5s;\n    -ms-transition: all 0.5s;\n    -o-transition: all 0.5s;\n    transition: all 0.5s;\n    -webkit-animation: bounce 4.5s linear infinite;\n    -moz-animation: bounce 4.5s linear infinite;\n    -ms-animation: bounce 4.5s linear infinite;\n    -o-animation: bounce 4.5s linear infinite;\n    animation: bounce 4.5s linear infinite; }\n    .banner__summary:hover {\n      opacity: 0.99;\n      border: 2px solid white;\n      transition: all 0.5s; }\n    .banner__summary h1, .banner__summary p {\n      font-family: 'PT Sans';\n      margin: 0;\n      padding: 0;\n      text-align: center;\n      line-height: 125%; }\n    .banner__summary h1 {\n      font-size: 32px;\n      font-size: 2rem;\n      margin: 28px 0 10px 0; }\n    .banner__summary p {\n      font-size: 18px;\n      font-size: 1.125rem;\n      margin: 0; }\n  .banner__globe, .banner__background {\n    position: absolute;\n    width: 100%;\n    height: 100%; }\n  .banner__globe {\n    z-index: 1; }\n  .banner__background {\n    z-index: 0;\n    opacity: 0.4;\n    background-image: url(\"/images/sky-1200.jpg\");\n    background-position: 50% 50%;\n    background-size: cover; }\n  .banner__message {\n    transition: all 0.75s;\n    position: absolute;\n    bottom: calc(50% - 210px);\n    color: white;\n    text-align: center;\n    width: 100%;\n    padding: 0 20%;\n    font-size: 18px;\n    font-size: 1.125rem;\n    opacity: 1;\n    font-family: 'PT Sans'; }\n  .banner__geopath {\n    cursor: pointer;\n    stroke: white;\n    fill: white;\n    stroke-width: 0.2px;\n    transition: all 0.2s; }\n    .banner__geopath--active, .banner__geopath:hover {\n      fill: #413478;\n      stroke: #413478;\n      transition: all 0.2s; }\n\n.header {\n  overflow: visible;\n  position: fixed;\n  width: 100%;\n  height: 60px;\n  top: 0;\n  box-shadow: 0 0 10px #333;\n  background-color: rgba(13, 23, 34, 0.95);\n  transition: all 0.2s;\n  color: white;\n  z-index: 100; }\n  .header--discrete {\n    background-color: rgba(255, 255, 255, 0);\n    box-shadow: none; }\n  .header__main-link {\n    height: 100%;\n    width: 150px; }\n    .header__main-link svg {\n      height: 30px;\n      width: 30px;\n      margin-top: 15px;\n      margin-left: 15px;\n      fill: white; }\n  .header__nav {\n    z-index: 100;\n    width: 100px;\n    height: 60px;\n    overflow: visible;\n    float: right;\n    text-align: right;\n    padding: 0; }\n    .header--discrete .header__nav {\n      width: 100px; }\n    @media screen and (min-width: 800px) {\n      .header__nav {\n        width: auto;\n        float: auto; } }\n    .header__nav__arrow, .header__nav__item {\n      width: 100px;\n      float: right;\n      height: 60px;\n      padding: 0; }\n    .header__nav__arrow {\n      cursor: pointer;\n      display: table;\n      text-align: center;\n      display: none; }\n      @media screen and (min-width: 800px) {\n        .header__nav__arrow {\n          display: none; } }\n      .header--discrete .header__nav__arrow {\n        display: table; }\n      .header__nav__arrow svg {\n        opacity: 0.9;\n        text-align: center;\n        vertical-align: middle;\n        display: table-cell;\n        fill: white;\n        width: 30px;\n        height: 30px;\n        margin: 15px auto; }\n      .header__nav__arrow:hover > svg, .header__nav__arrow--active > svg {\n        opacity: 1; }\n    .header__nav__item {\n      z-index: 100;\n      display: none; }\n      .header__nav__item:hover {\n        border-bottom: 4px solid #5d4aaa; }\n      .header__nav:hover .header__nav__item, .header--expanded .header__nav__item {\n        background-color: rgba(13, 23, 34, 0.95);\n        display: table; }\n      .header--discrete .header__nav__item {\n        display: none; }\n      .header--discrete .header__nav__item {\n        background: none !important;\n        border-color: white; }\n      @media screen and (min-width: 800px) {\n        .header__nav__item {\n          display: table; }\n          .header__nav:hover .header__nav__item {\n            background: none; } }\n      .header__nav__item a {\n        height: 100%;\n        padding: 0 0px;\n        display: table-cell;\n        position: relative;\n        text-align: center;\n        vertical-align: middle;\n        font-family: 'PT Sans';\n        font-size: 18px;\n        font-size: 1.125rem; }\n        .header__nav__item a:hover {\n          top: 2px;\n          opacity: 1; }\n      @media screen and (min-width: 800px) {\n        .header__nav__item {\n          display: table;\n          background: none; } }\n\n.project-show, .project-groups {\n  margin: 0; }\n\n.project-show {\n  padding: 0; }\n  .project-show__links {\n    text-align: center;\n    display: block; }\n    .project-show__links li {\n      margin: 15px 15px;\n      display: inline-block; }\n\n.project-group {\n  width: 100%;\n  padding: 100px 0 40px 0; }\n  .project-group:nth-of-type(2n+0) {\n    background-color: #f6f6f6; }\n  .project-group__content {\n    width: 250px;\n    margin-left: auto;\n    margin-right: auto; }\n    @media only screen and (min-width: 540px) {\n      .project-group__content {\n        width: 500px; } }\n    @media only screen and (min-width: 790px) {\n      .project-group__content {\n        width: 750px; } }\n    .project-group__content > h1 {\n      opacity: 1;\n      margin: 0;\n      font-size: 36px;\n      text-align: center; }\n  .project-group__separator, .project-group__description {\n    margin-left: 20px;\n    margin-right: 20px; }\n  .project-group__description {\n    margin-top: 5px;\n    margin-bottom: 5px; }\n  .project-group__separator {\n    height: 2px;\n    background-color: #5947a3;\n    border-radius: 1px;\n    margin-left: 20px;\n    margin-right: 20px;\n    margin-top: 10px;\n    margin-bottom: 15px;\n    opacity: 0.5; }\n\n.project-list {\n  width: 100%;\n  margin: 30px auto;\n  text-align: left; }\n  .project-list > li {\n    display: inline-block; }\n  .project-list__item {\n    display: inline-block;\n    fill: #0E3647;\n    position: relative;\n    width: 250px;\n    height: 225px;\n    -webkit-transition: all 0.75s;\n    -moz-transition: all 0.75s;\n    -ms-transition: all 0.75s;\n    -o-transition: all 0.75s;\n    transition: all 0.75s; }\n    .project-list__item > * {\n      position: absolute; }\n    .project-list__item > *, .project-list__item:hover > * {\n      -webkit-transition: all 0.75s;\n      -moz-transition: all 0.75s;\n      -ms-transition: all 0.75s;\n      -o-transition: all 0.75s;\n      transition: all 0.75s; }\n    .project-list__item__logo {\n      width: 187.5px;\n      height: 187.5px;\n      left: 31.25px;\n      z-index: 9;\n      top: 0px; }\n      .project-list__item:hover .project-list__item__logo {\n        opacity: 1;\n        top: 0px; }\n      .no-touch .project-list__item__logo {\n        top: 15px;\n        opacity: 0.95; }\n    .project-list__item__title {\n      color: #071c29;\n      font-size: 28px;\n      font-size: 1.75rem;\n      top: 85%;\n      width: 90%;\n      left: 5%;\n      opacity: 1;\n      text-align: center; }\n      .no-touch .project-list__item__title {\n        color: #071c29;\n        font-size: 24px;\n        top: 76%;\n        width: 90%;\n        left: 5%;\n        opacity: 1;\n        text-align: center; }\n      .project-list__item:hover .project-list__item__title {\n        opacity: 1;\n        top: 85%; }\n      .no-touch .project-list__item__title {\n        top: 76%;\n        opacity: 0; }\n\n.static {\n  width: 100%;\n  padding: 25px;\n  margin: auto; }\n  .static p:first-child {\n    padding-top: 0;\n    margin-top: 0; }\n  .static p:last-child {\n    padding-bottom: 0;\n    margin-bottom: 0; }\n  @media only screen and (min-width: 818px) {\n    .static {\n      width: 768px;\n      padding: 50px 0; } }\n  .static blockquote {\n    font-style: italic;\n    margin: 35px 0 35px 40px; }\n  .static ul {\n    list-style-type: circle;\n    list-style-position: outside;\n    padding: 25px; }\n  .static p, .static a {\n    hyphens: auto; }\n  .static li {\n    display: list-item;\n    padding: 5px 0; }\n  .static a {\n    color: #4F3F91;\n    border-bottom: 1px solid #4F3F91;\n    opacity: 0.7; }\n    .static a:hover {\n      opacity: 1; }\n  .static img, .static iframe {\n    width: 100%;\n    display: block;\n    margin: 40px auto;\n    border-radius: 4px; }\n    @media screen and (max-width: 780px) {\n      .static img, .static iframe {\n        width: 250px;\n        margin: auto; } }\n  .static iframe {\n    height: 400px; }\n\n.hero {\n  position: relative;\n  width: 100%;\n  content: '';\n  color: white; }\n  .hero__background, .hero__overlay, .hero__title-bar {\n    position: absolute;\n    width: 100%;\n    height: 100%;\n    left: 0;\n    top: 0; }\n  .hero__background {\n    background-size: cover;\n    background-position: 50% 0%;\n    background-repeat: no-repeat; }\n    .hero__background--blurred {\n      -webkit-filter: blur(3px);\n      filter: blur(3px); }\n  .hero__overlay {\n    -webkit-transition: all 0.5s;\n    -moz-transition: all 0.5s;\n    -ms-transition: all 0.5s;\n    -o-transition: all 0.5s;\n    transition: all 0.5s;\n    background-color: #0d1722; }\n  .hero__top-bar {\n    width: 100%;\n    position: absolute;\n    top: 70px; }\n  .hero__title-bar {\n    display: flex; }\n    .hero__title-bar__content {\n      margin: auto;\n      padding: 0 30px; }\n  .hero__nav-bar {\n    width: 100%;\n    position: absolute;\n    bottom: 70px; }\n  .hero__text {\n    position: absolute;\n    bottom: 20%;\n    left: 25px;\n    font-size: 64px;\n    font-size: 4rem;\n    font-family: 'PT Sans';\n    color: white; }\n    @media only screen and (min-width: 768px) {\n      .hero__text {\n        left: calc(50% - 768px/2);\n        font-size: 80px; } }\n\n.form {\n  width: 100%;\n  padding: 50px 0;\n  max-width: 600px;\n  margin: auto; }\n  .form input, .form select, .form textarea, .form button {\n    outline: none;\n    border: 1px solid #555; }\n  .form input, .form textarea {\n    width: 100%;\n    font-size: 24px;\n    font-size: 1.5rem;\n    padding: 8px 5px; }\n    .form input:focus, .form textarea:focus {\n      background-color: #ddd; }\n  .form label {\n    font-family: 'Hallo';\n    font-size: 44px;\n    font-size: 2.75rem;\n    margin: 10px 0; }\n  .form__hint {\n    font-family: 'Palatino';\n    font-size: 24px;\n    font-size: 1.5rem;\n    margin: 10px 0; }\n  .form__wrapper {\n    margin: 50px 0; }\n", ""]);
 
 	// exports
 
 
 /***/ },
-/* 365 */
+/* 375 */
 /***/ function(module, exports) {
 
 	/*
@@ -66716,10 +67735,10 @@
 
 
 /***/ },
-/* 366 */
+/* 376 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(365)();
+	exports = module.exports = __webpack_require__(375)();
 	// imports
 
 
@@ -66730,7 +67749,7 @@
 
 
 /***/ },
-/* 367 */
+/* 377 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -66981,819 +68000,6 @@
 		if(oldSrc)
 			URL.revokeObjectURL(oldSrc);
 	}
-
-
-/***/ },
-/* 368 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _base = __webpack_require__(369);
-
-	var _base2 = _interopRequireDefault(_base);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	// Inherit from base.
-	var Post = Object.create(_base2.default);
-
-	Post.fields = [{
-		key: 'id',
-		type: 'text',
-		defaultValue: 'choose-id',
-		formComponentName: 'Text',
-		labelText: 'Post ID',
-		hint: 'Same as url fragment'
-	}, {
-		key: 'type',
-		type: 'text',
-		defaultValue: 'project',
-		formComponentName: 'Text',
-		labelText: 'Post ID',
-		hint: 'Same as url fragment'
-	}, {
-		key: 'title',
-		type: 'text',
-		defaultValue: 'Project title',
-		formComponentName: 'Text',
-		labelText: 'Post ID',
-		hint: 'Same as url fragment'
-	}, {
-		key: 'headline',
-		type: 'text',
-		defaultValue: '',
-		formComponentName: 'Text',
-		labelText: 'Post ID',
-		hint: 'Same as url fragment'
-	}, {
-		key: 'name',
-		type: 'text',
-		defaultValue: 'Project name',
-		formComponentName: 'Text',
-		labelText: 'Post ID',
-		hint: 'Same as url fragment'
-	}, {
-		key: 'supervisors',
-		type: 'json',
-		defaultValue: [],
-		formComponentName: 'Text',
-		labelText: 'Post ID',
-		hint: 'Same as url fragment'
-	}, {
-		key: 'collaborators',
-		type: 'json',
-		defaultValue: [],
-		formComponentName: 'Text',
-		labelText: 'Post ID (same as url fragment)',
-		hint: 'Same as url fragment'
-	}, {
-		key: 'post_group',
-		type: 'text',
-		defaultValue: 'featured',
-		formComponentName: 'Text',
-		labelText: 'Post ID (same as url fragment)',
-		hint: 'Same as url fragment'
-	}, {
-		key: 'built_with',
-		type: 'json',
-		defaultValue: [],
-		formComponentName: 'Text',
-		labelText: 'Post ID (same as url fragment)',
-		hint: 'Same as url fragment'
-	}, {
-		key: 'body_text',
-		type: 'text',
-		defaultValue: "Stay tuned for this post's body text.",
-		formComponentName: 'Text',
-		labelText: 'Body Text',
-		hint: 'Same as url fragment'
-	}, {
-		key: 'display_order',
-		type: 'integer',
-		defaultValue: 0,
-		formComponentName: 'Text',
-		labelText: 'Post ID',
-		hint: 'Same as url fragment'
-	}, {
-		key: 'dates',
-		type: 'json',
-		defaultValue: [],
-		formComponentName: 'Text',
-		labelText: 'Post ID',
-		hint: 'Same as url fragment'
-	}, {
-		key: 'links',
-		type: 'json',
-		defaultValue: [],
-		formComponentName: 'Text',
-		labelText: 'Post ID',
-		hint: 'Same as url fragment'
-	}, {
-		key: 'is_live',
-		type: 'boolean',
-		defaultValue: false,
-		formComponent: 'Text',
-		options: [{ value: true, name: 'Yes' }, { value: false, name: 'No' }],
-		labelText: 'Post ID',
-		hint: 'Same as url fragment'
-	}];
-
-	Post.create = function (data) {
-
-		var self = Object.create(Post);
-
-		self.data = {};
-
-		for (var key in data) {
-			self.data[key] = data[key];
-		}
-
-		self.tableName = 'posts';
-
-		return self;
-	};
-
-	exports.default = Post;
-
-/***/ },
-/* 369 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-					value: true
-	});
-
-	var _underscore = __webpack_require__(212);
-
-	var _underscore2 = _interopRequireDefault(_underscore);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function escapeText(val) {
-					if (typeof val != 'string') return val;
-					return val.replace(/[\0\x08\x09\x1a\n\r"'\\\%]/g, function (char) {
-									switch (char) {
-													case "\0":
-																	return "\\0";
-													case "\x08":
-																	return "\\b";
-													case "\x09":
-																	return "\\t";
-													case "\x1a":
-																	return "\\z";
-													case "\n":
-																	return "\\n";
-													case "\r":
-																	return "\\r";
-													case "\"":
-													case "'":
-													case "\\":
-													case "%":
-																	return "\\" + char; // prepends a backslash to backslash, percent,
-													// and double/single quotes
-									}
-					});
-	}
-
-	var Base = {
-
-					// Set on superclass.
-					data: {},
-
-					// Set on superclass.
-					fields: [],
-
-					/*
-	     * 
-	     *
-	     */
-					sanitizeValue: function sanitizeValue(key, value) {},
-
-					/*
-	     *
-	     *
-	     */
-					setDefaults: function setDefaults() {
-									var fields = this.fields;
-									var data = this.data;
-
-									console.log(this, data, fields);
-
-									fields.forEach(function (field) {
-													var defaultValue = field.defaultValue;
-													var key = field.key;
-
-													if (data[key] == null && defaultValue != null) {
-																	data[key] = defaultValue;
-													}
-									});
-					},
-
-					/*
-	     *
-	     *
-	     */
-					getValuesString: function getValuesString() {
-									var fields = this.fields;
-									var data = this.data;
-
-									return fields.map(function (field) {
-													var key = field.key;
-													var defaultValue = field.defaultValue;
-
-													var value = data[key];
-
-													if (value == null) {
-																	value = defaultValue;
-													}
-
-													if (_underscore2.default.isArray(value) || _underscore2.default.isObject(value)) {
-																	value = '\'' + JSON.stringify(value) + '\'';
-													} else if (_underscore2.default.isString(value)) {
-																	var escapeMarker = '';
-																	if (value.length > 50) {
-																					escapeMarker = 'E';
-																	}
-																	value = escapeMarker + '\'' + escapeText(value) + '\'';
-													}
-
-													return value;
-									}).join(',');
-					},
-
-					/*
-	     * Returns comma-separated list of field keys.
-	     *
-	     */
-					getFieldKeysString: function getFieldKeysString() {
-									return this.fields.map(function (field) {
-													return field.key;
-									}).join(',');
-					},
-
-					/*
-	     * Returns comma-separated field key + type string.
-	     *
-	     */
-					getFieldKeyTypesString: function getFieldKeyTypesString() {
-									return this.fields.map(function (field) {
-													return field.key + ' ' + field.type;
-									}).join(',');
-					},
-
-					/*
-	     *
-	     *
-	     */
-					getSqlInsertCommand: function getSqlInsertCommand() {
-									return 'INSERT INTO ' + this.tableName + ' (' + this.getFieldKeysString() + ') VALUES(' + this.getValuesString() + ');';
-					},
-
-					/*
-	     *
-	     *
-	     */
-					getTableCreateCommand: function getTableCreateCommand() {
-									return 'CREATE TABLE ' + this.tableName + ' (' + this.getFieldKeyTypesString() + ');';
-					}
-	};
-
-	exports.default = Base;
-
-/***/ },
-/* 370 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	__webpack_require__(377);
-
-	var _react = __webpack_require__(147);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _underscore = __webpack_require__(212);
-
-	var _underscore2 = _interopRequireDefault(_underscore);
-
-	var _index = __webpack_require__(371);
-
-	var Subcomponents = _interopRequireWildcard(_index);
-
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	/*
-	 *
-	 *
-	 */
-
-	var Form = (function (_React$Component) {
-		_inherits(Form, _React$Component);
-
-		function Form() {
-			_classCallCheck(this, Form);
-
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(Form).apply(this, arguments));
-		}
-
-		_createClass(Form, [{
-			key: 'render',
-
-			/*
-	   *
-	   *
-	   */
-			value: function render() {
-				var style = this.props.isEnabled ? {} : { opacity: 0.5 };
-				return _react2.default.createElement(
-					'form',
-					{
-						className: 'form',
-						onSubmit: this.sendFormDataToParent.bind(this),
-						style: style
-					},
-					this.renderFormComponents(),
-					_react2.default.createElement('input', {
-						type: 'submit',
-						disabled: !this.props.isEnabled,
-						value: this.props.submitButtonText || 'Submit Form'
-					})
-				);
-			}
-
-			/*
-	   *
-	   *
-	   */
-
-		}, {
-			key: 'renderFormComponents',
-			value: function renderFormComponents() {
-				var _this2 = this;
-
-				return this.props.fields.map(function (field, i) {
-					var FormComp = Subcomponents[field.formComponentName] || Subcomponents.Text;
-					return _react2.default.createElement(FormComp, {
-						key: i,
-						id: field.key,
-						labelText: field.labelText,
-						hint: field.hint,
-						isEnabled: _this2.props.isEnabled,
-						saveDataOnParent: _this2.saveDataFromChild.bind(_this2),
-						initialValue: _this2.props.resource[field.key]
-					});
-				});
-			}
-
-			/*
-	   *
-	   *
-	   */
-
-		}, {
-			key: 'saveDataFromChild',
-			value: function saveDataFromChild(childData) {
-				this.props.handleFormFieldChange(childData);
-			}
-
-			/*
-	   * Run method passed down from parent.
-	   *
-	   */
-
-		}, {
-			key: 'sendFormDataToParent',
-			value: function sendFormDataToParent(e) {
-				e.preventDefault();
-				this.props.onSubmit(this.props.model);
-			}
-		}]);
-
-		return Form;
-	})(_react2.default.Component);
-
-	exports.default = Form;
-
-/***/ },
-/* 371 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _text = __webpack_require__(372);
-
-	Object.defineProperty(exports, 'Text', {
-	  enumerable: true,
-	  get: function get() {
-	    return _text.default;
-	  }
-	});
-
-	var _radio = __webpack_require__(373);
-
-	Object.defineProperty(exports, 'Radio', {
-	  enumerable: true,
-	  get: function get() {
-	    return _radio.default;
-	  }
-	});
-
-/***/ },
-/* 372 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _react = __webpack_require__(147);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	/*
-	 *
-	 *
-	 */
-
-	var Text = (function (_React$Component) {
-		_inherits(Text, _React$Component);
-
-		function Text() {
-			_classCallCheck(this, Text);
-
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(Text).apply(this, arguments));
-		}
-
-		_createClass(Text, [{
-			key: 'render',
-
-			/*
-	   *
-	   *
-	   */
-			value: function render() {
-				var InputComponent = !this.props.isMultiline ? 'input' : 'textarea';
-				return _react2.default.createElement(
-					'div',
-					{ className: 'form__wrapper' },
-					_react2.default.createElement(
-						'label',
-						{ 'for': this.props.id },
-						this.props.labelText
-					),
-					_react2.default.createElement(
-						'p',
-						{ className: 'form__hint' },
-						this.props.hint
-					),
-					_react2.default.createElement(InputComponent, {
-						type: 'text',
-						onChange: this.saveDataOnParent.bind(this),
-						disabled: !this.props.isEnabled,
-						name: this.props.id,
-						id: this.props.id,
-						value: this.props.initialValue,
-						placeholder: this.props.placeholder
-					})
-				);
-			}
-
-			/*
-	   *
-	   *
-	   */
-
-		}, {
-			key: 'saveDataOnParent',
-			value: function saveDataOnParent(e) {
-				this.props.saveDataOnParent({
-					id: this.props.id,
-					value: e.target.value
-				});
-			}
-		}]);
-
-		return Text;
-	})(_react2.default.Component);
-
-	exports.default = Text;
-
-/***/ },
-/* 373 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _react = __webpack_require__(147);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _underscore = __webpack_require__(212);
-
-	var _underscore2 = _interopRequireDefault(_underscore);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Radio = (function (_React$Component) {
-		_inherits(Radio, _React$Component);
-
-		function Radio() {
-			_classCallCheck(this, Radio);
-
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(Radio).apply(this, arguments));
-		}
-
-		_createClass(Radio, [{
-			key: 'render',
-
-			/*
-	   *
-	   *
-	   */
-			value: function render() {
-				return _react2.default.createElement(
-					'div',
-					{ className: 'form__wrapper' },
-					_react2.default.createElement(
-						'label',
-						{ 'for': this.props.id },
-						this.props.labelText
-					),
-					_react2.default.createElement(
-						'p',
-						{ className: 'form__hint' },
-						this.props.hint
-					),
-					this.renderOptions()
-				);
-			}
-
-			/*
-	   *
-	   *
-	   */
-
-		}, {
-			key: 'renderOptions',
-			value: function renderOptions() {
-				var _this2 = this;
-
-				return this.props.options.map(function (option, i) {
-					var option = option.key,
-					    isChecked = _this2.isOptionChecked(option, i);
-					return _react2.default.createElement(
-						'div',
-						{ className: 'form__radio', key: i },
-						_react2.default.createElement('input', {
-							type: 'checkbox',
-							name: _this2.props.id,
-							id: _this2.props.id + '-opt-' + i,
-							disabled: !_this2.props.isEnabled,
-							checked: isChecked,
-							onChange: _this2.saveDataOnParent.bind(_this2),
-							value: option
-						}),
-						_react2.default.createElement(
-							'p',
-							{ onDoubleClick: _this2.navigateToForeignModelEdit.bind(_this2, foreignModel) },
-							foreignModel.get(field)
-						)
-					);
-				});
-			}
-
-			/*
-	   *
-	   *
-	   */
-
-		}, {
-			key: 'componentDidMount',
-			value: function componentDidMount() {
-				// If there was no initial value passed to the component, pass back the first option to the parent.
-				this.fetchForeignCollection();
-				if (!_underscore2.default.isArray(this.props.initialValue)) {
-					this.props.saveDataOnParent({ id: this.props.id, value: [] });
-				}
-			}
-
-			/*
-	   *
-	   *
-	   */
-
-		}, {
-			key: 'isOptionChecked',
-			value: function isOptionChecked(option, i) {
-				// ! initialValue is an array !
-				return this.props.initialValue === option;
-			}
-
-			/*
-	   *
-	   *
-	   */
-
-		}, {
-			key: 'saveDataOnParent',
-			value: function saveDataOnParent(e) {
-				this.props.saveDataOnParent({
-					id: this.props.id,
-					value: e.target.value
-				});
-			}
-		}]);
-
-		return Radio;
-	})(_react2.default.Component);
-
-	exports.default = Radio;
-
-/***/ },
-/* 374 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _react = __webpack_require__(147);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _root = __webpack_require__(370);
-
-	var _root2 = _interopRequireDefault(_root);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	/*
-	 * Edit resource component.
-	 *
-	 */
-
-	var Edit = (function (_React$Component) {
-		_inherits(Edit, _React$Component);
-
-		/*
-	  * Set initial state.
-	  *
-	  */
-
-		function Edit(props) {
-			_classCallCheck(this, Edit);
-
-			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Edit).call(this, props));
-
-			_this.handleFormFieldChange = _this.handleFormFieldChange.bind(_this);
-
-			// Set resource object on state.
-			var resource = {};
-			_this.props.fields.forEach(function (field) {
-				resource[field.key] = field.defaultValue || '';
-			});
-			_this.state = { resource: resource };
-			return _this;
-		}
-
-		/*
-	  *
-	  *
-	  */
-
-		_createClass(Edit, [{
-			key: 'render',
-			value: function render() {
-				return _react2.default.createElement(
-					'div',
-					null,
-					_react2.default.createElement(_root2.default, {
-						fields: this.props.fields,
-						resource: this.state.resource,
-						handleFormFieldChange: this.handleFormFieldChange,
-						isEnabled: true
-					})
-				);
-			}
-
-			/*
-	   *
-	   *
-	   */
-
-		}, {
-			key: 'handleFormFieldChange',
-			value: function handleFormFieldChange(childData) {
-				var newResource = Object.assign({}, this.state.resource);
-				newResource[childData.id] = childData.value;
-				this.setState({ resource: newResource });
-			}
-		}]);
-
-		return Edit;
-	})(_react2.default.Component);
-
-	exports.default = Edit;
-
-/***/ },
-/* 375 */,
-/* 376 */,
-/* 377 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(378);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(367)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/sass-loader/index.js!./style.scss", function() {
-				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/sass-loader/index.js!./style.scss");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 378 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(365)();
-	// imports
-
-
-	// module
-	exports.push([module.id, "", ""]);
-
-	// exports
 
 
 /***/ }

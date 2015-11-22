@@ -1,8 +1,21 @@
 import React from 'react'
 import _ from 'underscore'
 
-
+/*
+ *
+ *
+ */
 class Radio extends React.Component {
+
+	/*
+	 *
+	 *
+	 */
+	constructor(props) {
+		super(props)
+		this.handleFormFieldChange = this.handleFormFieldChange.bind(this)
+	}
+
 
 	/*
 	 *
@@ -35,7 +48,7 @@ class Radio extends React.Component {
 						id={this.props.id + '-opt-' + i}
 						disabled={!this.props.isEnabled}
 						checked={ isChecked }
-						onChange={this.saveDataOnParent.bind(this)}
+						onChange={this.handleFormFieldChange.bind(this)}
 						value={ option } 
 					/>
 					<p onDoubleClick={this.navigateToForeignModelEdit.bind(this, foreignModel)}>{ foreignModel.get(field) }</p>
@@ -63,7 +76,6 @@ class Radio extends React.Component {
 	 *
 	 */
 	isOptionChecked(option, i) {
-		// ! initialValue is an array !
 		return (this.props.initialValue === option)
 	}
 
@@ -72,11 +84,11 @@ class Radio extends React.Component {
 	 *
 	 *
 	 */
-	saveDataOnParent(e) {
-		this.props.saveDataOnParent({
+	handleFormFieldChange(e) {
+		this.props.handleFormFieldChange({
 			id: this.props.id,
 			value: e.target.value
-		});
+		})
 	}
 
 }

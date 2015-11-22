@@ -1,4 +1,5 @@
 import React from 'react'
+import { findDOMNode } from 'react-dom'
 import marked from 'marked'
 
 import { Link } from 'react-router'
@@ -14,6 +15,12 @@ var greetings = [
 	'Hej'
 ]
 
+var imageUrl = '/images/me/me_1200.jpg'
+
+/*
+ *
+ *
+ */
 class About extends React.Component {
 
 	/*
@@ -24,9 +31,7 @@ class About extends React.Component {
 		super(props)
 		this.state = {
 			greetingIndex: 0,
-			scrollTop: 0,
-			hasImageLoaded: false,
-			heroHeight: window.innerHeight
+			hasImageLoaded: false
 		}
 	}
 
@@ -37,19 +42,15 @@ class About extends React.Component {
 	 */
 	render() {
 		return (
-			<div 
-				className='wrapper__content fill-parent' 
-				style={{paddingTop: 0}} 
-				onScroll={this.handleScroll.bind(this)}
-			>
-				<Header activeLinkName='about' isTransparent={ this.state.scrollTop < this.state.heroHeight - 80 } />
-				<img 
+			<div className='fill-parent'>
+				<img
 					style={ { opacity: 0.1, width: 10, height: 10, position: 'fixed' } } 
-					src='/images/me/me_1200.jpg' 
+					src={ imageUrl }
 					onLoad={this.handleImageLoad.bind(this)} 
 				/>
-				<div className='hero' style={this.getHeroStyle()}>
-					<div className='hero__overlay' style={{ opacity: this.state.hasImageLoaded ? null : '0.9' }} />
+				<div className='hero fill-parent'>
+					<div className='hero__background' style={this.getHeroBackgroundStyle()} />
+					<div className='hero__overlay' style={{ opacity: this.state.hasImageLoaded ? '0.6' : '0.8' }} />
 					<div className='hero__text'>{ greetings[this.state.greetingIndex] }</div>
 				</div>
 				<div 
@@ -90,27 +91,10 @@ class About extends React.Component {
 	 *
 	 *
 	 */
-	getHeroStyle() {
-		if (!this.state.hasImageLoaded) { 
-			return { 
-				backgroundColor: '#101C29',
-				height: this.state.heroHeight
-			}
+	getHeroBackgroundStyle() {
+		if (this.state.hasImageLoaded) {
+			return { backgroundImage: 'url(/images/me/me_1200.jpg)' }
 		}
-		return {
-			backgroundImage: 'url(/images/me/me_1200.jpg)',
-			height: this.state.heroHeight
-		}
-	}
-
-
-	/*
-	 *
-	 *
-	 */
-	handleScroll(e) {
-		var node = React.findDOMNode(this)
-		this.setState({ scrollTop: node.scrollTop })
 	}
 
 
