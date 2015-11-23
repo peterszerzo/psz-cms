@@ -8,11 +8,14 @@
   },
   "readme": "",
   "scripts": {
-    "dev": "webpack --watch",
-    "start": "node app.js",
-    "test": "mocha app/**/*_spec.js --compilers js:babel-core/register",
-    "compress": "gzip < public/scripts/bundle.js > public/scripts/bundle.js.gz",
-    "deploy": "npm run compress && git add -A && git commit -m 'fresh deploy' && git push origin master && git push heroku master"
+    "clean": "rm -f public/scripts/**/*",
+    "dev": "npm run clean && webpack --config webpack.config.development.js --watch",
+    "server": "node app.js",
+    "spec": "mocha app/**/*_spec.js --compilers js:babel-core/register",
+    "build-bundle": "npm run clean && webpack --config webpack.config.production.js",
+    "build-compress": "gzip < public/scripts/bundle.js > public/scripts/bundle.js.gz",
+    "build": "npm run build-bundle && npm run build-compress",
+    "deploy": "npm run build && git add -A && git commit -m 'fresh deploy' && git push origin master && git push heroku master"
   },
   "repository": {
     "type": "git",
@@ -50,6 +53,7 @@
   },
   "dependencies": {
     "babel-core": "^6.1.21",
+    "babel-polyfill": "^6.2.0",
     "babel-preset-es2015": "^6.1.18",
     "babel-preset-react": "^6.1.18",
     "babel-preset-stage-0": "^6.1.18",

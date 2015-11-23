@@ -1,17 +1,16 @@
 import React from 'react'
 import _ from 'underscore'
+import request from 'superagent'
+import fetch from 'isomorphic-fetch'
+
 import Form from './../form/root.jsx'
+import Modal from './../modal.jsx'
 
 import * as models from './../../../models/index.js'
 
-import Qajax from 'qajax'
-import request from 'superagent'
 
-import fetch from 'isomorphic-fetch'
 
-import Modal from './../modal.jsx'
-
-const EDIT_STATUSES = [ 'editing', 'save-pending', 'save-succeeded', 'save-failed' ]
+const EDIT_STATUSES = [ 'editing', 'pending', 'success', 'error' ]
 
 /*
  * Edit resource component.
@@ -31,13 +30,16 @@ class Edit extends React.Component {
 
 		this.Model = models[this.props.modelName]
 
-		this.state = { editStatus: 'editing' }
+		this.state = { 
+			editStatus: 'editing',
+			password: ''
+		}
 
 	}
 
 
 	/*
-	 *
+	 * Render only if model instance is set.
 	 *
 	 */
 	render() {
@@ -58,7 +60,7 @@ class Edit extends React.Component {
 
 
 	/*
-	 *
+	 * Render status modal.
 	 *
 	 */
 	renderStatusModal() {
@@ -140,8 +142,6 @@ class Edit extends React.Component {
 			this.setState({ editStatus: 'success' })
 			console.log(res)
 		})
-
-
 
 	}
 

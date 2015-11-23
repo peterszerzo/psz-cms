@@ -38,6 +38,8 @@ function escapeText(val) {
  */
 var Base = {
 
+	tableName: 'testresources',
+
 	// Set on superclass.
 	data: {},
 
@@ -174,6 +176,15 @@ var Base = {
 	 */
 	getSqlInsertCommand() {
 		return `INSERT INTO ${this.tableName} (${this.getFieldKeysString()}) VALUES(${this.getValuesString()});`
+	},
+
+
+	/*
+	 * Returns set keys.
+	 *
+	 */
+	getSqlUpdateCommand() {
+		return `UPDATE ${this.tableName} SET () WHERE (id='${this.data.id}');`;
 	},
 
 

@@ -4,7 +4,7 @@ import assert from 'assert'
 describe('testReducer', () => {
 
 	it('sets default property', () => {
-		assert.equal(testReducer(null, { type: 'UNREGISTERED_ACTION_TYPE' }), 'set')
+		assert.equal(testReducer(null, { type: 'UNREGISTERED_ACTION_TYPE' }), 'not set')
 	})
 
 	it('sets test property', () => {

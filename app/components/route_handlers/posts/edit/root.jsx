@@ -28,7 +28,7 @@ class EditPost extends React.Component {
 	 */
 	render() {
 		var { id } = this.props.router.params
-		var getUrl = (id == null) ? null : `/api/v2/posts?id=${id}`
+		var action = (id == null) ? 'create' : 'update'
 		return (
 			<div className='wrapper__clear-header fill-parent'>
 				<Edit 
