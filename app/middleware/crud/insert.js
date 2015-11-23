@@ -3,13 +3,15 @@ import * as models from './../../models/index.js'
 
 export default function insert(options, req, res, next) {
 
-	var { tableName, modelName } = options
+	var { modelName } = options
 
 	var data = req.body
 
 	var model = models[modelName].create(data)
 
 	var command = model.getSqlInsertCommand()
+
+	console.log(command)
 
 	var { dbClient } = req
 

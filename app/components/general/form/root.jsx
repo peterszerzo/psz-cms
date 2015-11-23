@@ -47,17 +47,19 @@ class Form extends React.Component {
 	 *
 	 */
 	renderFormComponents() {
-		return this.props.fields.map((field, i) => {
+		return this.props.model.fields.map((field, i) => {
+			var { key } = field
 			var FormComp = Subcomponents[field.formComponentName] || Subcomponents.Text;
 			return (
 				<FormComp
 					key={i}
-					id={field.key}
+					id={key}
+					options={field.formComponentOptions}
 					labelText={field.labelText}
 					hint={field.hint}
 					isEnabled={this.props.isEnabled}
 					handleFormFieldChange={this.handleFormFieldChange.bind(this)}
-					initialValue={this.props.resource[field.key]}
+					initialValue={this.props.model.getValueAsString(key)}
 				/>
 			)
 

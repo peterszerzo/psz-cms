@@ -11,7 +11,8 @@ class Text extends React.Component {
 	 *
 	 */
 	render() {
-		var InputComponent = !this.props.isMultiline ? 'input' : 'textarea'
+		var { options } = this.props
+		var InputComponent = (options && options.isMultiline) ? 'textarea' : 'input'
 		return (
 			<div className='form__wrapper'>
 				<label for={this.props.id}>{ this.props.labelText }</label>

@@ -58,7 +58,34 @@ var Base = {
 	 *
 	 *
 	 */
-	create(data) {
+	getCreateUrl() {
+		return `/api/v2/${this.tableName}/`
+	},
+
+
+	/*
+	 *
+	 *
+	 */
+	getUpdateUrl() {
+		return `/api/v2/${this.tableName}/${this.data.id}`
+	},
+
+
+	/*
+	 *
+	 *
+	 */
+	getDeleteUrl() {
+		return this.getUpdateUrl()
+	},
+
+
+	/*
+	 *
+	 *
+	 */
+	create(data = {}) {
 		var self = Object.create(this)
 		self.data = data
 		return self
@@ -78,6 +105,17 @@ var Base = {
 				data[key] = defaultValue
 			}
 		})
+	},
+
+
+	/*
+	 *
+	 *
+	 */
+	getValueAsString(key) {
+		var value = this.data[key]
+		if (_.isObject(value)) { return JSON.stringify(value) }
+		return value
 	},
 
 
@@ -136,6 +174,11 @@ var Base = {
 	 */
 	getSqlInsertCommand() {
 		return `INSERT INTO ${this.tableName} (${this.getFieldKeysString()}) VALUES(${this.getValuesString()});`
+	},
+
+
+	getSqlDeleteCommand() {
+		return `DELETE FROM ${this.tableName} WHERE (id='${this.data.id}');`
 	},
 
 

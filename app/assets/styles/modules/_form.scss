@@ -19,15 +19,19 @@
 		}
 	}
 
+	textarea {
+		height: 400px;
+	}
+
 
 	label {
-		font-family: 'Hallo';
+		font-family: 'PT Sans';
 		@include font-size(44px);
 		margin: 10px 0;
 	}
 
 	&__hint {
-		font-family: 'Palatino';
+		font-family: 'PT Serif';
 		@include font-size(24px);
 		margin: 10px 0;
 	}

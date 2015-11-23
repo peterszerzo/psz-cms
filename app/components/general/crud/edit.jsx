@@ -1,7 +1,15 @@
 import React from 'react'
+import _ from 'underscore'
 import Form from './../form/root.jsx'
 
+import * as models from './../../../models/index.js'
+
 import Qajax from 'qajax'
+import request from 'superagent'
+
+import fetch from 'isomorphic-fetch'
+
+import Modal from './../modal.jsx'
 
 const EDIT_STATUSES = [ 'editing', 'save-pending', 'save-succeeded', 'save-failed' ]
 
@@ -21,9 +29,9 @@ class Edit extends React.Component {
 		this.handleFormFieldChange = this.handleFormFieldChange.bind(this)
 		this.handleFormSubmit = this.handleFormSubmit.bind(this)
 
-		this.state = { 
-			editStatus: 'editing'
-		}	
+		this.Model = models[this.props.modelName]
+
+		this.state = { editStatus: 'editing' }
 
 	}
 
@@ -33,12 +41,13 @@ class Edit extends React.Component {
 	 *
 	 */
 	render() {
-		if (!this.state.resource) { return <div/> }
+		if (!this.state.model) { return <div/> }
 		return (
 			<div>
+				{ this.renderStatusModal() }
 				<Form
-					fields={ this.props.fields } 
-					resource={ this.state.resource }
+					fields={ this.Model.fields } 
+					model={ this.state.model }
 					handleFormFieldChange={ this.handleFormFieldChange }
 					handleFormSubmit={ this.handleFormSubmit }
 					isEnabled={ this.state.editStatus === 'editing' }
@@ -52,16 +61,40 @@ class Edit extends React.Component {
 	 *
 	 *
 	 */
+	renderStatusModal() {
+		var { editStatus } = this.state
+		if (editStatus === 'editing') { return }
+		return (
+			<Modal>
+				{ editStatus }
+			</Modal>
+		)
+	}
+
+
+	/*
+	 *
+	 *
+	 */
 	componentWillMount() {
-		if (this.props.getUrl) {
+		var { modelId } = this.props
+		if (modelId) {
 			// send ajax request to get resource
+			fetch(`/api/v2/posts?id=${modelId}`)
+				.then(res => res.json())
+				.then((res) => { 
+					if (_.isArray(res)) {
+						let data = res[0]
+						let model = this.Model.create(data)
+						this.setState({ model: model })
+					} else {
+						console.log('not an array')
+					}
+				})
 		} else {
-			let resource = {}
-			this.props.fields.forEach((field) => {
-				var { defaultValue } = field
-				resource[field.key] = defaultValue == null ? '' : defaultValue
-			})
-			this.setState({ resource: resource })
+			let model = this.Model.create()
+			model.setDefaults()
+			this.setState({ model: model })
 		}
 	}
 
@@ -71,9 +104,8 @@ class Edit extends React.Component {
 	 *
 	 */
 	handleFormFieldChange(childData) {
-		var newResource = Object.assign({}, this.state.resource)
-		newResource[childData.id] = childData.value
-		this.setState({ resource: newResource })
+		this.state.model.data[childData.id] = childData.value
+		this.forceUpdate()
 	}
 
 
@@ -82,13 +114,35 @@ class Edit extends React.Component {
 	 *
 	 */
 	handleFormSubmit() {
-		Qajax({
-			url: this.props.ajaxUrl,
-			method: this.props.ajaxMethod,
-			data: this.state.resource
+
+		var { action } = this.props
+
+		var { model } = this.state
+
+		this.setState({ editStatus: 'pending' })
+
+		var requestMethodName
+
+		switch(action) {
+			case 'update':
+				requestMethodName = 'put'
+			case 'delete':
+				requestMethodName = 'del'
+			default:
+				requestMethodName = 'post'
+		}
+
+		request[requestMethodName](model.getCreateUrl()).send(model.data).end((err, res) => {
+			if (err) { 
+				this.setState({ editStatus: 'error' })
+				return console.log(err) 
+			}
+			this.setState({ editStatus: 'success' })
+			console.log(res)
 		})
-			.then(Qajax.filterSuccess)
-			.then((xhr) => { console.log(JSON.parse(xhr.response)) }, (err) => { console.log(err) })
+
+
+
 	}
 
 }

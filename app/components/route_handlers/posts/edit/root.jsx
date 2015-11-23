@@ -1,10 +1,11 @@
 import React from 'react'
-
-import { Header } from './../../../general/header.jsx'
+import { connect } from 'react-redux'
 
 import Edit from './../../../general/crud/edit.jsx'
 
 import Post from './../../../../models/post.js'
+
+const ACTIONS = [ 'create', 'edit', 'delete' ]
 
 /*
  * 
@@ -26,12 +27,14 @@ class EditPost extends React.Component {
 	 *
 	 */
 	render() {
+		var { id } = this.props.router.params
+		var getUrl = (id == null) ? null : `/api/v2/posts?id=${id}`
 		return (
 			<div className='wrapper__clear-header fill-parent'>
 				<Edit 
-					fields={Post.fields}
-					ajaxMethod={'post'}
-					ajaxUrl={'/api/v2/posts'}
+					modelName='Post'
+					modelId={id}
+					action='create'
 				/>
 			</div>
 		)
@@ -39,4 +42,6 @@ class EditPost extends React.Component {
 
 }
 
-export default EditPost
+export default connect(state => ({ 
+	router: state.router
+}))(EditPost)

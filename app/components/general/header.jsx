@@ -33,10 +33,8 @@ class Header extends Component {
 	 *
 	 */
 	constructor(props) {
-		super(props);
-		this.state = {
-			isExpanded: false
-		}
+		super(props)
+		this.state = { isExpanded: false }
 	}
 
 

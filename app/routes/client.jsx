@@ -35,11 +35,12 @@ var routes = (
 					<Route path='/about' component={About} />
 					<Route path='/projects' component={ProjectsIndex} />
 					<Route path='/blog' component={BlogPostsIndex} />
-					{
-					// <Route path='/admin/posts'>
-					// 	<Route path='new' component={EditPost} />
-					// </Route>
-					}
+
+					<Route path='/admin/posts'>
+						<Route path='new' component={EditPost} />
+						<Route path=':id/edit' component={EditPost} />
+					</Route>
+
 					<Route path='/:id' component={Show} />
 				</Route>
 			</Router>

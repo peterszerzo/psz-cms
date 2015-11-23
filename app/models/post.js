@@ -35,7 +35,7 @@ Post.fields = [
 	{
 	    key: 'headline',
 	    type: 'text',
-	    defaultValue: '',
+	    defaultValue: 'Headline',
 	    formComponentName: 'Text',
 	    labelText: 'Post headline',
 	    hint: 'Or subtitle...'
@@ -53,7 +53,7 @@ Post.fields = [
 	{
 	    key: 'supervisors',
 	    type: 'json',
-	    defaultValue: '[]',
+	    defaultValue: [],
 	    formComponentName: 'Text',
 	    labelText: 'Supervisors',
 	    hint: 'Enter array'
@@ -62,7 +62,7 @@ Post.fields = [
 	{
 	    key: 'collaborators',
 	    type: 'json',
-	    defaultValue: '[]',
+	    defaultValue: [],
 	    formComponentName: 'Text',
 	    labelText: 'Collaborators',
 	    hint: 'Enter array'
@@ -80,7 +80,7 @@ Post.fields = [
 	{
 	    key: 'built_with',
 	    type: 'json',
-	    defaultValue: '[]',
+	    defaultValue: [],
 	    formComponentName: 'Text',
 	    labelText: 'Built with',
 	    hint: 'Enter list of technologies'
@@ -91,6 +91,7 @@ Post.fields = [
 	    type: 'text',
 	    defaultValue: "Stay tuned for this post's body text.",
 	    formComponentName: 'Text',
+	    formComponentOptions: { isMultiline: true },
 	    labelText: 'Body Text',
 	    hint: 'Enter html.'
 	},

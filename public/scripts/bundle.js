@@ -18709,6 +18709,12 @@
 					_react2.default.createElement(_reactRouter.Route, { path: '/about', component: _root4.default }),
 					_react2.default.createElement(_reactRouter.Route, { path: '/projects', component: ProjectsIndex }),
 					_react2.default.createElement(_reactRouter.Route, { path: '/blog', component: BlogPostsIndex }),
+					_react2.default.createElement(
+						_reactRouter.Route,
+						{ path: '/admin/posts' },
+						_react2.default.createElement(_reactRouter.Route, { path: 'new', component: _root10.default }),
+						_react2.default.createElement(_reactRouter.Route, { path: ':id/edit', component: _root10.default })
+					),
 					_react2.default.createElement(_reactRouter.Route, { path: '/:id', component: _root8.default })
 				)
 			)
@@ -51510,9 +51516,7 @@
 
 			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Header).call(this, props));
 
-			_this.state = {
-				isExpanded: false
-			};
+			_this.state = { isExpanded: false };
 			return _this;
 		}
 
@@ -64288,7 +64292,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _header = __webpack_require__(259);
+	var _reactRedux = __webpack_require__(213);
 
 	var _edit = __webpack_require__(359);
 
@@ -64305,6 +64309,8 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var ACTIONS = ['create', 'edit', 'delete'];
 
 	/*
 	 * 
@@ -64333,13 +64339,16 @@
 		_createClass(EditPost, [{
 			key: 'render',
 			value: function render() {
+				var id = this.props.router.params.id;
+
+				var getUrl = id == null ? null : '/api/v2/posts?id=' + id;
 				return _react2.default.createElement(
 					'div',
 					{ className: 'wrapper__clear-header fill-parent' },
 					_react2.default.createElement(_edit2.default, {
-						fields: _post2.default.fields,
-						ajaxMethod: 'post',
-						ajaxUrl: '/api/v2/posts'
+						modelName: 'Post',
+						modelId: id,
+						action: 'create'
 					})
 				);
 			}
@@ -64348,7 +64357,11 @@
 		return EditPost;
 	})(_react2.default.Component);
 
-	exports.default = EditPost;
+	exports.default = (0, _reactRedux.connect)(function (state) {
+		return {
+			router: state.router
+		};
+	})(EditPost);
 
 /***/ },
 /* 359 */
@@ -64366,13 +64379,35 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _underscore = __webpack_require__(212);
+
+	var _underscore2 = _interopRequireDefault(_underscore);
+
 	var _root = __webpack_require__(360);
 
 	var _root2 = _interopRequireDefault(_root);
 
+	var _index = __webpack_require__(381);
+
+	var models = _interopRequireWildcard(_index);
+
 	var _qajax = __webpack_require__(364);
 
 	var _qajax2 = _interopRequireDefault(_qajax);
+
+	var _superagent = __webpack_require__(378);
+
+	var _superagent2 = _interopRequireDefault(_superagent);
+
+	var _isomorphicFetch = __webpack_require__(254);
+
+	var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
+
+	var _modal = __webpack_require__(382);
+
+	var _modal2 = _interopRequireDefault(_modal);
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -64405,9 +64440,9 @@
 			_this.handleFormFieldChange = _this.handleFormFieldChange.bind(_this);
 			_this.handleFormSubmit = _this.handleFormSubmit.bind(_this);
 
-			_this.state = {
-				editStatus: 'editing'
-			};
+			_this.Model = models[_this.props.modelName];
+
+			_this.state = { editStatus: 'editing' };
 
 			return _this;
 		}
@@ -64420,15 +64455,16 @@
 		_createClass(Edit, [{
 			key: 'render',
 			value: function render() {
-				if (!this.state.resource) {
+				if (!this.state.model) {
 					return _react2.default.createElement('div', null);
 				}
 				return _react2.default.createElement(
 					'div',
 					null,
+					this.renderStatusModal(),
 					_react2.default.createElement(_root2.default, {
-						fields: this.props.fields,
-						resource: this.state.resource,
+						fields: this.Model.fields,
+						model: this.state.model,
 						handleFormFieldChange: this.handleFormFieldChange,
 						handleFormSubmit: this.handleFormSubmit,
 						isEnabled: this.state.editStatus === 'editing'
@@ -64442,23 +64478,50 @@
 	   */
 
 		}, {
+			key: 'renderStatusModal',
+			value: function renderStatusModal() {
+				var editStatus = this.state.editStatus;
+
+				if (editStatus === 'editing') {
+					return;
+				}
+				return _react2.default.createElement(
+					_modal2.default,
+					null,
+					editStatus
+				);
+			}
+
+			/*
+	   *
+	   *
+	   */
+
+		}, {
 			key: 'componentWillMount',
 			value: function componentWillMount() {
 				var _this2 = this;
 
-				if (this.props.getUrl) {
-					// send ajax request to get resource
-				} else {
-						(function () {
-							var resource = {};
-							_this2.props.fields.forEach(function (field) {
-								var defaultValue = field.defaultValue;
+				var modelId = this.props.modelId;
 
-								resource[field.key] = defaultValue == null ? '' : defaultValue;
-							});
-							_this2.setState({ resource: resource });
-						})();
-					}
+				if (modelId) {
+					// send ajax request to get resource
+					(0, _isomorphicFetch2.default)('/api/v2/posts?id=' + modelId).then(function (res) {
+						return res.json();
+					}).then(function (res) {
+						if (_underscore2.default.isArray(res)) {
+							var data = res[0];
+							var model = _this2.Model.create(data);
+							_this2.setState({ model: model });
+						} else {
+							console.log('not an array');
+						}
+					});
+				} else {
+					var model = this.Model.create();
+					model.setDefaults();
+					this.setState({ model: model });
+				}
 			}
 
 			/*
@@ -64469,9 +64532,8 @@
 		}, {
 			key: 'handleFormFieldChange',
 			value: function handleFormFieldChange(childData) {
-				var newResource = Object.assign({}, this.state.resource);
-				newResource[childData.id] = childData.value;
-				this.setState({ resource: newResource });
+				this.state.model.data[childData.id] = childData.value;
+				this.forceUpdate();
 			}
 
 			/*
@@ -64482,14 +64544,31 @@
 		}, {
 			key: 'handleFormSubmit',
 			value: function handleFormSubmit() {
-				(0, _qajax2.default)({
-					url: this.props.ajaxUrl,
-					method: this.props.ajaxMethod,
-					data: this.state.resource
-				}).then(_qajax2.default.filterSuccess).then(function (xhr) {
-					console.log(JSON.parse(xhr.response));
-				}, function (err) {
-					console.log(err);
+				var _this3 = this;
+
+				var action = this.props.action;
+				var model = this.state.model;
+
+				this.setState({ editStatus: 'pending' });
+
+				var requestMethodName;
+
+				switch (action) {
+					case 'update':
+						requestMethodName = 'put';
+					case 'delete':
+						requestMethodName = 'del';
+					default:
+						requestMethodName = 'post';
+				}
+
+				_superagent2.default[requestMethodName](model.getCreateUrl()).send(model.data).end(function (err, res) {
+					if (err) {
+						_this3.setState({ editStatus: 'error' });
+						return console.log(err);
+					}
+					_this3.setState({ editStatus: 'success' });
+					console.log(res);
 				});
 			}
 		}]);
@@ -64591,16 +64670,19 @@
 			value: function renderFormComponents() {
 				var _this2 = this;
 
-				return this.props.fields.map(function (field, i) {
+				return this.props.model.fields.map(function (field, i) {
+					var key = field.key;
+
 					var FormComp = Subcomponents[field.formComponentName] || Subcomponents.Text;
 					return _react2.default.createElement(FormComp, {
 						key: i,
-						id: field.key,
+						id: key,
+						options: field.formComponentOptions,
 						labelText: field.labelText,
 						hint: field.hint,
 						isEnabled: _this2.props.isEnabled,
 						handleFormFieldChange: _this2.handleFormFieldChange.bind(_this2),
-						initialValue: _this2.props.resource[field.key]
+						initialValue: _this2.props.model.getValueAsString(key)
 					});
 				});
 			}
@@ -64708,7 +64790,9 @@
 	   *
 	   */
 			value: function render() {
-				var InputComponent = !this.props.isMultiline ? 'input' : 'textarea';
+				var options = this.props.options;
+
+				var InputComponent = options && options.isMultiline ? 'textarea' : 'input';
 				return _react2.default.createElement(
 					'div',
 					{ className: 'form__wrapper' },
@@ -67362,7 +67446,7 @@
 	}, {
 		key: 'headline',
 		type: 'text',
-		defaultValue: '',
+		defaultValue: 'Headline',
 		formComponentName: 'Text',
 		labelText: 'Post headline',
 		hint: 'Or subtitle...'
@@ -67376,14 +67460,14 @@
 	}, {
 		key: 'supervisors',
 		type: 'json',
-		defaultValue: '[]',
+		defaultValue: [],
 		formComponentName: 'Text',
 		labelText: 'Supervisors',
 		hint: 'Enter array'
 	}, {
 		key: 'collaborators',
 		type: 'json',
-		defaultValue: '[]',
+		defaultValue: [],
 		formComponentName: 'Text',
 		labelText: 'Collaborators',
 		hint: 'Enter array'
@@ -67397,7 +67481,7 @@
 	}, {
 		key: 'built_with',
 		type: 'json',
-		defaultValue: '[]',
+		defaultValue: [],
 		formComponentName: 'Text',
 		labelText: 'Built with',
 		hint: 'Enter list of technologies'
@@ -67406,6 +67490,7 @@
 		type: 'text',
 		defaultValue: "Stay tuned for this post's body text.",
 		formComponentName: 'Text',
+		formComponentOptions: { isMultiline: true },
 		labelText: 'Body Text',
 		hint: 'Enter html.'
 	}, {
@@ -67511,7 +67596,33 @@
 	  *
 	  *
 	  */
-		create: function create(data) {
+		getCreateUrl: function getCreateUrl() {
+			return '/api/v2/' + this.tableName + '/';
+		},
+
+		/*
+	  *
+	  *
+	  */
+		getUpdateUrl: function getUpdateUrl() {
+			return '/api/v2/' + this.tableName + '/' + this.data.id;
+		},
+
+		/*
+	  *
+	  *
+	  */
+		getDeleteUrl: function getDeleteUrl() {
+			return this.getUpdateUrl();
+		},
+
+		/*
+	  *
+	  *
+	  */
+		create: function create() {
+			var data = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+
 			var self = Object.create(this);
 			self.data = data;
 			return self;
@@ -67533,6 +67644,18 @@
 					data[key] = defaultValue;
 				}
 			});
+		},
+
+		/*
+	  *
+	  *
+	  */
+		getValueAsString: function getValueAsString(key) {
+			var value = this.data[key];
+			if (_underscore2.default.isObject(value)) {
+				return JSON.stringify(value);
+			}
+			return value;
 		},
 
 		/*
@@ -67593,6 +67716,9 @@
 	  */
 		getSqlInsertCommand: function getSqlInsertCommand() {
 			return 'INSERT INTO ' + this.tableName + ' (' + this.getFieldKeysString() + ') VALUES(' + this.getValuesString() + ');';
+		},
+		getSqlDeleteCommand: function getSqlDeleteCommand() {
+			return 'DELETE FROM ' + this.tableName + ' WHERE (id=\'' + this.data.id + '\');';
 		},
 
 		/*
@@ -67717,7 +67843,7 @@
 	exports.i(__webpack_require__(376), "");
 
 	// module
-	exports.push([module.id, "@-webkit-keyframes bounce {\n  0% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  12.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  25% {\n    -moz-transform: translateY(9px);\n    -o-transform: translateY(9px);\n    -ms-transform: translateY(9px);\n    -webkit-transform: translateY(9px);\n    transform: translateY(9px); }\n  37.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  50% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  62.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  75% {\n    -moz-transform: translateY(-9px);\n    -o-transform: translateY(-9px);\n    -ms-transform: translateY(-9px);\n    -webkit-transform: translateY(-9px);\n    transform: translateY(-9px); }\n  87.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  100% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); } }\n\n@-moz-keyframes bounce {\n  0% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  12.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  25% {\n    -moz-transform: translateY(9px);\n    -o-transform: translateY(9px);\n    -ms-transform: translateY(9px);\n    -webkit-transform: translateY(9px);\n    transform: translateY(9px); }\n  37.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  50% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  62.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  75% {\n    -moz-transform: translateY(-9px);\n    -o-transform: translateY(-9px);\n    -ms-transform: translateY(-9px);\n    -webkit-transform: translateY(-9px);\n    transform: translateY(-9px); }\n  87.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  100% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); } }\n\n@-ms-keyframes bounce {\n  0% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  12.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  25% {\n    -moz-transform: translateY(9px);\n    -o-transform: translateY(9px);\n    -ms-transform: translateY(9px);\n    -webkit-transform: translateY(9px);\n    transform: translateY(9px); }\n  37.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  50% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  62.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  75% {\n    -moz-transform: translateY(-9px);\n    -o-transform: translateY(-9px);\n    -ms-transform: translateY(-9px);\n    -webkit-transform: translateY(-9px);\n    transform: translateY(-9px); }\n  87.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  100% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); } }\n\n@-o-keyframes bounce {\n  0% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  12.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  25% {\n    -moz-transform: translateY(9px);\n    -o-transform: translateY(9px);\n    -ms-transform: translateY(9px);\n    -webkit-transform: translateY(9px);\n    transform: translateY(9px); }\n  37.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  50% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  62.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  75% {\n    -moz-transform: translateY(-9px);\n    -o-transform: translateY(-9px);\n    -ms-transform: translateY(-9px);\n    -webkit-transform: translateY(-9px);\n    transform: translateY(-9px); }\n  87.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  100% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); } }\n\n@keyframes bounce {\n  0% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  12.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  25% {\n    -moz-transform: translateY(9px);\n    -o-transform: translateY(9px);\n    -ms-transform: translateY(9px);\n    -webkit-transform: translateY(9px);\n    transform: translateY(9px); }\n  37.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  50% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  62.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  75% {\n    -moz-transform: translateY(-9px);\n    -o-transform: translateY(-9px);\n    -ms-transform: translateY(-9px);\n    -webkit-transform: translateY(-9px);\n    transform: translateY(-9px); }\n  87.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  100% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); } }\n\n.wrapper {\n  overflow-x: hidden;\n  overflow-y: scroll; }\n  .wrapper__clear-header {\n    padding-top: 60px; }\n\n* {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n  -webkit-font-smoothing: antialiased; }\n\nhtml, body {\n  width: 100%;\n  height: 100%;\n  overflow: hidden;\n  margin: 0; }\n\npre, code {\n  width: 100%;\n  overflow-x: scroll; }\n\npre {\n  background-color: rgba(79, 63, 145, 0.1);\n  padding: 20px;\n  border-radius: 8px; }\n\na {\n  text-decoration: none;\n  color: white;\n  opacity: 0.6; }\n  a:hover {\n    opacity: 1; }\n\nul {\n  list-style-type: none;\n  padding: 0;\n  margin: 0; }\n  ul li {\n    display: block; }\n\nimg {\n  display: block;\n  width: 100%; }\n\n@font-face {\n  font-family: 'Hallo';\n  src: url(\"/fonts/Hallo-Sans/Hallo sans.otf\");\n  font-style: normal;\n  font-stretch: normal; }\n\n* {\n  font-family: 'PT Sans';\n  font-weight: normal; }\n\nh1, h2, h3, h4 {\n  font-family: 'PT Sans'; }\n\np, a, li {\n  font-family: 'PT Serif'; }\n\np, a, li, code {\n  font-size: 22px; }\n\ncode {\n  font-family: \"Courier New\";\n  font-size: 18px;\n  padding: 0 4px; }\n  p code {\n    font-size: 22px; }\n\np, li {\n  line-height: 165%; }\n\ncode {\n  line-height: 135%; }\n\nh1 {\n  font-size: 44px;\n  margin-top: 35px;\n  margin-bottom: 15px; }\n\nh2 {\n  font-size: 32px;\n  margin-top: 30px;\n  margin-bottom: 10px; }\n\nh3 {\n  font-size: 26px; }\n\n.hidden {\n  display: none !important; }\n\n.active {\n  opacity: 1 !important;\n  transition: opacity 0.5s ease-in-out; }\n\n.fill-parent {\n  width: 100%;\n  height: 100%; }\n\n.title, .headline {\n  text-align: center;\n  padding: 0 10px;\n  width: 100%;\n  margin: auto;\n  font-family: 'PT Sans';\n  word-wrap: break-word; }\n\n.title {\n  font-size: 48px;\n  font-size: 3rem;\n  margin: 30px 0 20px 0; }\n  @media only screen and (min-width: 768px) {\n    .title {\n      font-size: 72px;\n      font-size: 4.5rem;\n      margin: 45px 0 20px 0; } }\n\n.headline {\n  font-size: 22px;\n  font-size: 1.375rem;\n  max-width: 800px;\n  font-weight: normal;\n  margin-top: 0px;\n  margin-bottom: 80px; }\n  @media screen and (min-width: 600px) {\n    .headline {\n      font-size: 36px;\n      font-size: 2.25rem; } }\n\n.date {\n  text-align: center;\n  font-size: 18px;\n  font-size: 1.125rem;\n  padding: 0 0 30px 0; }\n\n.loader {\n  text-align: center;\n  margin-top: 30px;\n  height: 60px; }\n  .loader img {\n    display: inline-block;\n    width: 60px;\n    height: 60px; }\n\n.link {\n  width: 170px;\n  font-family: 'PT Sans';\n  margin: auto;\n  text-align: center;\n  color: white;\n  border: 2px solid white;\n  padding: 8px 16px;\n  font-size: 18px;\n  font-size: 1.125rem;\n  opacity: 1;\n  transition: all 0.3s; }\n  .link:hover {\n    color: #000;\n    background-color: white;\n    transition: all 0.3s; }\n\n.banner {\n  width: 100%;\n  height: 100%;\n  transition: all 0.5s;\n  background-color: #0d1722;\n  position: relative; }\n  .banner__summary {\n    z-index: 2;\n    top: calc(50% - 250px/2);\n    left: calc(50% - 250px/2);\n    position: fixed;\n    display: block;\n    border: 2px solid rgba(255, 255, 255, 0);\n    padding: 55px 30px;\n    width: 250px;\n    height: 250px;\n    border-radius: 100%;\n    margin: auto;\n    background-color: #413478;\n    opacity: 0.95;\n    -webkit-transition: all 0.5s;\n    -moz-transition: all 0.5s;\n    -ms-transition: all 0.5s;\n    -o-transition: all 0.5s;\n    transition: all 0.5s;\n    -webkit-animation: bounce 4.5s linear infinite;\n    -moz-animation: bounce 4.5s linear infinite;\n    -ms-animation: bounce 4.5s linear infinite;\n    -o-animation: bounce 4.5s linear infinite;\n    animation: bounce 4.5s linear infinite; }\n    .banner__summary:hover {\n      opacity: 0.99;\n      border: 2px solid white;\n      transition: all 0.5s; }\n    .banner__summary h1, .banner__summary p {\n      font-family: 'PT Sans';\n      margin: 0;\n      padding: 0;\n      text-align: center;\n      line-height: 125%; }\n    .banner__summary h1 {\n      font-size: 32px;\n      font-size: 2rem;\n      margin: 28px 0 10px 0; }\n    .banner__summary p {\n      font-size: 18px;\n      font-size: 1.125rem;\n      margin: 0; }\n  .banner__globe, .banner__background {\n    position: absolute;\n    width: 100%;\n    height: 100%; }\n  .banner__globe {\n    z-index: 1; }\n  .banner__background {\n    z-index: 0;\n    opacity: 0.4;\n    background-image: url(\"/images/sky-1200.jpg\");\n    background-position: 50% 50%;\n    background-size: cover; }\n  .banner__message {\n    transition: all 0.75s;\n    position: absolute;\n    bottom: calc(50% - 210px);\n    color: white;\n    text-align: center;\n    width: 100%;\n    padding: 0 20%;\n    font-size: 18px;\n    font-size: 1.125rem;\n    opacity: 1;\n    font-family: 'PT Sans'; }\n  .banner__geopath {\n    cursor: pointer;\n    stroke: white;\n    fill: white;\n    stroke-width: 0.2px;\n    transition: all 0.2s; }\n    .banner__geopath--active, .banner__geopath:hover {\n      fill: #413478;\n      stroke: #413478;\n      transition: all 0.2s; }\n\n.header {\n  overflow: visible;\n  position: fixed;\n  width: 100%;\n  height: 60px;\n  top: 0;\n  box-shadow: 0 0 10px #333;\n  background-color: rgba(13, 23, 34, 0.95);\n  transition: all 0.2s;\n  color: white;\n  z-index: 100; }\n  .header--discrete {\n    background-color: rgba(255, 255, 255, 0);\n    box-shadow: none; }\n  .header__main-link {\n    height: 100%;\n    width: 150px; }\n    .header__main-link svg {\n      height: 30px;\n      width: 30px;\n      margin-top: 15px;\n      margin-left: 15px;\n      fill: white; }\n  .header__nav {\n    z-index: 100;\n    width: 100px;\n    height: 60px;\n    overflow: visible;\n    float: right;\n    text-align: right;\n    padding: 0; }\n    .header--discrete .header__nav {\n      width: 100px; }\n    @media screen and (min-width: 800px) {\n      .header__nav {\n        width: auto;\n        float: auto; } }\n    .header__nav__arrow, .header__nav__item {\n      width: 100px;\n      float: right;\n      height: 60px;\n      padding: 0; }\n    .header__nav__arrow {\n      cursor: pointer;\n      display: table;\n      text-align: center;\n      display: none; }\n      @media screen and (min-width: 800px) {\n        .header__nav__arrow {\n          display: none; } }\n      .header--discrete .header__nav__arrow {\n        display: table; }\n      .header__nav__arrow svg {\n        opacity: 0.9;\n        text-align: center;\n        vertical-align: middle;\n        display: table-cell;\n        fill: white;\n        width: 30px;\n        height: 30px;\n        margin: 15px auto; }\n      .header__nav__arrow:hover > svg, .header__nav__arrow--active > svg {\n        opacity: 1; }\n    .header__nav__item {\n      z-index: 100;\n      display: none; }\n      .header__nav__item:hover {\n        border-bottom: 4px solid #5d4aaa; }\n      .header__nav:hover .header__nav__item, .header--expanded .header__nav__item {\n        background-color: rgba(13, 23, 34, 0.95);\n        display: table; }\n      .header--discrete .header__nav__item {\n        display: none; }\n      .header--discrete .header__nav__item {\n        background: none !important;\n        border-color: white; }\n      @media screen and (min-width: 800px) {\n        .header__nav__item {\n          display: table; }\n          .header__nav:hover .header__nav__item {\n            background: none; } }\n      .header__nav__item a {\n        height: 100%;\n        padding: 0 0px;\n        display: table-cell;\n        position: relative;\n        text-align: center;\n        vertical-align: middle;\n        font-family: 'PT Sans';\n        font-size: 18px;\n        font-size: 1.125rem; }\n        .header__nav__item a:hover {\n          top: 2px;\n          opacity: 1; }\n      @media screen and (min-width: 800px) {\n        .header__nav__item {\n          display: table;\n          background: none; } }\n\n.project-show, .project-groups {\n  margin: 0; }\n\n.project-show {\n  padding: 0; }\n  .project-show__links {\n    text-align: center;\n    display: block; }\n    .project-show__links li {\n      margin: 15px 15px;\n      display: inline-block; }\n\n.project-group {\n  width: 100%;\n  padding: 100px 0 40px 0; }\n  .project-group:nth-of-type(2n+0) {\n    background-color: #f6f6f6; }\n  .project-group__content {\n    width: 250px;\n    margin-left: auto;\n    margin-right: auto; }\n    @media only screen and (min-width: 540px) {\n      .project-group__content {\n        width: 500px; } }\n    @media only screen and (min-width: 790px) {\n      .project-group__content {\n        width: 750px; } }\n    .project-group__content > h1 {\n      opacity: 1;\n      margin: 0;\n      font-size: 36px;\n      text-align: center; }\n  .project-group__separator, .project-group__description {\n    margin-left: 20px;\n    margin-right: 20px; }\n  .project-group__description {\n    margin-top: 5px;\n    margin-bottom: 5px; }\n  .project-group__separator {\n    height: 2px;\n    background-color: #5947a3;\n    border-radius: 1px;\n    margin-left: 20px;\n    margin-right: 20px;\n    margin-top: 10px;\n    margin-bottom: 15px;\n    opacity: 0.5; }\n\n.project-list {\n  width: 100%;\n  margin: 30px auto;\n  text-align: left; }\n  .project-list > li {\n    display: inline-block; }\n  .project-list__item {\n    display: inline-block;\n    fill: #0E3647;\n    position: relative;\n    width: 250px;\n    height: 225px;\n    -webkit-transition: all 0.75s;\n    -moz-transition: all 0.75s;\n    -ms-transition: all 0.75s;\n    -o-transition: all 0.75s;\n    transition: all 0.75s; }\n    .project-list__item > * {\n      position: absolute; }\n    .project-list__item > *, .project-list__item:hover > * {\n      -webkit-transition: all 0.75s;\n      -moz-transition: all 0.75s;\n      -ms-transition: all 0.75s;\n      -o-transition: all 0.75s;\n      transition: all 0.75s; }\n    .project-list__item__logo {\n      width: 187.5px;\n      height: 187.5px;\n      left: 31.25px;\n      z-index: 9;\n      top: 0px; }\n      .project-list__item:hover .project-list__item__logo {\n        opacity: 1;\n        top: 0px; }\n      .no-touch .project-list__item__logo {\n        top: 15px;\n        opacity: 0.95; }\n    .project-list__item__title {\n      color: #071c29;\n      font-size: 28px;\n      font-size: 1.75rem;\n      top: 85%;\n      width: 90%;\n      left: 5%;\n      opacity: 1;\n      text-align: center; }\n      .no-touch .project-list__item__title {\n        color: #071c29;\n        font-size: 24px;\n        top: 76%;\n        width: 90%;\n        left: 5%;\n        opacity: 1;\n        text-align: center; }\n      .project-list__item:hover .project-list__item__title {\n        opacity: 1;\n        top: 85%; }\n      .no-touch .project-list__item__title {\n        top: 76%;\n        opacity: 0; }\n\n.static {\n  width: 100%;\n  padding: 25px;\n  margin: auto; }\n  .static p:first-child {\n    padding-top: 0;\n    margin-top: 0; }\n  .static p:last-child {\n    padding-bottom: 0;\n    margin-bottom: 0; }\n  @media only screen and (min-width: 818px) {\n    .static {\n      width: 768px;\n      padding: 50px 0; } }\n  .static blockquote {\n    font-style: italic;\n    margin: 35px 0 35px 40px; }\n  .static ul {\n    list-style-type: circle;\n    list-style-position: outside;\n    padding: 25px; }\n  .static p, .static a {\n    hyphens: auto; }\n  .static li {\n    display: list-item;\n    padding: 5px 0; }\n  .static a {\n    color: #4F3F91;\n    border-bottom: 1px solid #4F3F91;\n    opacity: 0.7; }\n    .static a:hover {\n      opacity: 1; }\n  .static img, .static iframe {\n    width: 100%;\n    display: block;\n    margin: 40px auto;\n    border-radius: 4px; }\n    @media screen and (max-width: 780px) {\n      .static img, .static iframe {\n        width: 250px;\n        margin: auto; } }\n  .static iframe {\n    height: 400px; }\n\n.hero {\n  position: relative;\n  width: 100%;\n  content: '';\n  color: white; }\n  .hero__background, .hero__overlay, .hero__title-bar {\n    position: absolute;\n    width: 100%;\n    height: 100%;\n    left: 0;\n    top: 0; }\n  .hero__background {\n    background-size: cover;\n    background-position: 50% 0%;\n    background-repeat: no-repeat; }\n    .hero__background--blurred {\n      -webkit-filter: blur(3px);\n      filter: blur(3px); }\n  .hero__overlay {\n    -webkit-transition: all 0.5s;\n    -moz-transition: all 0.5s;\n    -ms-transition: all 0.5s;\n    -o-transition: all 0.5s;\n    transition: all 0.5s;\n    background-color: #0d1722; }\n  .hero__top-bar {\n    width: 100%;\n    position: absolute;\n    top: 70px; }\n  .hero__title-bar {\n    display: flex; }\n    .hero__title-bar__content {\n      margin: auto;\n      padding: 0 30px; }\n  .hero__nav-bar {\n    width: 100%;\n    position: absolute;\n    bottom: 70px; }\n  .hero__text {\n    position: absolute;\n    bottom: 20%;\n    left: 25px;\n    font-size: 64px;\n    font-size: 4rem;\n    font-family: 'PT Sans';\n    color: white; }\n    @media only screen and (min-width: 768px) {\n      .hero__text {\n        left: calc(50% - 768px/2);\n        font-size: 80px; } }\n\n.form {\n  width: 100%;\n  padding: 50px 0;\n  max-width: 600px;\n  margin: auto; }\n  .form input, .form select, .form textarea, .form button {\n    outline: none;\n    border: 1px solid #555; }\n  .form input, .form textarea {\n    width: 100%;\n    font-size: 24px;\n    font-size: 1.5rem;\n    padding: 8px 5px; }\n    .form input:focus, .form textarea:focus {\n      background-color: #ddd; }\n  .form label {\n    font-family: 'Hallo';\n    font-size: 44px;\n    font-size: 2.75rem;\n    margin: 10px 0; }\n  .form__hint {\n    font-family: 'Palatino';\n    font-size: 24px;\n    font-size: 1.5rem;\n    margin: 10px 0; }\n  .form__wrapper {\n    margin: 50px 0; }\n", ""]);
+	exports.push([module.id, "@-webkit-keyframes bounce {\n  0% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  12.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  25% {\n    -moz-transform: translateY(9px);\n    -o-transform: translateY(9px);\n    -ms-transform: translateY(9px);\n    -webkit-transform: translateY(9px);\n    transform: translateY(9px); }\n  37.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  50% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  62.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  75% {\n    -moz-transform: translateY(-9px);\n    -o-transform: translateY(-9px);\n    -ms-transform: translateY(-9px);\n    -webkit-transform: translateY(-9px);\n    transform: translateY(-9px); }\n  87.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  100% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); } }\n\n@-moz-keyframes bounce {\n  0% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  12.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  25% {\n    -moz-transform: translateY(9px);\n    -o-transform: translateY(9px);\n    -ms-transform: translateY(9px);\n    -webkit-transform: translateY(9px);\n    transform: translateY(9px); }\n  37.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  50% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  62.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  75% {\n    -moz-transform: translateY(-9px);\n    -o-transform: translateY(-9px);\n    -ms-transform: translateY(-9px);\n    -webkit-transform: translateY(-9px);\n    transform: translateY(-9px); }\n  87.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  100% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); } }\n\n@-ms-keyframes bounce {\n  0% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  12.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  25% {\n    -moz-transform: translateY(9px);\n    -o-transform: translateY(9px);\n    -ms-transform: translateY(9px);\n    -webkit-transform: translateY(9px);\n    transform: translateY(9px); }\n  37.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  50% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  62.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  75% {\n    -moz-transform: translateY(-9px);\n    -o-transform: translateY(-9px);\n    -ms-transform: translateY(-9px);\n    -webkit-transform: translateY(-9px);\n    transform: translateY(-9px); }\n  87.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  100% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); } }\n\n@-o-keyframes bounce {\n  0% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  12.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  25% {\n    -moz-transform: translateY(9px);\n    -o-transform: translateY(9px);\n    -ms-transform: translateY(9px);\n    -webkit-transform: translateY(9px);\n    transform: translateY(9px); }\n  37.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  50% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  62.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  75% {\n    -moz-transform: translateY(-9px);\n    -o-transform: translateY(-9px);\n    -ms-transform: translateY(-9px);\n    -webkit-transform: translateY(-9px);\n    transform: translateY(-9px); }\n  87.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  100% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); } }\n\n@keyframes bounce {\n  0% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  12.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  25% {\n    -moz-transform: translateY(9px);\n    -o-transform: translateY(9px);\n    -ms-transform: translateY(9px);\n    -webkit-transform: translateY(9px);\n    transform: translateY(9px); }\n  37.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  50% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  62.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  75% {\n    -moz-transform: translateY(-9px);\n    -o-transform: translateY(-9px);\n    -ms-transform: translateY(-9px);\n    -webkit-transform: translateY(-9px);\n    transform: translateY(-9px); }\n  87.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  100% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); } }\n\n.wrapper {\n  overflow-x: hidden;\n  overflow-y: scroll; }\n  .wrapper__clear-header {\n    padding-top: 60px; }\n\n* {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n  -webkit-font-smoothing: antialiased; }\n\nhtml, body {\n  width: 100%;\n  height: 100%;\n  overflow: hidden;\n  margin: 0; }\n\npre, code {\n  width: 100%;\n  overflow-x: scroll; }\n\npre {\n  background-color: rgba(79, 63, 145, 0.1);\n  padding: 20px;\n  border-radius: 8px; }\n\na {\n  text-decoration: none;\n  color: white;\n  opacity: 0.6; }\n  a:hover {\n    opacity: 1; }\n\nul {\n  list-style-type: none;\n  padding: 0;\n  margin: 0; }\n  ul li {\n    display: block; }\n\nimg {\n  display: block;\n  width: 100%; }\n\n* {\n  font-family: 'PT Sans';\n  font-weight: normal; }\n\nh1, h2, h3, h4 {\n  font-family: 'PT Sans'; }\n\np, a, li {\n  font-family: 'PT Serif'; }\n\np, a, li, code {\n  font-size: 22px; }\n\ncode {\n  font-family: \"Courier New\";\n  font-size: 18px;\n  padding: 0 4px; }\n  p code {\n    font-size: 22px; }\n\np, li {\n  line-height: 165%; }\n\ncode {\n  line-height: 135%; }\n\nh1 {\n  font-size: 44px;\n  margin-top: 35px;\n  margin-bottom: 15px; }\n\nh2 {\n  font-size: 32px;\n  margin-top: 30px;\n  margin-bottom: 10px; }\n\nh3 {\n  font-size: 26px; }\n\n.hidden {\n  display: none !important; }\n\n.active {\n  opacity: 1 !important;\n  transition: opacity 0.5s ease-in-out; }\n\n.fill-parent {\n  width: 100%;\n  height: 100%; }\n\n.title, .headline {\n  text-align: center;\n  padding: 0 10px;\n  width: 100%;\n  margin: auto;\n  font-family: 'PT Sans';\n  word-wrap: break-word; }\n\n.title {\n  font-size: 48px;\n  font-size: 3rem;\n  margin: 30px 0 20px 0; }\n  @media only screen and (min-width: 768px) {\n    .title {\n      font-size: 72px;\n      font-size: 4.5rem;\n      margin: 45px 0 20px 0; } }\n\n.headline {\n  font-size: 22px;\n  font-size: 1.375rem;\n  max-width: 800px;\n  font-weight: normal;\n  margin-top: 0px;\n  margin-bottom: 80px; }\n  @media screen and (min-width: 600px) {\n    .headline {\n      font-size: 36px;\n      font-size: 2.25rem; } }\n\n.date {\n  text-align: center;\n  font-size: 18px;\n  font-size: 1.125rem;\n  padding: 0 0 30px 0; }\n\n.loader {\n  text-align: center;\n  margin-top: 30px;\n  height: 60px; }\n  .loader img {\n    display: inline-block;\n    width: 60px;\n    height: 60px; }\n\n.link {\n  width: 170px;\n  font-family: 'PT Sans';\n  margin: auto;\n  text-align: center;\n  color: white;\n  border: 2px solid white;\n  padding: 8px 16px;\n  font-size: 18px;\n  font-size: 1.125rem;\n  opacity: 1;\n  transition: all 0.3s; }\n  .link:hover {\n    color: #000;\n    background-color: white;\n    transition: all 0.3s; }\n\n.banner {\n  width: 100%;\n  height: 100%;\n  transition: all 0.5s;\n  background-color: #0d1722;\n  position: relative; }\n  .banner__summary {\n    z-index: 2;\n    top: calc(50% - 250px/2);\n    left: calc(50% - 250px/2);\n    position: fixed;\n    display: block;\n    border: 2px solid rgba(255, 255, 255, 0);\n    padding: 55px 30px;\n    width: 250px;\n    height: 250px;\n    border-radius: 100%;\n    margin: auto;\n    background-color: #413478;\n    opacity: 0.95;\n    -webkit-transition: all 0.5s;\n    -moz-transition: all 0.5s;\n    -ms-transition: all 0.5s;\n    -o-transition: all 0.5s;\n    transition: all 0.5s;\n    -webkit-animation: bounce 4.5s linear infinite;\n    -moz-animation: bounce 4.5s linear infinite;\n    -ms-animation: bounce 4.5s linear infinite;\n    -o-animation: bounce 4.5s linear infinite;\n    animation: bounce 4.5s linear infinite; }\n    .banner__summary:hover {\n      opacity: 0.99;\n      border: 2px solid white;\n      transition: all 0.5s; }\n    .banner__summary h1, .banner__summary p {\n      font-family: 'PT Sans';\n      margin: 0;\n      padding: 0;\n      text-align: center;\n      line-height: 125%; }\n    .banner__summary h1 {\n      font-size: 32px;\n      font-size: 2rem;\n      margin: 28px 0 10px 0; }\n    .banner__summary p {\n      font-size: 18px;\n      font-size: 1.125rem;\n      margin: 0; }\n  .banner__globe, .banner__background {\n    position: absolute;\n    width: 100%;\n    height: 100%; }\n  .banner__globe {\n    z-index: 1; }\n  .banner__background {\n    z-index: 0;\n    opacity: 0.4;\n    background-image: url(\"/images/sky-1200.jpg\");\n    background-position: 50% 50%;\n    background-size: cover; }\n  .banner__message {\n    transition: all 0.75s;\n    position: absolute;\n    bottom: calc(50% - 210px);\n    color: white;\n    text-align: center;\n    width: 100%;\n    padding: 0 20%;\n    font-size: 18px;\n    font-size: 1.125rem;\n    opacity: 1;\n    font-family: 'PT Sans'; }\n  .banner__geopath {\n    cursor: pointer;\n    stroke: white;\n    fill: white;\n    stroke-width: 0.2px;\n    transition: all 0.2s; }\n    .banner__geopath--active, .banner__geopath:hover {\n      fill: #413478;\n      stroke: #413478;\n      transition: all 0.2s; }\n\n.header {\n  overflow: visible;\n  position: fixed;\n  width: 100%;\n  height: 60px;\n  top: 0;\n  box-shadow: 0 0 10px #333;\n  background-color: rgba(13, 23, 34, 0.95);\n  transition: all 0.2s;\n  color: white;\n  z-index: 100; }\n  .header--discrete {\n    background-color: rgba(255, 255, 255, 0);\n    box-shadow: none; }\n  .header__main-link {\n    height: 100%;\n    width: 150px; }\n    .header__main-link svg {\n      height: 30px;\n      width: 30px;\n      margin-top: 15px;\n      margin-left: 15px;\n      fill: white; }\n  .header__nav {\n    z-index: 100;\n    width: 100px;\n    height: 60px;\n    overflow: visible;\n    float: right;\n    text-align: right;\n    padding: 0; }\n    .header--discrete .header__nav {\n      width: 100px; }\n    @media screen and (min-width: 800px) {\n      .header__nav {\n        width: auto;\n        float: auto; } }\n    .header__nav__arrow, .header__nav__item {\n      width: 100px;\n      float: right;\n      height: 60px;\n      padding: 0; }\n    .header__nav__arrow {\n      cursor: pointer;\n      display: table;\n      text-align: center;\n      display: none; }\n      @media screen and (min-width: 800px) {\n        .header__nav__arrow {\n          display: none; } }\n      .header--discrete .header__nav__arrow {\n        display: table; }\n      .header__nav__arrow svg {\n        opacity: 0.9;\n        text-align: center;\n        vertical-align: middle;\n        display: table-cell;\n        fill: white;\n        width: 30px;\n        height: 30px;\n        margin: 15px auto; }\n      .header__nav__arrow:hover > svg, .header__nav__arrow--active > svg {\n        opacity: 1; }\n    .header__nav__item {\n      z-index: 100;\n      display: none; }\n      .header__nav__item:hover {\n        border-bottom: 4px solid #5d4aaa; }\n      .header__nav:hover .header__nav__item, .header--expanded .header__nav__item {\n        background-color: rgba(13, 23, 34, 0.95);\n        display: table; }\n      .header--discrete .header__nav__item {\n        display: none; }\n      .header--discrete .header__nav__item {\n        background: none !important;\n        border-color: white; }\n      @media screen and (min-width: 800px) {\n        .header__nav__item {\n          display: table; }\n          .header__nav:hover .header__nav__item {\n            background: none; } }\n      .header__nav__item a {\n        height: 100%;\n        padding: 0 0px;\n        display: table-cell;\n        position: relative;\n        text-align: center;\n        vertical-align: middle;\n        font-family: 'PT Sans';\n        font-size: 18px;\n        font-size: 1.125rem; }\n        .header__nav__item a:hover {\n          top: 2px;\n          opacity: 1; }\n      @media screen and (min-width: 800px) {\n        .header__nav__item {\n          display: table;\n          background: none; } }\n\n.project-show, .project-groups {\n  margin: 0; }\n\n.project-show {\n  padding: 0; }\n  .project-show__links {\n    text-align: center;\n    display: block; }\n    .project-show__links li {\n      margin: 15px 15px;\n      display: inline-block; }\n\n.project-group {\n  width: 100%;\n  padding: 100px 0 40px 0; }\n  .project-group:nth-of-type(2n+0) {\n    background-color: #f6f6f6; }\n  .project-group__content {\n    width: 250px;\n    margin-left: auto;\n    margin-right: auto; }\n    @media only screen and (min-width: 540px) {\n      .project-group__content {\n        width: 500px; } }\n    @media only screen and (min-width: 790px) {\n      .project-group__content {\n        width: 750px; } }\n    .project-group__content > h1 {\n      opacity: 1;\n      margin: 0;\n      font-size: 36px;\n      text-align: center; }\n  .project-group__separator, .project-group__description {\n    margin-left: 20px;\n    margin-right: 20px; }\n  .project-group__description {\n    margin-top: 5px;\n    margin-bottom: 5px; }\n  .project-group__separator {\n    height: 2px;\n    background-color: #5947a3;\n    border-radius: 1px;\n    margin-left: 20px;\n    margin-right: 20px;\n    margin-top: 10px;\n    margin-bottom: 15px;\n    opacity: 0.5; }\n\n.project-list {\n  width: 100%;\n  margin: 30px auto;\n  text-align: left; }\n  .project-list > li {\n    display: inline-block; }\n  .project-list__item {\n    display: inline-block;\n    fill: #0E3647;\n    position: relative;\n    width: 250px;\n    height: 225px;\n    -webkit-transition: all 0.75s;\n    -moz-transition: all 0.75s;\n    -ms-transition: all 0.75s;\n    -o-transition: all 0.75s;\n    transition: all 0.75s; }\n    .project-list__item > * {\n      position: absolute; }\n    .project-list__item > *, .project-list__item:hover > * {\n      -webkit-transition: all 0.75s;\n      -moz-transition: all 0.75s;\n      -ms-transition: all 0.75s;\n      -o-transition: all 0.75s;\n      transition: all 0.75s; }\n    .project-list__item__logo {\n      width: 187.5px;\n      height: 187.5px;\n      left: 31.25px;\n      z-index: 9;\n      top: 0px; }\n      .project-list__item:hover .project-list__item__logo {\n        opacity: 1;\n        top: 0px; }\n      .no-touch .project-list__item__logo {\n        top: 15px;\n        opacity: 0.95; }\n    .project-list__item__title {\n      color: #071c29;\n      font-size: 28px;\n      font-size: 1.75rem;\n      top: 85%;\n      width: 90%;\n      left: 5%;\n      opacity: 1;\n      text-align: center; }\n      .no-touch .project-list__item__title {\n        color: #071c29;\n        font-size: 24px;\n        top: 76%;\n        width: 90%;\n        left: 5%;\n        opacity: 1;\n        text-align: center; }\n      .project-list__item:hover .project-list__item__title {\n        opacity: 1;\n        top: 85%; }\n      .no-touch .project-list__item__title {\n        top: 76%;\n        opacity: 0; }\n\n.static {\n  width: 100%;\n  padding: 25px;\n  margin: auto; }\n  .static p:first-child {\n    padding-top: 0;\n    margin-top: 0; }\n  .static p:last-child {\n    padding-bottom: 0;\n    margin-bottom: 0; }\n  @media only screen and (min-width: 818px) {\n    .static {\n      width: 768px;\n      padding: 50px 0; } }\n  .static blockquote {\n    font-style: italic;\n    margin: 35px 0 35px 40px; }\n  .static ul {\n    list-style-type: circle;\n    list-style-position: outside;\n    padding: 25px; }\n  .static p, .static a {\n    hyphens: auto; }\n  .static li {\n    display: list-item;\n    padding: 5px 0; }\n  .static a {\n    color: #4F3F91;\n    border-bottom: 1px solid #4F3F91;\n    opacity: 0.7; }\n    .static a:hover {\n      opacity: 1; }\n  .static img, .static iframe {\n    width: 100%;\n    display: block;\n    margin: 40px auto;\n    border-radius: 4px; }\n    @media screen and (max-width: 780px) {\n      .static img, .static iframe {\n        width: 250px;\n        margin: auto; } }\n  .static iframe {\n    height: 400px; }\n\n.hero {\n  position: relative;\n  width: 100%;\n  content: '';\n  color: white; }\n  .hero__background, .hero__overlay, .hero__title-bar {\n    position: absolute;\n    width: 100%;\n    height: 100%;\n    left: 0;\n    top: 0; }\n  .hero__background {\n    background-size: cover;\n    background-position: 50% 0%;\n    background-repeat: no-repeat; }\n    .hero__background--blurred {\n      -webkit-filter: blur(3px);\n      filter: blur(3px); }\n  .hero__overlay {\n    -webkit-transition: all 0.5s;\n    -moz-transition: all 0.5s;\n    -ms-transition: all 0.5s;\n    -o-transition: all 0.5s;\n    transition: all 0.5s;\n    background-color: #0d1722; }\n  .hero__top-bar {\n    width: 100%;\n    position: absolute;\n    top: 70px; }\n  .hero__title-bar {\n    display: flex; }\n    .hero__title-bar__content {\n      margin: auto;\n      padding: 0 30px; }\n  .hero__nav-bar {\n    width: 100%;\n    position: absolute;\n    bottom: 70px; }\n  .hero__text {\n    position: absolute;\n    bottom: 20%;\n    left: 25px;\n    font-size: 64px;\n    font-size: 4rem;\n    font-family: 'PT Sans';\n    color: white; }\n    @media only screen and (min-width: 768px) {\n      .hero__text {\n        left: calc(50% - 768px/2);\n        font-size: 80px; } }\n\n.form {\n  width: 100%;\n  padding: 50px 0;\n  max-width: 600px;\n  margin: auto; }\n  .form input, .form select, .form textarea, .form button {\n    outline: none;\n    border: 1px solid #555; }\n  .form input, .form textarea {\n    width: 100%;\n    font-size: 24px;\n    font-size: 1.5rem;\n    padding: 8px 5px; }\n    .form input:focus, .form textarea:focus {\n      background-color: #ddd; }\n  .form textarea {\n    height: 400px; }\n  .form label {\n    font-family: 'PT Sans';\n    font-size: 44px;\n    font-size: 2.75rem;\n    margin: 10px 0; }\n  .form__hint {\n    font-family: 'PT Serif';\n    font-size: 24px;\n    font-size: 1.5rem;\n    margin: 10px 0; }\n  .form__wrapper {\n    margin: 50px 0; }\n\n.modal {\n  z-index: 1000;\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  display: flex;\n  background-color: rgba(0, 0, 0, 0.3); }\n  .modal__content {\n    width: 300px;\n    height: 200px;\n    margin: auto;\n    border-radius: 10px;\n    font-size: 44px;\n    font-size: 2.75rem;\n    padding: 65px;\n    color: white;\n    background-color: #0d1722;\n    display: table;\n    text-align: center;\n    vertical-align: middle; }\n", ""]);
 
 	// exports
 
@@ -68045,6 +68171,1422 @@
 			URL.revokeObjectURL(oldSrc);
 	}
 
+
+/***/ },
+/* 378 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Module dependencies.
+	 */
+
+	var Emitter = __webpack_require__(379);
+	var reduce = __webpack_require__(380);
+
+	/**
+	 * Root reference for iframes.
+	 */
+
+	var root;
+	if (typeof window !== 'undefined') { // Browser window
+	  root = window;
+	} else if (typeof self !== 'undefined') { // Web Worker
+	  root = self;
+	} else { // Other environments
+	  root = this;
+	}
+
+	/**
+	 * Noop.
+	 */
+
+	function noop(){};
+
+	/**
+	 * Check if `obj` is a host object,
+	 * we don't want to serialize these :)
+	 *
+	 * TODO: future proof, move to compoent land
+	 *
+	 * @param {Object} obj
+	 * @return {Boolean}
+	 * @api private
+	 */
+
+	function isHost(obj) {
+	  var str = {}.toString.call(obj);
+
+	  switch (str) {
+	    case '[object File]':
+	    case '[object Blob]':
+	    case '[object FormData]':
+	      return true;
+	    default:
+	      return false;
+	  }
+	}
+
+	/**
+	 * Determine XHR.
+	 */
+
+	request.getXHR = function () {
+	  if (root.XMLHttpRequest
+	      && (!root.location || 'file:' != root.location.protocol
+	          || !root.ActiveXObject)) {
+	    return new XMLHttpRequest;
+	  } else {
+	    try { return new ActiveXObject('Microsoft.XMLHTTP'); } catch(e) {}
+	    try { return new ActiveXObject('Msxml2.XMLHTTP.6.0'); } catch(e) {}
+	    try { return new ActiveXObject('Msxml2.XMLHTTP.3.0'); } catch(e) {}
+	    try { return new ActiveXObject('Msxml2.XMLHTTP'); } catch(e) {}
+	  }
+	  return false;
+	};
+
+	/**
+	 * Removes leading and trailing whitespace, added to support IE.
+	 *
+	 * @param {String} s
+	 * @return {String}
+	 * @api private
+	 */
+
+	var trim = ''.trim
+	  ? function(s) { return s.trim(); }
+	  : function(s) { return s.replace(/(^\s*|\s*$)/g, ''); };
+
+	/**
+	 * Check if `obj` is an object.
+	 *
+	 * @param {Object} obj
+	 * @return {Boolean}
+	 * @api private
+	 */
+
+	function isObject(obj) {
+	  return obj === Object(obj);
+	}
+
+	/**
+	 * Serialize the given `obj`.
+	 *
+	 * @param {Object} obj
+	 * @return {String}
+	 * @api private
+	 */
+
+	function serialize(obj) {
+	  if (!isObject(obj)) return obj;
+	  var pairs = [];
+	  for (var key in obj) {
+	    if (null != obj[key]) {
+	      pairs.push(encodeURIComponent(key)
+	        + '=' + encodeURIComponent(obj[key]));
+	    }
+	  }
+	  return pairs.join('&');
+	}
+
+	/**
+	 * Expose serialization method.
+	 */
+
+	 request.serializeObject = serialize;
+
+	 /**
+	  * Parse the given x-www-form-urlencoded `str`.
+	  *
+	  * @param {String} str
+	  * @return {Object}
+	  * @api private
+	  */
+
+	function parseString(str) {
+	  var obj = {};
+	  var pairs = str.split('&');
+	  var parts;
+	  var pair;
+
+	  for (var i = 0, len = pairs.length; i < len; ++i) {
+	    pair = pairs[i];
+	    parts = pair.split('=');
+	    obj[decodeURIComponent(parts[0])] = decodeURIComponent(parts[1]);
+	  }
+
+	  return obj;
+	}
+
+	/**
+	 * Expose parser.
+	 */
+
+	request.parseString = parseString;
+
+	/**
+	 * Default MIME type map.
+	 *
+	 *     superagent.types.xml = 'application/xml';
+	 *
+	 */
+
+	request.types = {
+	  html: 'text/html',
+	  json: 'application/json',
+	  xml: 'application/xml',
+	  urlencoded: 'application/x-www-form-urlencoded',
+	  'form': 'application/x-www-form-urlencoded',
+	  'form-data': 'application/x-www-form-urlencoded'
+	};
+
+	/**
+	 * Default serialization map.
+	 *
+	 *     superagent.serialize['application/xml'] = function(obj){
+	 *       return 'generated xml here';
+	 *     };
+	 *
+	 */
+
+	 request.serialize = {
+	   'application/x-www-form-urlencoded': serialize,
+	   'application/json': JSON.stringify
+	 };
+
+	 /**
+	  * Default parsers.
+	  *
+	  *     superagent.parse['application/xml'] = function(str){
+	  *       return { object parsed from str };
+	  *     };
+	  *
+	  */
+
+	request.parse = {
+	  'application/x-www-form-urlencoded': parseString,
+	  'application/json': JSON.parse
+	};
+
+	/**
+	 * Parse the given header `str` into
+	 * an object containing the mapped fields.
+	 *
+	 * @param {String} str
+	 * @return {Object}
+	 * @api private
+	 */
+
+	function parseHeader(str) {
+	  var lines = str.split(/\r?\n/);
+	  var fields = {};
+	  var index;
+	  var line;
+	  var field;
+	  var val;
+
+	  lines.pop(); // trailing CRLF
+
+	  for (var i = 0, len = lines.length; i < len; ++i) {
+	    line = lines[i];
+	    index = line.indexOf(':');
+	    field = line.slice(0, index).toLowerCase();
+	    val = trim(line.slice(index + 1));
+	    fields[field] = val;
+	  }
+
+	  return fields;
+	}
+
+	/**
+	 * Return the mime type for the given `str`.
+	 *
+	 * @param {String} str
+	 * @return {String}
+	 * @api private
+	 */
+
+	function type(str){
+	  return str.split(/ *; */).shift();
+	};
+
+	/**
+	 * Return header field parameters.
+	 *
+	 * @param {String} str
+	 * @return {Object}
+	 * @api private
+	 */
+
+	function params(str){
+	  return reduce(str.split(/ *; */), function(obj, str){
+	    var parts = str.split(/ *= */)
+	      , key = parts.shift()
+	      , val = parts.shift();
+
+	    if (key && val) obj[key] = val;
+	    return obj;
+	  }, {});
+	};
+
+	/**
+	 * Initialize a new `Response` with the given `xhr`.
+	 *
+	 *  - set flags (.ok, .error, etc)
+	 *  - parse header
+	 *
+	 * Examples:
+	 *
+	 *  Aliasing `superagent` as `request` is nice:
+	 *
+	 *      request = superagent;
+	 *
+	 *  We can use the promise-like API, or pass callbacks:
+	 *
+	 *      request.get('/').end(function(res){});
+	 *      request.get('/', function(res){});
+	 *
+	 *  Sending data can be chained:
+	 *
+	 *      request
+	 *        .post('/user')
+	 *        .send({ name: 'tj' })
+	 *        .end(function(res){});
+	 *
+	 *  Or passed to `.send()`:
+	 *
+	 *      request
+	 *        .post('/user')
+	 *        .send({ name: 'tj' }, function(res){});
+	 *
+	 *  Or passed to `.post()`:
+	 *
+	 *      request
+	 *        .post('/user', { name: 'tj' })
+	 *        .end(function(res){});
+	 *
+	 * Or further reduced to a single call for simple cases:
+	 *
+	 *      request
+	 *        .post('/user', { name: 'tj' }, function(res){});
+	 *
+	 * @param {XMLHTTPRequest} xhr
+	 * @param {Object} options
+	 * @api private
+	 */
+
+	function Response(req, options) {
+	  options = options || {};
+	  this.req = req;
+	  this.xhr = this.req.xhr;
+	  // responseText is accessible only if responseType is '' or 'text' and on older browsers
+	  this.text = ((this.req.method !='HEAD' && (this.xhr.responseType === '' || this.xhr.responseType === 'text')) || typeof this.xhr.responseType === 'undefined')
+	     ? this.xhr.responseText
+	     : null;
+	  this.statusText = this.req.xhr.statusText;
+	  this.setStatusProperties(this.xhr.status);
+	  this.header = this.headers = parseHeader(this.xhr.getAllResponseHeaders());
+	  // getAllResponseHeaders sometimes falsely returns "" for CORS requests, but
+	  // getResponseHeader still works. so we get content-type even if getting
+	  // other headers fails.
+	  this.header['content-type'] = this.xhr.getResponseHeader('content-type');
+	  this.setHeaderProperties(this.header);
+	  this.body = this.req.method != 'HEAD'
+	    ? this.parseBody(this.text ? this.text : this.xhr.response)
+	    : null;
+	}
+
+	/**
+	 * Get case-insensitive `field` value.
+	 *
+	 * @param {String} field
+	 * @return {String}
+	 * @api public
+	 */
+
+	Response.prototype.get = function(field){
+	  return this.header[field.toLowerCase()];
+	};
+
+	/**
+	 * Set header related properties:
+	 *
+	 *   - `.type` the content type without params
+	 *
+	 * A response of "Content-Type: text/plain; charset=utf-8"
+	 * will provide you with a `.type` of "text/plain".
+	 *
+	 * @param {Object} header
+	 * @api private
+	 */
+
+	Response.prototype.setHeaderProperties = function(header){
+	  // content-type
+	  var ct = this.header['content-type'] || '';
+	  this.type = type(ct);
+
+	  // params
+	  var obj = params(ct);
+	  for (var key in obj) this[key] = obj[key];
+	};
+
+	/**
+	 * Force given parser
+	 * 
+	 * Sets the body parser no matter type.
+	 * 
+	 * @param {Function}
+	 * @api public
+	 */
+
+	Response.prototype.parse = function(fn){
+	  this.parser = fn;
+	  return this;
+	};
+
+	/**
+	 * Parse the given body `str`.
+	 *
+	 * Used for auto-parsing of bodies. Parsers
+	 * are defined on the `superagent.parse` object.
+	 *
+	 * @param {String} str
+	 * @return {Mixed}
+	 * @api private
+	 */
+
+	Response.prototype.parseBody = function(str){
+	  var parse = this.parser || request.parse[this.type];
+	  return parse && str && (str.length || str instanceof Object)
+	    ? parse(str)
+	    : null;
+	};
+
+	/**
+	 * Set flags such as `.ok` based on `status`.
+	 *
+	 * For example a 2xx response will give you a `.ok` of __true__
+	 * whereas 5xx will be __false__ and `.error` will be __true__. The
+	 * `.clientError` and `.serverError` are also available to be more
+	 * specific, and `.statusType` is the class of error ranging from 1..5
+	 * sometimes useful for mapping respond colors etc.
+	 *
+	 * "sugar" properties are also defined for common cases. Currently providing:
+	 *
+	 *   - .noContent
+	 *   - .badRequest
+	 *   - .unauthorized
+	 *   - .notAcceptable
+	 *   - .notFound
+	 *
+	 * @param {Number} status
+	 * @api private
+	 */
+
+	Response.prototype.setStatusProperties = function(status){
+	  // handle IE9 bug: http://stackoverflow.com/questions/10046972/msie-returns-status-code-of-1223-for-ajax-request
+	  if (status === 1223) {
+	    status = 204;
+	  }
+
+	  var type = status / 100 | 0;
+
+	  // status / class
+	  this.status = this.statusCode = status;
+	  this.statusType = type;
+
+	  // basics
+	  this.info = 1 == type;
+	  this.ok = 2 == type;
+	  this.clientError = 4 == type;
+	  this.serverError = 5 == type;
+	  this.error = (4 == type || 5 == type)
+	    ? this.toError()
+	    : false;
+
+	  // sugar
+	  this.accepted = 202 == status;
+	  this.noContent = 204 == status;
+	  this.badRequest = 400 == status;
+	  this.unauthorized = 401 == status;
+	  this.notAcceptable = 406 == status;
+	  this.notFound = 404 == status;
+	  this.forbidden = 403 == status;
+	};
+
+	/**
+	 * Return an `Error` representative of this response.
+	 *
+	 * @return {Error}
+	 * @api public
+	 */
+
+	Response.prototype.toError = function(){
+	  var req = this.req;
+	  var method = req.method;
+	  var url = req.url;
+
+	  var msg = 'cannot ' + method + ' ' + url + ' (' + this.status + ')';
+	  var err = new Error(msg);
+	  err.status = this.status;
+	  err.method = method;
+	  err.url = url;
+
+	  return err;
+	};
+
+	/**
+	 * Expose `Response`.
+	 */
+
+	request.Response = Response;
+
+	/**
+	 * Initialize a new `Request` with the given `method` and `url`.
+	 *
+	 * @param {String} method
+	 * @param {String} url
+	 * @api public
+	 */
+
+	function Request(method, url) {
+	  var self = this;
+	  Emitter.call(this);
+	  this._query = this._query || [];
+	  this.method = method;
+	  this.url = url;
+	  this.header = {};
+	  this._header = {};
+	  this.on('end', function(){
+	    var err = null;
+	    var res = null;
+
+	    try {
+	      res = new Response(self);
+	    } catch(e) {
+	      err = new Error('Parser is unable to parse the response');
+	      err.parse = true;
+	      err.original = e;
+	      return self.callback(err);
+	    }
+
+	    self.emit('response', res);
+
+	    if (err) {
+	      return self.callback(err, res);
+	    }
+
+	    if (res.status >= 200 && res.status < 300) {
+	      return self.callback(err, res);
+	    }
+
+	    var new_err = new Error(res.statusText || 'Unsuccessful HTTP response');
+	    new_err.original = err;
+	    new_err.response = res;
+	    new_err.status = res.status;
+
+	    self.callback(new_err, res);
+	  });
+	}
+
+	/**
+	 * Mixin `Emitter`.
+	 */
+
+	Emitter(Request.prototype);
+
+	/**
+	 * Allow for extension
+	 */
+
+	Request.prototype.use = function(fn) {
+	  fn(this);
+	  return this;
+	}
+
+	/**
+	 * Set timeout to `ms`.
+	 *
+	 * @param {Number} ms
+	 * @return {Request} for chaining
+	 * @api public
+	 */
+
+	Request.prototype.timeout = function(ms){
+	  this._timeout = ms;
+	  return this;
+	};
+
+	/**
+	 * Clear previous timeout.
+	 *
+	 * @return {Request} for chaining
+	 * @api public
+	 */
+
+	Request.prototype.clearTimeout = function(){
+	  this._timeout = 0;
+	  clearTimeout(this._timer);
+	  return this;
+	};
+
+	/**
+	 * Abort the request, and clear potential timeout.
+	 *
+	 * @return {Request}
+	 * @api public
+	 */
+
+	Request.prototype.abort = function(){
+	  if (this.aborted) return;
+	  this.aborted = true;
+	  this.xhr.abort();
+	  this.clearTimeout();
+	  this.emit('abort');
+	  return this;
+	};
+
+	/**
+	 * Set header `field` to `val`, or multiple fields with one object.
+	 *
+	 * Examples:
+	 *
+	 *      req.get('/')
+	 *        .set('Accept', 'application/json')
+	 *        .set('X-API-Key', 'foobar')
+	 *        .end(callback);
+	 *
+	 *      req.get('/')
+	 *        .set({ Accept: 'application/json', 'X-API-Key': 'foobar' })
+	 *        .end(callback);
+	 *
+	 * @param {String|Object} field
+	 * @param {String} val
+	 * @return {Request} for chaining
+	 * @api public
+	 */
+
+	Request.prototype.set = function(field, val){
+	  if (isObject(field)) {
+	    for (var key in field) {
+	      this.set(key, field[key]);
+	    }
+	    return this;
+	  }
+	  this._header[field.toLowerCase()] = val;
+	  this.header[field] = val;
+	  return this;
+	};
+
+	/**
+	 * Remove header `field`.
+	 *
+	 * Example:
+	 *
+	 *      req.get('/')
+	 *        .unset('User-Agent')
+	 *        .end(callback);
+	 *
+	 * @param {String} field
+	 * @return {Request} for chaining
+	 * @api public
+	 */
+
+	Request.prototype.unset = function(field){
+	  delete this._header[field.toLowerCase()];
+	  delete this.header[field];
+	  return this;
+	};
+
+	/**
+	 * Get case-insensitive header `field` value.
+	 *
+	 * @param {String} field
+	 * @return {String}
+	 * @api private
+	 */
+
+	Request.prototype.getHeader = function(field){
+	  return this._header[field.toLowerCase()];
+	};
+
+	/**
+	 * Set Content-Type to `type`, mapping values from `request.types`.
+	 *
+	 * Examples:
+	 *
+	 *      superagent.types.xml = 'application/xml';
+	 *
+	 *      request.post('/')
+	 *        .type('xml')
+	 *        .send(xmlstring)
+	 *        .end(callback);
+	 *
+	 *      request.post('/')
+	 *        .type('application/xml')
+	 *        .send(xmlstring)
+	 *        .end(callback);
+	 *
+	 * @param {String} type
+	 * @return {Request} for chaining
+	 * @api public
+	 */
+
+	Request.prototype.type = function(type){
+	  this.set('Content-Type', request.types[type] || type);
+	  return this;
+	};
+
+	/**
+	 * Set Accept to `type`, mapping values from `request.types`.
+	 *
+	 * Examples:
+	 *
+	 *      superagent.types.json = 'application/json';
+	 *
+	 *      request.get('/agent')
+	 *        .accept('json')
+	 *        .end(callback);
+	 *
+	 *      request.get('/agent')
+	 *        .accept('application/json')
+	 *        .end(callback);
+	 *
+	 * @param {String} accept
+	 * @return {Request} for chaining
+	 * @api public
+	 */
+
+	Request.prototype.accept = function(type){
+	  this.set('Accept', request.types[type] || type);
+	  return this;
+	};
+
+	/**
+	 * Set Authorization field value with `user` and `pass`.
+	 *
+	 * @param {String} user
+	 * @param {String} pass
+	 * @return {Request} for chaining
+	 * @api public
+	 */
+
+	Request.prototype.auth = function(user, pass){
+	  var str = btoa(user + ':' + pass);
+	  this.set('Authorization', 'Basic ' + str);
+	  return this;
+	};
+
+	/**
+	* Add query-string `val`.
+	*
+	* Examples:
+	*
+	*   request.get('/shoes')
+	*     .query('size=10')
+	*     .query({ color: 'blue' })
+	*
+	* @param {Object|String} val
+	* @return {Request} for chaining
+	* @api public
+	*/
+
+	Request.prototype.query = function(val){
+	  if ('string' != typeof val) val = serialize(val);
+	  if (val) this._query.push(val);
+	  return this;
+	};
+
+	/**
+	 * Write the field `name` and `val` for "multipart/form-data"
+	 * request bodies.
+	 *
+	 * ``` js
+	 * request.post('/upload')
+	 *   .field('foo', 'bar')
+	 *   .end(callback);
+	 * ```
+	 *
+	 * @param {String} name
+	 * @param {String|Blob|File} val
+	 * @return {Request} for chaining
+	 * @api public
+	 */
+
+	Request.prototype.field = function(name, val){
+	  if (!this._formData) this._formData = new root.FormData();
+	  this._formData.append(name, val);
+	  return this;
+	};
+
+	/**
+	 * Queue the given `file` as an attachment to the specified `field`,
+	 * with optional `filename`.
+	 *
+	 * ``` js
+	 * request.post('/upload')
+	 *   .attach(new Blob(['<a id="a"><b id="b">hey!</b></a>'], { type: "text/html"}))
+	 *   .end(callback);
+	 * ```
+	 *
+	 * @param {String} field
+	 * @param {Blob|File} file
+	 * @param {String} filename
+	 * @return {Request} for chaining
+	 * @api public
+	 */
+
+	Request.prototype.attach = function(field, file, filename){
+	  if (!this._formData) this._formData = new root.FormData();
+	  this._formData.append(field, file, filename);
+	  return this;
+	};
+
+	/**
+	 * Send `data`, defaulting the `.type()` to "json" when
+	 * an object is given.
+	 *
+	 * Examples:
+	 *
+	 *       // querystring
+	 *       request.get('/search')
+	 *         .end(callback)
+	 *
+	 *       // multiple data "writes"
+	 *       request.get('/search')
+	 *         .send({ search: 'query' })
+	 *         .send({ range: '1..5' })
+	 *         .send({ order: 'desc' })
+	 *         .end(callback)
+	 *
+	 *       // manual json
+	 *       request.post('/user')
+	 *         .type('json')
+	 *         .send('{"name":"tj"})
+	 *         .end(callback)
+	 *
+	 *       // auto json
+	 *       request.post('/user')
+	 *         .send({ name: 'tj' })
+	 *         .end(callback)
+	 *
+	 *       // manual x-www-form-urlencoded
+	 *       request.post('/user')
+	 *         .type('form')
+	 *         .send('name=tj')
+	 *         .end(callback)
+	 *
+	 *       // auto x-www-form-urlencoded
+	 *       request.post('/user')
+	 *         .type('form')
+	 *         .send({ name: 'tj' })
+	 *         .end(callback)
+	 *
+	 *       // defaults to x-www-form-urlencoded
+	  *      request.post('/user')
+	  *        .send('name=tobi')
+	  *        .send('species=ferret')
+	  *        .end(callback)
+	 *
+	 * @param {String|Object} data
+	 * @return {Request} for chaining
+	 * @api public
+	 */
+
+	Request.prototype.send = function(data){
+	  var obj = isObject(data);
+	  var type = this.getHeader('Content-Type');
+
+	  // merge
+	  if (obj && isObject(this._data)) {
+	    for (var key in data) {
+	      this._data[key] = data[key];
+	    }
+	  } else if ('string' == typeof data) {
+	    if (!type) this.type('form');
+	    type = this.getHeader('Content-Type');
+	    if ('application/x-www-form-urlencoded' == type) {
+	      this._data = this._data
+	        ? this._data + '&' + data
+	        : data;
+	    } else {
+	      this._data = (this._data || '') + data;
+	    }
+	  } else {
+	    this._data = data;
+	  }
+
+	  if (!obj || isHost(data)) return this;
+	  if (!type) this.type('json');
+	  return this;
+	};
+
+	/**
+	 * Invoke the callback with `err` and `res`
+	 * and handle arity check.
+	 *
+	 * @param {Error} err
+	 * @param {Response} res
+	 * @api private
+	 */
+
+	Request.prototype.callback = function(err, res){
+	  var fn = this._callback;
+	  this.clearTimeout();
+	  fn(err, res);
+	};
+
+	/**
+	 * Invoke callback with x-domain error.
+	 *
+	 * @api private
+	 */
+
+	Request.prototype.crossDomainError = function(){
+	  var err = new Error('Origin is not allowed by Access-Control-Allow-Origin');
+	  err.crossDomain = true;
+	  this.callback(err);
+	};
+
+	/**
+	 * Invoke callback with timeout error.
+	 *
+	 * @api private
+	 */
+
+	Request.prototype.timeoutError = function(){
+	  var timeout = this._timeout;
+	  var err = new Error('timeout of ' + timeout + 'ms exceeded');
+	  err.timeout = timeout;
+	  this.callback(err);
+	};
+
+	/**
+	 * Enable transmission of cookies with x-domain requests.
+	 *
+	 * Note that for this to work the origin must not be
+	 * using "Access-Control-Allow-Origin" with a wildcard,
+	 * and also must set "Access-Control-Allow-Credentials"
+	 * to "true".
+	 *
+	 * @api public
+	 */
+
+	Request.prototype.withCredentials = function(){
+	  this._withCredentials = true;
+	  return this;
+	};
+
+	/**
+	 * Initiate request, invoking callback `fn(res)`
+	 * with an instanceof `Response`.
+	 *
+	 * @param {Function} fn
+	 * @return {Request} for chaining
+	 * @api public
+	 */
+
+	Request.prototype.end = function(fn){
+	  var self = this;
+	  var xhr = this.xhr = request.getXHR();
+	  var query = this._query.join('&');
+	  var timeout = this._timeout;
+	  var data = this._formData || this._data;
+
+	  // store callback
+	  this._callback = fn || noop;
+
+	  // state change
+	  xhr.onreadystatechange = function(){
+	    if (4 != xhr.readyState) return;
+
+	    // In IE9, reads to any property (e.g. status) off of an aborted XHR will
+	    // result in the error "Could not complete the operation due to error c00c023f"
+	    var status;
+	    try { status = xhr.status } catch(e) { status = 0; }
+
+	    if (0 == status) {
+	      if (self.timedout) return self.timeoutError();
+	      if (self.aborted) return;
+	      return self.crossDomainError();
+	    }
+	    self.emit('end');
+	  };
+
+	  // progress
+	  var handleProgress = function(e){
+	    if (e.total > 0) {
+	      e.percent = e.loaded / e.total * 100;
+	    }
+	    self.emit('progress', e);
+	  };
+	  if (this.hasListeners('progress')) {
+	    xhr.onprogress = handleProgress;
+	  }
+	  try {
+	    if (xhr.upload && this.hasListeners('progress')) {
+	      xhr.upload.onprogress = handleProgress;
+	    }
+	  } catch(e) {
+	    // Accessing xhr.upload fails in IE from a web worker, so just pretend it doesn't exist.
+	    // Reported here:
+	    // https://connect.microsoft.com/IE/feedback/details/837245/xmlhttprequest-upload-throws-invalid-argument-when-used-from-web-worker-context
+	  }
+
+	  // timeout
+	  if (timeout && !this._timer) {
+	    this._timer = setTimeout(function(){
+	      self.timedout = true;
+	      self.abort();
+	    }, timeout);
+	  }
+
+	  // querystring
+	  if (query) {
+	    query = request.serializeObject(query);
+	    this.url += ~this.url.indexOf('?')
+	      ? '&' + query
+	      : '?' + query;
+	  }
+
+	  // initiate request
+	  xhr.open(this.method, this.url, true);
+
+	  // CORS
+	  if (this._withCredentials) xhr.withCredentials = true;
+
+	  // body
+	  if ('GET' != this.method && 'HEAD' != this.method && 'string' != typeof data && !isHost(data)) {
+	    // serialize stuff
+	    var contentType = this.getHeader('Content-Type');
+	    var serialize = request.serialize[contentType ? contentType.split(';')[0] : ''];
+	    if (serialize) data = serialize(data);
+	  }
+
+	  // set header fields
+	  for (var field in this.header) {
+	    if (null == this.header[field]) continue;
+	    xhr.setRequestHeader(field, this.header[field]);
+	  }
+
+	  // send stuff
+	  this.emit('request', this);
+	  xhr.send(data);
+	  return this;
+	};
+
+	/**
+	 * Faux promise support
+	 *
+	 * @param {Function} fulfill
+	 * @param {Function} reject
+	 * @return {Request}
+	 */
+
+	Request.prototype.then = function (fulfill, reject) {
+	  return this.end(function(err, res) {
+	    err ? reject(err) : fulfill(res);
+	  });
+	}
+
+	/**
+	 * Expose `Request`.
+	 */
+
+	request.Request = Request;
+
+	/**
+	 * Issue a request:
+	 *
+	 * Examples:
+	 *
+	 *    request('GET', '/users').end(callback)
+	 *    request('/users').end(callback)
+	 *    request('/users', callback)
+	 *
+	 * @param {String} method
+	 * @param {String|Function} url or callback
+	 * @return {Request}
+	 * @api public
+	 */
+
+	function request(method, url) {
+	  // callback
+	  if ('function' == typeof url) {
+	    return new Request('GET', method).end(url);
+	  }
+
+	  // url first
+	  if (1 == arguments.length) {
+	    return new Request('GET', method);
+	  }
+
+	  return new Request(method, url);
+	}
+
+	/**
+	 * GET `url` with optional callback `fn(res)`.
+	 *
+	 * @param {String} url
+	 * @param {Mixed|Function} data or fn
+	 * @param {Function} fn
+	 * @return {Request}
+	 * @api public
+	 */
+
+	request.get = function(url, data, fn){
+	  var req = request('GET', url);
+	  if ('function' == typeof data) fn = data, data = null;
+	  if (data) req.query(data);
+	  if (fn) req.end(fn);
+	  return req;
+	};
+
+	/**
+	 * HEAD `url` with optional callback `fn(res)`.
+	 *
+	 * @param {String} url
+	 * @param {Mixed|Function} data or fn
+	 * @param {Function} fn
+	 * @return {Request}
+	 * @api public
+	 */
+
+	request.head = function(url, data, fn){
+	  var req = request('HEAD', url);
+	  if ('function' == typeof data) fn = data, data = null;
+	  if (data) req.send(data);
+	  if (fn) req.end(fn);
+	  return req;
+	};
+
+	/**
+	 * DELETE `url` with optional callback `fn(res)`.
+	 *
+	 * @param {String} url
+	 * @param {Function} fn
+	 * @return {Request}
+	 * @api public
+	 */
+
+	request.del = function(url, fn){
+	  var req = request('DELETE', url);
+	  if (fn) req.end(fn);
+	  return req;
+	};
+
+	/**
+	 * PATCH `url` with optional `data` and callback `fn(res)`.
+	 *
+	 * @param {String} url
+	 * @param {Mixed} data
+	 * @param {Function} fn
+	 * @return {Request}
+	 * @api public
+	 */
+
+	request.patch = function(url, data, fn){
+	  var req = request('PATCH', url);
+	  if ('function' == typeof data) fn = data, data = null;
+	  if (data) req.send(data);
+	  if (fn) req.end(fn);
+	  return req;
+	};
+
+	/**
+	 * POST `url` with optional `data` and callback `fn(res)`.
+	 *
+	 * @param {String} url
+	 * @param {Mixed} data
+	 * @param {Function} fn
+	 * @return {Request}
+	 * @api public
+	 */
+
+	request.post = function(url, data, fn){
+	  var req = request('POST', url);
+	  if ('function' == typeof data) fn = data, data = null;
+	  if (data) req.send(data);
+	  if (fn) req.end(fn);
+	  return req;
+	};
+
+	/**
+	 * PUT `url` with optional `data` and callback `fn(res)`.
+	 *
+	 * @param {String} url
+	 * @param {Mixed|Function} data or fn
+	 * @param {Function} fn
+	 * @return {Request}
+	 * @api public
+	 */
+
+	request.put = function(url, data, fn){
+	  var req = request('PUT', url);
+	  if ('function' == typeof data) fn = data, data = null;
+	  if (data) req.send(data);
+	  if (fn) req.end(fn);
+	  return req;
+	};
+
+	/**
+	 * Expose `request`.
+	 */
+
+	module.exports = request;
+
+
+/***/ },
+/* 379 */
+/***/ function(module, exports) {
+
+	
+	/**
+	 * Expose `Emitter`.
+	 */
+
+	module.exports = Emitter;
+
+	/**
+	 * Initialize a new `Emitter`.
+	 *
+	 * @api public
+	 */
+
+	function Emitter(obj) {
+	  if (obj) return mixin(obj);
+	};
+
+	/**
+	 * Mixin the emitter properties.
+	 *
+	 * @param {Object} obj
+	 * @return {Object}
+	 * @api private
+	 */
+
+	function mixin(obj) {
+	  for (var key in Emitter.prototype) {
+	    obj[key] = Emitter.prototype[key];
+	  }
+	  return obj;
+	}
+
+	/**
+	 * Listen on the given `event` with `fn`.
+	 *
+	 * @param {String} event
+	 * @param {Function} fn
+	 * @return {Emitter}
+	 * @api public
+	 */
+
+	Emitter.prototype.on =
+	Emitter.prototype.addEventListener = function(event, fn){
+	  this._callbacks = this._callbacks || {};
+	  (this._callbacks[event] = this._callbacks[event] || [])
+	    .push(fn);
+	  return this;
+	};
+
+	/**
+	 * Adds an `event` listener that will be invoked a single
+	 * time then automatically removed.
+	 *
+	 * @param {String} event
+	 * @param {Function} fn
+	 * @return {Emitter}
+	 * @api public
+	 */
+
+	Emitter.prototype.once = function(event, fn){
+	  var self = this;
+	  this._callbacks = this._callbacks || {};
+
+	  function on() {
+	    self.off(event, on);
+	    fn.apply(this, arguments);
+	  }
+
+	  on.fn = fn;
+	  this.on(event, on);
+	  return this;
+	};
+
+	/**
+	 * Remove the given callback for `event` or all
+	 * registered callbacks.
+	 *
+	 * @param {String} event
+	 * @param {Function} fn
+	 * @return {Emitter}
+	 * @api public
+	 */
+
+	Emitter.prototype.off =
+	Emitter.prototype.removeListener =
+	Emitter.prototype.removeAllListeners =
+	Emitter.prototype.removeEventListener = function(event, fn){
+	  this._callbacks = this._callbacks || {};
+
+	  // all
+	  if (0 == arguments.length) {
+	    this._callbacks = {};
+	    return this;
+	  }
+
+	  // specific event
+	  var callbacks = this._callbacks[event];
+	  if (!callbacks) return this;
+
+	  // remove all handlers
+	  if (1 == arguments.length) {
+	    delete this._callbacks[event];
+	    return this;
+	  }
+
+	  // remove specific handler
+	  var cb;
+	  for (var i = 0; i < callbacks.length; i++) {
+	    cb = callbacks[i];
+	    if (cb === fn || cb.fn === fn) {
+	      callbacks.splice(i, 1);
+	      break;
+	    }
+	  }
+	  return this;
+	};
+
+	/**
+	 * Emit `event` with the given args.
+	 *
+	 * @param {String} event
+	 * @param {Mixed} ...
+	 * @return {Emitter}
+	 */
+
+	Emitter.prototype.emit = function(event){
+	  this._callbacks = this._callbacks || {};
+	  var args = [].slice.call(arguments, 1)
+	    , callbacks = this._callbacks[event];
+
+	  if (callbacks) {
+	    callbacks = callbacks.slice(0);
+	    for (var i = 0, len = callbacks.length; i < len; ++i) {
+	      callbacks[i].apply(this, args);
+	    }
+	  }
+
+	  return this;
+	};
+
+	/**
+	 * Return array of callbacks for `event`.
+	 *
+	 * @param {String} event
+	 * @return {Array}
+	 * @api public
+	 */
+
+	Emitter.prototype.listeners = function(event){
+	  this._callbacks = this._callbacks || {};
+	  return this._callbacks[event] || [];
+	};
+
+	/**
+	 * Check if this emitter has `event` handlers.
+	 *
+	 * @param {String} event
+	 * @return {Boolean}
+	 * @api public
+	 */
+
+	Emitter.prototype.hasListeners = function(event){
+	  return !! this.listeners(event).length;
+	};
+
+
+/***/ },
+/* 380 */
+/***/ function(module, exports) {
+
+	
+	/**
+	 * Reduce `arr` with `fn`.
+	 *
+	 * @param {Array} arr
+	 * @param {Function} fn
+	 * @param {Mixed} initial
+	 *
+	 * TODO: combatible error handling?
+	 */
+
+	module.exports = function(arr, fn, initial){  
+	  var idx = 0;
+	  var len = arr.length;
+	  var curr = arguments.length == 3
+	    ? initial
+	    : arr[idx++];
+
+	  while (idx < len) {
+	    curr = fn.call(null, curr, arr[idx], ++idx, arr);
+	  }
+	  
+	  return curr;
+	};
+
+/***/ },
+/* 381 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _post = __webpack_require__(368);
+
+	Object.defineProperty(exports, 'Post', {
+	  enumerable: true,
+	  get: function get() {
+	    return _post.default;
+	  }
+	});
+
+/***/ },
+/* 382 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _react = __webpack_require__(147);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/*
+	 *
+	 *
+	 */
+	function Modal(props) {
+
+		return _react2.default.createElement(
+			'div',
+			{ className: 'modal' },
+			_react2.default.createElement(
+				'div',
+				{ className: 'modal__content' },
+				props.children
+			)
+		);
+	}
+
+	exports.default = Modal;
 
 /***/ }
 /******/ ]);
