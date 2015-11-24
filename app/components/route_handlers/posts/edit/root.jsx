@@ -5,8 +5,6 @@ import Edit from './../../../general/crud/edit.jsx'
 
 import Post from './../../../../models/post.js'
 
-const ACTIONS = [ 'create', 'edit', 'delete' ]
-
 /*
  * 
  *
@@ -27,14 +25,14 @@ class EditPost extends React.Component {
 	 *
 	 */
 	render() {
-		var { id } = this.props.router.params
-		var action = (id == null) ? 'create' : 'update'
+		var { id, action } = this.props.router.params
+		action = action || 'new'
 		return (
 			<div className='wrapper__clear-header fill-parent'>
 				<Edit 
 					modelName='Post'
 					modelId={id}
-					action='create'
+					action={action}
 				/>
 			</div>
 		)

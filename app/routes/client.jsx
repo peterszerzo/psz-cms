@@ -38,7 +38,7 @@ var routes = (
 
 					<Route path='/admin/posts'>
 						<Route path='new' component={EditPost} />
-						<Route path=':id/edit' component={EditPost} />
+						<Route path=':id/:action' component={EditPost} />
 					</Route>
 
 					<Route path='/:id' component={Show} />

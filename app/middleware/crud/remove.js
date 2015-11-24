@@ -1,17 +1,27 @@
-import _ from 'underscore';
-import pg from 'pg';
+import 'babel-polyfill'
 
-export default function delete(options, req, res, next) {
+import _ from 'underscore'
+import pg from 'pg'
+
+import * as models from './../../models/index.js'
+
+export default function remove(options, req, res, next) {
 	
 	var { modelName } = options
 
+	var Model = models[modelName]
+
 	var data = req.body
 
-	var model = models[modelName].create(data)
+	console.log(Model)
+
+	var model = Model.create(data)
 
 	var command = model.getSqlDeleteCommand()
 
 	var { dbClient } = req
+
+	console.log(command)
 
 	dbClient.query(command, (err, data) => {
 		if (err) {

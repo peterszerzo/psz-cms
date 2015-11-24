@@ -18713,7 +18713,7 @@
 						_reactRouter.Route,
 						{ path: '/admin/posts' },
 						_react2.default.createElement(_reactRouter.Route, { path: 'new', component: _root10.default }),
-						_react2.default.createElement(_reactRouter.Route, { path: ':id/edit', component: _root10.default })
+						_react2.default.createElement(_reactRouter.Route, { path: ':id/:action', component: _root10.default })
 					),
 					_react2.default.createElement(_reactRouter.Route, { path: '/:id', component: _root8.default })
 				)
@@ -51540,7 +51540,9 @@
 					'header--discrete': isDiscrete,
 					'header--expanded': this.state.isExpanded
 				});
-				var opacity = this.props.router.location.pathname === '/' ? '0' : '1';
+
+				var opacity = pathname === '/' ? '0' : '1';
+
 				return _react2.default.createElement(
 					'div',
 					{ className: cls, style: { opacity: opacity } },
@@ -51573,11 +51575,13 @@
 				var activeLinkName = this.props.activeLinkName;
 
 				return buttons.map(function (button, index) {
-					var isActive = activeLinkName && button.name === activeLinkName,
-					    className = 'header__nav__item' + (isActive ? ' header__nav__item--active' : '');
+					var cls = (0, _classnames2.default)({
+						'header__nav__item': true,
+						'header__nav__item--active': activeLinkName && button.name === activeLinkName
+					});
 					return _react2.default.createElement(
 						'li',
-						{ className: className, key: index },
+						{ className: cls, key: index },
 						_react2.default.createElement(
 							_reactRouter.Link,
 							{ to: button.url },
@@ -64310,8 +64314,6 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var ACTIONS = ['create', 'edit', 'delete'];
-
 	/*
 	 * 
 	 *
@@ -64339,16 +64341,18 @@
 		_createClass(EditPost, [{
 			key: 'render',
 			value: function render() {
-				var id = this.props.router.params.id;
+				var _props$router$params = this.props.router.params;
+				var id = _props$router$params.id;
+				var action = _props$router$params.action;
 
-				var action = id == null ? 'create' : 'update';
+				action = action || 'new';
 				return _react2.default.createElement(
 					'div',
 					{ className: 'wrapper__clear-header fill-parent' },
 					_react2.default.createElement(_edit2.default, {
 						modelName: 'Post',
 						modelId: id,
-						action: 'create'
+						action: action
 					})
 				);
 			}
@@ -64433,6 +64437,8 @@
 
 			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Edit).call(this, props));
 
+			console.log(props.modelId, props.action);
+
 			_this.handleFormFieldChange = _this.handleFormFieldChange.bind(_this);
 			_this.handleFormSubmit = _this.handleFormSubmit.bind(_this);
 
@@ -64492,7 +64498,7 @@
 			}
 
 			/*
-	   *
+	   * Fetch resource if an ID was passed down in props.
 	   *
 	   */
 
@@ -64518,21 +64524,25 @@
 					});
 				} else {
 					var model = this.Model.create();
-					model.setDefaults();
 					this.setState({ model: model });
 				}
 			}
 
 			/*
-	   *
+	   * Apply change from form field. The model instance is recreated so as not to mutate the data.
 	   *
 	   */
 
 		}, {
 			key: 'handleFormFieldChange',
 			value: function handleFormFieldChange(childData) {
-				this.state.model.data[childData.id] = childData.value;
-				this.forceUpdate();
+				var data = this.state.model.data;
+
+				var change = {};
+				change[childData.id] = childData.value;
+				var newData = Object.assign({}, data, change);
+				var newModel = this.Model.create(newData);
+				this.setState({ model: newModel });
 			}
 
 			/*
@@ -64550,21 +64560,26 @@
 
 				this.setState({ editStatus: 'pending' });
 
-				var requestMethodName;
+				var requestMethodName, requestUrl;
 
 				switch (action) {
 					case 'update':
 						requestMethodName = 'put';
+						requestUrl = model.getUpdateUrl();
+						break;
 					case 'delete':
 						requestMethodName = 'del';
+						requestUrl = model.getDeleteUrl();
+						break;
 					default:
 						requestMethodName = 'post';
+						requestUrl = model.getCreateUrl();
 				}
 
-				_superagent2.default[requestMethodName](model.getCreateUrl()).send(model.data).end(function (err, res) {
+				_superagent2.default[requestMethodName](requestUrl).send(model.data).end(function (err, res) {
 					if (err) {
 						_this3.setState({ editStatus: 'error' });
-						return console.log(err);
+						return console.log(err.stack);
 					}
 					_this3.setState({ editStatus: 'success' });
 					console.log(res);
@@ -66047,7 +66062,7 @@
 						hint: field.hint,
 						isEnabled: isEnabled,
 						handleFormFieldChange: _this2.handleFormFieldChange.bind(_this2),
-						initialValue: model.getValueAsString(key)
+						initialValue: model.getAttributeForFormField(field)
 					});
 				});
 			}
@@ -66591,20 +66606,28 @@
 
 		tableName: 'testresources',
 
-		// Set on superclass.
+		// Set on subclass.
 		data: {},
 
-		// Set on superclass.
+		// Set on subclass.
 		fields: [],
 
 		/*
-	  * 
+	  * Create model instance.
 	  *
 	  */
-		sanitizeValue: function sanitizeValue(key, value) {},
+		create: function create() {
+			var data = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+
+			var self = Object.create(this);
+			self.setDefaults();
+			// Add new data on top of defaults.
+			self.data = Object.assign({}, self.data, data);
+			return self;
+		},
 
 		/*
-	  *
+	  * Get API url to create new resource.
 	  *
 	  */
 		getCreateUrl: function getCreateUrl() {
@@ -66612,7 +66635,7 @@
 		},
 
 		/*
-	  *
+	  * Get API url to update the resource.
 	  *
 	  */
 		getUpdateUrl: function getUpdateUrl() {
@@ -66620,23 +66643,11 @@
 		},
 
 		/*
-	  *
+	  * Get API url to delete the resource.
 	  *
 	  */
 		getDeleteUrl: function getDeleteUrl() {
 			return this.getUpdateUrl();
-		},
-
-		/*
-	  *
-	  *
-	  */
-		create: function create() {
-			var data = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-
-			var self = Object.create(this);
-			self.data = data;
-			return self;
 		},
 
 		/*
@@ -66661,8 +66672,8 @@
 	  *
 	  *
 	  */
-		getValueAsString: function getValueAsString(key) {
-			var value = this.data[key];
+		getAttributeForFormField: function getAttributeForFormField(field) {
+			var value = this.data[field.key];
 			if (_underscore2.default.isObject(value)) {
 				return JSON.stringify(value);
 			}
@@ -66673,32 +66684,44 @@
 	  *
 	  *
 	  */
+		getAttributeForSqlInsert: function getAttributeForSqlInsert(field) {
+			var key = field.key;
+
+			var value = this.data[field.key];
+			if (_underscore2.default.isArray(value) || _underscore2.default.isObject(value)) {
+				value = '\'' + JSON.stringify(value) + '\'';
+			} else if (_underscore2.default.isString(value)) {
+				var escapeMarker = '';
+				if (value.length > 15) {
+					escapeMarker = 'E';
+				}
+				value = escapeMarker + '\'' + escapeText(value) + '\'';
+			}
+			return value;
+		},
+
+		/*
+	  * Gets value string for SQL insert.
+	  *
+	  */
 		getValuesString: function getValuesString() {
-			var fields = this.fields;
-			var data = this.data;
+			var _this = this;
 
-			return fields.map(function (field) {
-				var key = field.key;
-				var defaultValue = field.defaultValue;
-
-				var value = data[key];
-
-				if (value == null) {
-					value = defaultValue;
-				}
-
-				if (_underscore2.default.isArray(value) || _underscore2.default.isObject(value)) {
-					value = '\'' + JSON.stringify(value) + '\'';
-				} else if (_underscore2.default.isString(value)) {
-					var escapeMarker = '';
-					if (value.length > 15) {
-						escapeMarker = 'E';
-					}
-					value = escapeMarker + '\'' + escapeText(value) + '\'';
-				}
-
-				return value;
+			return this.fields.map(function (field) {
+				return _this.getAttributeForSqlInsert(field);
 			}).join(',');
+		},
+
+		/*
+	  *
+	  *
+	  */
+		getSetString: function getSetString() {
+			var _this2 = this;
+
+			return this.fields.map(function (field) {
+				return field.key + '=' + _this2.getAttributeForSqlInsert(field);
+			});
 		},
 
 		/*
@@ -66734,8 +66757,13 @@
 	  *
 	  */
 		getSqlUpdateCommand: function getSqlUpdateCommand() {
-			return 'UPDATE ' + this.tableName + ' SET () WHERE (id=\'' + this.data.id + '\');';
+			return 'UPDATE ' + this.tableName + ' SET (' + this.getSetString() + ') WHERE (id=\'' + this.data.id + '\');';
 		},
+
+		/*
+	  *
+	  *
+	  */
 		getSqlDeleteCommand: function getSqlDeleteCommand() {
 			return 'DELETE FROM ' + this.tableName + ' WHERE (id=\'' + this.data.id + '\');';
 		},
@@ -69272,7 +69300,7 @@
 	exports.i(__webpack_require__(381), "");
 
 	// module
-	exports.push([module.id, "@-webkit-keyframes bounce {\n  0% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  12.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  25% {\n    -moz-transform: translateY(9px);\n    -o-transform: translateY(9px);\n    -ms-transform: translateY(9px);\n    -webkit-transform: translateY(9px);\n    transform: translateY(9px); }\n  37.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  50% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  62.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  75% {\n    -moz-transform: translateY(-9px);\n    -o-transform: translateY(-9px);\n    -ms-transform: translateY(-9px);\n    -webkit-transform: translateY(-9px);\n    transform: translateY(-9px); }\n  87.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  100% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); } }\n\n@-moz-keyframes bounce {\n  0% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  12.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  25% {\n    -moz-transform: translateY(9px);\n    -o-transform: translateY(9px);\n    -ms-transform: translateY(9px);\n    -webkit-transform: translateY(9px);\n    transform: translateY(9px); }\n  37.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  50% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  62.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  75% {\n    -moz-transform: translateY(-9px);\n    -o-transform: translateY(-9px);\n    -ms-transform: translateY(-9px);\n    -webkit-transform: translateY(-9px);\n    transform: translateY(-9px); }\n  87.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  100% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); } }\n\n@-ms-keyframes bounce {\n  0% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  12.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  25% {\n    -moz-transform: translateY(9px);\n    -o-transform: translateY(9px);\n    -ms-transform: translateY(9px);\n    -webkit-transform: translateY(9px);\n    transform: translateY(9px); }\n  37.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  50% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  62.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  75% {\n    -moz-transform: translateY(-9px);\n    -o-transform: translateY(-9px);\n    -ms-transform: translateY(-9px);\n    -webkit-transform: translateY(-9px);\n    transform: translateY(-9px); }\n  87.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  100% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); } }\n\n@-o-keyframes bounce {\n  0% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  12.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  25% {\n    -moz-transform: translateY(9px);\n    -o-transform: translateY(9px);\n    -ms-transform: translateY(9px);\n    -webkit-transform: translateY(9px);\n    transform: translateY(9px); }\n  37.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  50% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  62.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  75% {\n    -moz-transform: translateY(-9px);\n    -o-transform: translateY(-9px);\n    -ms-transform: translateY(-9px);\n    -webkit-transform: translateY(-9px);\n    transform: translateY(-9px); }\n  87.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  100% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); } }\n\n@keyframes bounce {\n  0% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  12.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  25% {\n    -moz-transform: translateY(9px);\n    -o-transform: translateY(9px);\n    -ms-transform: translateY(9px);\n    -webkit-transform: translateY(9px);\n    transform: translateY(9px); }\n  37.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  50% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  62.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  75% {\n    -moz-transform: translateY(-9px);\n    -o-transform: translateY(-9px);\n    -ms-transform: translateY(-9px);\n    -webkit-transform: translateY(-9px);\n    transform: translateY(-9px); }\n  87.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  100% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); } }\n\n.wrapper {\n  overflow-x: hidden;\n  overflow-y: scroll; }\n  .wrapper__clear-header {\n    padding-top: 60px; }\n\n* {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n  -webkit-font-smoothing: antialiased; }\n\nhtml, body {\n  width: 100%;\n  height: 100%;\n  overflow: hidden;\n  margin: 0; }\n\npre, code {\n  width: 100%;\n  overflow-x: scroll; }\n\npre {\n  background-color: rgba(79, 63, 145, 0.1);\n  padding: 20px;\n  border-radius: 8px; }\n\na {\n  text-decoration: none;\n  color: white;\n  opacity: 0.6; }\n  a:hover {\n    opacity: 1; }\n\nul {\n  list-style-type: none;\n  padding: 0;\n  margin: 0; }\n  ul li {\n    display: block; }\n\nimg {\n  display: block;\n  width: 100%; }\n\n* {\n  font-family: 'PT Sans';\n  font-weight: normal; }\n\nh1, h2, h3, h4 {\n  font-family: 'PT Sans'; }\n\np, a, li {\n  font-family: 'PT Serif'; }\n\np, a, li, code {\n  font-size: 22px; }\n\ncode {\n  font-family: \"Courier New\";\n  font-size: 18px;\n  padding: 0 4px; }\n  p code {\n    font-size: 22px; }\n\np, li {\n  line-height: 165%; }\n\ncode {\n  line-height: 135%; }\n\nh1 {\n  font-size: 44px;\n  margin-top: 35px;\n  margin-bottom: 15px; }\n\nh2 {\n  font-size: 32px;\n  margin-top: 30px;\n  margin-bottom: 10px; }\n\nh3 {\n  font-size: 26px; }\n\n.hidden {\n  display: none !important; }\n\n.active {\n  opacity: 1 !important;\n  transition: opacity 0.5s ease-in-out; }\n\n.fill-parent {\n  width: 100%;\n  height: 100%; }\n\n.title, .headline {\n  text-align: center;\n  padding: 0 10px;\n  width: 100%;\n  margin: auto;\n  font-family: 'PT Sans';\n  word-wrap: break-word; }\n\n.title {\n  font-size: 48px;\n  font-size: 3rem;\n  margin: 30px 0 20px 0; }\n  @media only screen and (min-width: 768px) {\n    .title {\n      font-size: 72px;\n      font-size: 4.5rem;\n      margin: 45px 0 20px 0; } }\n\n.headline {\n  font-size: 22px;\n  font-size: 1.375rem;\n  max-width: 800px;\n  font-weight: normal;\n  margin-top: 0px;\n  margin-bottom: 80px; }\n  @media screen and (min-width: 600px) {\n    .headline {\n      font-size: 36px;\n      font-size: 2.25rem; } }\n\n.date {\n  text-align: center;\n  font-size: 18px;\n  font-size: 1.125rem;\n  padding: 0 0 30px 0; }\n\n.loader {\n  text-align: center;\n  margin-top: 30px;\n  height: 60px; }\n  .loader img {\n    display: inline-block;\n    width: 60px;\n    height: 60px; }\n\n.link {\n  width: 170px;\n  font-family: 'PT Sans';\n  margin: auto;\n  text-align: center;\n  color: white;\n  border: 2px solid white;\n  padding: 8px 16px;\n  font-size: 18px;\n  font-size: 1.125rem;\n  opacity: 1;\n  transition: all 0.3s; }\n  .link:hover {\n    color: #000;\n    background-color: white;\n    transition: all 0.3s; }\n\n.banner {\n  width: 100%;\n  height: 100%;\n  transition: all 0.5s;\n  background-color: #0d1722;\n  position: relative; }\n  .banner__summary {\n    z-index: 2;\n    top: calc(50% - 250px/2);\n    left: calc(50% - 250px/2);\n    position: fixed;\n    display: block;\n    border: 2px solid rgba(255, 255, 255, 0);\n    padding: 55px 30px;\n    width: 250px;\n    height: 250px;\n    border-radius: 100%;\n    margin: auto;\n    background-color: #413478;\n    opacity: 0.95;\n    -webkit-transition: all 0.5s;\n    -moz-transition: all 0.5s;\n    -ms-transition: all 0.5s;\n    -o-transition: all 0.5s;\n    transition: all 0.5s;\n    -webkit-animation: bounce 4.5s linear infinite;\n    -moz-animation: bounce 4.5s linear infinite;\n    -ms-animation: bounce 4.5s linear infinite;\n    -o-animation: bounce 4.5s linear infinite;\n    animation: bounce 4.5s linear infinite; }\n    .banner__summary:hover {\n      opacity: 0.99;\n      border: 2px solid white;\n      transition: all 0.5s; }\n    .banner__summary h1, .banner__summary p {\n      font-family: 'PT Sans';\n      margin: 0;\n      padding: 0;\n      text-align: center;\n      line-height: 125%; }\n    .banner__summary h1 {\n      font-size: 32px;\n      font-size: 2rem;\n      margin: 28px 0 10px 0; }\n    .banner__summary p {\n      font-size: 18px;\n      font-size: 1.125rem;\n      margin: 0; }\n  .banner__globe, .banner__background {\n    position: absolute;\n    width: 100%;\n    height: 100%; }\n  .banner__globe {\n    z-index: 1; }\n  .banner__background {\n    z-index: 0;\n    opacity: 0.4;\n    background-image: url(\"/images/sky-1200.jpg\");\n    background-position: 50% 50%;\n    background-size: cover; }\n  .banner__message {\n    transition: all 0.75s;\n    position: absolute;\n    bottom: calc(50% - 210px);\n    color: white;\n    text-align: center;\n    width: 100%;\n    padding: 0 20%;\n    font-size: 18px;\n    font-size: 1.125rem;\n    opacity: 1;\n    font-family: 'PT Sans'; }\n  .banner__geopath {\n    cursor: pointer;\n    stroke: white;\n    fill: white;\n    stroke-width: 0.2px;\n    transition: all 0.2s; }\n    .banner__geopath--active, .banner__geopath:hover {\n      fill: #413478;\n      stroke: #413478;\n      transition: all 0.2s; }\n\n.header {\n  overflow: visible;\n  position: fixed;\n  width: 100%;\n  height: 60px;\n  top: 0;\n  box-shadow: 0 0 10px #333;\n  background-color: rgba(13, 23, 34, 0.95);\n  transition: all 0.2s;\n  color: white;\n  z-index: 100; }\n  .header--discrete {\n    background-color: rgba(255, 255, 255, 0);\n    box-shadow: none; }\n  .header__main-link {\n    height: 100%;\n    width: 150px; }\n    .header__main-link svg {\n      height: 30px;\n      width: 30px;\n      margin-top: 15px;\n      margin-left: 15px;\n      fill: white; }\n  .header__nav {\n    z-index: 100;\n    width: 100px;\n    height: 60px;\n    overflow: visible;\n    float: right;\n    text-align: right;\n    padding: 0; }\n    .header--discrete .header__nav {\n      width: 100px; }\n    @media screen and (min-width: 800px) {\n      .header__nav {\n        width: auto;\n        float: auto; } }\n    .header__nav__arrow, .header__nav__item {\n      width: 100px;\n      float: right;\n      height: 60px;\n      padding: 0; }\n    .header__nav__arrow {\n      cursor: pointer;\n      display: table;\n      text-align: center;\n      display: none; }\n      @media screen and (min-width: 800px) {\n        .header__nav__arrow {\n          display: none; } }\n      .header--discrete .header__nav__arrow {\n        display: table; }\n      .header__nav__arrow svg {\n        opacity: 0.9;\n        text-align: center;\n        vertical-align: middle;\n        display: table-cell;\n        fill: white;\n        width: 30px;\n        height: 30px;\n        margin: 15px auto; }\n      .header__nav__arrow:hover > svg, .header__nav__arrow--active > svg {\n        opacity: 1; }\n    .header__nav__item {\n      z-index: 100;\n      display: none; }\n      .header__nav__item:hover {\n        border-bottom: 4px solid #5d4aaa; }\n      .header__nav:hover .header__nav__item, .header--expanded .header__nav__item {\n        background-color: rgba(13, 23, 34, 0.95);\n        display: table; }\n      .header--discrete .header__nav__item {\n        display: none; }\n      .header--discrete .header__nav__item {\n        background: none !important;\n        border-color: white; }\n      @media screen and (min-width: 800px) {\n        .header__nav__item {\n          display: table; }\n          .header__nav:hover .header__nav__item {\n            background: none; } }\n      .header__nav__item a {\n        height: 100%;\n        padding: 0 0px;\n        display: table-cell;\n        position: relative;\n        text-align: center;\n        vertical-align: middle;\n        font-family: 'PT Sans';\n        font-size: 18px;\n        font-size: 1.125rem; }\n        .header__nav__item a:hover {\n          top: 2px;\n          opacity: 1; }\n      @media screen and (min-width: 800px) {\n        .header__nav__item {\n          display: table;\n          background: none; } }\n\n.project-show, .project-groups {\n  margin: 0; }\n\n.project-show {\n  padding: 0; }\n  .project-show__links {\n    text-align: center;\n    display: block; }\n    .project-show__links li {\n      margin: 15px 15px;\n      display: inline-block; }\n\n.project-group {\n  width: 100%;\n  padding: 100px 0 40px 0; }\n  .project-group:nth-of-type(2n+0) {\n    background-color: #f6f6f6; }\n  .project-group__content {\n    width: 250px;\n    margin-left: auto;\n    margin-right: auto; }\n    @media only screen and (min-width: 540px) {\n      .project-group__content {\n        width: 500px; } }\n    @media only screen and (min-width: 790px) {\n      .project-group__content {\n        width: 750px; } }\n    .project-group__content > h1 {\n      opacity: 1;\n      margin: 0;\n      font-size: 36px;\n      text-align: center; }\n  .project-group__separator, .project-group__description {\n    margin-left: 20px;\n    margin-right: 20px; }\n  .project-group__description {\n    margin-top: 5px;\n    margin-bottom: 5px; }\n  .project-group__separator {\n    height: 2px;\n    background-color: #5947a3;\n    border-radius: 1px;\n    margin-left: 20px;\n    margin-right: 20px;\n    margin-top: 10px;\n    margin-bottom: 15px;\n    opacity: 0.5; }\n\n.project-list {\n  width: 100%;\n  margin: 30px auto;\n  text-align: left; }\n  .project-list > li {\n    display: inline-block; }\n  .project-list__item {\n    display: inline-block;\n    fill: #0E3647;\n    position: relative;\n    width: 250px;\n    height: 225px;\n    -webkit-transition: all 0.75s;\n    -moz-transition: all 0.75s;\n    -ms-transition: all 0.75s;\n    -o-transition: all 0.75s;\n    transition: all 0.75s; }\n    .project-list__item > * {\n      position: absolute; }\n    .project-list__item > *, .project-list__item:hover > * {\n      -webkit-transition: all 0.75s;\n      -moz-transition: all 0.75s;\n      -ms-transition: all 0.75s;\n      -o-transition: all 0.75s;\n      transition: all 0.75s; }\n    .project-list__item__logo {\n      width: 187.5px;\n      height: 187.5px;\n      left: 31.25px;\n      z-index: 9;\n      top: 0px; }\n      .project-list__item:hover .project-list__item__logo {\n        opacity: 1;\n        top: 0px; }\n      .no-touch .project-list__item__logo {\n        top: 15px;\n        opacity: 0.95; }\n    .project-list__item__title {\n      color: #071c29;\n      font-size: 28px;\n      font-size: 1.75rem;\n      top: 85%;\n      width: 90%;\n      left: 5%;\n      opacity: 1;\n      text-align: center; }\n      .no-touch .project-list__item__title {\n        color: #071c29;\n        font-size: 24px;\n        top: 76%;\n        width: 90%;\n        left: 5%;\n        opacity: 1;\n        text-align: center; }\n      .project-list__item:hover .project-list__item__title {\n        opacity: 1;\n        top: 85%; }\n      .no-touch .project-list__item__title {\n        top: 76%;\n        opacity: 0; }\n\n.static {\n  width: 100%;\n  padding: 25px;\n  margin: auto; }\n  .static p:first-child {\n    padding-top: 0;\n    margin-top: 0; }\n  .static p:last-child {\n    padding-bottom: 0;\n    margin-bottom: 0; }\n  @media only screen and (min-width: 818px) {\n    .static {\n      width: 768px;\n      padding: 50px 0; } }\n  .static blockquote {\n    font-style: italic;\n    margin: 35px 0 35px 40px; }\n  .static ul {\n    list-style-type: circle;\n    list-style-position: outside;\n    padding: 25px; }\n  .static p, .static a {\n    hyphens: auto; }\n  .static li {\n    display: list-item;\n    padding: 5px 0; }\n  .static a {\n    color: #4F3F91;\n    border-bottom: 1px solid #4F3F91;\n    opacity: 0.7; }\n    .static a:hover {\n      opacity: 1; }\n  .static img, .static iframe {\n    width: 100%;\n    display: block;\n    margin: 40px auto;\n    border-radius: 4px; }\n    @media screen and (max-width: 780px) {\n      .static img, .static iframe {\n        width: 250px;\n        margin: auto; } }\n  .static iframe {\n    height: 400px; }\n\n.hero {\n  position: relative;\n  width: 100%;\n  content: '';\n  color: white; }\n  .hero__background, .hero__overlay, .hero__title-bar {\n    position: absolute;\n    width: 100%;\n    height: 100%;\n    left: 0;\n    top: 0; }\n  .hero__background {\n    background-size: cover;\n    background-position: 50% 0%;\n    background-repeat: no-repeat; }\n    .hero__background--blurred {\n      -webkit-filter: blur(3px);\n      filter: blur(3px); }\n  .hero__overlay {\n    -webkit-transition: all 0.5s;\n    -moz-transition: all 0.5s;\n    -ms-transition: all 0.5s;\n    -o-transition: all 0.5s;\n    transition: all 0.5s;\n    background-color: #0d1722; }\n  .hero__top-bar {\n    width: 100%;\n    position: absolute;\n    top: 70px; }\n  .hero__title-bar {\n    display: flex; }\n    .hero__title-bar__content {\n      margin: auto;\n      padding: 0 30px; }\n  .hero__nav-bar {\n    width: 100%;\n    position: absolute;\n    bottom: 70px; }\n  .hero__text {\n    position: absolute;\n    bottom: 20%;\n    left: 25px;\n    font-size: 64px;\n    font-size: 4rem;\n    font-family: 'PT Sans';\n    color: white; }\n    @media only screen and (min-width: 768px) {\n      .hero__text {\n        left: calc(50% - 768px/2);\n        font-size: 80px; } }\n\n.form {\n  width: 100%;\n  padding: 50px 0;\n  max-width: 600px;\n  margin: auto; }\n  .form input, .form select, .form textarea, .form button {\n    outline: none;\n    border: 1px solid #555; }\n  .form input, .form textarea {\n    width: 100%;\n    font-size: 24px;\n    font-size: 1.5rem;\n    padding: 8px 5px; }\n    .form input:focus, .form textarea:focus {\n      background-color: #ddd; }\n  .form textarea {\n    height: 400px; }\n  .form label {\n    font-family: 'PT Sans';\n    font-size: 44px;\n    font-size: 2.75rem;\n    margin: 10px 0; }\n  .form__hint {\n    font-family: 'PT Serif';\n    font-size: 24px;\n    font-size: 1.5rem;\n    margin: 10px 0; }\n  .form__wrapper {\n    margin: 50px 0; }\n\n.modal {\n  z-index: 1000;\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  display: flex;\n  background-color: rgba(0, 0, 0, 0.3); }\n  .modal__content {\n    width: 300px;\n    height: 200px;\n    margin: auto;\n    border-radius: 10px;\n    font-size: 44px;\n    font-size: 2.75rem;\n    padding: 65px;\n    color: white;\n    background-color: #0d1722;\n    display: table;\n    text-align: center;\n    vertical-align: middle; }\n", ""]);
+	exports.push([module.id, "@-webkit-keyframes bounce {\n  0% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  12.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  25% {\n    -moz-transform: translateY(9px);\n    -o-transform: translateY(9px);\n    -ms-transform: translateY(9px);\n    -webkit-transform: translateY(9px);\n    transform: translateY(9px); }\n  37.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  50% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  62.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  75% {\n    -moz-transform: translateY(-9px);\n    -o-transform: translateY(-9px);\n    -ms-transform: translateY(-9px);\n    -webkit-transform: translateY(-9px);\n    transform: translateY(-9px); }\n  87.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  100% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); } }\n\n@-moz-keyframes bounce {\n  0% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  12.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  25% {\n    -moz-transform: translateY(9px);\n    -o-transform: translateY(9px);\n    -ms-transform: translateY(9px);\n    -webkit-transform: translateY(9px);\n    transform: translateY(9px); }\n  37.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  50% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  62.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  75% {\n    -moz-transform: translateY(-9px);\n    -o-transform: translateY(-9px);\n    -ms-transform: translateY(-9px);\n    -webkit-transform: translateY(-9px);\n    transform: translateY(-9px); }\n  87.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  100% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); } }\n\n@-ms-keyframes bounce {\n  0% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  12.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  25% {\n    -moz-transform: translateY(9px);\n    -o-transform: translateY(9px);\n    -ms-transform: translateY(9px);\n    -webkit-transform: translateY(9px);\n    transform: translateY(9px); }\n  37.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  50% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  62.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  75% {\n    -moz-transform: translateY(-9px);\n    -o-transform: translateY(-9px);\n    -ms-transform: translateY(-9px);\n    -webkit-transform: translateY(-9px);\n    transform: translateY(-9px); }\n  87.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  100% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); } }\n\n@-o-keyframes bounce {\n  0% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  12.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  25% {\n    -moz-transform: translateY(9px);\n    -o-transform: translateY(9px);\n    -ms-transform: translateY(9px);\n    -webkit-transform: translateY(9px);\n    transform: translateY(9px); }\n  37.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  50% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  62.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  75% {\n    -moz-transform: translateY(-9px);\n    -o-transform: translateY(-9px);\n    -ms-transform: translateY(-9px);\n    -webkit-transform: translateY(-9px);\n    transform: translateY(-9px); }\n  87.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  100% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); } }\n\n@keyframes bounce {\n  0% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  12.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  25% {\n    -moz-transform: translateY(9px);\n    -o-transform: translateY(9px);\n    -ms-transform: translateY(9px);\n    -webkit-transform: translateY(9px);\n    transform: translateY(9px); }\n  37.5% {\n    -moz-transform: translateY(6px);\n    -o-transform: translateY(6px);\n    -ms-transform: translateY(6px);\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px); }\n  50% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); }\n  62.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  75% {\n    -moz-transform: translateY(-9px);\n    -o-transform: translateY(-9px);\n    -ms-transform: translateY(-9px);\n    -webkit-transform: translateY(-9px);\n    transform: translateY(-9px); }\n  87.5% {\n    -moz-transform: translateY(-6px);\n    -o-transform: translateY(-6px);\n    -ms-transform: translateY(-6px);\n    -webkit-transform: translateY(-6px);\n    transform: translateY(-6px); }\n  100% {\n    -moz-transform: translateY(0px);\n    -o-transform: translateY(0px);\n    -ms-transform: translateY(0px);\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px); } }\n\n.wrapper {\n  overflow-x: hidden;\n  overflow-y: scroll; }\n  .wrapper__clear-header {\n    padding-top: 60px; }\n\n* {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n  -webkit-font-smoothing: antialiased; }\n\nhtml, body {\n  width: 100%;\n  height: 100%;\n  overflow: hidden;\n  margin: 0; }\n\npre, code {\n  width: 100%;\n  overflow-x: scroll; }\n\npre {\n  background-color: rgba(79, 63, 145, 0.1);\n  padding: 20px;\n  border-radius: 8px; }\n\na {\n  text-decoration: none;\n  color: white;\n  opacity: 0.6; }\n  a:hover {\n    opacity: 1; }\n\nul {\n  list-style-type: none;\n  padding: 0;\n  margin: 0; }\n  ul li {\n    display: block; }\n\nimg {\n  display: block;\n  width: 100%; }\n\n* {\n  font-family: 'PT Sans';\n  font-weight: normal; }\n\nh1, h2, h3, h4 {\n  font-family: 'PT Sans'; }\n\np, a, li {\n  font-family: 'PT Serif'; }\n\np, a, li, code {\n  font-size: 22px; }\n\ncode {\n  font-family: \"Courier New\";\n  font-size: 18px;\n  padding: 0 4px; }\n  p code {\n    font-size: 22px; }\n\np, li {\n  line-height: 165%; }\n\ncode {\n  line-height: 135%; }\n\nh1 {\n  font-size: 44px;\n  margin-top: 35px;\n  margin-bottom: 15px; }\n\nh2 {\n  font-size: 32px;\n  margin-top: 30px;\n  margin-bottom: 10px; }\n\nh3 {\n  font-size: 26px; }\n\n.hidden {\n  display: none !important; }\n\n.active {\n  opacity: 1 !important;\n  transition: opacity 0.5s ease-in-out; }\n\n.fill-parent {\n  width: 100%;\n  height: 100%; }\n\n.title, .headline {\n  text-align: center;\n  padding: 0 10px;\n  width: 100%;\n  margin: auto;\n  font-family: 'PT Sans';\n  word-wrap: break-word; }\n\n.title {\n  font-size: 48px;\n  font-size: 3rem;\n  margin: 30px 0 20px 0; }\n  @media only screen and (min-width: 768px) {\n    .title {\n      font-size: 72px;\n      font-size: 4.5rem;\n      margin: 45px 0 20px 0; } }\n\n.headline {\n  font-size: 22px;\n  font-size: 1.375rem;\n  max-width: 800px;\n  font-weight: normal;\n  margin-top: 0px;\n  margin-bottom: 80px; }\n  @media screen and (min-width: 600px) {\n    .headline {\n      font-size: 36px;\n      font-size: 2.25rem; } }\n\n.date {\n  text-align: center;\n  font-size: 18px;\n  font-size: 1.125rem;\n  padding: 0 0 30px 0; }\n\n.loader {\n  text-align: center;\n  margin-top: 30px;\n  height: 60px; }\n  .loader img {\n    display: inline-block;\n    width: 60px;\n    height: 60px; }\n\n.link {\n  width: 170px;\n  font-family: 'PT Sans';\n  margin: auto;\n  text-align: center;\n  color: white;\n  border: 2px solid white;\n  padding: 8px 16px;\n  font-size: 18px;\n  font-size: 1.125rem;\n  opacity: 1;\n  transition: all 0.3s; }\n  .link:hover {\n    color: #000;\n    background-color: white;\n    transition: all 0.3s; }\n\n.banner {\n  width: 100%;\n  height: 100%;\n  transition: all 0.5s;\n  background-color: #0d1722;\n  position: relative; }\n  .banner__summary {\n    z-index: 2;\n    top: calc(50% - 250px/2);\n    left: calc(50% - 250px/2);\n    position: fixed;\n    display: block;\n    border: 2px solid rgba(255, 255, 255, 0);\n    padding: 55px 30px;\n    width: 250px;\n    height: 250px;\n    border-radius: 100%;\n    margin: auto;\n    background-color: #413478;\n    opacity: 0.95;\n    -webkit-transition: all 0.5s;\n    -moz-transition: all 0.5s;\n    -ms-transition: all 0.5s;\n    -o-transition: all 0.5s;\n    transition: all 0.5s;\n    -webkit-animation: bounce 4.5s linear infinite;\n    -moz-animation: bounce 4.5s linear infinite;\n    -ms-animation: bounce 4.5s linear infinite;\n    -o-animation: bounce 4.5s linear infinite;\n    animation: bounce 4.5s linear infinite; }\n    .banner__summary:hover {\n      opacity: 0.99;\n      border: 2px solid white;\n      transition: all 0.5s; }\n    .banner__summary h1, .banner__summary p {\n      font-family: 'PT Sans';\n      margin: 0;\n      padding: 0;\n      text-align: center;\n      line-height: 125%; }\n    .banner__summary h1 {\n      font-size: 32px;\n      font-size: 2rem;\n      margin: 28px 0 10px 0; }\n    .banner__summary p {\n      font-size: 18px;\n      font-size: 1.125rem;\n      margin: 0; }\n  .banner__globe, .banner__background {\n    position: absolute;\n    width: 100%;\n    height: 100%; }\n  .banner__globe {\n    z-index: 1; }\n  .banner__background {\n    z-index: 0;\n    opacity: 0.4;\n    background-image: url(\"/images/sky-1200.jpg\");\n    background-position: 50% 50%;\n    background-size: cover; }\n  .banner__message {\n    transition: all 0.75s;\n    position: absolute;\n    bottom: calc(50% - 210px);\n    color: white;\n    text-align: center;\n    width: 100%;\n    padding: 0 20%;\n    font-size: 18px;\n    font-size: 1.125rem;\n    opacity: 1;\n    font-family: 'PT Sans'; }\n  .banner__geopath {\n    cursor: pointer;\n    stroke: white;\n    fill: white;\n    stroke-width: 0.2px;\n    transition: all 0.2s; }\n    .banner__geopath--active, .banner__geopath:hover {\n      fill: #413478;\n      stroke: #413478;\n      transition: all 0.2s; }\n\n.header {\n  overflow: visible;\n  position: fixed;\n  width: 100%;\n  height: 60px;\n  top: 0;\n  box-shadow: 0 0 10px #333;\n  background-color: rgba(13, 23, 34, 0.95);\n  transition: all 0.2s;\n  color: white;\n  z-index: 100; }\n  .header--discrete {\n    background-color: rgba(255, 255, 255, 0);\n    box-shadow: none; }\n  .header__main-link {\n    height: 100%;\n    width: 150px; }\n    .header__main-link svg {\n      height: 30px;\n      width: 30px;\n      margin-top: 15px;\n      margin-left: 15px;\n      fill: white; }\n  .header__nav {\n    z-index: 100;\n    width: 100px;\n    height: 60px;\n    overflow: visible;\n    float: right;\n    text-align: right;\n    padding: 0; }\n    .header--discrete .header__nav {\n      width: 100px; }\n    @media screen and (min-width: 800px) {\n      .header__nav {\n        width: auto;\n        float: auto; } }\n    .header__nav__arrow, .header__nav__item {\n      width: 100px;\n      float: right;\n      height: 60px;\n      padding: 0; }\n    .header__nav__arrow {\n      cursor: pointer;\n      display: table;\n      text-align: center;\n      display: none; }\n      @media screen and (min-width: 800px) {\n        .header__nav__arrow {\n          display: none; } }\n      .header--discrete .header__nav__arrow {\n        display: table; }\n      .header__nav__arrow svg {\n        opacity: 0.9;\n        text-align: center;\n        vertical-align: middle;\n        display: table-cell;\n        fill: white;\n        width: 30px;\n        height: 30px;\n        margin: 15px auto; }\n      .header__nav__arrow:hover > svg, .header__nav__arrow--active > svg {\n        opacity: 1; }\n    .header__nav__item {\n      z-index: 100;\n      display: none; }\n      .header__nav__item:hover {\n        border-bottom: 4px solid #5d4aaa; }\n      .header__nav:hover .header__nav__item, .header--expanded .header__nav__item {\n        background-color: rgba(13, 23, 34, 0.95);\n        display: table; }\n      .header--discrete .header__nav__item {\n        display: none; }\n      .header--discrete .header__nav__item {\n        background: none !important;\n        border-color: white; }\n      @media screen and (min-width: 800px) {\n        .header__nav__item {\n          display: table; }\n          .header__nav:hover .header__nav__item {\n            background: none; } }\n      .header__nav__item a {\n        height: 100%;\n        padding: 0 0px;\n        display: table-cell;\n        position: relative;\n        text-align: center;\n        vertical-align: middle;\n        font-family: 'PT Sans';\n        font-size: 18px;\n        font-size: 1.125rem; }\n        .header__nav__item a:hover {\n          top: 2px;\n          opacity: 1; }\n      @media screen and (min-width: 800px) {\n        .header__nav__item {\n          display: table;\n          background: none; } }\n\n.project-show, .project-groups {\n  margin: 0; }\n\n.project-show {\n  padding: 0; }\n  .project-show__links {\n    text-align: center;\n    display: block; }\n    .project-show__links li {\n      margin: 15px 15px;\n      display: inline-block; }\n\n.project-group {\n  width: 100%;\n  padding: 100px 0 40px 0; }\n  .project-group:nth-of-type(2n+0) {\n    background-color: #f6f6f6; }\n  .project-group__content {\n    width: 250px;\n    margin-left: auto;\n    margin-right: auto; }\n    @media only screen and (min-width: 540px) {\n      .project-group__content {\n        width: 500px; } }\n    @media only screen and (min-width: 790px) {\n      .project-group__content {\n        width: 750px; } }\n    .project-group__content > h1 {\n      opacity: 1;\n      margin: 0;\n      font-size: 36px;\n      text-align: center; }\n  .project-group__separator, .project-group__description {\n    margin-left: 20px;\n    margin-right: 20px; }\n  .project-group__description {\n    margin-top: 5px;\n    margin-bottom: 5px; }\n  .project-group__separator {\n    height: 2px;\n    background-color: #5947a3;\n    border-radius: 1px;\n    margin-left: 20px;\n    margin-right: 20px;\n    margin-top: 10px;\n    margin-bottom: 15px;\n    opacity: 0.5; }\n\n.project-list {\n  width: 100%;\n  margin: 30px auto;\n  text-align: left; }\n  .project-list > li {\n    display: inline-block; }\n  .project-list__item {\n    display: inline-block;\n    fill: #0E3647;\n    position: relative;\n    width: 250px;\n    height: 225px;\n    -webkit-transition: all 0.75s;\n    -moz-transition: all 0.75s;\n    -ms-transition: all 0.75s;\n    -o-transition: all 0.75s;\n    transition: all 0.75s; }\n    .project-list__item > * {\n      position: absolute; }\n    .project-list__item > *, .project-list__item:hover > * {\n      -webkit-transition: all 0.75s;\n      -moz-transition: all 0.75s;\n      -ms-transition: all 0.75s;\n      -o-transition: all 0.75s;\n      transition: all 0.75s; }\n    .project-list__item__logo {\n      width: 187.5px;\n      height: 187.5px;\n      left: 31.25px;\n      z-index: 9;\n      top: 0px; }\n      .project-list__item:hover .project-list__item__logo {\n        opacity: 1;\n        top: 0px; }\n      .no-touch .project-list__item__logo {\n        top: 15px;\n        opacity: 0.95; }\n    .project-list__item__title {\n      color: #071c29;\n      font-size: 28px;\n      font-size: 1.75rem;\n      top: 85%;\n      width: 90%;\n      left: 5%;\n      opacity: 1;\n      text-align: center; }\n      .no-touch .project-list__item__title {\n        color: #071c29;\n        font-size: 24px;\n        top: 76%;\n        width: 90%;\n        left: 5%;\n        opacity: 1;\n        text-align: center; }\n      .project-list__item:hover .project-list__item__title {\n        opacity: 1;\n        top: 85%; }\n      .no-touch .project-list__item__title {\n        top: 76%;\n        opacity: 0; }\n\n.static {\n  width: 100%;\n  padding: 25px;\n  margin: auto; }\n  .static p:first-child {\n    padding-top: 0;\n    margin-top: 0; }\n  .static p:last-child {\n    padding-bottom: 0;\n    margin-bottom: 0; }\n  @media only screen and (min-width: 818px) {\n    .static {\n      width: 768px;\n      padding: 50px 0; } }\n  .static blockquote {\n    font-style: italic;\n    margin: 35px 0 35px 40px; }\n  .static ul {\n    list-style-type: circle;\n    list-style-position: outside;\n    padding: 25px; }\n  .static p, .static a {\n    hyphens: auto; }\n  .static li {\n    display: list-item;\n    padding: 5px 0; }\n  .static a {\n    color: #4F3F91;\n    border-bottom: 1px solid #4F3F91;\n    opacity: 0.7; }\n    .static a:hover {\n      opacity: 1; }\n  .static img, .static iframe {\n    width: 100%;\n    display: block;\n    margin: 40px auto;\n    border-radius: 4px; }\n    @media screen and (max-width: 780px) {\n      .static img, .static iframe {\n        width: 250px;\n        margin: auto; } }\n  .static iframe {\n    height: 400px; }\n\n.hero {\n  position: relative;\n  width: 100%;\n  content: '';\n  color: white; }\n  .hero__background, .hero__overlay, .hero__title-bar {\n    position: absolute;\n    width: 100%;\n    height: 100%;\n    left: 0;\n    top: 0; }\n  .hero__background {\n    background-size: cover;\n    background-position: 50% 50%;\n    background-repeat: no-repeat; }\n    .hero__background--blurred {\n      -webkit-filter: blur(3px);\n      filter: blur(3px); }\n  .hero__overlay {\n    -webkit-transition: all 0.5s;\n    -moz-transition: all 0.5s;\n    -ms-transition: all 0.5s;\n    -o-transition: all 0.5s;\n    transition: all 0.5s;\n    background-color: #0d1722; }\n  .hero__top-bar {\n    width: 100%;\n    position: absolute;\n    top: 70px; }\n  .hero__title-bar {\n    display: flex; }\n    .hero__title-bar__content {\n      margin: auto;\n      padding: 0 30px; }\n  .hero__nav-bar {\n    width: 100%;\n    position: absolute;\n    bottom: 70px; }\n  .hero__text {\n    position: absolute;\n    bottom: 20%;\n    left: 25px;\n    font-size: 64px;\n    font-size: 4rem;\n    font-family: 'PT Sans';\n    color: white; }\n    @media only screen and (min-width: 768px) {\n      .hero__text {\n        left: calc(50% - 768px/2);\n        font-size: 80px; } }\n\n.form {\n  width: 100%;\n  padding: 50px 0;\n  max-width: 600px;\n  margin: auto; }\n  .form input, .form select, .form textarea, .form button {\n    outline: none;\n    border: 1px solid #555; }\n  .form input, .form textarea {\n    width: 100%;\n    font-size: 24px;\n    font-size: 1.5rem;\n    padding: 8px 5px; }\n    .form input:focus, .form textarea:focus {\n      background-color: #ddd; }\n  .form textarea {\n    height: 400px; }\n  .form label {\n    font-family: 'PT Sans';\n    font-size: 44px;\n    font-size: 2.75rem;\n    margin: 10px 0; }\n  .form__hint {\n    font-family: 'PT Serif';\n    font-size: 24px;\n    font-size: 1.5rem;\n    margin: 10px 0; }\n  .form__wrapper {\n    margin: 50px 0; }\n\n.modal {\n  z-index: 1000;\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  display: flex;\n  background-color: rgba(0, 0, 0, 0.3); }\n  .modal__content {\n    width: 300px;\n    height: 200px;\n    margin: auto;\n    border-radius: 10px;\n    font-size: 44px;\n    font-size: 2.75rem;\n    padding: 65px;\n    color: white;\n    background-color: #0d1722;\n    display: table;\n    text-align: center;\n    vertical-align: middle; }\n", ""]);
 
 	// exports
 

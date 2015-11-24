@@ -1,3 +1,5 @@
+import 'babel-polyfill'
+
 import pg from 'pg'
 import * as models from './../../models/index.js'
 

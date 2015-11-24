@@ -1,5 +1,7 @@
-import _ from 'underscore';
-import pg from 'pg';
+import 'babel-polyfill'
+
+import _ from 'underscore'
+import pg from 'pg'
 
 export default function list(options, req, res, next) {
 

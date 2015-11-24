@@ -8,8 +8,6 @@ import Modal from './../modal.jsx'
 
 import * as models from './../../../models/index.js'
 
-
-
 const EDIT_STATUSES = [ 'editing', 'pending', 'success', 'error' ]
 
 /*
@@ -24,6 +22,8 @@ class Edit extends React.Component {
 	 */
 	constructor(props) {
 		super(props)
+
+		console.log(props.modelId, props.action)
 
 		this.handleFormFieldChange = this.handleFormFieldChange.bind(this)
 		this.handleFormSubmit = this.handleFormSubmit.bind(this)
@@ -75,7 +75,7 @@ class Edit extends React.Component {
 
 
 	/*
-	 *
+	 * Fetch resource if an ID was passed down in props.
 	 *
 	 */
 	componentWillMount() {
@@ -95,19 +95,22 @@ class Edit extends React.Component {
 				})
 		} else {
 			let model = this.Model.create()
-			model.setDefaults()
 			this.setState({ model: model })
 		}
 	}
 
 
 	/*
-	 *
+	 * Apply change from form field. The model instance is recreated so as not to mutate the data.
 	 *
 	 */
 	handleFormFieldChange(childData) {
-		this.state.model.data[childData.id] = childData.value
-		this.forceUpdate()
+		var { data } = this.state.model
+		var change = {}
+		change[childData.id] = childData.value
+		var newData = Object.assign({}, data, change)
+		var newModel = this.Model.create(newData)
+		this.setState({ model: newModel })
 	}
 
 
@@ -123,21 +126,26 @@ class Edit extends React.Component {
 
 		this.setState({ editStatus: 'pending' })
 
-		var requestMethodName
+		var requestMethodName, requestUrl
 
 		switch(action) {
 			case 'update':
 				requestMethodName = 'put'
+				requestUrl = model.getUpdateUrl()
+				break
 			case 'delete':
 				requestMethodName = 'del'
+				requestUrl = model.getDeleteUrl()
+				break
 			default:
 				requestMethodName = 'post'
+				requestUrl = model.getCreateUrl()
 		}
 
-		request[requestMethodName](model.getCreateUrl()).send(model.data).end((err, res) => {
+		request[requestMethodName](requestUrl).send(model.data).end((err, res) => {
 			if (err) { 
 				this.setState({ editStatus: 'error' })
-				return console.log(err) 
+				return console.log(err.stack) 
 			}
 			this.setState({ editStatus: 'success' })
 			console.log(res)

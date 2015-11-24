@@ -60,7 +60,7 @@ class Form extends React.Component {
 					hint={field.hint}
 					isEnabled={isEnabled}
 					handleFormFieldChange={this.handleFormFieldChange.bind(this)}
-					initialValue={model.getValueAsString(key)}
+					initialValue={model.getAttributeForFormField(field)}
 				/>
 			)
 

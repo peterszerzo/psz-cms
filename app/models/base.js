@@ -40,24 +40,28 @@ var Base = {
 
 	tableName: 'testresources',
 
-	// Set on superclass.
+	// Set on subclass.
 	data: {},
 
-	// Set on superclass.
+	// Set on subclass.
 	fields: [],
 
 
 	/*
-	 * 
+	 * Create model instance.
 	 *
 	 */
-	sanitizeValue(key, value) {
-
+	create(data = {}) {
+		var self = Object.create(this)
+		self.setDefaults()
+		// Add new data on top of defaults.
+		self.data = Object.assign({}, self.data, data)
+		return self
 	},
 
 
 	/*
-	 *
+	 * Get API url to create new resource.
 	 *
 	 */
 	getCreateUrl() {
@@ -66,7 +70,7 @@ var Base = {
 
 
 	/*
-	 *
+	 * Get API url to update the resource.
 	 *
 	 */
 	getUpdateUrl() {
@@ -75,22 +79,11 @@ var Base = {
 
 
 	/*
-	 *
+	 * Get API url to delete the resource.
 	 *
 	 */
 	getDeleteUrl() {
 		return this.getUpdateUrl()
-	},
-
-
-	/*
-	 *
-	 *
-	 */
-	create(data = {}) {
-		var self = Object.create(this)
-		self.data = data
-		return self
 	},
 
 
@@ -114,8 +107,8 @@ var Base = {
 	 *
 	 *
 	 */
-	getValueAsString(key) {
-		var value = this.data[key]
+	getAttributeForFormField(field) {
+		var value = this.data[field.key]
 		if (_.isObject(value)) { return JSON.stringify(value) }
 		return value
 	},
@@ -125,30 +118,35 @@ var Base = {
 	 *
 	 *
 	 */
+	getAttributeForSqlInsert(field) {
+		var { key } = field
+		var value = this.data[field.key]
+		if (_.isArray(value) || _.isObject(value)) {
+	        value = `'${JSON.stringify(value)}'`;
+	    } else if (_.isString(value)) {
+	        let escapeMarker = ''
+	        if (value.length > 15) { escapeMarker = 'E' }
+	        value = `${escapeMarker}'${escapeText(value)}'`
+	    }
+	    return value
+	},
+
+
+	/*
+	 * Gets value string for SQL insert.
+	 *
+	 */
 	getValuesString() {
+	    return this.fields.map(field => this.getAttributeForSqlInsert(field)).join(',')
+	},
 
-	    var { fields, data } = this
 
-	    return fields.map((field) => {
-
-	    	var { key, defaultValue } = field
-
-	        var value = data[key]
-
-	        if (value == null) { value = defaultValue }
-
-	        if (_.isArray(value) || _.isObject(value)) { 
-	            value = `'${JSON.stringify(value)}'`; 
-	        } else if (_.isString(value)) {
-	            let escapeMarker = ''
-	            if (value.length > 15) { escapeMarker = 'E' }
-	            value = `${escapeMarker}'${escapeText(value)}'`
-	        }
-
-	        return value
-
-	    }).join(',')
-
+	/*
+	 *
+	 *
+	 */
+	getSetString() {
+		return this.fields.map(field => `${field.key}=${this.getAttributeForSqlInsert(field)}`)
 	},
 
 
@@ -184,10 +182,14 @@ var Base = {
 	 *
 	 */
 	getSqlUpdateCommand() {
-		return `UPDATE ${this.tableName} SET () WHERE (id='${this.data.id}');`;
+		return `UPDATE ${this.tableName} SET (${this.getSetString()}) WHERE (id='${this.data.id}');`;
 	},
 
 
+	/*
+	 *
+	 *
+	 */
 	getSqlDeleteCommand() {
 		return `DELETE FROM ${this.tableName} WHERE (id='${this.data.id}');`
 	},

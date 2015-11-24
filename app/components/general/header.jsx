@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 
 import * as Buttons from './buttons.jsx'
 
-
 var buttons = [
 	{
 		name: 'projects',
@@ -52,7 +51,9 @@ class Header extends Component {
 			'header--discrete': isDiscrete,
 			'header--expanded': this.state.isExpanded
 		})
-		var opacity = this.props.router.location.pathname === '/' ? '0' : '1'
+
+		var opacity = (pathname === '/') ? '0' : '1'
+
 		return (
 			<div className={ cls } style={{ opacity: opacity }}>
 				<Link className='header__main-link' to='/'>
@@ -76,10 +77,12 @@ class Header extends Component {
 	renderList() {
 		var { activeLinkName } = this.props
 		return buttons.map(function(button, index) {
-			var isActive = (activeLinkName && (button.name === activeLinkName)),
-				className = 'header__nav__item' + (isActive ? ' header__nav__item--active' : '');
+			var cls = classNames({ 
+					'header__nav__item': true,
+					'header__nav__item--active': activeLinkName && (button.name === activeLinkName)
+				});
 			return (
-				<li className={className} key={index} >
+				<li className={cls} key={index} >
 					<Link to={button.url}>
 						{ button.name }
 					</Link>
