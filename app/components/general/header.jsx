@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
 
-import * as Buttons from './buttons.jsx'
+import { BackToMain, Falafel } from './buttons.jsx'
 
 var buttons = [
 	{
@@ -33,7 +33,10 @@ class Header extends Component {
 	 */
 	constructor(props) {
 		super(props)
-		this.state = { isExpanded: false }
+		this.toggleExpandedState = this.toggleExpandedState.bind(this)
+		this.state = {
+			isExpanded: false
+		}
 	}
 
 
@@ -42,9 +45,12 @@ class Header extends Component {
 	 *
 	 */
 	render() {
-		var { windowHeight, scrollTop } = this.props.app.ui
+
+		var { windowWidth, windowHeight, scrollTop } = this.props.app.ui
+
 		var { pathname } = this.props.router.location
-		var isDiscrete = ([ '/projects', '/blog' ].indexOf(pathname) === -1) && (windowHeight > scrollTop)
+
+		var isDiscrete = windowWidth < 600 || (([ '/projects', '/blog' ].indexOf(pathname) === -1) && (windowHeight > scrollTop))
 		
 		var cls = classNames({
 			'header': true,
@@ -55,17 +61,25 @@ class Header extends Component {
 		var opacity = (pathname === '/') ? '0' : '1'
 
 		return (
-			<div className={ cls } style={{ opacity: opacity }}>
-				<Link className='header__main-link' to='/'>
-					<Buttons.BackToMain />
+			<header className={ cls } style={{ opacity: opacity }}>
+
+				<Link className='header__icon header__main-link' to='/'>
+					<BackToMain />
 				</Link>
-				<ul className='header__nav'>
-					<li className='header__nav__arrow' onClick={this.toggleExpandedState.bind(this)}>
-						<Buttons.Arrow />
-					</li>
-					{this.renderList()}
-				</ul>
-			</div>
+
+				<nav className='header__icon header__falafel' onClick={this.toggleExpandedState}>
+					<Falafel/>
+				</nav>
+
+				<nav className='header__nav'>
+					<ul>
+						{this.renderList()}
+					</ul>
+				</nav>
+
+				{ this.renderModalNav() }
+				
+			</header>
 		)
 	}
 
@@ -76,15 +90,16 @@ class Header extends Component {
 	 */
 	renderList() {
 		var { activeLinkName } = this.props
-		return buttons.map(function(button, index) {
-			var cls = classNames({ 
+		return buttons.map(function(button, i) {
+			var { url, name } = button,
+				cls = classNames({ 
 					'header__nav__item': true,
-					'header__nav__item--active': activeLinkName && (button.name === activeLinkName)
+					'header__nav__item--active': name === activeLinkName
 				});
 			return (
-				<li className={cls} key={index} >
-					<Link to={button.url}>
-						{ button.name }
+				<li className={cls} key={i} >
+					<Link to={ url }>
+						{ name }
 					</Link>
 				</li>
 			)
@@ -92,7 +107,20 @@ class Header extends Component {
 	}
 
 
-	
+	/*
+	 *
+	 *
+	 */
+	renderModalNav() {
+		if (!this.state.isExpanded) { return }
+		return (
+			<nav className='header__modal-nav'>
+				<ul>
+				{ this.renderList() }
+				</ul>
+			</nav>
+		)
+	}
 
 
 	/*

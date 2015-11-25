@@ -22,9 +22,16 @@ describe('base', () => {
 		})
 	})
 
-	describe('getValueAsString', () => {
-		it('returns value as a string', () => {
-			assert.equal(base.getValueAsString('jsonValue'), '[1,2,3]')
+	describe('getAttributeForFormField', () => {
+		it('returns json value as a string', () => {
+			assert.equal(base.getAttributeForFormField('jsonValue'), '[1,2,3]')
+		})
+	})
+
+	describe('getSqlUpdateCommand', () => {
+		var model = Base.create({ id: 'id', name: 'name' })
+		it('returns sql update command', () => {
+			assert.equal(model.getSqlUpdateCommand(), "UPDATE testresources SET (id='id',name='name') WHERE (id='id');")
 		})
 	})
 

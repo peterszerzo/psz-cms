@@ -48,7 +48,8 @@ class Form extends React.Component {
 	 */
 	renderFormComponents() {
 		var { model, isEnabled } = this.props
-		return model.fields.map((field, i) => {
+		var fields = [ ...model.fields, { key: 'password', type: 'text', labelText: 'Password', hint: 'Enter edit password.' } ]
+		return fields.map((field, i) => {
 			var { key } = field
 			var FormComp = Subcomponents[field.formComponentName] || Subcomponents.Text;
 			return (

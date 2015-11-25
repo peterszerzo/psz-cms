@@ -1,6 +1,6 @@
 import express from 'express'
 
-import { insert, list, remove } from './../../../middleware/crud/index.js'
+import { insert, list, remove, update } from './../../../middleware/crud/index.js'
 
 var router = express.Router()
 
@@ -13,6 +13,10 @@ router.post('/posts', insert.bind(this, { modelName: 'Post', tableName: 'posts' 
 })
 
 router.delete('/posts/:id', remove.bind(this, { modelName: 'Post', tableName: 'posts' }), function(req, res) {
+	res.json(req.dbResponse)
+})
+
+router.put('/posts/:id', update.bind(this, { modelName: 'Post', tableName: 'posts' }), function(req, res) {
 	res.json(req.dbResponse)
 })
 

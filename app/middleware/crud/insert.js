@@ -9,6 +9,9 @@ export default function insert(options, req, res, next) {
 
 	var data = req.body
 
+	var { password } = data
+	delete data.password
+
 	var model = models[modelName].create(data)
 
 	var command = model.getSqlInsertCommand()
@@ -16,6 +19,11 @@ export default function insert(options, req, res, next) {
 	console.log(command)
 
 	var { dbClient } = req
+
+	if (password !== process.env['PORCUPINE']) {
+		req.dbResponse = { status: 'error', serverError: err }
+		return next()
+	}
 
 	dbClient.query(command, (err, data) => {
 		if (err) {

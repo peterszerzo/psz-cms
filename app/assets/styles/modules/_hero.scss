@@ -3,7 +3,6 @@
 	width: 100%;
 	content: '';
 	
-
 	color: white;
 
 	&__background, &__overlay, &__title-bar {
@@ -33,7 +32,7 @@
 	&__top-bar {
 		width: 100%;
 		position: absolute;
-		top: $header-height + 10px;
+		top: 22px;
 	}
 
 	&__title-bar {
@@ -47,7 +46,7 @@
 	&__nav-bar {
 		width: 100%;
 		position: absolute;
-		bottom: $header-height + 10px;
+		bottom: 50px;
 	}
 
 	&__text {

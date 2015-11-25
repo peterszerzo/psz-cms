@@ -23,8 +23,6 @@ class Edit extends React.Component {
 	constructor(props) {
 		super(props)
 
-		console.log(props.modelId, props.action)
-
 		this.handleFormFieldChange = this.handleFormFieldChange.bind(this)
 		this.handleFormSubmit = this.handleFormSubmit.bind(this)
 
@@ -129,7 +127,7 @@ class Edit extends React.Component {
 		var requestMethodName, requestUrl
 
 		switch(action) {
-			case 'update':
+			case 'edit':
 				requestMethodName = 'put'
 				requestUrl = model.getUpdateUrl()
 				break
@@ -148,7 +146,6 @@ class Edit extends React.Component {
 				return console.log(err.stack) 
 			}
 			this.setState({ editStatus: 'success' })
-			console.log(res)
 		})
 
 	}

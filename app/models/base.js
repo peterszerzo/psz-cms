@@ -40,11 +40,23 @@ var Base = {
 
 	tableName: 'testresources',
 
-	// Set on subclass.
 	data: {},
 
 	// Set on subclass.
-	fields: [],
+	fields: [
+		{
+			key: 'id',
+			type: 'text'
+		},
+		{
+			key: 'name',
+			type: 'text'
+		},
+		{
+			key: 'jsonValue',
+			type: 'json'
+		}
+	],
 
 
 	/*
@@ -93,7 +105,6 @@ var Base = {
 	 */
 	setDefaults() {
 		var { fields, data } = this
-
 		fields.forEach((field) => {
 			var { defaultValue, key } = field
 			if (data[key] == null && defaultValue != null) {
@@ -115,13 +126,13 @@ var Base = {
 
 
 	/*
-	 *
+	 * Convert type for sql insert.
 	 *
 	 */
 	getAttributeForSqlInsert(field) {
 		var { key } = field
 		var value = this.data[field.key]
-		if (_.isArray(value) || _.isObject(value)) {
+		if (field.type === 'json' && (_.isObject(value) || _.isArray(value))) {
 	        value = `'${JSON.stringify(value)}'`;
 	    } else if (_.isString(value)) {
 	        let escapeMarker = ''
@@ -146,7 +157,7 @@ var Base = {
 	 *
 	 */
 	getSetString() {
-		return this.fields.map(field => `${field.key}=${this.getAttributeForSqlInsert(field)}`)
+		return this.fields.map(field => `${field.key}=${this.getAttributeForSqlInsert(field)}`).join(', ')
 	},
 
 
@@ -182,12 +193,12 @@ var Base = {
 	 *
 	 */
 	getSqlUpdateCommand() {
-		return `UPDATE ${this.tableName} SET (${this.getSetString()}) WHERE (id='${this.data.id}');`;
+		return `UPDATE ${this.tableName} SET ${this.getSetString()} WHERE id='${this.data.id}';`;
 	},
 
 
 	/*
-	 *
+	 * 
 	 *
 	 */
 	getSqlDeleteCommand() {

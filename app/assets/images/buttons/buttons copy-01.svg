@@ -4,12 +4,10 @@
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="100px"
 	 height="100px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
 <g id="back-main">
+	<polygon points="62.318,5.066 37.018,48.891 11.715,5.066 	"/>
+	<polygon points="31.446,68.748 16.328,94.934 1.208,68.748 	"/>
+	<polygon points="98.792,45.05 79.288,78.83 59.786,45.05 	"/>
 </g>
 <g id="expand">
-	<g>
-		<rect x="3.167" y="24" stroke="#FFFFFF" stroke-miterlimit="10" width="94" height="8"/>
-		<rect x="3.167" y="46" stroke="#FFFFFF" stroke-miterlimit="10" width="94" height="9"/>
-		<rect x="3.167" y="69" stroke="#FFFFFF" stroke-miterlimit="10" width="94" height="8"/>
-	</g>
 </g>
 </svg>

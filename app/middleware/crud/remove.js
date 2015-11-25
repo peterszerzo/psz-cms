@@ -8,22 +8,23 @@ import * as models from './../../models/index.js'
 export default function remove(options, req, res, next) {
 	
 	var { modelName } = options
-
 	var Model = models[modelName]
 
 	var data = req.body
 
-	console.log(Model)
+	var { password } = data
+	delete data.password
 
 	var model = Model.create(data)
 
 	var command = model.getSqlDeleteCommand()
 
-	var { dbClient } = req
+	if (password !== process.env['PORCUPINE']) {
+		req.dbResponse = { status: 'error', serverError: 'Invalid password.' }
+		return next()
+	}
 
-	console.log(command)
-
-	dbClient.query(command, (err, data) => {
+	req.dbClient.query(command, (err, data) => {
 		if (err) {
 			console.log(err)
 			req.dbResponse = { status: 'error', serverError: err }

@@ -1,12 +1,13 @@
 import React from 'react'
 
+
 export function BackToMain(props) {
 	return (
-		<svg viewBox="0 0 200 200">
+		<svg viewBox="0 0 100 100">
 			<g>
-				<polygon points="169.869,122.333 104.26,84.454 169.869,46.575 "/>
-				<polygon points="91.883,63.283 45.827,36.692 91.883,10.101 "/>
-				<polygon points="132.218,186.898 76.302,154.616 132.218,122.333 "/>
+				<polygon points="62.318,5.066 37.018,48.891 11.715,5.066 	"/>
+	<polygon points="31.446,68.748 16.328,94.934 1.208,68.748 	"/>
+	<polygon points="98.792,45.05 79.288,78.83 59.786,45.05 	"/>
 			</g>
 		</svg>
 	)
@@ -19,5 +20,40 @@ export function Arrow(props) {
 				<polygon points="137.878,67.196 100.001,132.804 62.122,67.196"/>
 			</g>
 		</svg>
+	)
+}
+
+
+export function Down(props) {
+	return (
+		<svg viewBox="0 0 100 100">
+			<g>
+				<path d="M50.002,66.139c-0.678,0-1.356-0.172-1.967-0.517L5.03,41.345c-1.924-1.086-2.603-3.526-1.517-5.45
+		c1.087-1.923,3.525-2.603,5.45-1.517l41.038,23.167l41.036-23.167c1.927-1.085,4.364-0.407,5.45,1.517s0.407,4.363-1.517,5.45
+		L51.969,65.622C51.358,65.966,50.68,66.139,50.002,66.139z"/>
+			</g>
+		</svg>
+	)
+}
+
+
+export function Falafel(props) {
+	var y0 = 5 // start y coordinate
+	var h = 11 // height
+	var s = 16 // spacing
+	return (
+		<svg viewBox="0 0 100 100">
+			<g>
+				<rect 
+					x="0" 
+					y={ y0 + 0 }
+					width="100" 
+					height={ h } 
+				/>
+				<rect x="0" y={ y0 + h + s  } width="100" height={ h } />
+				<rect x="0" y={ y0 + 2 * h + 2 * s } width="100" height={ h } />
+			</g>
+		</svg>
+
 	)
 }

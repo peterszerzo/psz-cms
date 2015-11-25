@@ -46,7 +46,7 @@ class About extends React.Component {
 				{ this.renderTestImage() }
 				<div className='hero fill-parent'>
 					<div className='hero__background' style={this.getHeroBackgroundStyle()} />
-					<div className='hero__overlay' style={{ opacity: this.state.hasImageLoaded ? '0.6' : '0.8' }} />
+					<div className='hero__overlay' style={{ opacity: this.state.isHeroImageLoaded ? '0.6' : '0.8' }} />
 					<div className='hero__text'>{ greetings[this.state.greetingIndex] }</div>
 				</div>
 				<div 
