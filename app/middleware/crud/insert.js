@@ -16,8 +16,6 @@ export default function insert(options, req, res, next) {
 
 	var command = model.getSqlInsertCommand()
 
-	console.log(command)
-
 	var { dbClient } = req
 
 	if (password !== process.env['PORCUPINE']) {
