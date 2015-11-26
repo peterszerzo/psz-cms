@@ -1,1 +1,0 @@
-Design project with General Assembly.

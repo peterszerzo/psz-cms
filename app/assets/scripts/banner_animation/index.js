@@ -47,8 +47,7 @@ module.exports = function(fileName) {
      *
      */
     self.setup = function() {
-        self.svg = d3.select('.banner__globe').append('svg');
-        self.setDimensions();
+        self.svg = d3.select('.banner__globe svg');
         self.eye = new Eye();
         window.addEventListener('resize', self.setDimensions);
     };
@@ -132,8 +131,8 @@ module.exports = function(fileName) {
      */
     self.setDimensions = function() {
         var minW = 800, minH = 600,
-            w = Math.max(minW, window.innerWidth),
-            h = Math.max(minH, window.innerHeight);
+            w = Math.max(minW, self.props.ui.windowWidth),
+            h = Math.max(minH, self.props.ui.windowHeight);
         self.width = w;
         self.height = h;
         if (self.svg) {

@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router'
 import fetch from 'isomorphic-fetch'
 import _ from 'underscore'
+import { connect } from 'react-redux'
 
 import { Loader } from './../../../general/loader.jsx'
 
@@ -37,7 +38,8 @@ class Index extends React.Component {
 	 *
 	 */
 	render() {
-		var { resources } = this.state
+		console.log(this.getResources())
+		var resources = _.where(this.getResources(), { type: this.props.postType })
 		if (resources == null) { return <Loader /> }
 		var resourceGroups = _.groupBy(resources, resource => resource.post_group)
 		return (
@@ -50,18 +52,37 @@ class Index extends React.Component {
 
 	/*
 	 * Fetch post summary and set to state.
-	 * TODO: set through Redux action instead.
+	 *
 	 */
 	componentDidMount() {
 
-		fetch(`/api/v2/posts?type=${this.props.postType}&fields=(id,name,post_group)`)
-			.then(res => res.json())
-			.then((resources) => {
-				this.setState({ resources })
-			})
+		if (this.getResources()) { return }
 
+		fetch('/api/v2/posts?fields=(id,name,post_group,type)')
+			.then(res => res.json())
+			.then((posts) => {
+				if (_.isArray(posts)) {
+					this.props.dispatch({ type: 'FETCH_ALL_POST_SUMMARIES_SUCCESS', data: posts })
+				}
+			}).catch((err) => { console.log(err.stack) })
+		
+
+	}
+
+
+	/*
+	 *
+	 *
+	 */
+	getResources() {
+		// return this.state.resources
+		var postSummaries = this.props.app.entities.posts.summaries
+		if (postSummaries) { return postSummaries.data }
 	}
 
 }
 
-export default Index
+export default connect(state => ({ 
+	router: state.router,
+	app: state.app
+}))(Index)

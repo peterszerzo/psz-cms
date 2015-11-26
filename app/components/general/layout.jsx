@@ -40,11 +40,10 @@ class Layout extends React.Component {
 	 *
 	 *
 	 */
-	componentDidMount() {
+	componentWillMount() {
 		this.setWindowDimensions()
 		// Component is live forever - no need to remove event listener.
 		window.addEventListener('resize', this.setWindowDimensions)
-		
 	}
 
 
@@ -53,7 +52,7 @@ class Layout extends React.Component {
 	 *
 	 */
 	setWindowDimensions() {
-		this.props.dispatch({ type: 'SET_WINDOW_DIMENSIONS', value: {
+		this.props.dispatch({ type: 'SET_WINDOW_DIMENSIONS', data: {
 			height: window.innerHeight,
 			width: window.innerWidth
 		}})
@@ -66,7 +65,7 @@ class Layout extends React.Component {
 	 */
 	handleScroll(e) {
 		var node = findDOMNode(this)
-		this.props.dispatch({ type: 'SET_SCROLL_TOP', value: node.scrollTop })
+		this.props.dispatch({ type: 'SET_SCROLL_TOP', data: node.scrollTop })
 	}
 
 }

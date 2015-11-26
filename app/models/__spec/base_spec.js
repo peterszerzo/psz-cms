@@ -7,7 +7,7 @@ describe('base', () => {
 	var base
 
 	beforeEach(() => {
-		base = Base.create({ id: 'testid', jsonValue: [ 1, 2, 3 ] })
+		base = Base.create({ id: 'testid', name: 'name', jsonValue: [ 1, 2, 3 ] })
 	})
 
 	describe('getUpdateUrl', () => {
@@ -24,14 +24,13 @@ describe('base', () => {
 
 	describe('getAttributeForFormField', () => {
 		it('returns json value as a string', () => {
-			assert.equal(base.getAttributeForFormField('jsonValue'), '[1,2,3]')
+			assert.equal(base.getAttributeForFormField(base.fields[2]), '[1,2,3]')
 		})
 	})
 
 	describe('getSqlUpdateCommand', () => {
-		var model = Base.create({ id: 'id', name: 'name' })
 		it('returns sql update command', () => {
-			assert.equal(model.getSqlUpdateCommand(), "UPDATE testresources SET (id='id',name='name') WHERE (id='id');")
+			assert.equal(base.getSqlUpdateCommand(), "UPDATE testresources SET id='testid', name='name', jsonValue='[1,2,3]' WHERE id='testid';")
 		})
 	})
 

@@ -1,3 +1,7 @@
+/*
+ * Reducer used to test the React - Redux integration.
+ *
+ */
 export default function testReducer(state = 'not set', action) {
 
 	var { type } = action

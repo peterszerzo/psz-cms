@@ -22,7 +22,6 @@ class Banner extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			randomPostId: null,
 			isGlobeAnimationRendered: false,
 			message: {
 				isShowing: false,
@@ -37,12 +36,17 @@ class Banner extends React.Component {
 	 *
 	 */
 	render() {
+		var { ui } = this.props.app
+
 		var { isGlobeAnimationRendered } = this.state
 		var style = isGlobeAnimationRendered ? { opacity: 1 } : { opacity: 0 }
+
 		return (
 			<div className="banner fill-parent" style={ style }>
 				<div className="banner__background"></div>
-				<div className="banner__globe"></div>
+				<div className="banner__globe">
+					<svg width={ui.windowWidth} height={ui.windowHeight}></svg>
+				</div>
 				<Link className="banner__summary" to='/projects'>
 					<h1>a little room</h1>
 					<p>for mindful code, design and writing</p>
@@ -73,18 +77,25 @@ class Banner extends React.Component {
 	 */
 	componentDidMount() {
 
-		var isWide = window.innerWidth > 500
+		var { ui } = this.props.app
+
+		var isWide = ui.windowWidth && ui.windowWidth > 500
 
 		var geoFileName = isWide ? 'geo.json' : 'geo_small.json'
 
 		if (!isWide) {
-			this.state.message.isShowing = true
-			this.forceUpdate()
+			this.setState({ message: Object.assign({}, this.state.message, { isShowing: true }) })
 		}
 
 		this.fetchRandomUrl()
 
 		this.globeAnimation = globe(geoFileName)
+
+		this.globeAnimation.props = {
+			onClick: this.navigateToRandom.bind(this),
+			onHover: this.triggerMessage.bind(this),
+			ui: ui
+		}
 
 		this.globeAnimation.onClick = this.navigateToRandom.bind(this)
 		this.globeAnimation.onHover = this.triggerMessage.bind(this)
@@ -94,6 +105,16 @@ class Banner extends React.Component {
 			this.setState({ isGlobeAnimationRendered: true })
 		})
 
+	}
+
+
+	/*
+	 *
+	 *
+	 */
+	componentDidUpdate() {
+		this.globeAnimation.props.ui = this.props.app.ui
+		this.globeAnimation.setDimensions()
 	}
 
 	
@@ -111,11 +132,11 @@ class Banner extends React.Component {
 	 *
 	 */
 	fetchRandomUrl() {
-		fetch('/api/v2/posts?fields=(id)')
+		fetch('/api/v2/posts?fields=(id,name,post_group,type)')
 			.then(res => res.json())
 			.then((posts) => {
 				if (_.isArray(posts)) {
-					this.setState({ randomPostId: posts[Math.floor(Math.random() * posts.length)].id })
+					this.props.dispatch({ type: 'FETCH_ALL_POST_SUMMARIES_SUCCESS', data: posts })
 				}
 			})
 	}
@@ -126,12 +147,15 @@ class Banner extends React.Component {
 	 *
 	 */
 	navigateToRandom() {
-		var { randomPostId } = this.state,
-			{ dispatch, history } = this.props;
+		var { dispatch } = this.props
+		var postSummaries = this.props.app.entities.posts.summaries, randomPostId
+		if (postSummaries) {
+			let { data } = postSummaries
+			randomPostId = data[Math.floor(data.length * Math.random())].id
+		}
 		if (randomPostId) {
 			let url = `/${randomPostId}`
 			this.props.dispatch(pushState(null, `/${randomPostId}`))
-			// history.pushState(null, `/${randomPostId}`)
 		}
 
 
