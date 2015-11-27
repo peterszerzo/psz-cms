@@ -5,7 +5,7 @@ import marked from 'marked'
 import { Link } from 'react-router'
 import text from './text.js'
 
-import { Header } from './../../general/header.jsx'
+import Footer from './../../general/footer.jsx'
 
 var greetings = [ 
 	'Hello',
@@ -53,6 +53,7 @@ class About extends React.Component {
 					className='static'
 					dangerouslySetInnerHTML={{__html: marked(text, { sanitize: true })}}
 				/>
+				<Footer />
 			</div>
 		)
 	}

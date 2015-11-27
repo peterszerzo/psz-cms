@@ -76,13 +76,13 @@
 	&__message {
 		transition: all 0.75s;
 		position: absolute;
-		bottom: calc(50% - 210px);
+		bottom: 20px;
 		color: white;
 		text-align: center;
 		width: 100%;
-		padding: 0 20%;
-		@include font-size(18px);
-		opacity: 1;
+		padding: 0 60px;
+		@include font-size(16px);
+		opacity: 0.7;
 		font-family: 'PT Sans';
 	}
 

@@ -18,10 +18,6 @@
 		background-size: cover;
 		background-position: 50% 50%;
 		background-repeat: no-repeat;
-		&--blurred {
-			-webkit-filter: blur(3px);
-			filter: blur(3px);
-		}
 	}
 
 	&__overlay {

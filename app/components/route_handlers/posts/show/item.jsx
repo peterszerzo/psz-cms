@@ -63,13 +63,13 @@ function Dates(props) {
  */
 function ShowItem(props) {
 
-	var { resource } = props
+	var { resource, scrollRatio } = props
 	
 	if (resource == null) { return <Loader /> }
 
 	var imageUrl = `/images/posts/${resource.id}/hero.jpg`
 
-	var { headline, links, body_text, dates, title, is_draft } = resource
+	var { headline, links, body_text, dates, title } = resource
 
 	let body
 
@@ -77,15 +77,13 @@ function ShowItem(props) {
 		body = <div className="static" dangerouslySetInnerHTML={{ __html: marked(body_text) }}/>
 	}
 
-	if (is_draft === true) {
-		title += ' (draft)'
-	}
-
 	var { isHeroImageLoaded } = props
 
 	var heroOverlayOpacity = isHeroImageLoaded ? '0.7' : '1'
 
-	var heroBackgroundStyle = isHeroImageLoaded ? { backgroundImage: `url('${imageUrl}')` } : null
+	var heroBackgroundStyle = isHeroImageLoaded ? { 
+		backgroundImage: `url('${imageUrl}')`
+	} : null
 
 	return (
 		<div className="project-show fill-parent">

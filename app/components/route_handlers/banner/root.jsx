@@ -21,6 +21,8 @@ class Banner extends React.Component {
 	 */
 	constructor(props) {
 		super(props)
+		this.navigateToRandom = this.navigateToRandom.bind(this)
+		this.triggerMessage = this.triggerMessage.bind(this)
 		this.state = {
 			isGlobeAnimationRendered: false,
 			message: {
@@ -89,8 +91,8 @@ class Banner extends React.Component {
 		this.globeAnimation = globe(geoFileName)
 
 		this.globeAnimation.props = {
-			onClick: this.navigateToRandom.bind(this),
-			onHover: this.triggerMessage.bind(this),
+			onClick: this.navigateToRandom,
+			onHover: this.triggerMessage,
 			ui: ui
 		}
 
@@ -172,7 +174,7 @@ class Banner extends React.Component {
 	 */
 	triggerMessage() {
 
-		const FADE_OUT_IN = 4.5, DO_NOT_REAPPEAR_ON_HOVER_FOR = 9
+		const FADE_OUT_IN = 4500, DO_NOT_REAPPEAR_ON_HOVER_FOR = 9000
 
 		if (!this.state.message.shouldShowOnHover) { return }
 

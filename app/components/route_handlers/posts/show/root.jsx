@@ -27,10 +27,12 @@ class Show extends React.Component {
 	 */
 	render() {
 		var resource = this.getResource()
+		var { scrollTop, windowHeight } = this.props.ui
 		return (
 			<div className='wrapper__content fill-parent'>
 				{ this.renderTestImage() }
-				<ShowItem 
+				<ShowItem
+					scrollRatio={ scrollTop / windowHeight }
 					isHeroImageLoaded={ this.state.isHeroImageLoaded } 
 					resource={ resource }
 				/>
@@ -107,5 +109,6 @@ class Show extends React.Component {
 
 export default connect(state => ({ 
 	router: state.router,
+	ui: state.app.ui,
 	postsById: state.app.entities.posts.byId
 }))(Show)
