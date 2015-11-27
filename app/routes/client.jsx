@@ -1,5 +1,5 @@
 import React from 'react'
-import { Router, Route } from 'react-router'
+import { Router, Route, NotFoundRoute } from 'react-router'
 import createHistory from 'history/lib/createBrowserHistory'
 
 import { createStore, compose, combineReducers } from 'redux'
@@ -16,6 +16,8 @@ import Index from './../components/route_handlers/posts/index/root.jsx'
 import Show from './../components/route_handlers/posts/show/root.jsx'
 import EditPost from './../components/route_handlers/posts/edit/root.jsx'
 
+import NotFound from './../components/route_handlers/not_found/root.jsx'
+
 // Import reducer.
 import reducer from './../reducers/index.js'
 
@@ -31,28 +33,32 @@ var store = compose(
 function ProjectsIndex(props) { return <Index { ...props } activeLinkName={'projects'} postType={'project'} /> }
 function BlogPostsIndex(props) { return <Index { ...props } activeLinkName={'blog'} postType={'blog_post'} /> }
 
-var routes = (
+var reactRouter = (
+	<Router>
+		<Route component={Layout}>
+			<Route path='/' component={Banner} />
+			<Route path='/about' component={About} />
+			<Route path='/projects' component={ProjectsIndex} />
+			<Route path='/blog' component={BlogPostsIndex} />
+			<Route path='/admin/posts'>
+				<Route path='new' component={EditPost} />
+				<Route path=':id/:action' component={EditPost} />
+			</Route>
+			<Route path='/:id' component={Show} />
+			{ /* <NotFoundRoute component={NotFound} /> */ }
+		</Route>
+	</Router>
+)
+
+var reactReduxRouter = (
 	<Provider store={store}>
 		<ReduxRouter>
-			<Router>
-				<Route component={Layout}>
-
-					<Route path='/' component={Banner} />
-					<Route path='/about' component={About} />
-					<Route path='/projects' component={ProjectsIndex} />
-					<Route path='/blog' component={BlogPostsIndex} />
-
-					<Route path='/admin/posts'>
-						<Route path='new' component={EditPost} />
-						<Route path=':id/:action' component={EditPost} />
-					</Route>
-
-					<Route path='/:id' component={Show} />
-					
-				</Route>
-			</Router>
+			{ reactRouter }
 		</ReduxRouter>
 	</Provider>
 )
 
-export default routes
+export default {
+	reactRouter: reactRouter,
+	reactReduxRouter: reactReduxRouter
+}

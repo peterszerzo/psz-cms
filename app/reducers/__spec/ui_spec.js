@@ -13,19 +13,19 @@ describe('uiReducer', () => {
 	}
 
 	it('sets scroll top', () => {
-		var action = { type: 'SET_SCROLL_TOP', value: 20 }
+		var action = { type: 'SET_SCROLL_TOP', data: 20 }
 		var newState = uiReducer(state, action)
 		assert.equal(newState.scrollTop, 20)
 	})
 
 	it('sets window height', () => {
-		var action = { type: 'SET_WINDOW_DIMENSIONS', value: { height: 15 } }
+		var action = { type: 'SET_WINDOW_DIMENSIONS', data: { height: 15 } }
 		var newState = uiReducer(state, action)
 		assert.equal(newState.windowHeight, 15)
 	})
 
 	it('does not mutate state', () => {
-		var action = { type: 'SET_SCROLL_TOP', value: 20 }
+		var action = { type: 'SET_SCROLL_TOP', data: 20 }
 		var newState = uiReducer(state, action)
 		assert.notEqual(state, newState)
 	})

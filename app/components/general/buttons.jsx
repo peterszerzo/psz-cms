@@ -38,8 +38,8 @@ export function Down(props) {
 
 
 export function Falafel(props) {
-	var y0 = 5 // start y coordinate
-	var h = 11 // height
+	var y0 = 15 // start y coordinate
+	var h = 12 // height
 	var s = 16 // spacing
 	return (
 		<svg viewBox="0 0 100 100">
@@ -48,7 +48,8 @@ export function Falafel(props) {
 					x="0" 
 					y={ y0 + 0 }
 					width="100" 
-					height={ h } 
+					height={ h }
+					transform={ 'rotate(0)' }
 				/>
 				<rect x="0" y={ y0 + h + s  } width="100" height={ h } />
 				<rect x="0" y={ y0 + 2 * h + 2 * s } width="100" height={ h } />

@@ -11,7 +11,7 @@
 	background-color: transparentize(get-color(base), 0.05);
 	transition: all 0.2s;
 
-	&--discrete {
+	&--transparent {
 		background-color: rgba(255, 255, 255, 0);
 		box-shadow: none;
 	}
@@ -24,7 +24,7 @@
 		width: $header-height;
 		cursor: pointer;
 		position: absolute;
-		padding: ($header-height - 25px) / 2;
+		padding: ($header-height - $icon-size) / 2;
 		svg { 
 			width: 100%;
 			height: 100%;
@@ -104,7 +104,28 @@
 		left: 0;
 		bottom: 0;
 		right: 0;
-		background-color: rgba(0, 0, 0, 0.8);
+		background-color: rgba(0, 0, 0, 0.9);
+
+		&__items {
+			position: absolute;
+			top: $header-height + 0px;
+			right: 23px;
+		}
+
+		&__item {
+			color: white;
+			margin: 35px 0;
+			
+			&:first-child {
+				margin-top: 20px;
+			}
+
+			text-align: right;
+			a { 
+				@include font-size(32px);
+				font-family: 'PT Sans'; 
+			}
+		}
 	}
 
 }

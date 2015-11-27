@@ -24,7 +24,7 @@ class Banner extends React.Component {
 		this.state = {
 			isGlobeAnimationRendered: false,
 			message: {
-				isShowing: false,
+				isShowing: true,
 				shouldShowOnHover: true
 			}
 		}
@@ -36,9 +36,10 @@ class Banner extends React.Component {
 	 *
 	 */
 	render() {
-		var { ui } = this.props.app
+		var { ui } = this.props
 
 		var { isGlobeAnimationRendered } = this.state
+		
 		var style = isGlobeAnimationRendered ? { opacity: 1 } : { opacity: 0 }
 
 		return (
@@ -77,17 +78,13 @@ class Banner extends React.Component {
 	 */
 	componentDidMount() {
 
-		var { ui } = this.props.app
+		this.fetchRandomUrl()
+
+		var { ui } = this.props
 
 		var isWide = ui.windowWidth && ui.windowWidth > 500
 
 		var geoFileName = isWide ? 'geo.json' : 'geo_small.json'
-
-		if (!isWide) {
-			this.setState({ message: Object.assign({}, this.state.message, { isShowing: true }) })
-		}
-
-		this.fetchRandomUrl()
 
 		this.globeAnimation = globe(geoFileName)
 
@@ -96,9 +93,6 @@ class Banner extends React.Component {
 			onHover: this.triggerMessage.bind(this),
 			ui: ui
 		}
-
-		this.globeAnimation.onClick = this.navigateToRandom.bind(this)
-		this.globeAnimation.onHover = this.triggerMessage.bind(this)
 
 		this.globeAnimation.start()
 		this.globeAnimation.on('rendered', () => {
@@ -113,7 +107,7 @@ class Banner extends React.Component {
 	 *
 	 */
 	componentDidUpdate() {
-		this.globeAnimation.props.ui = this.props.app.ui
+		this.globeAnimation.props.ui = this.props.ui
 		this.globeAnimation.setDimensions()
 	}
 
@@ -146,9 +140,21 @@ class Banner extends React.Component {
 	 *
 	 *
 	 */
+	fetchAnimationGeoFile() {
+		var { ui } = this.props
+		var isWide = ui.windowWidth && ui.windowWidth > 500
+		var geoFileName = isWide ? 'geo.json' : 'geo_small.json'
+
+	}
+
+
+	/*
+	 * Navigate to a random post's location.
+	 *
+	 */
 	navigateToRandom() {
-		var { dispatch } = this.props
-		var postSummaries = this.props.app.entities.posts.summaries, randomPostId
+		var { dispatch, postSummaries } = this.props
+		var randomPostId
 		if (postSummaries) {
 			let { data } = postSummaries
 			randomPostId = data[Math.floor(data.length * Math.random())].id
@@ -157,19 +163,16 @@ class Banner extends React.Component {
 			let url = `/${randomPostId}`
 			this.props.dispatch(pushState(null, `/${randomPostId}`))
 		}
-
-
-
 	}
 
 
 	/*
-	 *
-	 *
+	 * Trigger the message encouraging the user to click on a triangle.
+	 * The message should fade out after a certain time, and it should not reappear on triangle hover for some time longer.
 	 */
 	triggerMessage() {
 
-		if (!this.state.randomPostId) { return }
+		const FADE_OUT_IN = 4.5, DO_NOT_REAPPEAR_ON_HOVER_FOR = 9
 
 		if (!this.state.message.shouldShowOnHover) { return }
 
@@ -182,11 +185,11 @@ class Banner extends React.Component {
 		
 		setTimeout(() => {
 			this.setState({ message: Object.assign({}, this.state.message, { isShowing: false }) })
-		}, 4500)
+		}, FADE_OUT_IN)
 
 		setTimeout(() => {
-			this.setState({ message: Object.assign({}, this.state.message, { shouldShowOnHover: false }) })
-		}, 9000)
+			this.setState({ message: Object.assign({}, this.state.message, { shouldShowOnHover: true }) })
+		}, DO_NOT_REAPPEAR_ON_HOVER_FOR)
 
 	}
 
@@ -194,5 +197,6 @@ class Banner extends React.Component {
 
 export default connect(state => ({ 
 	router: state.router,
-	app: state.app
+	ui: state.app.ui,
+	postSummaries: state.app.entities.posts.summaries
 }))(Banner)

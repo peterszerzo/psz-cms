@@ -38,7 +38,6 @@ class Index extends React.Component {
 	 *
 	 */
 	render() {
-		console.log(this.getResources())
 		var resources = _.where(this.getResources(), { type: this.props.postType })
 		if (resources == null) { return <Loader /> }
 		var resourceGroups = _.groupBy(resources, resource => resource.post_group)
@@ -76,13 +75,15 @@ class Index extends React.Component {
 	 */
 	getResources() {
 		// return this.state.resources
-		var postSummaries = this.props.app.entities.posts.summaries
-		if (postSummaries) { return postSummaries.data }
+		var { postSummaries } = this.props
+		if (!postSummaries) { return }
+		var { status, data } = postSummaries
+		if (status === 'success') { return data }
 	}
 
 }
 
 export default connect(state => ({ 
 	router: state.router,
-	app: state.app
+	postSummaries: state.app.entities.posts.summaries
 }))(Index)

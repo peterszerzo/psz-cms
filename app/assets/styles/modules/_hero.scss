@@ -32,7 +32,13 @@
 	&__top-bar {
 		width: 100%;
 		position: absolute;
-		top: 22px;
+		top: 25px;
+	}
+
+	&__bottom-bar {
+		width: 100%;
+		position: absolute;
+		bottom: 25px;
 	}
 
 	&__title-bar {

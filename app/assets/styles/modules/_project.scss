@@ -26,10 +26,31 @@
 	&-group {
 
 		width: 100%;
-		padding: 100px 0 40px 0;
+		padding: 40px 0 20px 0;
+		@include bp-w(600px) {
+			padding: 60px 0 40px 0;
+		}
 
 		&:nth-of-type(2n+0) {
 			background-color: #f6f6f6;
+		}
+
+		&__header, &__content {
+			margin-left: auto;
+			margin-right: auto;
+			
+		}
+
+		&__header {
+			width: 100%;
+			@include bp-w(2 * $h + 40) {
+				width: 2 * $h;
+			}
+			@include bp-w(3 * $h + 40) {
+				width: 3 * $h;
+			}
+			h1 { text-align: center; }
+			p { padding-left: 20px; padding-right: 20px; }
 		}
 
 		&__content {
@@ -40,8 +61,6 @@
 			@include bp-w(3 * $h + 40) {
 				width: 3 * $h;
 			}
-			margin-left: auto;
-			margin-right: auto;
 
 			& > h1 {
 				opacity: 1;

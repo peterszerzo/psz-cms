@@ -35,6 +35,8 @@ pg.connect(DATABASE_URL, function(err, client, done) {
 			req.dbClient = client
 			next()
 		});
+	} else {
+		console.log('Could not connect to the database.')
 	}
 
 	app.use(router)

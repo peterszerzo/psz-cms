@@ -3,7 +3,9 @@
 	$p: 25px;
 
 	width: 100%;
-	padding: 25px;
+
+	// The 6px accounts for line height in the paragraph and makes sure the space at on the side and at the top are exactly the same. This looks great on small screens.
+	padding: ($p - 6px) $p;
 
 	margin: auto;
 

@@ -80,8 +80,8 @@ module.exports = function(fileName) {
      *
      */
     self.onFeatureClick = function(feature) {
-        if (self.onClick) {
-            self.onClick();
+        if (self.props.onClick) {
+            self.props.onClick();
         }
     };
 
@@ -92,8 +92,8 @@ module.exports = function(fileName) {
      */
     self.onFeatureMouseEnter = function(feature) {
         feature._isActive = true;
-        if (self.onHover) {
-            self.onHover();
+        if (self.props.onHover) {
+            self.props.onHover();
         }
     };
 

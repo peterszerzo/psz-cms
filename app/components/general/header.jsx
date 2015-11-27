@@ -34,9 +34,7 @@ class Header extends Component {
 	constructor(props) {
 		super(props)
 		this.toggleExpandedState = this.toggleExpandedState.bind(this)
-		this.state = {
-			isExpanded: false
-		}
+		this.state = { isExpanded: false }
 	}
 
 
@@ -52,12 +50,16 @@ class Header extends Component {
 
 		var isDiscrete = windowWidth < 600 || (([ '/projects', '/blog' ].indexOf(pathname) === -1) && (windowHeight > scrollTop))
 		
+		var isTransparent = ([ '/projects', '/blog' ].indexOf(pathname) === -1) && (windowHeight > scrollTop)
+
 		var cls = classNames({
 			'header': true,
 			'header--discrete': isDiscrete,
-			'header--expanded': this.state.isExpanded
+			'header--expanded': this.state.isExpanded,
+			'header--transparent': isTransparent
 		})
 
+		// Do not show if at root route.
 		var opacity = (pathname === '/') ? '0' : '1'
 
 		return (
@@ -85,7 +87,7 @@ class Header extends Component {
 
 
 	/*
-	 *
+	 * 
 	 *
 	 */
 	renderList() {
@@ -108,6 +110,29 @@ class Header extends Component {
 
 
 	/*
+	 * 
+	 *
+	 */
+	renderModalList() {
+		var { activeLinkName } = this.props
+		return buttons.map(function(button, i) {
+			var { url, name } = button,
+				cls = classNames({ 
+					'header__modal-nav__item': true,
+					'header__modal-nav__item--active': name === activeLinkName
+				});
+			return (
+				<li className={cls} key={i} >
+					<Link to={ url }>
+						{ name }
+					</Link>
+				</li>
+			)
+		})
+	}
+
+
+	/*
 	 *
 	 *
 	 */
@@ -115,11 +140,25 @@ class Header extends Component {
 		if (!this.state.isExpanded) { return }
 		return (
 			<nav className='header__modal-nav'>
-				<ul>
-				{ this.renderList() }
+				<div className='close-button' onClick={this.toggleExpandedState}>
+					<Falafel />
+				</div>
+				<ul className='header__modal-nav__items'>
+					{ this.renderModalList() }
 				</ul>
 			</nav>
 		)
+	}
+
+
+	/*
+	 *
+	 *
+	 */
+	componentWillUpdate(nextProps, nextState) {
+		if (this.props.router.location !== nextProps.router.location && this.state.isExpanded) {
+			this.toggleExpandedState()
+		}
 	}
 
 
