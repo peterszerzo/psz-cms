@@ -51,7 +51,7 @@ class Footer extends React.Component {
 		return (
 			<footer className='footer'>
 				<div className='footer__background' />
-				<div className='footer__overlay' style={{ opacity: '0.5' }} />
+				<div className='footer__overlay' style={{  }} />
 				<div className='footer__links'>
 					{ this.renderLinks() }
 				</div>

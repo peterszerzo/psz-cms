@@ -6,29 +6,29 @@ import { connect } from 'react-redux'
 import Header from './header.jsx'
 
 /*
- *
+ * Main layout component used in routes.
  *
  */
 class Layout extends React.Component {
 
 	/*
-	 *
+	 * Bind handlers to the component.
 	 *
 	 */
 	constructor(props) {
 		super(props)
 		this.setWindowDimensions = this.setWindowDimensions.bind(this)
-		this.handleScroll = this.handleScroll.bind(this)
+		this.updateScrollTop = this.updateScrollTop.bind(this)
 	}
 
 
 	/*
-	 *
+	 * 
 	 *
 	 */
 	render() {
 		return (
-			<div className='wrapper fill-parent' onScroll={this.handleScroll}>
+			<div className='wrapper fill-parent'>
 				<Header />
 				{ this.props.children }
 			</div>
@@ -37,13 +37,13 @@ class Layout extends React.Component {
 
 
 	/*
-	 *
-	 *
+	 * Add resize and scroll handlers.
+	 * Since this component is live forever, there is no need to remove them.
 	 */
 	componentWillMount() {
 		this.setWindowDimensions()
-		// Component is live forever - no need to remove event listener.
 		window.addEventListener('resize', this.setWindowDimensions)
+		setInterval(this.updateScrollTop, 100)
 	}
 
 
@@ -63,7 +63,7 @@ class Layout extends React.Component {
 	 *
 	 *
 	 */
-	handleScroll(e) {
+	updateScrollTop(e) {
 		var node = findDOMNode(this)
 		this.props.dispatch({ type: 'SET_SCROLL_TOP', data: node.scrollTop })
 	}

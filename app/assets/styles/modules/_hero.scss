@@ -23,6 +23,7 @@
 	&__overlay {
 		@include transition(all 0.5s);
 		background-color: map-get($colors, base);
+		opacity: 0.6;
 	}
 
 	&__top-bar {

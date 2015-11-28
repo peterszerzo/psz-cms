@@ -20,10 +20,12 @@
 
 	&__overlay {
 		background-color: map-get($colors, base);
+		opacity: 0.6;
 	}
 
 	&__background {
 		background-image: url(/images/smoking-nature-1200.jpg);
+		background-size: cover;
 	}
 
 	&__links, &__messages {

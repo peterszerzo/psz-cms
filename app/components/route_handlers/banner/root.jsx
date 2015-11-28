@@ -9,6 +9,8 @@ import { Loader } from './../../general/loader.jsx'
 
 import fetch from 'isomorphic-fetch'
 
+const FADE_OUT_IN = 4500, DO_NOT_REAPPEAR_ON_HOVER_FOR = 9000
+
 /*
  *
  *
@@ -23,8 +25,20 @@ class Banner extends React.Component {
 		super(props)
 		this.navigateToRandom = this.navigateToRandom.bind(this)
 		this.triggerMessage = this.triggerMessage.bind(this)
+
+		this.fadeOut = function() {
+			this.setState({ message: Object.assign({}, this.state.message, { isShowing: false }) })
+		}
+
+		this.reactivateOnHover = function() {
+			this.setState({ message: Object.assign({}, this.state.message, { shouldShowOnHover: true }) })
+		}
+
+		this.fadeOut = this.fadeOut.bind(this)
+		this.reactivateOnHover = this.reactivateOnHover.bind(this)
+
 		this.state = {
-			isGlobeAnimationRendered: false,
+			isGlobeAnimationRunning: false,
 			message: {
 				isShowing: true,
 				shouldShowOnHover: true
@@ -40,21 +54,24 @@ class Banner extends React.Component {
 	render() {
 		var { ui } = this.props
 
-		var { isGlobeAnimationRendered } = this.state
+		var { isGlobeAnimationRunning } = this.state
 		
-		var style = isGlobeAnimationRendered ? { opacity: 1 } : { opacity: 0 }
+		var style = isGlobeAnimationRunning ? { opacity: '1' } : { opacity: '0' }
 
 		return (
-			<div className="banner fill-parent" style={ style }>
-				<div className="banner__background"></div>
-				<div className="banner__globe">
-					<svg width={ui.windowWidth} height={ui.windowHeight}></svg>
+			<div className="banner fill-parent">
+				{ isGlobeAnimationRunning ? null : <Loader /> }
+				<div className='banner__content fill-parent' style={ style }>
+					<div className="banner__background"></div>
+					<div className="banner__globe">
+						<svg width={ui.windowWidth} height={ui.windowHeight}></svg>
+					</div>
+					<Link className="banner__summary" to='/projects'>
+						<h1>a little room</h1>
+						<p>for mindful code, design and writing</p>
+					</Link>
+					{ this.renderMessage() }
 				</div>
-				<Link className="banner__summary" to='/projects'>
-					<h1>a little room</h1>
-					<p>for mindful code, design and writing</p>
-				</Link>
-				{ this.renderMessage() }
 			</div>
 		)
 	}
@@ -79,38 +96,31 @@ class Banner extends React.Component {
 	 *
 	 */
 	componentDidMount() {
-
-		this.fetchRandomUrl()
-
-		var { ui } = this.props
-
-		var isWide = ui.windowWidth && ui.windowWidth > 500
-
-		var geoFileName = isWide ? 'geo.json' : 'geo_small.json'
-
-		this.globeAnimation = globe(geoFileName)
-
-		this.globeAnimation.props = {
-			onClick: this.navigateToRandom,
-			onHover: this.triggerMessage,
-			ui: ui
+		var { postSummaries } = this.props
+		if (postSummaries == null || postSummaries.status !== 'success') {
+			this.fetchPostSummaries()
 		}
-
-		this.globeAnimation.start()
-		this.globeAnimation.on('rendered', () => {
-			this.setState({ isGlobeAnimationRendered: true })
-		})
-
+		
 	}
 
 
 	/*
-	 *
-	 *
+	 * If the animation is already running, update it.
+	 * Otherwise, fetch geo data if necessary.
+	 * If available, start globe animation.
 	 */
 	componentDidUpdate() {
-		this.globeAnimation.props.ui = this.props.ui
-		this.globeAnimation.setDimensions()
+		if (this.state.isGlobeAnimationRunning) {
+			this.globeAnimation.props.ui = this.props.ui
+			this.globeAnimation.setDimensions()
+		} else {
+			let { globeAnimation } = this.props
+			if (globeAnimation && globeAnimation.status === 'success') {
+				this.startGlobeAnimation()
+			} else {
+				this.fetchAnimationGeoFile()
+			}
+		}
 	}
 
 	
@@ -127,7 +137,7 @@ class Banner extends React.Component {
 	 *
 	 *
 	 */
-	fetchRandomUrl() {
+	fetchPostSummaries() {
 		fetch('/api/v2/posts?fields=(id,name,post_group,type)')
 			.then(res => res.json())
 			.then((posts) => {
@@ -146,7 +156,32 @@ class Banner extends React.Component {
 		var { ui } = this.props
 		var isWide = ui.windowWidth && ui.windowWidth > 500
 		var geoFileName = isWide ? 'geo.json' : 'geo_small.json'
+		fetch(`/data/geo/${geoFileName}`)
+			.then(res => res.json())
+			.then((geo) => {
+				this.props.dispatch({
+					type: 'FETCH_GLOBE_ANIMATION_GEO_JSON_SUCCESS',
+					data: geo
+				})
+			})
+	}
 
+
+	/*
+	 *
+	 *
+	 */
+	startGlobeAnimation() {
+		let { globeAnimation } = this.props
+		var { ui } = this.props
+		this.globeAnimation = globe(globeAnimation.data)
+		this.globeAnimation.props = {
+			onClick: this.navigateToRandom,
+			onHover: this.triggerMessage,
+			ui: ui
+		}
+		this.globeAnimation.start()
+		this.setState({ isGlobeAnimationRunning: true })
 	}
 
 
@@ -174,8 +209,6 @@ class Banner extends React.Component {
 	 */
 	triggerMessage() {
 
-		const FADE_OUT_IN = 4500, DO_NOT_REAPPEAR_ON_HOVER_FOR = 9000
-
 		if (!this.state.message.shouldShowOnHover) { return }
 
 		this.setState({
@@ -185,13 +218,9 @@ class Banner extends React.Component {
 			}
 		})
 		
-		setTimeout(() => {
-			this.setState({ message: Object.assign({}, this.state.message, { isShowing: false }) })
-		}, FADE_OUT_IN)
+		setTimeout(this.fadeOut, FADE_OUT_IN)
 
-		setTimeout(() => {
-			this.setState({ message: Object.assign({}, this.state.message, { shouldShowOnHover: true }) })
-		}, DO_NOT_REAPPEAR_ON_HOVER_FOR)
+		setTimeout(this.reactivateOnHover, DO_NOT_REAPPEAR_ON_HOVER_FOR)
 
 	}
 
@@ -200,5 +229,6 @@ class Banner extends React.Component {
 export default connect(state => ({ 
 	router: state.router,
 	ui: state.app.ui,
-	postSummaries: state.app.entities.posts.summaries
+	postSummaries: state.app.entities.posts.summaries,
+	globeAnimation: state.app.entities.geo.globeAnimation
 }))(Banner)

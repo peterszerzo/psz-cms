@@ -1,15 +1,15 @@
-import d3 from 'd3';
-import { Events } from 'backbone';
-import _ from 'underscore';
+import d3 from 'd3'
+import { Events } from 'backbone'
+import _ from 'underscore'
 
-import Eye from './eye.js';
-import geomUtil from './geometry_utilities.js';
+import Eye from './eye.js'
+import geomUtil from './geometry_utilities.js'
 
 /*
  * Globe animation module.
  * @returns {object} self - Module object with public API.
  */
-module.exports = function(fileName) {
+module.exports = function(geoJson) {
 
     var self = {
         timeStep: 0.02,
@@ -17,19 +17,19 @@ module.exports = function(fileName) {
         height: 0,
         svg: undefined,
         eye: undefined
-    };
+    }
 
     // Mix in events module.
-    _.extend(self, Events);
+    _.extend(self, Events)
 
     /*
      *
      *
      */
     self.start = function() {
-        self.setup();
-        d3.json('data/geo/' + fileName, self.draw);
-    };
+        self.setup()
+        self.draw()
+    }
 
 
     /*
@@ -37,9 +37,9 @@ module.exports = function(fileName) {
      *
      */
     self.stop = function() {
-        self.tearDown();
-        self.removeElements();
-    };
+        self.tearDown()
+        self.removeElements()
+    }
 
 
     /*
@@ -47,10 +47,10 @@ module.exports = function(fileName) {
      *
      */
     self.setup = function() {
-        self.svg = d3.select('.banner__globe svg');
-        self.eye = new Eye();
-        window.addEventListener('resize', self.setDimensions);
-    };
+        self.svg = d3.select('.banner__globe svg')
+        self.eye = new Eye()
+        window.addEventListener('resize', self.setDimensions)
+    }
 
 
     /*
@@ -58,11 +58,9 @@ module.exports = function(fileName) {
      *
      */
     self.tearDown = function() {
-        if (self.animationIntervalId) {
-            clearInterval(self.animationIntervalId);
-        }
-        window.removeEventListener('resize', self.setDimensions);
-    };
+        if (self.animationIntervalId) { clearInterval(self.animationIntervalId) }
+        window.removeEventListener('resize', self.setDimensions)
+    }
 
 
     /*
@@ -70,9 +68,9 @@ module.exports = function(fileName) {
      *
      */
     self.removeElements = function() {
-        self.svg.selectAll('path').remove();
-        self.svg.remove();
-    };
+        self.svg.selectAll('path').remove()
+        self.svg.remove()
+    }
 
 
     /*
@@ -81,9 +79,9 @@ module.exports = function(fileName) {
      */
     self.onFeatureClick = function(feature) {
         if (self.props.onClick) {
-            self.props.onClick();
+            self.props.onClick()
         }
-    };
+    }
 
 
     /*
@@ -91,11 +89,11 @@ module.exports = function(fileName) {
      *
      */
     self.onFeatureMouseEnter = function(feature) {
-        feature._isActive = true;
+        feature._isActive = true
         if (self.props.onHover) {
-            self.props.onHover();
+            self.props.onHover()
         }
-    };
+    }
 
 
     /*
@@ -103,26 +101,26 @@ module.exports = function(fileName) {
      *
      */
     self.onFeatureMouseLeave = function(feature) {
-        feature._isActive = false;
-    };
+        feature._isActive = false
+    }
 
 
     /*
      *
      *
      */
-    self.draw = function(error, data) {
+    self.draw = function() {
         self.svg.selectAll('path')
-            .data(data.features)
+            .data(geoJson.features)
             .enter()
             .append('path')
             .on('mouseenter', self.onFeatureMouseEnter.bind(self))
             .on('mouseleave', self.onFeatureMouseLeave.bind(self))
-            .on('click', self.onFeatureClick);
-        self.updateGeoPaths();
-        self.trigger('rendered');
-        self.animationIntervalId = setInterval(self.update, self.timeStep * 1000);
-    };
+            .on('click', self.onFeatureClick)
+        self.updateGeoPaths()
+        self.trigger('rendered')
+        self.animationIntervalId = setInterval(self.update, self.timeStep * 1000)
+    }
 
 
     /*
@@ -132,16 +130,16 @@ module.exports = function(fileName) {
     self.setDimensions = function() {
         var minW = 800, minH = 600,
             w = Math.max(minW, self.props.ui.windowWidth),
-            h = Math.max(minH, self.props.ui.windowHeight);
-        self.width = w;
-        self.height = h;
+            h = Math.max(minH, self.props.ui.windowHeight)
+        self.width = w
+        self.height = h
         if (self.svg) {
             self.svg.attr({
                 width: w,
                 height: h
-            });
+            })
         }
-    };
+    }
 
 
     /*
@@ -150,16 +148,16 @@ module.exports = function(fileName) {
     self.getPath = function() {
         var path, projection,
             minWH = Math.min(self.width, self.height),
-            avgWH = (self.width + self.height) / 2;
+            avgWH = (self.width + self.height) / 2
 
         projection = d3.geo.orthographic()
             .scale(avgWH * 0.8)
             .rotate([- self.eye.position[0], - self.eye.position[1]])
-            .translate([ window.innerWidth / 2, window.innerHeight / 2 ]);
+            .translate([ window.innerWidth / 2, window.innerHeight / 2 ])
 
-        path = d3.geo.path().projection(projection);
-        return path;
-    };
+        path = d3.geo.path().projection(projection)
+        return path
+    }
 
 
     /*
@@ -167,9 +165,10 @@ module.exports = function(fileName) {
      *
      */
     self.update = function() {
-        self.eye.updateHarmonic(self.timeStep);
-        self.updateGeoPaths();
-    };
+        self.eye.updateHarmonic(self.timeStep)
+        window.requestAnimationFrame(self.updateGeoPaths)
+        // self.updateGeoPaths()
+    }
 
 
     /*
@@ -177,19 +176,19 @@ module.exports = function(fileName) {
      *
      */
     self.getFeatureCentroid = function(feature) {
-        var i, c, coord;
+        var i, c, coord
         // If centroid is already cached, return it.
         if (feature.geometry['_centroid_cache']) {
-            return feature.geometry['_centroid_cache'];
+            return feature.geometry['_centroid_cache']
         }
-        c = [ 0, 0 ];
-        coord = feature.geometry.coordinates;
+        c = [ 0, 0 ]
+        coord = feature.geometry.coordinates
         for (i = 0; i < 3; i += 1) { 
-            c[0] += coordinates[0][i][0] / 3;
-            c[1] += coordinates[0][i][1] / 3;
+            c[0] += coordinates[0][i][0] / 3
+            c[1] += coordinates[0][i][1] / 3
         }
-        return c;
-    };
+        return c
+    }
 
 
     /*

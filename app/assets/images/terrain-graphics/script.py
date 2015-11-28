@@ -77,6 +77,6 @@ def write_file(file_name, content):
 	f.close()
 
 def Main():
-	write_file('geo_small.json', json.dumps(get_feature_collection('geo_small')))
+	write_file('geo.json', json.dumps(get_feature_collection('geo')))
 
 Main()
