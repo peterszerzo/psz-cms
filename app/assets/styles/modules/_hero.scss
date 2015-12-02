@@ -43,6 +43,8 @@
 		&__content {
 			margin: auto;
 			padding: 0 30px;
+			font-family: 'PT Sans';
+			h1, h2 { font-weight: bold; }
 		}
 	}
 
@@ -63,6 +65,7 @@
 		}
 		
 		font-family: 'PT Sans';
+		font-weight: bold;
 		color: white;
 	}
 	

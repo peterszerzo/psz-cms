@@ -67,8 +67,9 @@ class Banner extends React.Component {
 						<svg width={ui.windowWidth} height={ui.windowHeight}></svg>
 					</div>
 					<Link className="banner__summary" to='/projects'>
-						<h1>a little room</h1>
-						<p>for mindful code, design and writing</p>
+						<h1>mindful code and design</h1>
+						<p>RIGHT TH</p>
+						<p>IS WAY</p>
 					</Link>
 					{ this.renderMessage() }
 				</div>
@@ -85,7 +86,7 @@ class Banner extends React.Component {
 		var style = this.state.message.isShowing ? { opacity: 1 } : { opacity: 0 }
 		return (
 			<div className="banner__message" style={style}>
-				{ 'hey, welcome! click a triangle for random content' }
+				{ 'hey, welcome! click a triangle for a featured project' }
 			</div>
 		)
 	}
