@@ -15,8 +15,8 @@
 	&__summary {
 
 		z-index: 2;
-		$w: 300px;
-		$h: 178px;
+		$w: 286px;
+		$h: 158px;
 		top: calc(50% - #{$h}/2);
 		left: calc(50% - #{$w}/2);
 
@@ -24,12 +24,12 @@
 		display: block;
 		border: 2px solid rgba(255, 255, 255, 0);
 
-		padding: 20px;
+		padding: 20px 16px;
 
 		width: $w;
 		height: $h;
 
-		border-radius: 8px;
+		border-radius: 16px;
 		margin: auto;
 		background-color: $c;
 		opacity: 0.95;
@@ -42,26 +42,10 @@
 			transition: all 0.5s;
 		}
 
-		h1, p { 
-			font-family: 'PT Sans';
-			margin: 0;
-			padding: 0;
-			text-align: left;
+		svg {
+			fill: white;
 		}
 
-		h1 {
-			@include font-size(23.5px);
-			margin: 0 0 3px 0;
-			padding-left: 3px;
-			line-height: 120%;
-		}
-
-		p {
-			font-weight: bold;
-			@include font-size(60px);
-			margin: 0;
-			line-height: 90%;
-		}
 	}
 
 

@@ -4,6 +4,8 @@ import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import { pushState } from 'redux-router'
 
+import Sign from './../../general/sign.jsx'
+
 import globe from './../../../assets/scripts/banner_animation/index.js'
 import { Loader } from './../../general/loader.jsx'
 
@@ -67,9 +69,7 @@ class Banner extends React.Component {
 						<svg width={ui.windowWidth} height={ui.windowHeight}></svg>
 					</div>
 					<Link className="banner__summary" to='/projects'>
-						<h1>mindful code and design</h1>
-						<p>RIGHT TH</p>
-						<p>IS WAY</p>
+						<Sign />
 					</Link>
 					{ this.renderMessage() }
 				</div>
