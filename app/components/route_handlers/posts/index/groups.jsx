@@ -1,9 +1,15 @@
-import React from 'react';
-import _ from 'underscore';
+import React from 'react'
+import _ from 'underscore'
 
-import List from './list.jsx';
-import Loader from './../../../general/loader.jsx';
+import List from './list.jsx'
+import Loader from './../../../general/loader.jsx'
 
+const GROUP_ORDER = [ 'featured', 'recent', 'nostalgia', 'technical', 'personal' ]
+
+/*
+ *
+ *
+ */
 class Groups extends React.Component {
 
 	/*
@@ -27,9 +33,11 @@ class Groups extends React.Component {
 
 		var { resourceGroups } = this.props
 
-		if (resourceGroups == null) { return (<Loader />); }
+		if (resourceGroups == null) { return <Loader /> }
 
-		return Object.keys(resourceGroups).map((key, index) => {
+		var keys = Object.keys(resourceGroups).sort((a, b) => (GROUP_ORDER.indexOf(a) - GROUP_ORDER.indexOf(b)))
+
+		return keys.map((key, index) => {
 			var resources = resourceGroups[key]
 			if (resources == null) { return <div/> }
 			return (
