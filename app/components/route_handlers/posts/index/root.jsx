@@ -61,6 +61,7 @@ class Index extends React.Component {
 			.then(res => res.json())
 			.then((posts) => {
 				if (_.isArray(posts)) {
+					posts = posts.sort((p1, p2) => (p1['display_order'] - p2['display_order']))
 					this.props.dispatch({ type: 'FETCH_ALL_POST_SUMMARIES_SUCCESS', data: posts })
 				}
 			}).catch((err) => { console.log(err.stack) })

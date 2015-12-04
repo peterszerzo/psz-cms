@@ -38,7 +38,9 @@ class Groups extends React.Component {
 		var keys = Object.keys(resourceGroups).sort((a, b) => (GROUP_ORDER.indexOf(a) - GROUP_ORDER.indexOf(b)))
 
 		return keys.map((key, index) => {
+
 			var resources = resourceGroups[key]
+			
 			if (resources == null) { return <div/> }
 			return (
 				<div className='project-group' key={index}>
@@ -52,8 +54,8 @@ class Groups extends React.Component {
 						<List resources={resources} />
 					</div>
 				</div>
-			);
-		});
+			)
+		})
 	}
 
 }
