@@ -1,4 +1,4 @@
-require('./../styles/site.scss')
+import './../styles/site.scss'
 
 import { render } from 'react-dom'
 

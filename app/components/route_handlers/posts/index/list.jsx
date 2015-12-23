@@ -1,6 +1,6 @@
-import React from 'react';
+import React from 'react'
 
-import ListItem from './item.jsx';
+import ListItem from './item.jsx'
 
 var List = (props) => {
 
@@ -9,7 +9,7 @@ var List = (props) => {
 	if (resources == null) { return <div/> }
 
 	var list = resources.map((resource, index) => {
-		return <ListItem resource={resource} key={index} />;
+		return <ListItem resource={resource} key={index} />
 	})
 
 	return (
@@ -20,4 +20,4 @@ var List = (props) => {
 
 }
 
-export default List;
+export default List

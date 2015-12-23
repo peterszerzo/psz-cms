@@ -79,15 +79,6 @@
 				display: none;
 			}
 
-			&:hover { 
-				border-bottom: 4px solid lighten(map-get($colors, purple), 7); 
-				a {
-					top: 3px; opacity: 1;
-				}
-			}
-
-			display: table;
-
 			a { 
 				height: 100%;
 				padding: 0 0px;
@@ -99,6 +90,15 @@
 				@include font-size(18px);
 				top: 1px;
 			}
+
+			&:hover, &--active { 
+				border-bottom: 4px solid lighten(map-get($colors, purple), 7); 
+				a {
+					top: 3px; opacity: 1;
+				}
+			}
+
+			display: table;
 
 		}
 	}

@@ -1,6 +1,6 @@
 # peterszerzo.com
 
-My current personal website - an evolving experiment with designs and technologies that tends to not sit still for more than 2 weeks (read its story [here](/docs/story.md)).
+My current personal website. Read its story [here](/docs/story.md).
 
 ## Development environment
 
@@ -19,7 +19,7 @@ Finally, run two terminal windows with the following scripts:
 
 This will be a little more streamlined shortly.
 
-## Docs
+## The Docs
 
 Are right here:
 * [Testing](/docs/testing.md)

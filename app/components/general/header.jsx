@@ -91,7 +91,8 @@ class Header extends Component {
 	 *
 	 */
 	renderList() {
-		var { activeLinkName } = this.props
+		var { pathname } = this.props.router.location
+		var activeLinkName = pathname.slice(1)
 		return buttons.map(function(button, i) {
 			var { url, name } = button,
 				cls = classNames({ 
