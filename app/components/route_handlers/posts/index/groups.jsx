@@ -47,10 +47,9 @@ class Groups extends React.Component {
 					<div className='project-group__header'>
 						<h1>{ key }</h1>
 						<div className='project-group__separator' />
-						<p> { this.props.groupDescriptions[key] } </p>
+						{ /* <p> { this.props.groupDescriptions[key] } </p> */ }
 					</div>
 					<div className='project-group__content'>
-						
 						<List resources={resources} />
 					</div>
 				</div>

@@ -9,7 +9,7 @@ import { Loader } from './../../../general/loader.jsx'
 import Groups from './groups.jsx'
 
 var groupDescriptions = {
-	'featured': 'Things on my mind these days. An incomplete collection.',
+	'featured': 'My current favorites.',
 	'recent': 'A blend of mostly finished technical and creative endeavors.',
 	'nostalgia': 'The childhood project(s) that got me started.',
 	'personal': 'Thoughts, stories, the occasional low-key rambling.',
