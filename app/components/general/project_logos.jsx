@@ -4,7 +4,6 @@ import React from 'react'
 
 var noFill = { fill: 'none' }
 
-
 export function Neutral(props) {
 
 	return (
@@ -13,7 +12,26 @@ export function Neutral(props) {
 				<circle cx="200" cy="200.712" r="199.221"/>
 			</g>
 		</svg>
-	);
+	)
+
+}
+
+
+export function HelicopterRide(props) {
+
+	return (
+		<svg className={props.className} viewBox="0 0 400 400">
+			<g id="fill">
+				<circle fill="#0F3955" cx="200" cy="200" r="199.221"/>
+				<g>
+					<path fill="#FFFFFF" d="M79.03,182.366c14.853,16.409,37.376,25.644,62.532,25.644c44.725,0,81.006-32.275,81.006-73.053
+						c0-40.779-36.261-72.572-80.985-72.572c-0.737,0-3.294,0-3.294,0l0,0H0v122h79"/>
+					<path fill="#0F3955" d="M144.953,113.667c-18.414,0-33.344,8.266-33.344,18.46c0,10.195,14.93,18.461,33.344,18.461
+						c18.419,0,33.349-8.266,33.349-18.461C178.302,121.933,163.372,113.667,144.953,113.667z"/>
+				</g>
+			</g>
+		</svg>
+	)
 
 }
 
@@ -59,7 +77,7 @@ export function OnDeletingMyFacebook(props) {
 					v62.438H210.598z"/>
 			</g>
 		</svg>
-	);
+	)
 
 }
 
@@ -84,7 +102,7 @@ export function Playground1(props) {
 				<rect x="192.737" y="247" fill="#FFFFFF" width="60" height="5.158"/>
 			</g>
 		</svg>
-	);
+	)
 
 }
 
@@ -100,7 +118,7 @@ export function Battle(props) {
 					C89.337,170.431,48.597,288.771,41.875,314.797"/>
 			</g>
 		</svg>
-	);
+	)
 
 }
 
@@ -120,7 +138,7 @@ export function Newamerica(props) {
 					s-5.479,12.175-12.174,12.175C129.388,169.564,123.91,164.086,123.91,157.39"/>
 			</g>
 		</svg>
-	);
+	)
 
 }
 
@@ -137,7 +155,7 @@ export function About(props) {
 				<circle fill="#FFFFFF" cx="260" cy="273.987" r="14.999"/>
 			</g>
 		</svg>
-	);
+	)
 
 }
 
@@ -170,7 +188,7 @@ export function Kinetic(props) {
 				<circle cx="138.537" cy="232.491" r="4.098"/>
 			</g>
 		</svg>
-	);
+	)
 
 }
 
@@ -191,7 +209,7 @@ export function ScalingTricksForGeo(props) {
 					c-0.477,109.873,88.204,199.331,198.076,199.806C260.91,399.213,317.065,370.329,353.722,324.998z"/>
 			</g>
 		</svg>
-	);
+	)
 
 }
 
@@ -217,7 +235,7 @@ export function RipsawJs(props) {
 					C3.798,161.158,10.612,135.708,23.629,110.17z"/>
 			</g>
 		</svg>
-	);
+	)
 
 }
 
@@ -242,7 +260,7 @@ export function Pba(props) {
 				</g>
 			</g>
 		</svg>
-	);
+	)
 
 }
 
@@ -269,7 +287,7 @@ export function GiraffeForRhino(props) {
 					C174.729,169.351,176.851,170.346,178.5,169.927z"/>
 			</g>
 		</svg>
-	);
+	)
 
 }
 
@@ -321,7 +339,7 @@ export function AlgorithmicTattoo(props) {
 				<line style={noFill} stroke="#FFFFFF" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" x1="88.149" y1="165.17" x2="95.078" y2="163.762"/>
 			</g>
 		</svg>
-	);
+	)
 
 }
 
@@ -365,6 +383,6 @@ export function PendantProject(props) {
 				</g>
 			</g>
 		</svg>
-	);
+	)
 
 }
