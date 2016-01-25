@@ -3,26 +3,14 @@ import _ from 'underscore'
 
 import * as Subcomponents from './subcomponents/index.js'
 
-/*
- * Reusable form component.
- *
- */
-class Form extends React.Component {
+export default class Form extends React.Component {
 
-	/*
-	 *
-	 *
-	 */
 	constructor(props) {
 		super(props)
 		this.handleFormFieldChange = this.handleFormFieldChange.bind(this)
 		this.handleFormSubmit = this.handleFormSubmit.bind(this)
 	}
 
-	/*
-	 *
-	 *
-	 */
 	render() {
 		var style = this.props.isEnabled ? {} : { opacity: 0.5 }
 		return (
@@ -41,11 +29,6 @@ class Form extends React.Component {
 		);
 	}
 
-
-	/*
-	 *
-	 *
-	 */
 	renderFormComponents() {
 		var { model, isEnabled } = this.props
 		var fields = [ ...model.fields, { key: 'password', type: 'text', labelText: 'Password', hint: 'Enter edit password.' } ]
@@ -68,25 +51,13 @@ class Form extends React.Component {
 		})
 	}
 
-
-	/*
-	 *
-	 *
-	 */
 	handleFormFieldChange(changedFormFieldData) {
 		this.props.handleFormFieldChange(changedFormFieldData)
 	}
 
-	
-	/*
-	 * Run method passed down from parent.
-	 *
-	 */
 	handleFormSubmit(e) {
 		e.preventDefault()
 		this.props.handleFormSubmit()
 	}
 
 }
-
-export default Form

@@ -1,9 +1,5 @@
 import React from 'react'
 
-/*
- * Loading icon.
- *
- */
 export function Loader() {
 	return (
 		<div className='loader'>

@@ -1,10 +1,6 @@
 import React from 'react'
 
-/*
- *
- *
- */
-function Modal(props) {
+export default function Modal(props) {
 
 	return (
 		<div className='modal'>
@@ -15,5 +11,3 @@ function Modal(props) {
 	)
 
 }
-
-export default Modal

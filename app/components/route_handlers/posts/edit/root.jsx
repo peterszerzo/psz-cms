@@ -5,25 +5,9 @@ import Edit from './../../../general/crud/edit.jsx'
 
 import Post from './../../../../models/post.js'
 
-/*
- * 
- *
- */
+
 class EditPost extends React.Component {
 
-	/*
-	 *
-	 *
-	 */
-	constructor(props) {
-		super(props)
-	}
-
-
-	/*
-	 *
-	 *
-	 */
 	render() {
 		var { id, action } = this.props.router.params
 		action = action || 'new'

@@ -6,29 +6,17 @@ import Loader from './../../../general/loader.jsx'
 
 const GROUP_ORDER = [ 'featured', 'recent', 'nostalgia', 'technical', 'personal' ]
 
-/*
- *
- *
- */
+
 class Groups extends React.Component {
 
-	/*
-	 *
-	 *
-	 */
 	render() {
 		return (
 			<div className='project-groups'>
 				{ this.renderGroups() }
 			</div>
-		);
+		)
 	}
 
-
-	/*
-	 *
-	 *
-	 */
 	renderGroups() {
 
 		var { resourceGroups } = this.props

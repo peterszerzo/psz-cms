@@ -7,7 +7,7 @@ import text from './text.js'
 
 import Footer from './../../general/footer.jsx'
 
-var greetings = [ 
+const GREETINGS = [ 
 	'Hello',
 	'Sziasztok',
 	'Salut',
@@ -15,18 +15,10 @@ var greetings = [
 	'Hej'
 ]
 
-var imageUrl = '/images/me/me_1200.jpg'
+const IMAGE_URL = '/images/me/me_1200.jpg'
 
-/*
- *
- *
- */
-class About extends React.Component {
+export default class About extends React.Component {
 
-	/*
-	 *
-	 *
-	 */
 	constructor(props) {
 		super(props)
 		this.state = {
@@ -35,11 +27,6 @@ class About extends React.Component {
 		}
 	}
 
-
-	/*
-	 *
-	 *
-	 */
 	render() {
 		var heroOverlayStyle = this.state.isHeroImageLoaded ? null : { opacity: '1' }
 		return (
@@ -48,7 +35,7 @@ class About extends React.Component {
 				<div className='hero fill-parent'>
 					<div className='hero__background' style={this.getHeroBackgroundStyle()} />
 					<div className='hero__overlay' style={ heroOverlayStyle } />
-					<div className='hero__text'>{ greetings[this.state.greetingIndex] }</div>
+					<div className='hero__text'>{ GREETINGS[this.state.greetingIndex] }</div>
 				</div>
 				<div 
 					className='static'
@@ -59,66 +46,39 @@ class About extends React.Component {
 		)
 	}
 
-
-	/*
-	 *
-	 *
-	 */
 	renderTestImage() {
 		return (
 			<img
 				style={ { opacity: 0.1, width: 10, height: 10, position: 'fixed' } } 
-				src={ imageUrl }
+				src={ IMAGE_URL }
 				onLoad={this.handleImageLoad.bind(this)} 
 			/>
 		)
 	}
 
-
-	/*
-	 *
-	 *
-	 */
 	componentDidMount() {
 		this.greetingChangeInterval = setInterval(() => {
-			if (this.state.greetingIndex === (greetings.length - 1)) {
+			if (this.state.greetingIndex === (GREETINGS.length - 1)) {
 				return this.setState({ greetingIndex: 0 });
 			}
 			this.setState({ greetingIndex: this.state.greetingIndex + 1 });
 		}, 2000)
 	}
 
-
-	/*
-	 *
-	 *
-	 */
 	componentWillUnmount() {
 		if (this.greetingChangeInterval) {
 			clearInterval(this.greetingChangeInterval)
 		}
 	}
 
-
-	/*
-	 *
-	 *
-	 */
 	getHeroBackgroundStyle() {
 		if (this.state.isHeroImageLoaded) {
-			return { backgroundImage: `url(${imageUrl})` }
+			return { backgroundImage: `url(${IMAGE_URL})` }
 		}
 	}
 
-
-	/*
-	 *
-	 *
-	 */
 	handleImageLoad() {
 		this.setState({ isHeroImageLoaded: true })
 	}
 
 }
-
-export default About

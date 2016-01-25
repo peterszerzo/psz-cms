@@ -1,31 +1,24 @@
-import * as React from 'react'
+import React from 'react'
 import _ from 'underscore'
+import fetch from 'isomorphic-fetch'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import { pushState } from 'redux-router'
 
 import Sign from './../../general/sign.jsx'
-
 import globe from './../../../assets/scripts/banner_animation/index.js'
 import { Loader } from './../../general/loader.jsx'
 
-import fetch from 'isomorphic-fetch'
 
-const FADE_OUT_IN = 4500, DO_NOT_REAPPEAR_ON_HOVER_FOR = 9000
+const FADE_OUT_IN = 4500
+const DO_NOT_REAPPEAR_ON_HOVER_FOR = 9000
 
-/*
- *
- *
- */
-class Banner extends React.Component {
 
-	/*
-	 *
-	 *
-	 */
+export default class Banner extends React.Component {
+
 	constructor(props) {
 		super(props)
-		this.navigateToRandom = this.navigateToRandom.bind(this)
+		this.navigateToRandomPost = this.navigateToRandomPost.bind(this)
 		this.triggerMessage = this.triggerMessage.bind(this)
 
 		this.fadeOut = function() {
@@ -48,11 +41,6 @@ class Banner extends React.Component {
 		}
 	}
 
-
-	/*
-	 *
-	 *
-	 */
 	render() {
 		var { ui } = this.props
 
@@ -77,11 +65,6 @@ class Banner extends React.Component {
 		)
 	}
 
-
-	/*
-	 *
-	 *
-	 */
 	renderMessage() {
 		var style = this.state.message.isShowing ? { opacity: 1 } : { opacity: 0 }
 		return (
@@ -91,11 +74,6 @@ class Banner extends React.Component {
 		)
 	}
 
-
-	/*
-	 *
-	 *
-	 */
 	componentDidMount() {
 		var { postSummaries } = this.props
 		if (postSummaries == null || postSummaries.status !== 'success') {
@@ -104,13 +82,10 @@ class Banner extends React.Component {
 		
 	}
 
-
-	/*
-	 * If the animation is already running, update it.
-	 * Otherwise, fetch geo data if necessary.
-	 * If available, start globe animation.
-	 */
 	componentDidUpdate() {
+		// If the animation is already running, update it.
+		// Otherwise, fetch geo data if necessary.
+		// If that's available, start globe animation.
 		if (this.state.isGlobeAnimationRunning) {
 			this.globeAnimation.props.ui = this.props.ui
 			this.globeAnimation.setDimensions()
@@ -124,20 +99,10 @@ class Banner extends React.Component {
 		}
 	}
 
-	
-	/*
-	 *
-	 *
-	 */
 	componentWillUnmount() {
 		this.globeAnimation.stop()
 	}
 
-
-	/*
-	 *
-	 *
-	 */
 	fetchPostSummaries() {
 		fetch('/api/v2/posts?fields=(id,name,post_group,type)')
 			.then(res => res.json())
@@ -149,11 +114,6 @@ class Banner extends React.Component {
 			})
 	}
 
-
-	/*
-	 *
-	 *
-	 */
 	fetchAnimationGeoFile() {
 		var { ui } = this.props
 		var isWide = ui.windowWidth && ui.windowWidth > 500
@@ -168,17 +128,12 @@ class Banner extends React.Component {
 			})
 	}
 
-
-	/*
-	 *
-	 *
-	 */
 	startGlobeAnimation() {
 		let { globeAnimation } = this.props
 		var { ui } = this.props
 		this.globeAnimation = globe(globeAnimation.data)
 		this.globeAnimation.props = {
-			onClick: this.navigateToRandom,
+			onClick: this.navigateToRandomPost,
 			onHover: this.triggerMessage,
 			ui: ui
 		}
@@ -186,12 +141,7 @@ class Banner extends React.Component {
 		this.setState({ isGlobeAnimationRunning: true })
 	}
 
-
-	/*
-	 * Navigate to a random post's location.
-	 *
-	 */
-	navigateToRandom() {
+	navigateToRandomPost() {
 		var { dispatch, postSummaries } = this.props
 		var randomPostId
 		if (postSummaries) {

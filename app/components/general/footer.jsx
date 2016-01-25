@@ -1,6 +1,6 @@
 import React from 'react'
 
-const links = [
+const LINKS = [
 	{
 		name: 'GitHub',
 		url: 'https://github.com/pickled-plugins'
@@ -19,34 +19,21 @@ const links = [
 	}
 ]
 
-const messages = [
+const MESSAGES = [
 	'Water your plants',
 	'Talk about your feelings',
 	'Say hi to your neighbor'
 ]
 
 
-/*
- *
- *
- */
-class Footer extends React.Component {
+export default class Footer extends React.Component {
 
-	/*
-	 *
-	 *
-	 */
 	constructor(props) {
 		super(props)
 		this.changeMessage = this.changeMessage.bind(this)
 		this.state = { activeMessageIndex: 0 }
 	}
 
-
-	/*
-	 *
-	 *
-	 */
 	render() {
 		return (
 			<footer className='footer'>
@@ -56,53 +43,32 @@ class Footer extends React.Component {
 					{ this.renderLinks() }
 				</div>
 				<div className='footer__messages'>
-					<p>{ messages[this.state.activeMessageIndex] }</p>
+					<p>{ MESSAGES[this.state.activeMessageIndex] }</p>
 				</div>
 			</footer>
 		)
 	}
 
-
-	/*
-	 *
-	 *
-	 */
 	renderLinks() {
-		return links.map((link, i) => {
+		return LINKS.map((link, i) => {
 			var { name, url } = link
 			return <a key={i} className='link' href={url}>{name}</a>
 		})
 	}
 
-
-	/*
-	 *
-	 *
-	 */
 	componentDidMount() {
 		this.changeInterval = setInterval(this.changeMessage, 2500)
 	}
 
-
-	/*
-	 *
-	 *
-	 */
 	componentWillUnmount() {
 		clearInterval(this.changeInterval)
 	}
 
-
-	/*
-	 *
-	 *
-	 */
 	changeMessage() {
-		var i = this.state.activeMessageIndex, n = messages.length
+		var i = this.state.activeMessageIndex
+		var n = MESSAGES.length
 		if (i === n - 1) { return this.setState({ activeMessageIndex: 0 }) }
 		this.setState({ activeMessageIndex: i + 1 })
 	}
 
 }
-
-export default Footer

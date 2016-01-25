@@ -6,10 +6,6 @@ import { Link } from 'react-router'
 import { Loader } from './../../../general/loader.jsx'
 
 
-/*
- * Render a list of links.
- *
- */
 function Links(props) {
 	var { links } = props
 	if (!links) { return <div/> }
@@ -34,11 +30,6 @@ function Links(props) {
 }
 
 
-
-/*
- * Render a dash-formatted date pair.
- *
- */
 function Dates(props) {
 
 	var { dates } = props
@@ -57,10 +48,6 @@ function Dates(props) {
 }
 
 
-/*
- *
- *
- */
 function ShowItem(props) {
 
 	var { resource, scrollRatio } = props

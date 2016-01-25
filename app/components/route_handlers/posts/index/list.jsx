@@ -2,7 +2,8 @@ import React from 'react'
 
 import ListItem from './item.jsx'
 
-var List = (props) => {
+
+export default function List(props) {
 
 	var { resources } = props
 
@@ -19,5 +20,3 @@ var List = (props) => {
 	)
 
 }
-
-export default List

@@ -10,16 +10,9 @@ import * as models from './../../../models/index.js'
 
 const EDIT_STATUSES = [ 'editing', 'pending', 'success', 'error' ]
 
-/*
- * Edit resource component.
- *
- */
-class Edit extends React.Component {
 
-	/*
-	 * Set initial state.
-	 *
-	 */
+export default class Edit extends React.Component {
+
 	constructor(props) {
 		super(props)
 
@@ -35,11 +28,6 @@ class Edit extends React.Component {
 
 	}
 
-
-	/*
-	 * Render only if model instance is set.
-	 *
-	 */
 	render() {
 		if (!this.state.model) { return <div/> }
 		return (
@@ -56,11 +44,6 @@ class Edit extends React.Component {
 		)
 	}
 
-
-	/*
-	 * Render status modal.
-	 *
-	 */
 	renderStatusModal() {
 		var { editStatus } = this.state
 		if (editStatus === 'editing') { return }
@@ -71,11 +54,6 @@ class Edit extends React.Component {
 		)
 	}
 
-
-	/*
-	 * Fetch resource if an ID was passed down in props.
-	 *
-	 */
 	componentWillMount() {
 		var { modelId } = this.props
 		if (modelId) {
@@ -97,11 +75,6 @@ class Edit extends React.Component {
 		}
 	}
 
-
-	/*
-	 * Apply change from form field. The model instance is recreated so as not to mutate the data.
-	 *
-	 */
 	handleFormFieldChange(childData) {
 		var { data } = this.state.model
 		var change = {}
@@ -111,11 +84,6 @@ class Edit extends React.Component {
 		this.setState({ model: newModel })
 	}
 
-
-	/*
-	 *
-	 *
-	 */
 	handleFormSubmit() {
 
 		var { action } = this.props
@@ -151,5 +119,3 @@ class Edit extends React.Component {
 	}
 
 }
-
-export default Edit

@@ -1,11 +1,8 @@
-// Project logo svg's.
-
 import React from 'react'
 
-var noFill = { fill: 'none' }
+const noFill = { fill: 'none' }
 
 export function Neutral(props) {
-
 	return (
 		<svg className={props.className} viewBox="0 0 400 400">
 			<g>
@@ -13,12 +10,9 @@ export function Neutral(props) {
 			</g>
 		</svg>
 	)
-
 }
 
-
 export function Albatross(props) {
-
 	return (
 		<svg className={props.className} viewBox="0 0 400 400">
 			<g>
@@ -58,12 +52,10 @@ export function Albatross(props) {
 			</g>
 		</svg>
 	)
-
 }
 
 
 export function HelicopterRide(props) {
-
 	return (
 		<svg className={props.className} viewBox="0 0 400 400">
 			<g>
@@ -79,7 +71,6 @@ export function HelicopterRide(props) {
 			</g>
 		</svg>
 	)
-
 }
 
 
@@ -87,7 +78,6 @@ export function HelicopterRide(props) {
 
 
 export function LiquidLab(props) {
-
 	return (
 		<svg className={props.className} viewBox="0 0 400 400">
 			<g>
@@ -109,13 +99,11 @@ export function LiquidLab(props) {
 			</g>
 		</svg>
 	)
-
 }
 
 
 
 export function OnDeletingMyFacebook(props) {
-
 	return (
 		<svg className={props.className} viewBox="0 0 400 400">
 			<g>
@@ -128,12 +116,10 @@ export function OnDeletingMyFacebook(props) {
 			</g>
 		</svg>
 	)
-
 }
 
 
 export function Playground1(props) {
-
 	return (
 		<svg className={props.className} viewBox="0 0 400 400">
 			<g>
@@ -153,11 +139,9 @@ export function Playground1(props) {
 			</g>
 		</svg>
 	)
-
 }
 
 export function Battle(props) {
-
 	return (
 		<svg className={props.className} viewBox="0 0 400 400">
 			<g>
@@ -169,11 +153,9 @@ export function Battle(props) {
 			</g>
 		</svg>
 	)
-
 }
 
 export function Newamerica(props) {
-
 	return (
 		<svg className={props.className} viewBox="0 0 400 400">
 			<g>
@@ -189,11 +171,9 @@ export function Newamerica(props) {
 			</g>
 		</svg>
 	)
-
 }
 
 export function About(props) {
-
 	return (
 		<svg className={props.className} viewBox="0 0 400 400">
 			<g>
@@ -206,11 +186,9 @@ export function About(props) {
 			</g>
 		</svg>
 	)
-
 }
 
 export function Kinetic(props) {
-
 	return (
 		<svg className={props.className} viewBox="0 0 400 400">
 			<g>
@@ -239,11 +217,9 @@ export function Kinetic(props) {
 			</g>
 		</svg>
 	)
-
 }
 
 export function ScalingTricksForGeo(props) {
-
 	return (
 		<svg className={props.className} viewBox="0 0 400 400">
 			<g>
@@ -260,11 +236,9 @@ export function ScalingTricksForGeo(props) {
 			</g>
 		</svg>
 	)
-
 }
 
 export function RipsawJs(props) {
-
 	return (
 		<svg className={props.className} viewBox="0 0 400 400">
 			<g>
@@ -286,12 +260,9 @@ export function RipsawJs(props) {
 			</g>
 		</svg>
 	)
-
 }
 
-
 export function Pba(props) {
-
 	return (
 		<svg className={props.className} viewBox="0 0 400 400">
 			<g>
@@ -311,12 +282,9 @@ export function Pba(props) {
 			</g>
 		</svg>
 	)
-
 }
 
-
 export function GiraffeForRhino(props) {
-
 	return (
 		<svg className={props.className} viewBox="0 0 400 400">
 			<g>
@@ -338,12 +306,9 @@ export function GiraffeForRhino(props) {
 			</g>
 		</svg>
 	)
-
 }
 
-
 export function AlgorithmicTattoo(props) {
-
 	return (
 		<svg className={props.className} viewBox="0 0 400 400">
 			<g>
@@ -390,12 +355,9 @@ export function AlgorithmicTattoo(props) {
 			</g>
 		</svg>
 	)
-
 }
 
-
 export function PendantProject(props) {
-
 	return (
 		<svg className={props.className} viewBox="0 0 400 400">
 			<g>
@@ -434,5 +396,4 @@ export function PendantProject(props) {
 			</g>
 		</svg>
 	)
-
 }

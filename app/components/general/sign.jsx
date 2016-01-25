@@ -1,7 +1,6 @@
 import React from 'react'
 
-function Sign(props) {
-
+export default function Sign(props) {
 	return (
 		<svg viewBox="0 0 1049 471">
 		    <g>
@@ -13,7 +12,4 @@ function Sign(props) {
 		    </g>
 		</svg>
 	)
-
 }
-
-export default Sign

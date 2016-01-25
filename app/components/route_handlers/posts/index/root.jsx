@@ -17,26 +17,13 @@ var groupDescriptions = {
 }
 
 
-/*
- *
- *
- */
 class Index extends React.Component {
 
-	/*
-	 *
-	 *
-	 */
 	constructor(props) {
 		super(props)
-		this.state = this.state || {}
+		this.state = {}
 	}
 
-
-	/*
-	 *
-	 *
-	 */
 	render() {
 		var resources = _.where(this.getResources(), { type: this.props.postType })
 		if (resources == null) { return <Loader /> }
@@ -48,11 +35,6 @@ class Index extends React.Component {
 		)
 	}
 
-
-	/*
-	 * Fetch post summary and set to state.
-	 *
-	 */
 	componentDidMount() {
 
 		if (this.getResources()) { return }
@@ -69,13 +51,7 @@ class Index extends React.Component {
 
 	}
 
-
-	/*
-	 *
-	 *
-	 */
 	getResources() {
-		// return this.state.resources
 		var { postSummaries } = this.props
 		if (!postSummaries) { return }
 		var { status, data } = postSummaries

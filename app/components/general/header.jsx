@@ -21,27 +21,14 @@ var buttons = [
 ].reverse()
 
 
-/*
- *
- *
- */
 class Header extends Component {
 
-	/*
-	 *
-	 *
-	 */
 	constructor(props) {
 		super(props)
 		this.toggleExpandedState = this.toggleExpandedState.bind(this)
 		this.state = { isExpanded: false }
 	}
 
-
-	/*
-	 *
-	 *
-	 */
 	render() {
 
 		var { windowWidth, windowHeight, scrollTop } = this.props.app.ui
@@ -85,11 +72,6 @@ class Header extends Component {
 		)
 	}
 
-
-	/*
-	 * 
-	 *
-	 */
 	renderList() {
 		var { pathname } = this.props.router.location
 		var activeLinkName = pathname.slice(1)
@@ -109,11 +91,6 @@ class Header extends Component {
 		})
 	}
 
-
-	/*
-	 * 
-	 *
-	 */
 	renderModalList() {
 		var { activeLinkName } = this.props
 		return buttons.map(function(button, i) {
@@ -132,11 +109,6 @@ class Header extends Component {
 		})
 	}
 
-
-	/*
-	 *
-	 *
-	 */
 	renderModalNav() {
 		if (!this.state.isExpanded) { return }
 		return (
@@ -151,22 +123,12 @@ class Header extends Component {
 		)
 	}
 
-
-	/*
-	 *
-	 *
-	 */
 	componentWillUpdate(nextProps, nextState) {
 		if (this.props.router.location !== nextProps.router.location && this.state.isExpanded) {
 			this.toggleExpandedState()
 		}
 	}
 
-
-	/*
-	 *
-	 *
-	 */
 	toggleExpandedState() {
 		this.setState({ isExpanded: !this.state.isExpanded })
 	}
@@ -174,7 +136,4 @@ class Header extends Component {
 }
 
 
-export default connect(state => ({ 
-	router: state.router,
-	app: state.app
-}))(Header)
+export default Header
