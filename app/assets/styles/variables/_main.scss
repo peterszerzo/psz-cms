@@ -11,17 +11,7 @@ $colors: (
 	light-purple: #9695A8
 );
 
-$palette: (
-	blue: (
-		base: #2D338C,
-		light: #1D9DFF
-	)
-);
-
 @function get-color($key, $index: 1) {
-	@if ($key == 'scheme') {
-		@return nth(map-get($colors, $key), $index);
-	}
 	@return map-get($colors, $key);
 }
 

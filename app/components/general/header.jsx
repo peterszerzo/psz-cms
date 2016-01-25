@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 
 import { BackToMain, Falafel } from './buttons.jsx'
 
+
 var buttons = [
 	{
 		name: 'projects',

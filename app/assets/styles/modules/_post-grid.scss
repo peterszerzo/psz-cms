@@ -1,0 +1,54 @@
+.post-grid {
+
+	width: 100%;
+	float: left;
+
+	&__element {
+
+		position: relative;
+
+		width: 50%;
+		float: left;
+		height: 400px;
+		display: flex;
+
+		opacity: 1;
+
+		&__background, &__overlay {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+		}
+
+		&__background {
+			filter: blur(3px);
+			background-position: 50% 50%;
+			background-size: 100%;
+		}
+
+		&__overlay {
+
+			background-color: transparentize(#333, 0.3);
+			transition: all 0.5s;
+			.post-grid__element:hover & {
+				background-color: transparentize(get-color(purple), 0.02);
+				transition: all 0.5s;
+			}
+		}
+
+		&:hover {
+			background-size: 105%;
+			transition: all 0.5s;
+		}
+
+		&__title {
+			position: relative;
+			color: white;
+			margin: auto;
+		}
+
+	}
+
+}

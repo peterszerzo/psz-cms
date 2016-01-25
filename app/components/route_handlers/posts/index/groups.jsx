@@ -7,7 +7,7 @@ import Loader from './../../../general/loader.jsx'
 const GROUP_ORDER = [ 'featured', 'recent', 'nostalgia', 'technical', 'personal' ]
 
 
-class Groups extends React.Component {
+export default class Groups extends React.Component {
 
 	render() {
 		return (
@@ -21,7 +21,9 @@ class Groups extends React.Component {
 
 		var { resourceGroups } = this.props
 
-		if (resourceGroups == null) { return <Loader /> }
+		if (resourceGroups == null) { 
+			return <Loader /> 
+		}
 
 		var keys = Object.keys(resourceGroups).sort((a, b) => (GROUP_ORDER.indexOf(a) - GROUP_ORDER.indexOf(b)))
 
@@ -29,13 +31,13 @@ class Groups extends React.Component {
 
 			var resources = resourceGroups[key]
 			
-			if (resources == null) { return <div/> }
+			if (!resources) { return null }
+
 			return (
 				<div className='project-group' key={index}>
 					<div className='project-group__header'>
 						<h1>{ key }</h1>
 						<div className='project-group__separator' />
-						{ /* <p> { this.props.groupDescriptions[key] } </p> */ }
 					</div>
 					<div className='project-group__content'>
 						<List resources={resources} />
@@ -46,5 +48,3 @@ class Groups extends React.Component {
 	}
 
 }
-
-export default Groups

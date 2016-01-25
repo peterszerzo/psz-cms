@@ -16,7 +16,10 @@ class Layout extends React.Component {
 	render() {
 		return (
 			<div className='wrapper fill-parent'>
-				<Header app={this.props.app} router={this.state.router} />
+				<Header 
+					app={this.props.app} 
+					router={this.props.router} 
+				/>
 				{ this.props.children }
 			</div>
 		)
@@ -24,6 +27,7 @@ class Layout extends React.Component {
 
 	componentWillMount() {
 		this.setWindowDimensions()
+		// Component alive while app runs, no need to remove this event listener.
 		window.addEventListener('resize', this.setWindowDimensions)
 		setInterval(this.updateScrollTop, 100)
 	}

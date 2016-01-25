@@ -8,7 +8,8 @@ module.exports = {
 	output: {
 		path: path.resolve('./public/scripts'),
 		publicPath: 'http://localhost:3000/',
-		filename: 'bundle.js'
+		filename: 'bundle.js',
+		sourceMapFilename: 'bundle.js.map'
 	},
 
 	module: {
@@ -30,6 +31,8 @@ module.exports = {
 
 		]
 	},
+
+	devtool: 'source-map',
 
 	plugins: []
 

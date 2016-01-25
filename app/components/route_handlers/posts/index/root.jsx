@@ -7,14 +7,7 @@ import { connect } from 'react-redux'
 import { Loader } from './../../../general/loader.jsx'
 
 import Groups from './groups.jsx'
-
-var groupDescriptions = {
-	'featured': 'My current favorites.',
-	'recent': 'A blend of mostly finished technical and creative endeavors.',
-	'nostalgia': 'The childhood project(s) that got me started.',
-	'personal': 'Thoughts, stories, the occasional low-key rambling.',
-	'technical': 'Tricks I learn while dabbling with technology.'
-}
+import NewList from './new_list.jsx'
 
 
 class Index extends React.Component {
@@ -30,15 +23,14 @@ class Index extends React.Component {
 		var resourceGroups = _.groupBy(resources, resource => resource.post_group)
 		return (
 			<div className='wrapper__clear-header fill-parent'>
-				<Groups groupDescriptions={groupDescriptions} resourceGroups={resourceGroups}/>
+				{ /* <Groups resourceGroups={resourceGroups}/> */ }
+				<NewList posts={resources} />
 			</div>
 		)
 	}
 
 	componentDidMount() {
-
 		if (this.getResources()) { return }
-
 		fetch('/api/v2/posts?fields=(id,name,post_group,type)')
 			.then(res => res.json())
 			.then((posts) => {
@@ -47,8 +39,6 @@ class Index extends React.Component {
 					this.props.dispatch({ type: 'FETCH_ALL_POST_SUMMARIES_SUCCESS', data: posts })
 				}
 			}).catch((err) => { console.log(err.stack) })
-		
-
 	}
 
 	getResources() {
