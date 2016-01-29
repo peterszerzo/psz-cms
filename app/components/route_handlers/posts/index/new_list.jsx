@@ -5,7 +5,6 @@ import { Link } from 'react-router'
 export default class NewList extends React.Component {
 
 	render() {
-		console.log(this.props.posts)
 		return (
 			<div className='post-grid'>
 				{ this.renderPostList() }

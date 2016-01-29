@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 
 import Header from './header.jsx'
 
+import Elm from './../../elm/Main.elm'
+
 
 class Layout extends React.Component {
 
@@ -21,6 +23,7 @@ class Layout extends React.Component {
 					router={this.props.router} 
 				/>
 				{ this.props.children }
+				<div ref='elm-container' />
 			</div>
 		)
 	}
@@ -30,6 +33,11 @@ class Layout extends React.Component {
 		// Component alive while app runs, no need to remove this event listener.
 		window.addEventListener('resize', this.setWindowDimensions)
 		setInterval(this.updateScrollTop, 100)
+	}
+
+	componentDidMount() {
+		var elmContainer = findDOMNode(this.refs['elm-container'])
+		Elm.embed(Elm.Main, elmContainer)
 	}
 
 	setWindowDimensions() {

@@ -1,3 +1,5 @@
+import 'babel-polyfill'
+
 import './../styles/site.scss'
 
 import { render } from 'react-dom'

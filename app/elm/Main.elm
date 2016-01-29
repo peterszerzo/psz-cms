@@ -1,17 +1,27 @@
-import Color exposing (..)
-import Graphics.Collage exposing (..)
-import Graphics.Element exposing (..)
+import Html exposing (div, button, text)
+import Html.Events exposing (onClick)
+import StartApp.Simple as StartApp
 
 
-main : Element
 main =
-  collage 300 300
-    [ ngon 3 75
-        |> filled clearGrey
-        |> move (-10,0)
+  StartApp.start { model = model, view = view, update = update }
+
+
+model = 0
+
+
+view address model =
+  div []
+    [ button [ onClick address Decrement ] [ text "-" ]
+    , div [] [ text (toString model) ]
+    , button [ onClick address Increment ] [ text "+" ]
     ]
 
 
-clearGrey : Color
-clearGrey =
-  rgba 111 111 111 0.6
+type Action = Increment | Decrement
+
+
+update action model =
+  case action of
+    Increment -> model + 1
+    Decrement -> model - 1

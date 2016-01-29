@@ -7,7 +7,7 @@ module.exports = {
 
 	output: {
 		path: path.resolve('./public/scripts'),
-		publicPath: 'http://localhost:3000/',
+		publicPath: 'http://localhost:3001/',
 		filename: 'bundle.js',
 		sourceMapFilename: 'bundle.js.map'
 	},
@@ -18,7 +18,7 @@ module.exports = {
 			{
 				test: /(\.js)|(\.jsx)$/,
 				loader: 'babel-loader',
-				exclude: /(node_modules|bower_components)/,
+				exclude: /node_modules/,
 				query: {
 					presets: [ 'es2015', 'react', 'stage-0' ]
 				}
@@ -27,13 +27,17 @@ module.exports = {
 			{
 				test: /\.scss$/,
 				loaders: [ 'style', 'css', 'sass' ]
+			},
+
+			{
+				test: /\.elm$/,
+				exclude: /node_modules/,
+				loader: 'elm-simple-loader'
 			}
 
 		]
 	},
 
-	devtool: 'source-map',
-
-	plugins: []
+	devtool: 'source-map'
 
 }

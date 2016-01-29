@@ -2,4 +2,5 @@ node_modules
 bower_components
 services/lambda/dist
 elm-stuff
+npm-debug.log
 .env

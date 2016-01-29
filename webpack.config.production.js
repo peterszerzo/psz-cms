@@ -1,5 +1,6 @@
 var path = require('path'),
-	webpack = require('webpack');
+	webpack = require('webpack'),
+	CompressionPlugin = require('compression-webpack-plugin');
 
 module.exports = {
 
@@ -26,6 +27,12 @@ module.exports = {
 			{
 				test: /\.scss$/,
 				loaders: [ 'style', 'css', 'sass' ]
+			},
+
+			{
+				test: /\.elm$/,
+				exclude: /node_modules/,
+				loader: 'elm-simple-loader'
 			}
 
 		]
@@ -36,7 +43,8 @@ module.exports = {
 			mangle: {
 				except: [ '$super', '$', 'exports', 'require' ]
 			}
-		})
+		}),
+		new CompressionPlugin()
 	]
 
 }
