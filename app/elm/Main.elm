@@ -6,7 +6,7 @@ import StartApp as StartApp
 
 import Task
 
-import App.Elm.Counter exposing (init, view, update, Action)
+import App.Elm.Globe exposing (init, view, update, Action)
 
 
 app =
@@ -15,7 +15,7 @@ app =
     , view = view
     , update = update
     , inputs = [ 
-      Signal.map (\message -> App.Elm.Counter.TestMessage message) test
+      Signal.map (\geoData -> App.Elm.Globe.SetGeoData geoData) addGeoData
     ]
   }
 
@@ -23,7 +23,7 @@ port tasks : Signal (Task.Task Never ())
 port tasks =
   app.tasks
 
-port test : Signal String
+port addGeoData : Signal List
 
 main =
   app.html

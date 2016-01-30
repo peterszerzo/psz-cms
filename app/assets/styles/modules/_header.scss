@@ -42,10 +42,7 @@
 	}
 
 	&__falafel {
-		display: none;
-		.header--discrete & {
-			display: block;
-		}
+		display: block;
 		right: 0;
 	}
 

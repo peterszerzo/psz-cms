@@ -1,4 +1,5 @@
 import React from 'react'
+import { findDOMNode } from 'react-dom'
 import _ from 'underscore'
 import fetch from 'isomorphic-fetch'
 import { Link } from 'react-router'
@@ -8,6 +9,8 @@ import { pushState } from 'redux-router'
 import Sign from './../../general/sign.jsx'
 import globe from './../../../assets/scripts/banner_animation/index.js'
 import { Loader } from './../../general/loader.jsx'
+
+// import Elm from './../../../elm/Main.elm'
 
 
 const FADE_OUT_IN = 4500
@@ -56,6 +59,7 @@ export default class Banner extends React.Component {
 					<div className="banner__globe">
 						<svg width={ui.windowWidth} height={ui.windowHeight}></svg>
 					</div>
+					<div className="banner__elm" ref="elm-container" />
 					<Link className="banner__summary" to='/projects'>
 						<Sign />
 					</Link>
@@ -75,11 +79,17 @@ export default class Banner extends React.Component {
 	}
 
 	componentDidMount() {
+		this.startElm()
 		var { postSummaries } = this.props
 		if (postSummaries == null || postSummaries.status !== 'success') {
 			this.fetchPostSummaries()
 		}
 		
+	}
+
+	startElm() {
+		// var elmContainer = findDOMNode(this.refs['elm-container'])
+		// var elmApp = Elm.embed(Elm.Main, elmContainer, { addGeoData: [] })
 	}
 
 	componentDidUpdate() {
@@ -130,6 +140,7 @@ export default class Banner extends React.Component {
 
 	startGlobeAnimation() {
 		let { globeAnimation } = this.props
+		console.log(globeAnimation.data)
 		var { ui } = this.props
 		this.globeAnimation = globe(globeAnimation.data)
 		this.globeAnimation.props = {
@@ -154,11 +165,6 @@ export default class Banner extends React.Component {
 		}
 	}
 
-
-	/*
-	 * Trigger the message encouraging the user to click on a triangle.
-	 * The message should fade out after a certain time, and it should not reappear on triangle hover for some time longer.
-	 */
 	triggerMessage() {
 
 		if (!this.state.message.shouldShowOnHover) { return }

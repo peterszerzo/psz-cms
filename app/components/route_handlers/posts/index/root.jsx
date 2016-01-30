@@ -22,7 +22,7 @@ class Index extends React.Component {
 		if (resources == null) { return <Loader /> }
 		var resourceGroups = _.groupBy(resources, resource => resource.post_group)
 		return (
-			<div className='wrapper__clear-header fill-parent'>
+			<div className='fill-parent'>
 				{ /* <Groups resourceGroups={resourceGroups}/> */ }
 				<NewList posts={resources} />
 			</div>

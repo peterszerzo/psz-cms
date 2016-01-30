@@ -31,13 +31,14 @@ module.exports = {
 
 			{
 				test: /\.elm$/,
-				exclude: /node_modules/,
-				noParse: [/.elm$/],
-				loader: 'elm-simple-loader'
+				exclude: [ /elm-stuff/, /node_modules/ ],
+				loader: 'elm-webpack'
 			}
 
 		]
 	},
+
+	noParse: /\.elm$/,
 
 	devtool: 'source-map'
 

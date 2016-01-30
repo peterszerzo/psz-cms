@@ -38,7 +38,7 @@ class Header extends Component {
 
 		var isDiscrete = windowWidth < 600 || (([ '/projects', '/blog' ].indexOf(pathname) === -1) && (windowHeight > scrollTop))
 		
-		var isTransparent = ([ '/projects', '/blog' ].indexOf(pathname) === -1) && (windowHeight > scrollTop)
+		var isTransparent = ([ '/projects', '/blog' ].indexOf(pathname) !== -1) || (windowHeight > scrollTop)
 
 		var cls = classNames({
 			'header': true,
@@ -61,11 +61,13 @@ class Header extends Component {
 					<Falafel/>
 				</nav>
 
-				<nav className='header__nav'>
-					<ul>
-						{this.renderList()}
-					</ul>
-				</nav>
+				{
+				// <nav className='header__nav'>
+				// 	<ul>
+				// 		{this.renderList()}
+				// 	</ul>
+				// </nav>
+				}
 
 				{ this.renderModalNav() }
 				

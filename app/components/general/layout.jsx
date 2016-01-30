@@ -35,12 +35,6 @@ class Layout extends React.Component {
 		setInterval(this.updateScrollTop, 100)
 	}
 
-	componentDidMount() {
-		var elmContainer = findDOMNode(this.refs['elm-container'])
-		var elmApp = Elm.embed(Elm.Main, elmContainer, { test: 'Test' })
-		// elmApp.ports.test.send('Counterrr')
-	}
-
 	setWindowDimensions() {
 		this.props.dispatch({ type: 'SET_WINDOW_DIMENSIONS', data: {
 			height: window.innerHeight,
