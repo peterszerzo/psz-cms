@@ -32,6 +32,7 @@ module.exports = {
 			{
 				test: /\.elm$/,
 				exclude: /node_modules/,
+				noParse: [/.elm$/],
 				loader: 'elm-simple-loader'
 			}
 

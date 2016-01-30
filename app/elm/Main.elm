@@ -1,27 +1,29 @@
-import Html exposing (div, button, text)
-import Html.Events exposing (onClick)
-import StartApp.Simple as StartApp
+import Debug exposing (log)
 
+import Effects exposing (Effects, none, Never)
+
+import StartApp as StartApp
+
+import Task
+
+import App.Elm.Counter exposing (init, view, update, Action)
+
+
+app =
+  StartApp.start { 
+      init = init
+    , view = view
+    , update = update
+    , inputs = [ 
+      Signal.map (\message -> App.Elm.Counter.TestMessage message) test
+    ]
+  }
+
+port tasks : Signal (Task.Task Never ())
+port tasks =
+  app.tasks
+
+port test : Signal String
 
 main =
-  StartApp.start { model = model, view = view, update = update }
-
-
-model = 0
-
-
-view address model =
-  div []
-    [ button [ onClick address Decrement ] [ text "-" ]
-    , div [] [ text (toString model) ]
-    , button [ onClick address Increment ] [ text "+" ]
-    ]
-
-
-type Action = Increment | Decrement
-
-
-update action model =
-  case action of
-    Increment -> model + 1
-    Decrement -> model - 1
+  app.html

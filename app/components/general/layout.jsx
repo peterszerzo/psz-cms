@@ -37,7 +37,8 @@ class Layout extends React.Component {
 
 	componentDidMount() {
 		var elmContainer = findDOMNode(this.refs['elm-container'])
-		Elm.embed(Elm.Main, elmContainer)
+		var elmApp = Elm.embed(Elm.Main, elmContainer, { test: 'Test' })
+		// elmApp.ports.test.send('Counterrr')
 	}
 
 	setWindowDimensions() {
