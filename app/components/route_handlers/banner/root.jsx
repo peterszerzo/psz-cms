@@ -10,7 +10,7 @@ import Sign from './../../general/sign.jsx'
 import globe from './../../../assets/scripts/banner_animation/index.js'
 import { Loader } from './../../general/loader.jsx'
 
-// import Elm from './../../../elm/Main.elm'
+import GlobeAnimation from './globe_animation.jsx'
 
 
 const FADE_OUT_IN = 4500
@@ -46,19 +46,18 @@ export default class Banner extends React.Component {
 
 	render() {
 		var { ui } = this.props
-
-		var { isGlobeAnimationRunning } = this.state
-		
-		var style = isGlobeAnimationRunning ? { opacity: '1' } : { opacity: '0' }
-
+		var { globeAnimation } = this.props
+		var globeAnimationData = globeAnimation ? globeAnimation.data : null
 		return (
-			<div className="banner fill-parent">
-				{ isGlobeAnimationRunning ? null : <Loader /> }
-				<div className='banner__content fill-parent' style={ style }>
-					<div className="banner__background"></div>
-					<div className="banner__globe">
-						<svg width={ui.windowWidth} height={ui.windowHeight}></svg>
-					</div>
+			<div className='banner fill-parent'>
+				<div className='banner__content fill-parent'>
+					<div className='banner__background'></div>
+					<GlobeAnimation 
+						ui={ui}
+						navigateToRandomPost={this.navigateToRandomPost}
+						triggerMessage={this.triggerMessage}
+						data={globeAnimationData}
+					/>
 					<div className="banner__elm" ref="elm-container" />
 					<Link className="banner__summary" to='/projects'>
 						<Sign />
@@ -79,38 +78,13 @@ export default class Banner extends React.Component {
 	}
 
 	componentDidMount() {
-		this.startElm()
-		var { postSummaries } = this.props
+		var { postSummaries, globeAnimation } = this.props
 		if (postSummaries == null || postSummaries.status !== 'success') {
 			this.fetchPostSummaries()
 		}
-		
-	}
-
-	startElm() {
-		// var elmContainer = findDOMNode(this.refs['elm-container'])
-		// var elmApp = Elm.embed(Elm.Main, elmContainer, { addGeoData: [] })
-	}
-
-	componentDidUpdate() {
-		// If the animation is already running, update it.
-		// Otherwise, fetch geo data if necessary.
-		// If that's available, start globe animation.
-		if (this.state.isGlobeAnimationRunning) {
-			this.globeAnimation.props.ui = this.props.ui
-			this.globeAnimation.setDimensions()
-		} else {
-			let { globeAnimation } = this.props
-			if (globeAnimation && globeAnimation.status === 'success') {
-				this.startGlobeAnimation()
-			} else {
-				this.fetchAnimationGeoFile()
-			}
+		if (globeAnimation == null) {
+			this.fetchAnimationGeoFile()
 		}
-	}
-
-	componentWillUnmount() {
-		this.globeAnimation.stop()
 	}
 
 	fetchPostSummaries() {
@@ -138,20 +112,6 @@ export default class Banner extends React.Component {
 			})
 	}
 
-	startGlobeAnimation() {
-		let { globeAnimation } = this.props
-		console.log(globeAnimation.data)
-		var { ui } = this.props
-		this.globeAnimation = globe(globeAnimation.data)
-		this.globeAnimation.props = {
-			onClick: this.navigateToRandomPost,
-			onHover: this.triggerMessage,
-			ui: ui
-		}
-		this.globeAnimation.start()
-		this.setState({ isGlobeAnimationRunning: true })
-	}
-
 	navigateToRandomPost() {
 		var { dispatch, postSummaries } = this.props
 		var randomPostId
@@ -166,20 +126,15 @@ export default class Banner extends React.Component {
 	}
 
 	triggerMessage() {
-
 		if (!this.state.message.shouldShowOnHover) { return }
-
 		this.setState({
 			message: {
 				isShowing: true,
 				shouldShowOnHover: false
 			}
 		})
-		
 		setTimeout(this.fadeOut, FADE_OUT_IN)
-
 		setTimeout(this.reactivateOnHover, DO_NOT_REAPPEAR_ON_HOVER_FOR)
-
 	}
 
 }

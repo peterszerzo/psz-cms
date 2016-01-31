@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 
 import Header from './header.jsx'
 
-import Elm from './../../elm/Main.elm'
+// import Elm from './../../elm/Main.elm'
 
 
 class Layout extends React.Component {

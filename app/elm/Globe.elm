@@ -1,5 +1,7 @@
 module App.Elm.Globe where
 
+import Debug exposing (log)
+
 import Html exposing (div, button, text, fromElement)
 import Html.Events exposing (onClick)
 import Effects exposing (Effects, none, Never)
@@ -13,7 +15,7 @@ import App.Elm.Polygon exposing (Model)
 
 
 init = 
-  ({ count = 0, geoData = {} }, none)
+  ({ count = 0, coordinates = [] }, none)
 
 canvas = 
   fromElement (
@@ -32,17 +34,18 @@ view address model =
   div []
     [ button [ onClick address Decrement ] [ text "-" ]
     , div [] [ text (toString model.count) ]
+    , div [] [ text (toString (List.length model.coordinates)) ]
     , button [ onClick address Increment ] [ text "+" ]
     , canvas
     ]
 
-type alias Model = { count: Int, geoData: List }
+type alias Model = { count: Int, coordinates: (List App.Elm.Polygon.Model) }
 
-type Action = Increment | Decrement | SetGeoData List
+type Action = Increment | Decrement | SetCoordinates (List App.Elm.Polygon.Model)
 
 update: Action -> Model -> (Model, Effects Action)
 update action model =
   case action of
     Increment -> ({ model | count = model.count + 1 }, none)
     Decrement -> ({ model | count = model.count - 1 }, none)
-    SetGeoData geoData -> ({ model | geoData = geoData }, none)
+    SetCoordinates coordinates -> ({ model | coordinates = coordinates }, none)

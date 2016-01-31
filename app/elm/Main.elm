@@ -1,12 +1,9 @@
-import Debug exposing (log)
-
 import Effects exposing (Effects, none, Never)
-
 import StartApp as StartApp
-
 import Task
 
 import App.Elm.Globe exposing (init, view, update, Action)
+import App.Elm.Polygon exposing (Model)
 
 
 app =
@@ -15,7 +12,7 @@ app =
     , view = view
     , update = update
     , inputs = [ 
-      Signal.map (\geoData -> App.Elm.Globe.SetGeoData geoData) addGeoData
+      Signal.map (\coordinates -> App.Elm.Globe.SetCoordinates coordinates) addCoordinates
     ]
   }
 
@@ -23,7 +20,7 @@ port tasks : Signal (Task.Task Never ())
 port tasks =
   app.tasks
 
-port addGeoData : Signal List
+port addCoordinates : Signal (List App.Elm.Polygon.Model)
 
 main =
   app.html
