@@ -27,10 +27,7 @@ export default class GlobeAnimation extends React.Component {
 	componentDidUpdate(prevProps) {
 		if (prevProps.data == null && this.props.data != null) {
 			// this.startGlobeAnimation()
-			let coordinates = this.getPolygonCoordinates()
-			let elmContainer = findDOMNode(this.refs['elm-container'])
-			console.log(coordinates)
-			let elmApp = Elm.embed(Elm.Main, elmContainer, { addCoordinates: coordinates })
+			this.startElmApp()
 		} else {
 			// this.updateGlobeAnimation()
 		}
@@ -40,6 +37,15 @@ export default class GlobeAnimation extends React.Component {
 		if (this.globeAnimation) {
 			this.globeAnimation.stop()
 		}
+	}
+
+	startElmApp() {
+		var coordinates = this.getPolygonCoordinates()
+		var elmContainer = findDOMNode(this.refs['elm-container'])
+		this.elmApp = Elm.embed(Elm.Main, elmContainer, { addCoordinates: [] })
+		console.log(this.elmApp.ports.addCoordinates)
+
+		this.elmApp.ports.addCoordinates.send(coordinates)
 	}
 
 	startGlobeAnimation() {

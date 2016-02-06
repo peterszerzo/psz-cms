@@ -36,7 +36,6 @@ export default class Banner extends React.Component {
 		this.reactivateOnHover = this.reactivateOnHover.bind(this)
 
 		this.state = {
-			isGlobeAnimationRunning: false,
 			message: {
 				isShowing: true,
 				shouldShowOnHover: true
@@ -58,7 +57,6 @@ export default class Banner extends React.Component {
 						triggerMessage={this.triggerMessage}
 						data={globeAnimationData}
 					/>
-					<div className="banner__elm" ref="elm-container" />
 					<Link className="banner__summary" to='/projects'>
 						<Sign />
 					</Link>

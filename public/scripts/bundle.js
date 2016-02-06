@@ -32524,7 +32524,6 @@
 			_this.reactivateOnHover = _this.reactivateOnHover.bind(_this);
 	
 			_this.state = {
-				isGlobeAnimationRunning: false,
 				message: {
 					isShowing: true,
 					shouldShowOnHover: true
@@ -32553,7 +32552,6 @@
 							triggerMessage: this.triggerMessage,
 							data: globeAnimationData
 						}),
-						_react2.default.createElement('div', { className: 'banner__elm', ref: 'elm-container' }),
 						_react2.default.createElement(
 							_reactRouter.Link,
 							{ className: 'banner__summary', to: '/projects' },
@@ -56438,10 +56436,7 @@
 			value: function componentDidUpdate(prevProps) {
 				if (prevProps.data == null && this.props.data != null) {
 					// this.startGlobeAnimation()
-					var coordinates = this.getPolygonCoordinates();
-					var elmContainer = (0, _reactDom.findDOMNode)(this.refs['elm-container']);
-					console.log(coordinates);
-					var elmApp = _Main2.default.embed(_Main2.default.Main, elmContainer, { addCoordinates: coordinates });
+					this.startElmApp();
 				} else {
 					// this.updateGlobeAnimation()
 				}
@@ -56452,6 +56447,16 @@
 				if (this.globeAnimation) {
 					this.globeAnimation.stop();
 				}
+			}
+		}, {
+			key: 'startElmApp',
+			value: function startElmApp() {
+				var coordinates = this.getPolygonCoordinates();
+				var elmContainer = (0, _reactDom.findDOMNode)(this.refs['elm-container']);
+				this.elmApp = _Main2.default.embed(_Main2.default.Main, elmContainer, { addCoordinates: [] });
+				console.log(this.elmApp.ports.addCoordinates);
+	
+				this.elmApp.ports.addCoordinates.send(coordinates);
 			}
 		}, {
 			key: 'startGlobeAnimation',
@@ -66990,23 +66995,14 @@
 	   $Effects = Elm.Effects.make(_elm),
 	   $Graphics$Collage = Elm.Graphics.Collage.make(_elm),
 	   $Html = Elm.Html.make(_elm),
-	   $Html$Events = Elm.Html.Events.make(_elm),
 	   $List = Elm.List.make(_elm),
 	   $Maybe = Elm.Maybe.make(_elm),
 	   $Result = Elm.Result.make(_elm),
 	   $Signal = Elm.Signal.make(_elm);
 	   var _op = {};
-	   var update = F2(function (action,model) {
-	      var _p0 = action;
-	      switch (_p0.ctor)
-	      {case "Increment": return {ctor: "_Tuple2",_0: _U.update(model,{count: model.count + 1}),_1: $Effects.none};
-	         case "Decrement": return {ctor: "_Tuple2",_0: _U.update(model,{count: model.count - 1}),_1: $Effects.none};
-	         default: return {ctor: "_Tuple2",_0: _U.update(model,{coordinates: _p0._0}),_1: $Effects.none};}
-	   });
+	   var update = F2(function (action,model) {    var _p0 = action;return {ctor: "_Tuple2",_0: _U.update(model,{coordinates: _p0._0}),_1: $Effects.none};});
 	   var SetCoordinates = function (a) {    return {ctor: "SetCoordinates",_0: a};};
-	   var Decrement = {ctor: "Decrement"};
-	   var Increment = {ctor: "Increment"};
-	   var Model = F2(function (a,b) {    return {count: a,coordinates: b};});
+	   var Model = function (a) {    return {coordinates: a};};
 	   var canvas = $Html.fromElement(A3($Graphics$Collage.collage,
 	   300,
 	   300,
@@ -67015,26 +67011,14 @@
 	           {ctor: "_Tuple2",_0: 50,_1: 10},
 	           A2($Graphics$Collage.filled,A4($Color.rgba,0,0,0,0.2),A2($Graphics$Collage.ngon,5,50)))])));
 	   var view = F2(function (address,model) {
-	      return A4($Debug.log,
-	      $Basics.toString($List.length(model.coordinates)),
-	      $Html.div,
+	      return A2($Html.div,
 	      _U.list([]),
-	      _U.list([A2($Html.button,_U.list([A2($Html$Events.onClick,address,Decrement)]),_U.list([$Html.text("-")]))
-	              ,A2($Html.div,_U.list([]),_U.list([$Html.text($Basics.toString(model.count))]))
-	              ,A2($Html.div,_U.list([]),_U.list([$Html.text($Basics.toString($List.length(model.coordinates)))]))
-	              ,A2($Html.button,_U.list([A2($Html$Events.onClick,address,Increment)]),_U.list([$Html.text("+")]))
+	      _U.list([A2($Html.div,_U.list([]),_U.list([$Html.text($Basics.toString($List.length(model.coordinates)))]))
+	              ,A2($Html.div,_U.list([]),_U.list([$Html.text("hello")]))
 	              ,canvas]));
 	   });
-	   var init = {ctor: "_Tuple2",_0: {count: 0,coordinates: _U.list([])},_1: $Effects.none};
-	   return _elm.App.Elm.Globe.values = {_op: _op
-	                                      ,init: init
-	                                      ,canvas: canvas
-	                                      ,view: view
-	                                      ,Model: Model
-	                                      ,Increment: Increment
-	                                      ,Decrement: Decrement
-	                                      ,SetCoordinates: SetCoordinates
-	                                      ,update: update};
+	   var init = {ctor: "_Tuple2",_0: {coordinates: _U.list([])},_1: $Effects.none};
+	   return _elm.App.Elm.Globe.values = {_op: _op,init: init,canvas: canvas,view: view,Model: Model,SetCoordinates: SetCoordinates,update: update};
 	};
 	Elm.Main = Elm.Main || {};
 	Elm.Main.make = function (_elm) {

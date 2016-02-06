@@ -15,7 +15,7 @@ import App.Elm.Polygon exposing (Model)
 
 
 init = 
-  ({ count = 0, coordinates = [] }, none)
+  ({ coordinates = [] }, none)
 
 canvas = 
   fromElement (
@@ -32,20 +32,15 @@ canvas =
 
 view address model =
   div []
-    [ button [ onClick address Decrement ] [ text "-" ]
-    , div [] [ text (toString model.count) ]
-    , div [] [ text (toString (List.length model.coordinates)) ]
-    , button [ onClick address Increment ] [ text "+" ]
+    [ div [] [ text (toString (List.length model.coordinates)) ]
     , canvas
     ]
 
-type alias Model = { count: Int, coordinates: (List App.Elm.Polygon.Model) }
+type alias Model = { coordinates: (List App.Elm.Polygon.Model) }
 
-type Action = Increment | Decrement | SetCoordinates (List App.Elm.Polygon.Model)
+type Action = SetCoordinates (List App.Elm.Polygon.Model)
 
 update: Action -> Model -> (Model, Effects Action)
 update action model =
   case action of
-    Increment -> ({ model | count = model.count + 1 }, none)
-    Decrement -> ({ model | count = model.count - 1 }, none)
     SetCoordinates coordinates -> ({ model | coordinates = coordinates }, none)
