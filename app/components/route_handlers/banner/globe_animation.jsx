@@ -3,7 +3,7 @@ import { findDOMNode } from 'react-dom'
 
 import globe from './../../../assets/scripts/banner_animation/index.js'
 
-import Elm from './../../../elm/Main.elm'
+import Elm from './../../../elm/build/elm.js'
 
 
 export default class GlobeAnimation extends React.Component {
@@ -13,7 +13,7 @@ export default class GlobeAnimation extends React.Component {
 		return (
 			<div className='banner__globe'>
 				<svg width={ui.windowWidth} height={ui.windowHeight}></svg>
-				<div ref='elm-container'/>
+				<div ref='elm-container' style={{ position: 'fixed', top: '0', left: '0' }} />
 			</div>
 		)
 	}

@@ -12,6 +12,8 @@
     "dev": "npm run clean && webpack --config webpack.config.development.js --watch",
     "server": "node app.js",
     "spec": "mocha app/**/*_spec.js --compilers js:babel-core/register",
+    "watch-elm": "chokidar 'app/elm/src/**/*' -c 'elm make app/elm/src/Main.elm --output temp/elm-globals.js'",
+    "watch-elm-commonjs": "chokidar 'temp/elm-globals.js' -c 'cp temp/elm-globals.js app/elm/build/elm.js && cat app/elm/build/elm-suffix.js >> app/elm/build/elm.js'",
     "build": "npm run clean && webpack --config webpack.config.production.js",
     "deploy": "npm run build && git add -A && git commit -m 'fresh deploy' && git push origin master && git push heroku master"
   },

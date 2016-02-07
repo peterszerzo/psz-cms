@@ -27,12 +27,6 @@ module.exports = {
 			{
 				test: /\.scss$/,
 				loaders: [ 'style', 'css', 'sass' ]
-			},
-
-			{
-				test: /\.elm$/,
-				exclude: [ /elm-stuff/, /node_modules/ ],
-				loader: 'elm-webpack'
 			}
 
 		]

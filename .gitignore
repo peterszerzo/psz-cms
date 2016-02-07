@@ -1,6 +1,6 @@
 node_modules
-bower_components
-services/lambda/dist
 elm-stuff
+app/elm/build
 npm-debug.log
+temp
 .env
