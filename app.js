@@ -4,11 +4,11 @@ require('babel-core/register');
 // Load development environment variables.
 if (process.env['NODE_ENV'] !== 'production') {
 	try {
-		require('dotenv').load(); 
+		require('dotenv').load();
 	} catch(err) {
 		console.log(err);
 	}
 }
 
 // Require server.
-require('./server.js');
+require('./server/index.js');

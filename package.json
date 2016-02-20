@@ -9,12 +9,10 @@
   "readme": "",
   "scripts": {
     "clean": "rm -f public/scripts/**/*",
-    "dev": "npm run clean && webpack --config webpack.config.development.js --watch",
+    "dev": "npm run clean && NODE_ENV=development webpack --config webpack.config.js --watch",
     "server": "node app.js",
     "spec": "mocha app/**/*_spec.js --compilers js:babel-core/register",
-    "watch-elm": "chokidar 'app/elm/src/**/*' -c 'elm make app/elm/src/Main.elm --output temp/elm-globals.js'",
-    "watch-elm-commonjs": "chokidar 'temp/elm-globals.js' -c 'cp temp/elm-globals.js app/elm/build/elm.js && cat app/elm/build/elm-suffix.js >> app/elm/build/elm.js'",
-    "build": "npm run clean && webpack --config webpack.config.production.js",
+    "build": "npm run clean && NODE_ENV=production webpack --config webpack.config.js",
     "deploy": "npm run build && git add -A && git commit -m 'fresh deploy' && git push origin master && git push heroku master"
   },
   "repository": {
@@ -36,6 +34,7 @@
     "css-loader": "^0.23.0",
     "elm-simple-loader": "^1.0.1",
     "elm-webpack-loader": "^2.0.0",
+    "json-loader": "^0.5.4",
     "mocha": "^2.3.0",
     "node-sass": "^3.4.2",
     "postcss": "^5.0.14",
@@ -46,6 +45,8 @@
     "react-addons-test-utils": "^0.14.0",
     "sass-loader": "^3.1.1",
     "style-loader": "^0.13.0",
+    "ts-loader": "^0.8.0",
+    "typescript": "^1.7.5",
     "webpack": "^1.12.6",
     "webpack-dev-middleware": "^1.2.0"
   },
