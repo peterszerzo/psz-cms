@@ -15,7 +15,7 @@ var NODE_ENV = process.env.NODE_ENV;
 
 module.exports = {
 
-	entry: './theme/src/assets/scripts/bundle.js',
+	entry: './theme/assets/scripts/bundle.js',
 
 	output: {
 		path: path.resolve('./public/scripts'),

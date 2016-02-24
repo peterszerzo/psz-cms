@@ -1,6 +1,6 @@
 node_modules
 elm-stuff
-app/elm/build
 npm-debug.log
+.DS_Store
 temp
 .env
