@@ -1,0 +1,10 @@
+.wrapper {
+	
+	overflow-x: hidden;
+	overflow-y: scroll;
+
+	&__clear-header {
+		padding-top: $header-height;
+	}
+
+}
