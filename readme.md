@@ -1,6 +1,8 @@
-# peterszerzo.com
+This project is cute, but deprecated. Check out [psz-theme](https://github.com/pickled-plugins/psz-theme) instead.
 
-My current personal website. Read its story [here](/docs/story.md).
+# psz cms
+
+CMS and single-page app client for my old personal website. Read its story [here](/docs/story.md).
 
 ## Development environment
 
